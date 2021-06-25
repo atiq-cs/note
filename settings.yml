@@ -1,0 +1,5 @@
+Host: note.iqubit.xyz
+LinksUseHttps: true
+SiteTitle: Notes from Qubit Inc.
+Description: "Head's in the cloud, a Qubit blog"
+GenerateSearchIndex: true
