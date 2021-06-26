@@ -1,0 +1,19 @@
+name: Deploy Site
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout root and submodule
+      uses: actions/checkout@v2   # ref, https://github.com/actions/checkout
+      with:
+        submodules: 'true'
+    - uses: actions/setup-dotnet@v1
+      with:
+        # SDK Version (requires full version)
+        # i.e, https://dotnet.microsoft.com/download/dotnet/6.0
+        dotnet-version: '6.0.100'
+    - run: dotnet run --configuration Release -- deploy
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
