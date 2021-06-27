@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Heads in the cloud! A Qubit Blog!">
+
+  <title>Notes from Qubit Inc. - WiFi Networking with Powershell and netsh</title>
+
+  <link rel="canonical" href="https://note.iqubit.xyz/posts/network-wifi-cmd">
+
+      <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
+      <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
+  
+  <meta name="application-name" content="Notes from Qubit Inc." />
+  <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
+  <meta name="msapplication-starturl" content="/" />
+
+  <meta property="og:title" content="Notes from Qubit Inc. - WiFi Networking with Powershell and netsh" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://note.iqubit.xyz/posts/network-wifi-cmd" />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="/vendor/bootstrap/scss/bootstrap.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/fontawesome-free/css/brands.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css' data-no-mirror>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' data-no-mirror>
+  
+  <!-- Custom styles for this template -->
+  <link href="/scss/clean-blog.css" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/plugins/autoloader/prism-autoloader.min.js" data-no-mirror></script>
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/themes/prism.css">
+  
+  
+
+
+  
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Notes from Qubit Inc.</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/tags">Tags</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/posts">Posts</a>
+            </li>
+</ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Page Header -->
+  <header class="masthead">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="post-heading">
+          <h1>
+            WiFi Networking with Powershell and netsh
+          </h1>
+              <div class="meta">Published on Friday, 22 November 2019</div>
+                <div class="mt-3">
+                      <a href="/tags/powershell-core" class="badge badge-light"> powershell core</a>
+                      <a href="/tags/network" class="badge badge-light"> network</a>
+                      <a href="/tags/system-administration" class="badge badge-light"> system administration</a>
+                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- Main Content -->
+  <div class="container"> 
+    <div class="row">
+      <div id="content" class="col-md-12">  
+        <p>Please be aware of notation below in command outlines. <code>$</code> represents a command and rests of the lines following that line are output. Powershell is superset of traditional command prompt. Hence, all usual binaries still run on powershell for example, <code>takeown</code>.</p>
+<h1 id="introduction">Introduction</h1>
+<p>We still need to use <code>netsh</code> till we have cmdlets support
+<em>To connect to a specific network or SSID</em></p>
+<pre><code>netsh wlan connect name='Starbucks WiFi'
+</code></pre>
+<p><em>To disconnect from WiFi</em></p>
+<pre><code>$ netsh wlan disconnect interface=Wi-Fi
+Disconnection request was completed successfully for interface &quot;Wi-Fi&quot;.
+</code></pre>
+<p><em>To disable Net WiFi Adapter (requires admin privilege),</em></p>
+<pre><code>Disable-NetAdapter -Name Wi-Fi -Confirm:$false
+</code></pre>
+<p><em>To disable Net WiFi Adapter (requires admin privilege),</em></p>
+<pre><code>Enable-NetAdapter -Name Wi-Fi
+</code></pre>
+<p>To provide more context, new cmdlets and netsh features enable us to control network interfaces of the PC. Here's a netsh example to list WiFi SSIDs,</p>
+<pre><code>$ netsh wlan show profiles
+
+Profiles on interface Wi-Fi:
+
+Group policy profiles (read only)
+---------------------------------
+
+User profiles
+-------------
+    All User Profile     : CSC-Public
+    All User Profile     : Starbucks WiFi
+    All User Profile     : VTA Free WiFi
+    All User Profile     : Philz Tesora
+    All User Profile     : PEETS
+.......
+</code></pre>
+<p>This command does not show currently available WiFi Networks. It only shows the networks that are saved in the System because it connected to those in past.</p>
+<p>Following shows pretty much the same list probably because most WiFi have clear type Key,</p>
+<pre><code>$ netsh wlan show profiles key=clear
+</code></pre>
+<p><em>To view information on the currently connect WiFi network</em></p>
+<pre><code>$ Get-NetConnectionProfile
+Name             : Starbucks WiFi  12
+InterfaceAlias   : Wi-Fi
+InterfaceIndex   : 16
+NetworkCategory  : Public
+IPv4Connectivity : Internet
+IPv6Connectivity : NoTraffic
+</code></pre>
+<p>Applying above command on a specific SSID provides us more info,</p>
+<pre><code>$ netsh wlan show profiles name='Starbucks WiFi'
+
+Profile Starbucks WiFi on interface Wi-Fi:
+=======================================================================
+
+Applied: All User Profile
+
+Profile information
+-------------------
+    Version                : 1
+    Type                   : Wireless LAN
+    Name                   : Starbucks WiFi
+    Control options        :
+        Connection mode    : Connect automatically
+        Network broadcast  : Connect only if this network is broadcasting
+        AutoSwitch         : Do not switch to other networks
+        MAC Randomization  : Disabled
+
+Connectivity settings
+---------------------
+    Number of SSIDs        : 1
+    SSID name              : &quot;Starbucks WiFi&quot;
+    Network type           : Infrastructure
+    Radio type             : [ Any Radio Type ]
+    Vendor extension          : Not present
+
+Security settings
+-----------------
+    Authentication         : Open
+    Cipher                 : None
+    Security key           : Absent
+    Key Index              : 1
+
+Cost settings
+-------------
+    Cost                   : Unrestricted
+    Congested              : No
+    Approaching Data Limit : No
+    Over Data Limit        : No
+    Roaming                : No
+    Cost Source            : Default
+</code></pre>
+<p>Following is equivalent,</p>
+<pre><code>$ netsh wlan show profiles name='Starbucks WiFi' key=clear
+</code></pre>
+<h4 id="show-interfaces-info">Show Interfaces Info</h4>
+<p>To view currently connected SSID etc,</p>
+<pre><code>$ netsh wlan show interfaces
+There is 1 interface on the system:
+
+Name                   : Wi-Fi
+Description            : Intel(R) Wi-Fi 6 AX200 160MHz
+GUID                   : 605a0ad1-b96b-4f4e-b5a9-782623d6d797
+Physical address       : 04:ed:33:4c:9e:1f
+State                  : connected
+SSID                   : Nimbus3000
+BSSID                  : 84:bb:69:fa:93:10
+Network type           : Infrastructure
+Radio type             : 802.11ac
+Authentication         : WPA2-Personal
+Cipher                 : CCMP
+Connection mode        : Auto Connect
+Channel                : 40
+Receive rate (Mbps)    : 585
+Transmit rate (Mbps)   : 866.7
+Signal                 : 94%
+Profile                : Qubit
+
+Hosted network status  : Not available
+</code></pre>
+<p>Using powershell cmdlet, we can view information on all network interfaces in the system,</p>
+<pre><code>$ Get-NetAdapter
+Name                      InterfaceDescription                    ifIndex Status       MacAddress             LinkSpeed
+----                      --------------------                    ------- ------       ----------             ---------
+Ethernet 2                Cisco AnyConnect Secure Mobility Clien…      14 Not Present  00-05-9A-3C-7A-00          0 bps
+Wi-Fi                     Intel(R) Wi-Fi 6 AX200 160MHz                10 Up           04-ED-33-4C-9E-1F       400 Mbps
+vEthernet (Default Switc… Hyper-V Virtual Ethernet Adapter             23 Up           00-15-5D-5F-1A-CB        10 Gbps
+</code></pre>
+<p>To view information on the WiFi network interface,</p>
+<pre><code>$ Get-NetAdapter -Name Wi-Fi
+Name                      InterfaceDescription                    ifIndex Status       MacAddress             LinkSpeed
+----                      --------------------                    ------- ------       ----------             ---------
+Wi-Fi                     Intel(R) Wi-Fi 6 AX200 160MHz                10 Up           04-ED-33-4C-9E-1F       400 Mbps
+</code></pre>
+<p>Show cmdlets related to net adapter,</p>
+<pre><code>$ gcm -Noun netadapter | select name, modulename
+
+Name               ModuleName
+----               ----------
+Disable-NetAdapter NetAdapter
+Enable-NetAdapter  NetAdapter
+Get-NetAdapter     NetAdapter
+Rename-NetAdapter  NetAdapter
+Restart-NetAdapter NetAdapter
+Set-NetAdapter     NetAdapter
+</code></pre>
+<p>Additionally, now, we have cmdlet to show IP Address info without sing <code>netsh</code>,</p>
+<pre><code>$ Get-NetIPAddress
+
+IPAddress         : fe80::1d40:6866:1418:1efe%22
+InterfaceIndex    : 22
+InterfaceAlias    : vEthernet (Default Switch)
+AddressFamily     : IPv6
+Type              : Unicast
+PrefixLength      : 64
+PrefixOrigin      : WellKnown
+SuffixOrigin      : Link
+AddressState      : Preferred
+ValidLifetime     : Infinite ([TimeSpan]::MaxValue)
+PreferredLifetime : Infinite ([TimeSpan]::MaxValue)
+SkipAsSource      : False
+PolicyStore       : ActiveStore
+
+IPAddress         : fe80::61e3:ae79:980e:1c5d%8
+InterfaceIndex    : 8
+InterfaceAlias    : Wi-Fi
+AddressFamily     : IPv6
+Type              : Unicast
+PrefixLength      : 64
+... ...
+
+... ...
+IPAddress         : 172.31.98.36
+InterfaceIndex    : 8
+InterfaceAlias    : Wi-Fi
+AddressFamily     : IPv4
+Type              : Unicast
+PrefixLength      : 23
+PrefixOrigin      : Dhcp
+SuffixOrigin      : Dhcp
+AddressState      : Preferred
+ValidLifetime     : 00:38:38
+PreferredLifetime : 00:38:38
+SkipAsSource      : False
+PolicyStore       : ActiveStore
+
+IPAddress         : 127.0.0.1
+InterfaceIndex    : 1
+InterfaceAlias    : Loopback Pseudo-Interface 1
+AddressFamily     : IPv4
+... ...
+</code></pre>
+<p>Show available WiFi Networks using <code>netsh</code>,</p>
+<pre><code>$ netsh wlan show networks mode=bssid
+
+Interface name : Wi-Fi
+There are 3 networks currently visible.
+
+SSID 1 : Qubit_Guest
+    Network type            : Infrastructure
+    Authentication          : WPA2-Personal
+    Encryption              : CCMP
+    BSSID 1                 : 20:a6:cd:32:fe:e1
+        Signal             : 50%
+        Radio type         : 802.11n
+        Channel            : 6
+        Basic rates (Mbps) : 24
+        Other rates (Mbps) : 36 48 54
+    BSSID 2                 : 44:48:c1:a5:08:81
+        Signal             : 81%
+        Radio type         : 802.11n
+        Channel            : 6
+        Basic rates (Mbps) : 24
+        Other rates (Mbps) : 36 48 54
+    BSSID 3                ... ...
+
+SSID 2 : Qubit
+    Network type            : Infrastructure
+    Authentication          : WPA2-Enterprise
+    Encryption              : CCMP
+    BSSID 1                 : 44:48:c1:a4:f0:b1
+        Signal             : 62%
+        Radio type         : 802.11ac
+        Channel            : 157
+        Basic rates (Mbps) : 24
+        Other rates (Mbps) : 36 48 54
+    BSSID 2                ... ...
+
+SSID 3 : hello_kitty
+    Network type            : Infrastructure
+    Authentication          : WPA2-Personal
+    Encryption              : CCMP
+    BSSID 1                ... ...
+</code></pre>
+<h2 id="wifi-modem-best-practices">WiFI Modem Best Practices</h2>
+<p>Few points,</p>
+<ol>
+<li>Reboot modem every few months</li>
+<li>Hopefully carrier provides firmware udpates if not update every few months</li>
+<li>Keep in touch with carrier's customer service in case of slow speed, give good complaints coz they owe you the speed you deserve.</li>
+</ol>
+<h2 id="references">References</h2>
+<ol>
+<li><a href="https://blogs.technet.microsoft.com/heyscriptingguy/2015/11/23/get-wireless-network-ssid-and-password-with-powershell">ms technet - Get Wireless Network SSID and Password with PowerShell</a></li>
+<li><a href="https://marckean.com/2017/03/16/auto-connect-to-wifi-access-points">netsh wlan commands</a></li>
+<li><a href="https://blogs.technet.microsoft.com/heyscriptingguy/2013/06/15/weekend-scripter-use-powershell-to-find-auto-connect-wireless-networks">changing autoconnect properties for some networks</a></li>
+<li><a href="https://blogs.technet.microsoft.com/heyscriptingguy/2014/01/13/enabling-and-disabling-network-adapters-with-powershell">disabling unnecessary network adapters</a></li>
+<li><a href="https://www.xfinity.com/support/internet/comcast-supported-routers-gateways-adapters">Some possible default passwords for networks / routers / gateways</a></li>
+<li><a href="https://devblogs.microsoft.com/scripting/get-wireless-network-ssid-and-password-with-powershell">MS devblogs - Get Wireless Network SSID and Password with PowerShell</a></li>
+</ol>
+
+
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Footer -->  
+  <footer>
+    <div class="container">
+        <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright text-muted m-0">Copyright &#xA9; 2021</p>
+                    <br />
+                    <ul class="list-inline text-center small">
+                            <li class="list-inline-item">
+                                <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                            </li>
+                    </ul>
+                    <br />
+                    <div class="font-weight-bold small"><a href="https://statiq.dev">Generated by Statiq</a></div>
+                </div>
+        </div>
+    </div>
+</footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  
+
+
+  
+
+  <!-- Custom scripts for this template -->
+  <script src="/js/clean-blog.js"></script>
+
+</body>
+
+</html>

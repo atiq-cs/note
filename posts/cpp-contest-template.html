@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Heads in the cloud! A Qubit Blog!">
+
+  <title>Notes from Qubit Inc. - Sample Coding Template for Problem Solvers in C&#x2B;&#x2B;</title>
+
+  <link rel="canonical" href="https://note.iqubit.xyz/posts/cpp-contest-template">
+
+      <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
+      <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
+  
+  <meta name="application-name" content="Notes from Qubit Inc." />
+  <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
+  <meta name="msapplication-starturl" content="/" />
+
+  <meta property="og:title" content="Notes from Qubit Inc. - Sample Coding Template for Problem Solvers in C&#x2B;&#x2B;" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://note.iqubit.xyz/posts/cpp-contest-template" />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="/vendor/bootstrap/scss/bootstrap.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/fontawesome-free/css/brands.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css' data-no-mirror>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' data-no-mirror>
+  
+  <!-- Custom styles for this template -->
+  <link href="/scss/clean-blog.css" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/plugins/autoloader/prism-autoloader.min.js" data-no-mirror></script>
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/themes/prism.css">
+  
+  
+
+
+  
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Notes from Qubit Inc.</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/tags">Tags</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/posts">Posts</a>
+            </li>
+</ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Page Header -->
+  <header class="masthead">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="post-heading">
+          <h1>
+            Sample Coding Template for Problem Solvers in C&#x2B;&#x2B;
+          </h1>
+              <div class="meta">Published on Thursday, 27 February 2014</div>
+                <div class="mt-3">
+                      <a href="/tags/c" class="badge badge-light"> C&#x2B;&#x2B;</a>
+                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- Main Content -->
+  <div class="container"> 
+    <div class="row">
+      <div id="content" class="col-md-12">  
+        <p>In this article I provide my C++ template which,</p>
+<ul>
+<li>includes mostly used C++ header files</li>
+<li>enables redirection of cin and cout to file input and file out respectively depending on programmer's choice</li>
+<li>includes an OOP class as skeleton design taking an example as simple as Ecological Premium</li>
+</ul>
+<p>Please have a look at c++ template below. You are encouraged to use it and to provide feedback if it helps you anyway.</p>
+<p>Programming contestants have templates of many variations. These variations come on many categories: sometimes on use of OOP, sometimes on use of complex MACROS, sometimes on function designs. Whether a clean OOP design can help us think in an organized way, whether it can help us avoid worries of low level details and myriads of bugs related with acquiring insignificant efficiency problem solvers can tell about it.</p>
+<p>** C++ Template can be found at <a href="https://github.com/atiq-cs/Problem-Solving/blob/master/coding-template/cpp/Template.cpp">github link</a> **</p>
+<p>All C++ Templates can be found at <a href="https://github.com/atiq-cs/Problem-Solving/tree/master/coding-template/cpp">github link</a></p>
+<pre><code class="language-cpp">    /*******************************************************
+    * Problem Name: Problem Title for example &quot;Ecological Premium&quot;
+    * Problem ID: Problem Number for example &quot;10300&quot;
+    * Occassion: Offline solving volume 103
+    * Date: February 27, 2018
+    * Template revision: 002, OOP
+    *
+    * Algorithm: Adhoc
+    * Special Case:
+    * Judge Status: Accepted
+    * Author: Atique
+    * Notes: Primitive data structure limit sensitive
+    *
+    *******************************************************/
+    //Uncomment this line if you use C standard IO functions i.e., printf, scanf
+    #include &lt;string&gt;
+    #include &lt;sstream&gt;
+    #include &lt;cmath&gt;
+    #include &lt;cstdio&gt;
+    #include &lt;vector&gt;
+    #include &lt;iostream&gt;
+    #include &lt;algorithm&gt;
+    #include &lt;map&gt;
+    #include //for cout formatting
+    #define INF 2147483648
+    #define EPS 1e-8
+    using namespace std;
+     
+    // Comment this before submission
+    #define ENABLE_IO_REDIRECTION    1 // redirect cin to input
+        // file for the problem and cout to output file for the problem
+     
+    class EcologicalPremium {
+    public:
+        EcologicalPremium();
+        void CalculateBudget();
+    };
+     
+    EcologicalPremium::EcologicalPremium() {
+        // Initiaze used variables
+    }
+     
+    void EcologicalPremium::CalculateBudget() {
+        // Take Input
+        int nTestCase = 0;
+     
+        // Take number of test cases
+        cin&gt;&gt;nTestCase;
+     
+        while (nTestCase--) {
+            // write some code, take more input using cin if necessary
+            // call some member functions,
+            // output the result using cout
+        }
+    }
+     
+    int main() {
+        #ifdef  ENABLE_IO_REDIRECTION
+            // set problem number here; it helps setting correct input
+            // and output file
+            string problem_id(&quot;10300&quot;);
+     
+            string in_file_path(problem_id); in_file_path += &quot;_in.txt&quot;;
+            string out_file_path(problem_id); out_file_path +=
+                    &quot;_out.txt&quot;;
+     
+            // Redirect cin to in file
+            ifstream subinput(in_file_path);
+            streambuf* orig_cin = NULL;
+            if (subinput) {
+                orig_cin = cin.rdbuf(); //save old buf
+                cin.rdbuf(subinput.rdbuf()); //redirect std::cin to
+                        in.txt!
+            }
+            else
+                cout&lt;&lt;&quot;Input file problem &quot; &lt;&lt; problem_id &lt;&lt; &quot; does
+                    not exist.&quot;&lt;&lt;endl;
+     
+            // Redirect cout to out file
+            ofstream suboutput(out_file_path);
+            streambuf *orig_cout = NULL;
+            if (suboutput) {
+                orig_cout = cout.rdbuf(); //save old buf
+                cout.rdbuf(suboutput.rdbuf()); //redirect std::cout
+                // to out.txt!
+            }
+     
+        #endif
+     
+        // Code here
+        EcologicalPremium EPObj;
+        EPObj.CalculateBudget();
+     
+        #ifdef  ENABLE_IO_REDIRECTION
+            if (suboutput)
+                cout.rdbuf(orig_cout);
+            if (suboutput)
+                cin.rdbuf(orig_cin);
+        #endif
+     
+        return 0;
+    }
+     
+    /*
+     cout.setf (ios::fixed, ios::floatfield);
+     cout.setf(ios::showpoint);
+     cout&lt;&lt;setprecision(2)&lt;&lt;sum_c + eps&lt;&lt;endl;
+    */
+</code></pre>
+<p>Before submiting the solution to an online judge you should undefine <code>ENABLE_IO_REDIRECTION</code> (comment the referred line). Depending on the problem id set by you on line number 62 the output executable's input file will be set as <code>number_in.txt</code> and output file name will be set as <code>number_out.txt</code>. For example, for problem 10300 its input file becomes <code>10300_in.txt</code> and output file becomes <code>10300_out.txt</code></p>
+
+
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Footer -->  
+  <footer>
+    <div class="container">
+        <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright text-muted m-0">Copyright &#xA9; 2021</p>
+                    <br />
+                    <ul class="list-inline text-center small">
+                            <li class="list-inline-item">
+                                <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                            </li>
+                    </ul>
+                    <br />
+                    <div class="font-weight-bold small"><a href="https://statiq.dev">Generated by Statiq</a></div>
+                </div>
+        </div>
+    </div>
+</footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  
+
+
+  
+
+  <!-- Custom scripts for this template -->
+  <script src="/js/clean-blog.js"></script>
+
+</body>
+
+</html>

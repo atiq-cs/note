@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Heads in the cloud! A Qubit Blog!">
+
+  <title>Notes from Qubit Inc. - dotnet core Hello World with Entity Framework and Database</title>
+
+  <link rel="canonical" href="https://note.iqubit.xyz/posts/net-core-hello-entity-framework-database-sql">
+
+      <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
+      <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
+  
+  <meta name="application-name" content="Notes from Qubit Inc." />
+  <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
+  <meta name="msapplication-starturl" content="/" />
+
+  <meta property="og:title" content="Notes from Qubit Inc. - dotnet core Hello World with Entity Framework and Database" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://note.iqubit.xyz/posts/net-core-hello-entity-framework-database-sql" />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="/vendor/bootstrap/scss/bootstrap.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/fontawesome-free/css/brands.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css' data-no-mirror>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' data-no-mirror>
+  
+  <!-- Custom styles for this template -->
+  <link href="/scss/clean-blog.css" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/plugins/autoloader/prism-autoloader.min.js" data-no-mirror></script>
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/themes/prism.css">
+  
+  
+
+
+  
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Notes from Qubit Inc.</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/tags">Tags</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/posts">Posts</a>
+            </li>
+</ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Page Header -->
+  <header class="masthead">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="post-heading">
+          <h1>
+            dotnet core Hello World with Entity Framework and Database
+          </h1>
+              <div class="meta">Published on Sunday, 01 July 2018</div>
+                <div class="mt-3">
+                      <a href="/tags/dotnet-core" class="badge badge-light"> dotnet core</a>
+                      <a href="/tags/entity-framework" class="badge badge-light"> entity framework</a>
+                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- Main Content -->
+  <div class="container"> 
+    <div class="row">
+      <div id="content" class="col-md-12">  
+        <h2 id="creating-a-hello-world-console-application">Creating a hello world console application</h2>
+<p>With .net core things are pretty simple. We run two commands and it does everything we need for a hello world program,</p>
+<pre><code>$ dotnet new console -n P1_Console
+</code></pre>
+<p>It creates the directory and puts required hello world source file and project file inside the dir named 'P1_Console'. What type of applications does it support can be found at <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new">microsoft docs - dotnet-new</a></p>
+<pre><code>$ dotnet run
+Hello World!
+</code></pre>
+<p>detailed reference at <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-run">microsoft docs - dotnet-run</a>. It is minimalist and does what is supposed to do.</p>
+<p>This builds the application and runs it. If you only want to build and don't wanna run.</p>
+<pre><code>$ dotnet build
+Microsoft (R) Build Engine version 15.7.179.6572 for .NET Core
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  Restore completed in 33.49 ms for D:\Code\netcore\P01_Console\P01_Console.csproj.
+  P01_Console -&gt; D:\Code\netcore\P01_Console\bin\Debug\netcoreapp2.1\P01_Console.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.80
+</code></pre>
+<p>Build ref is at <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-build">microsoft - dotnet-build</a></p>
+<p>Default source code of <code>Program.cs</code> looks like,</p>
+<pre><code>using System;
+
+namespace P01_Console
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine(&quot;Hello World!&quot;);
+        }
+    }
+}
+</code></pre>
+<p>I change it slightly to create a generic list of cities and to sort them which is as below,</p>
+<pre><code>using System;
+using System.Collections.Generic;
+
+namespace P01_Console {
+  class Program {
+    static void Main(string[] args) {
+      var cityList = new List { &quot;San Jose&quot;, &quot;Santa Clara&quot;, &quot;Redwood&quot; };
+      cityList.Sort();
+      foreach (var city in cityList)
+        Console.WriteLine(city);
+    }
+  }
+}
+</code></pre>
+<p>And then I build/run it,</p>
+<pre><code>$ dotnet run
+Redwood
+San Jose
+Santa Clara
+</code></pre>
+<p><code>dotnet run</code> kinda quietly gets it done; it does not talk about changes it found, recompiling info etc. Command looks pretty simple. How about providing some arguments for the program? <a href="https://docs.microsoft.com/en-us/dotnet/core/tutorials/using-with-xplat-cli">ms docs - Getting started with .NET Core on Windows/Linux/macOS using the command line</a> demonstrates it.</p>
+<h2 id="creating-hello-world-mvc-application-with-entity-framework-and-sql-database-support">Creating hello world MVC application with Entity Framework and SQL Database Support</h2>
+<h3 id="creating-hello-world-mvc">Creating hello world MVC</h3>
+<p>First, we create a new MVC application,</p>
+<pre><code>$ dotnet new mvc -n P2_MVC_SQLDB
+The template &quot;ASP.NET Core Web App (Model-View-Controller)&quot; was created successfully.
+This template contains technologies from parties other than Microsoft, see https://aka.ms/aspnetcore-template-3pn-210 for details.
+
+Processing post-creation actions...
+Running 'dotnet restore' on P2_MVC_SQLDB\P2_MVC_SQLDB.csproj...
+  Restoring packages for D:\git_ws\net-core-demos\P2_MVC_SQLDB\P2_MVC_SQLDB.csproj...
+  Generating MSBuild file D:\git_ws\net-core-demos\P2_MVC_SQLDB\obj\P2_MVC_SQLDB.csproj.nuget.g.props.
+  Generating MSBuild file D:\git_ws\net-core-demos\P2_MVC_SQLDB\obj\P2_MVC_SQLDB.csproj.nuget.g.targets.
+  Restore completed in 1 sec for D:\git_ws\net-core-demos\P2_MVC_SQLDB\P2_MVC_SQLDB.csproj.
+
+Restore succeeded.
+</code></pre>
+<p>This immediately creates a hello world mvc application and we can build/run it.</p>
+<pre><code>$ dotnet run
+Using launch settings from D:\git_ws\net-core-demos\mvc_test\Properties\launchSettings.json...
+info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[0]
+      User profile is available. Using 'C:\Users\atiqc\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+Hosting environment: Development
+Content root path: D:\git_ws\net-core-demos\mvc_test
+Now listening on: https://localhost:5001
+Now listening on: http://localhost:5000
+Application started. Press Ctrl+C to shut down.
+</code></pre>
+<p>When we navigate using the browser to https://localhost:5001 it looks like this.</p>
+<p><img src="https://github.com/atiq-cs/atiqcs-wp-com/raw/master/images/2018/07/03_netcore-demo1.png" alt=".net Core MVC Demo" /></p>
+<h3 id="changing-hello-world-mvc-to-ef-db-supported-app">Changing hello world mvc to EF, DB supported App</h3>
+<p>We add following two packages,</p>
+<pre><code>$ dotnet add package Microsoft.EntityFrameworkCore.SqlServer -v 2.1.0
+$ dotnet add package Microsoft.EntityFrameworkCore.Tools -v 2.1.0
+</code></pre>
+<p>We add specific package version 2.1.0 because latest version at this time is 2.1.1 which has dependency conflict.</p>
+<p>When we add/remove/change packages basically it changes the project file <code>P2_MVC_SQLDB.csproj</code>. Also note that,</p>
+<pre><code>$ dotnet add package package_name
+</code></pre>
+<p>adds the latest version of the package.</p>
+<p>Regarding package management, we also have remove package if we want,</p>
+<pre><code>$ dotnet remove package Microsoft.EntityFrameworkCore.SqlServer
+</code></pre>
+<p>Now, we change source file <code>Startup.cs</code> to register our context with dependency injection. To know more about Dependency injection in ASP.NET Core <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection">MS Docs article  - dependency-injection</a></p>
+<p>We add following namespaces,</p>
+<pre><code>using EFGetStarted.AspNetCore.NewDb.Models;
+using Microsoft.EntityFrameworkCore;
+</code></pre>
+<p>And change the method <code>ConfigureServices</code> to,</p>
+<pre><code>public void ConfigureServices(IServiceCollection services)
+{
+    services.AddMvc();
+
+    var connection = &#64;&quot;Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0&quot;;
+    services.AddDbContext(options =&gt; options.UseSqlServer(connection));
+}
+</code></pre>
+<p>This is not the best way to add connection strings but this serves the hello world purpose for simplification.</p>
+<p>We add <code>Models\Model.cs</code>,</p>
+<pre><code>New-Item Models\Model.cs
+</code></pre>
+<p>and paste following contents,</p>
+<pre><code>using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+
+namespace EFGetStarted.AspNetCore.NewDb.Models
+{
+    public class BloggingContext : DbContext
+    {
+        public BloggingContext(DbContextOptions options)
+            : base(options)
+        { }
+
+        public DbSet Blogs { get; set; }
+        public DbSet Posts { get; set; }
+    }
+
+    public class Blog
+    {
+        public int BlogId { get; set; }
+        public string Url { get; set; }
+
+        public List Posts { get; set; }
+    }
+
+    public class Post
+    {
+        public int PostId { get; set; }
+        public string Title { get; set; }
+        public string Content { get; set; }
+
+        public int BlogId { get; set; }
+        public Blog Blog { get; set; }
+    }
+}
+</code></pre>
+<p>Similarly we add <code>Controllers/BlogsController.cs</code>,</p>
+<pre><code>New-Item Controllers/BlogsController.cs
+</code></pre>
+<p>with following contents,</p>
+<pre><code>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using EFGetStarted.AspNetCore.NewDb.Models;
+
+namespace P02_MVC.Controllers
+{
+    public class BlogsController : Controller
+    {
+        private readonly BloggingContext _context;
+
+        public BlogsController(BloggingContext context)
+        {
+            _context = context;
+        }
+
+        // GET: Blogs
+        public async Task Index()
+        {
+            return View(await _context.Blogs.ToListAsync());
+        }
+
+        // GET: Blogs/Details/5
+        public async Task Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var blog = await _context.Blogs
+                .FirstOrDefaultAsync(m =&gt; m.BlogId == id);
+            if (blog == null)
+            {
+                return NotFound();
+            }
+
+            return View(blog);
+        }
+
+        // GET: Blogs/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Blogs/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task Create([Bind(&quot;BlogId,Url&quot;)] Blog blog)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(blog);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(blog);
+        }
+
+        // GET: Blogs/Edit/5
+        public async Task Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var blog = await _context.Blogs.FindAsync(id);
+            if (blog == null)
+            {
+                return NotFound();
+            }
+            return View(blog);
+        }
+
+        // POST: Blogs/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task Edit(int id, [Bind(&quot;BlogId,Url&quot;)] Blog blog)
+        {
+            if (id != blog.BlogId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(blog);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!BlogExists(blog.BlogId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(blog);
+        }
+
+        // GET: Blogs/Delete/5
+        public async Task Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var blog = await _context.Blogs
+                .FirstOrDefaultAsync(m =&gt; m.BlogId == id);
+            if (blog == null)
+            {
+                return NotFound();
+            }
+
+            return View(blog);
+        }
+
+        // POST: Blogs/Delete/5
+        [HttpPost, ActionName(&quot;Delete&quot;)]
+        [ValidateAntiForgeryToken]
+        public async Task DeleteConfirmed(int id)
+        {
+            var blog = await _context.Blogs.FindAsync(id);
+            _context.Blogs.Remove(blog);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool BlogExists(int id)
+        {
+            return _context.Blogs.Any(e =&gt; e.BlogId == id);
+        }
+    }
+}
+</code></pre>
+<p>And Copy Views folder into View <code>Views/Blogs</code>.</p>
+<ul>
+<li>Create.cshtml</li>
+<li>Delete.cshtml</li>
+<li>Details.cshtml</li>
+<li>Edit.cshtml</li>
+<li>Index.cshtml</li>
+</ul>
+<p>In this demo, we have manually added all components required for enabling a blog controller, providing it view, providing basic operations and bind it with the Model using EF.</p>
+<p>Visual Studio allows to do this automatically using scaffolding. When we do that we usually need following package to be installed,</p>
+<pre><code>$ dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design -v 2.1.0
+</code></pre>
+<p>and then, we could use scaffolding template to create this as showed in screenshot below,</p>
+<p><img src="https://github.com/atiq-cs/atiqcs-wp-com/raw/master/images/2018/07/05_netcore-hello-mvc-scaffolding.png" alt=".net Core MVC Demo Scaffolding" /></p>
+<p>Then, we create the database and update it,</p>
+<pre><code>$ dotnet ef -v migrations add InitialCreate
+$ dotnet ef -v database update
+output here: https://gist.github.com/atiq-cs/2cfe23a43a296685aaea1fc379ce3ac0
+</code></pre>
+<p>I add <code>-v</code> to see verbose output which is not required. It's time to run the app,</p>
+<pre><code>$ dotnet run
+Using launch settings from D:\git_ws\net-core-demos\P2_MVC_SQLDB\Properties\launchSettings.json...
+info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[0]
+      User profile is available. Using 'C:\Users\atiqc\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+Hosting environment: Development
+Content root path: D:\git_ws\net-core-demos\P2_MVC_SQLDB
+Now listening on: https://localhost:5001
+Now listening on: http://localhost:5000
+Application started. Press Ctrl+C to shut down.
+</code></pre>
+<p>Now we navigate to https://localhost:5001/Blogs/ and view the site.</p>
+<p>I follow following two reference while creating this.</p>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/new-db">MS Docs - Getting Started with EF Core on ASP.NET Core with a New database</a></li>
+<li><a href="https://docs.microsoft.com/en-us/ef/core/get-started/netcore/new-db-sqlite">MS Docs - Getting Started with EF Core on .NET Core Console App with a New database</a></li>
+</ul>
+
+
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Footer -->  
+  <footer>
+    <div class="container">
+        <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright text-muted m-0">Copyright &#xA9; 2021</p>
+                    <br />
+                    <ul class="list-inline text-center small">
+                            <li class="list-inline-item">
+                                <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                            </li>
+                    </ul>
+                    <br />
+                    <div class="font-weight-bold small"><a href="https://statiq.dev">Generated by Statiq</a></div>
+                </div>
+        </div>
+    </div>
+</footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  
+
+
+  
+
+  <!-- Custom scripts for this template -->
+  <script src="/js/clean-blog.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Heads in the cloud! A Qubit Blog!">
+
+  <title>Notes from Qubit Inc. - Azure Cloud CLI Windows Container Instance</title>
+
+  <link rel="canonical" href="https://note.iqubit.xyz/posts/cloud-azure-ci">
+
+      <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
+      <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
+  
+  <meta name="application-name" content="Notes from Qubit Inc." />
+  <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
+  <meta name="msapplication-starturl" content="/" />
+
+  <meta property="og:title" content="Notes from Qubit Inc. - Azure Cloud CLI Windows Container Instance" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://note.iqubit.xyz/posts/cloud-azure-ci" />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="/vendor/bootstrap/scss/bootstrap.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/fontawesome-free/css/brands.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css' data-no-mirror>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' data-no-mirror>
+  
+  <!-- Custom styles for this template -->
+  <link href="/scss/clean-blog.css" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/plugins/autoloader/prism-autoloader.min.js" data-no-mirror></script>
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/themes/prism.css">
+  
+  
+
+
+  
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Notes from Qubit Inc.</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/tags">Tags</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/posts">Posts</a>
+            </li>
+</ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Page Header -->
+  <header class="masthead">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="post-heading">
+          <h1>
+            Azure Cloud CLI Windows Container Instance
+          </h1>
+            <h2 class="subheading">Hands-on features of Azure CLI, account, group, container etc</h2>
+              <div class="meta">Published on Wednesday, 15 August 2018</div>
+                <div class="mt-3">
+                      <a href="/tags/azure-cloud" class="badge badge-light"> Azure Cloud</a>
+                      <a href="/tags/system-adiministration" class="badge badge-light"> System Adiministration</a>
+                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- Main Content -->
+  <div class="container"> 
+    <div class="row">
+      <div id="content" class="col-md-12">  
+        <p>This article demos various features of Azure CLI.</p>
+<p>First, we set the path,</p>
+<pre><code>Microsoft Windows [Version 10.0.17134.165]
+(c) 2018 Microsoft Corporation. All rights reserved.
+&gt; set PATH=%PATH%;C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin
+</code></pre>
+<p>Then we check current tools versions,</p>
+<pre><code>&gt; az --version
+azure-cli (2.0.43)
+
+acr (2.1.2)
+acs (2.2.2)
+advisor (0.6.0)
+ams (0.2.1)
+appservice (0.2.1)
+backup (1.2.0)
+batch (3.3.1)
+batchai (0.4.0)
+billing (0.2.0)
+cdn (0.1.0)
+cloud (2.1.0)
+cognitiveservices (0.2.0)
+command-modules-nspkg (2.0.2)
+configure (2.0.18)
+consumption (0.4.0)
+container (0.3.2)
+core (2.0.43)
+cosmosdb (0.2.0)
+dla (0.2.0)
+dls (0.1.0)
+dms (0.1.0)
+eventgrid (0.2.0)
+eventhubs (0.2.1)
+extension (0.2.1)
+feedback (2.1.4)
+find (0.2.12)
+interactive (0.3.27)
+iot (0.2.0)
+keyvault (2.2.1)
+lab (0.1.0)
+maps (0.3.1)
+monitor (0.2.1)
+network (2.2.2)
+nspkg (3.0.3)
+policyinsights (0.1.0)
+profile (2.1.1)
+rdbms (0.3.0)
+redis (0.3.0)
+reservations (0.3.1)
+resource (2.1.1)
+role (2.1.2)
+search (0.1.0)
+servicebus (0.2.1)
+servicefabric (0.1.0)
+sql (2.1.1)
+storage (2.1.1)
+vm (2.2.0)
+</code></pre>
+<p>Python location <code>C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\python.exe</code>
+Extensions directory <code>C:\Users\Atiq\.azure\cliextensions</code></p>
+<p>Python version,</p>
+<pre><code>Python (Windows) 3.6.5 (v3.6.5:f59c0932b4, Mar 28 2018, 16:07:46) [MSC v.1900 32 bit (Intel)]
+Legal docs and information: aka.ms/AzureCliLegal
+</code></pre>
+<p>Let's login,</p>
+<pre><code>&gt; az login
+Note, we have launched a browser for you to login. For old experience with device code, use &quot;az login --use-device-code&quot;
+You have logged in. Now let us find all the subscriptions to which you have access...
+[
+{
+    &quot;cloudName&quot;: &quot;AzureCloud&quot;,
+    &quot;id&quot;: &quot;b2faf878-6232-4834-8e65-5e2baeab5939&quot;,
+    &quot;isDefault&quot;: true,
+    &quot;name&quot;: &quot;Free Trial&quot;,
+    &quot;state&quot;: &quot;Enabled&quot;,
+    &quot;tenantId&quot;: &quot;cbd5d855-bf04-4fa4-8da1-a3282cdb742b&quot;,
+    &quot;user&quot;: {
+    &quot;name&quot;: &quot;sodadrinkerthree&#64;hotmail.com&quot;,
+    &quot;type&quot;: &quot;user&quot;
+    }
+}
+]
+</code></pre>
+<p>List accounts and VM,</p>
+<pre><code>&gt; az account list
+[
+{
+    &quot;cloudName&quot;: &quot;AzureCloud&quot;,
+    &quot;id&quot;: &quot;b2faf878-6232-4834-8e65-5e2baeab5939&quot;,
+    &quot;isDefault&quot;: true,
+    &quot;name&quot;: &quot;Free Trial&quot;,
+    &quot;state&quot;: &quot;Enabled&quot;,
+    &quot;tenantId&quot;: &quot;cbd5d855-bf04-4fa4-8da1-a3282cdb742b&quot;,
+    &quot;user&quot;: {
+    &quot;name&quot;: &quot;sodadrinkerthree&#64;hotmail.com&quot;,
+    &quot;type&quot;: &quot;user&quot;
+    }
+}
+]
+</code></pre>
+<p>Create a container,</p>
+<pre><code>&gt; az group create --name docker --location westus
+{
+&quot;id&quot;: &quot;/subscriptions/b2faf878-6232-4834-8e65-5e2baeab5939/resourceGroups/docker&quot;,
+&quot;location&quot;: &quot;westus&quot;,
+&quot;managedBy&quot;: null,
+&quot;name&quot;: &quot;docker&quot;,
+&quot;properties&quot;: {
+    &quot;provisioningState&quot;: &quot;Succeeded&quot;
+},
+&quot;tags&quot;: null
+}
+</code></pre>
+<p>create regular nanoserver instance,</p>
+<pre><code>&gt; az container create --name winci --image microsoft/nanoserver --resource-group docker --ip-address public --os-type Windows --location westus
+</code></pre>
+<p>List resource groups,</p>
+<pre><code>&gt; az container list --resource-group docker -o table
+Name    ResourceGroup    ProvisioningState    Image                 IP:ports           CPU/Memory       OsType    Location
+------  ---------------  -------------------  --------------------  -----------------  ---------------  --------  ----------
+winci   docker           Succeeded            microsoft/nanoserver  40.118.229.222:80  1.0 core/1.5 gb  Windows   westus
+</code></pre>
+<p>delete its resource group,</p>
+<pre><code>&gt; az container delete --resource-group docker --name winci
+</code></pre>
+<p>Create a CI from nanoserver IIS image, this one does recognize executing commands,</p>
+<pre><code>&gt; az container create --name winci --image microsoft/iis:nanoserver --resource-group docker --ip-address public --os-type Windows --location westus --ports 80
+{
+&quot;containers&quot;: [
+    {
+    &quot;command&quot;: null,
+    &quot;environmentVariables&quot;: [],
+    &quot;image&quot;: &quot;microsoft/iis:nanoserver&quot;,
+    &quot;instanceView&quot;: {
+        &quot;currentState&quot;: {
+        &quot;detailStatus&quot;: &quot;&quot;,
+        &quot;exitCode&quot;: null,
+        &quot;finishTime&quot;: null,
+        &quot;startTime&quot;: &quot;2018-08-09T05:17:14+00:00&quot;,
+        &quot;state&quot;: &quot;Running&quot;
+        },
+        &quot;events&quot;: [
+        {
+            &quot;count&quot;: 2,
+            &quot;firstTimestamp&quot;: &quot;2018-08-09T05:15:33+00:00&quot;,
+            &quot;lastTimestamp&quot;: &quot;2018-08-09T05:16:02+00:00&quot;,
+            &quot;message&quot;: &quot;pulling image \&quot;microsoft/iis:nanoserver\&quot;&quot;,
+            &quot;name&quot;: &quot;Pulling&quot;,
+            &quot;type&quot;: &quot;Normal&quot;
+        },
+        {
+            &quot;count&quot;: 1,
+            &quot;firstTimestamp&quot;: &quot;2018-08-09T05:17:05+00:00&quot;,
+            &quot;lastTimestamp&quot;: &quot;2018-08-09T05:17:05+00:00&quot;,
+            &quot;message&quot;: &quot;Successfully pulled image \&quot;microsoft/iis:nanoserver\&quot;&quot;,
+            &quot;name&quot;: &quot;Pulled&quot;,
+            &quot;type&quot;: &quot;Normal&quot;
+        },
+        {
+            &quot;count&quot;: 1,
+            &quot;firstTimestamp&quot;: &quot;2018-08-09T05:17:05+00:00&quot;,
+            &quot;lastTimestamp&quot;: &quot;2018-08-09T05:17:05+00:00&quot;,
+            &quot;message&quot;: &quot;Created container with docker id 7f89eb798bff&quot;,
+            &quot;name&quot;: &quot;Created&quot;,
+            &quot;type&quot;: &quot;Normal&quot;
+        },
+        {
+            &quot;count&quot;: 1,
+            &quot;firstTimestamp&quot;: &quot;2018-08-09T05:17:14+00:00&quot;,
+            &quot;lastTimestamp&quot;: &quot;2018-08-09T05:17:14+00:00&quot;,
+            &quot;message&quot;: &quot;Started container with docker id 7f89eb798bff&quot;,
+            &quot;name&quot;: &quot;Started&quot;,
+            &quot;type&quot;: &quot;Normal&quot;
+        }
+        ],
+        &quot;previousState&quot;: null,
+        &quot;restartCount&quot;: 0
+    },
+    &quot;livenessProbe&quot;: null,
+    &quot;name&quot;: &quot;winci&quot;,
+    &quot;ports&quot;: [
+        {
+        &quot;port&quot;: 80,
+        &quot;protocol&quot;: &quot;TCP&quot;
+        }
+    ],
+    &quot;readinessProbe&quot;: null,
+    &quot;resources&quot;: {
+        &quot;limits&quot;: null,
+        &quot;requests&quot;: {
+        &quot;cpu&quot;: 1.0,
+        &quot;memoryInGb&quot;: 1.5
+        }
+    },
+    &quot;volumeMounts&quot;: null
+    }
+],
+&quot;diagnostics&quot;: null,
+&quot;id&quot;: &quot;/subscriptions/b2faf878-6232-4834-8e65-5e2baeab5939/resourceGroups/docker/providers/Microsoft.ContainerInstance/containerGroups/winci&quot;,
+&quot;imageRegistryCredentials&quot;: null,
+&quot;instanceView&quot;: {
+    &quot;events&quot;: [],
+    &quot;state&quot;: &quot;Running&quot;
+},
+&quot;ipAddress&quot;: {
+    &quot;dnsNameLabel&quot;: null,
+    &quot;fqdn&quot;: null,
+    &quot;ip&quot;: &quot;40.78.17.202&quot;,
+    &quot;ports&quot;: [
+    {
+        &quot;port&quot;: 80,
+        &quot;protocol&quot;: &quot;TCP&quot;
+    }
+    ]
+},
+&quot;location&quot;: &quot;westus&quot;,
+&quot;name&quot;: &quot;winci&quot;,
+&quot;osType&quot;: &quot;Windows&quot;,
+&quot;provisioningState&quot;: &quot;Succeeded&quot;,
+&quot;resourceGroup&quot;: &quot;docker&quot;,
+&quot;restartPolicy&quot;: &quot;Always&quot;,
+&quot;tags&quot;: {},
+&quot;type&quot;: &quot;Microsoft.ContainerInstance/containerGroups&quot;,
+&quot;volumes&quot;: null
+}
+</code></pre>
+<p>Now, lets execute,</p>
+<pre><code>&gt; az container exec --resource-group docker --name winci --exec-command &quot;cmd.exe&quot;
+... messed up output contains ASCII 0x1B ....
+.. Microsoft Windows [Version 10.0.14393] ....(c) 2016 Micro...
+</code></pre>
+<p>Environment,</p>
+<pre><code>C:\&gt;set
+ALLUSERSPROFILE=C:\ProgramData
+APPDATA=C:\Users\ContainerAdministrator\AppData\Roaming
+CAAS_3F2A3A4754DE4E56877D945C622B7D50_PORT=tcp://10.0.225.18:80
+CAAS_3F2A3A4754DE4E56877D945C622B7D50_PORT_80_TCP=tcp://10.0.225.18:80
+CAAS_3F2A3A4754DE4E56877D945C622B7D50_PORT_80_TCP_ADDR=10.0.225.18
+CAAS_3F2A3A4754DE4E56877D945C622B7D50_PORT_80_TCP_PORT=80
+CAAS_3F2A3A4754DE4E56877D945C622B7D50_PORT_80_TCP_PROTO=tcp
+CAAS_3F2A3A4754DE4E56877D945C622B7D50_SERVICE_HOST=10.0.225.18
+CAAS_3F2A3A4754DE4E56877D945C622B7D50_SERVICE_PORT=80
+CAAS_3F2A3A4754DE4E56877D945C622B7D50_SERVICE_PORT_80=80
+CommonProgramFiles=C:\Program Files\Common Files
+CommonProgramFiles(x86)=C:\Program Files (x86)\Common Files
+CommonProgramW6432=C:\Program Files\Common Files
+COMPUTERNAME=7F89EB798BFF
+ComSpec=C:\Windows\system32\cmd.exe
+KUBERNETES_PORT=tcp://10.0.0.1:443
+KUBERNETES_PORT_443_TCP=tcp://10.0.0.1:443
+KUBERNETES_PORT_443_TCP_ADDR=10.0.0.1
+KUBERNETES_PORT_443_TCP_PORT=443
+KUBERNETES_PORT_443_TCP_PROTO=tcp
+KUBERNETES_SERVICE_HOST=10.0.0.1
+KUBERNETES_SERVICE_PORT=443
+KUBERNETES_SERVICE_PORT_HTTPS=443
+LOCALAPPDATA=C:\Users\ContainerAdministrator\AppData\Local
+NUMBER_OF_PROCESSORS=2
+OS=Windows_NT
+Path=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Users\ContainerAdministrator\AppData\Local\Microsoft\WindowsApps
+PATHEXT=.COM;.EXE;.BAT;.CMD
+PROCESSOR_ARCHITECTURE=AMD64
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 63 Stepping 2, GenuineIntel
+PROCESSOR_LEVEL=6
+PROCESSOR_REVISION=3f02
+ProgramData=C:\ProgramData
+ProgramFiles=C:\Program Files
+ProgramFiles(x86)=C:\Program Files (x86)
+ProgramW6432=C:\Program Files
+PROMPT=$P$G
+PUBLIC=C:\Users\Public
+SystemDrive=C:
+SystemRoot=C:\Windows
+TEMP=C:\Users\ContainerAdministrator\AppData\Local\Temp
+TMP=C:\Users\ContainerAdministrator\AppData\Local\Temp
+USERDOMAIN=User Manager
+USERNAME=ContainerAdministrator
+USERPROFILE=C:\Users\ContainerAdministrator
+windir=C:\Windows
+</code></pre>
+<p>list acounts,</p>
+<pre><code>&gt; az account show
+{
+&quot;environmentName&quot;: &quot;AzureCloud&quot;,
+&quot;id&quot;: &quot;b2faf878-6232-4834-8e65-5e2baeab5939&quot;,
+&quot;isDefault&quot;: true,
+&quot;name&quot;: &quot;Free Trial&quot;,
+&quot;state&quot;: &quot;Enabled&quot;,
+&quot;tenantId&quot;: &quot;cbd5d855-bf04-4fa4-8da1-a3282cdb742b&quot;,
+&quot;user&quot;: {
+    &quot;name&quot;: &quot;sodadrinkerthree&#64;hotmail.com&quot;,
+    &quot;type&quot;: &quot;user&quot;
+}
+}
+</code></pre>
+<p>List containers in 2 ways,</p>
+<pre><code>&gt; az container list --out table
+Name    ResourceGroup    ProvisioningState    Image                     IP:ports         CPU/Memory       OsType    Location
+------  ---------------  -------------------  ------------------------  ---------------  ---------------  --------  ----------
+winci   docker           Succeeded            microsoft/iis:nanoserver  40.78.17.202:80  1.0 core/1.5 gb  Windows   westus
+
+az&gt; container list
+[
+{
+    &quot;containers&quot;: [
+    {
+        &quot;command&quot;: null,
+        &quot;environmentVariables&quot;: [],
+        &quot;image&quot;: &quot;microsoft/iis:nanoserver&quot;,
+        &quot;instanceView&quot;: null,
+        &quot;livenessProbe&quot;: null,
+        &quot;name&quot;: &quot;winci&quot;,
+        &quot;ports&quot;: [
+        {
+            &quot;port&quot;: 80,
+            &quot;protocol&quot;: &quot;TCP&quot;
+        }
+        ],
+        &quot;readinessProbe&quot;: null,
+        &quot;resources&quot;: {
+        &quot;limits&quot;: null,
+        &quot;requests&quot;: {
+            &quot;cpu&quot;: 1.0,
+            &quot;memoryInGb&quot;: 1.5
+        }
+        },
+        &quot;volumeMounts&quot;: null
+    }
+    ],
+    &quot;diagnostics&quot;: null,
+    &quot;id&quot;: &quot;/subscriptions/b2faf878-6232-4834-8e65-5e2baeab5939/resourceGroups/docker/providers/Microsoft.ContainerInstance/containerGroups/winci&quot;,
+    &quot;imageRegistryCredentials&quot;: null,
+    &quot;instanceView&quot;: null,
+    &quot;ipAddress&quot;: {
+    &quot;dnsNameLabel&quot;: null,
+    &quot;fqdn&quot;: null,
+    &quot;ip&quot;: &quot;40.78.17.202&quot;,
+    &quot;ports&quot;: [
+        {
+        &quot;port&quot;: 80,
+        &quot;protocol&quot;: &quot;TCP&quot;
+        }
+    ]
+    },
+    &quot;location&quot;: &quot;westus&quot;,
+    &quot;name&quot;: &quot;winci&quot;,
+    &quot;osType&quot;: &quot;Windows&quot;,
+    &quot;provisioningState&quot;: &quot;Succeeded&quot;,
+    &quot;resourceGroup&quot;: &quot;docker&quot;,
+    &quot;restartPolicy&quot;: &quot;Always&quot;,
+    &quot;tags&quot;: {},
+    &quot;type&quot;: &quot;Microsoft.ContainerInstance/containerGroups&quot;,
+    &quot;volumes&quot;: null
+}
+]
+</code></pre>
+<p>List web apps,</p>
+<pre><code>az&gt;&gt; webapp list
+[
+{
+    &quot;appServicePlanId&quot;: &quot;/subscriptions/b2faf878-6232-4834-8e65-5e2baeab5939/resourceGroups/blog/providers/Microsoft.Web/serverfarms/WestUS-D1-Shared&quot;,
+    &quot;availabilityState&quot;: &quot;Normal&quot;,
+    &quot;clientAffinityEnabled&quot;: true,
+    &quot;clientCertEnabled&quot;: false,
+    &quot;cloningInfo&quot;: null,
+    &quot;containerSize&quot;: 0,
+    &quot;dailyMemoryTimeQuota&quot;: 0,
+    &quot;defaultHostName&quot;: &quot;orchardcore.azurewebsites.net&quot;,
+    &quot;enabled&quot;: true,
+    &quot;enabledHostNames&quot;: [
+    &quot;orchardcore.azurewebsites.net&quot;,
+    &quot;orchardcore.scm.azurewebsites.net&quot;
+    ],
+    &quot;hostNameSslStates&quot;: [
+    {
+        &quot;hostType&quot;: &quot;Standard&quot;,
+        &quot;ipBasedSslResult&quot;: null,
+        &quot;ipBasedSslState&quot;: &quot;NotConfigured&quot;,
+        &quot;name&quot;: &quot;orchardcore.azurewebsites.net&quot;,
+        &quot;sslState&quot;: &quot;Disabled&quot;,
+        &quot;thumbprint&quot;: null,
+        &quot;toUpdate&quot;: null,
+        &quot;toUpdateIpBasedSsl&quot;: null,
+        &quot;virtualIp&quot;: null
+    },
+    {
+        &quot;hostType&quot;: &quot;Repository&quot;,
+        &quot;ipBasedSslResult&quot;: null,
+        &quot;ipBasedSslState&quot;: &quot;NotConfigured&quot;,
+        &quot;name&quot;: &quot;orchardcore.scm.azurewebsites.net&quot;,
+        &quot;sslState&quot;: &quot;Disabled&quot;,
+        &quot;thumbprint&quot;: null,
+        &quot;toUpdate&quot;: null,
+        &quot;toUpdateIpBasedSsl&quot;: null,
+        &quot;virtualIp&quot;: null
+    }
+    ],
+    &quot;hostNames&quot;: [
+    &quot;orchardcore.azurewebsites.net&quot;
+    ],
+    &quot;hostNamesDisabled&quot;: false,
+    &quot;hostingEnvironmentProfile&quot;: null,
+    &quot;httpsOnly&quot;: false,
+    &quot;id&quot;: &quot;/subscriptions/b2faf878-6232-4834-8e65-5e2baeab5939/resourceGroups/blog/providers/Microsoft.Web/sites/orchardcore&quot;,
+    &quot;identity&quot;: null,
+    &quot;isDefaultContainer&quot;: null,
+    &quot;kind&quot;: &quot;app&quot;,
+    &quot;lastModifiedTimeUtc&quot;: &quot;2018-07-27T20:07:09.590000&quot;,
+    &quot;location&quot;: &quot;West US&quot;,
+    &quot;maxNumberOfWorkers&quot;: null,
+    &quot;name&quot;: &quot;orchardcore&quot;,
+    &quot;outboundIpAddresses&quot;: &quot;104.42.152.64,40.118.228.30,40.118.235.170,40.118.239.187,40.118.232.194&quot;,
+    &quot;possibleOutboundIpAddresses&quot;: &quot;104.42.152.64,40.118.228.30,40.118.235.170,40.118.239.187,40.118.232.194,40.118.232.202,40.118.239.1,40.112.131.175&quot;,
+    &quot;repositorySiteName&quot;: &quot;orchardcore&quot;,
+    &quot;reserved&quot;: false,
+    &quot;resourceGroup&quot;: &quot;blog&quot;,
+    &quot;scmSiteAlsoStopped&quot;: false,
+    &quot;siteConfig&quot;: null,
+    &quot;slotSwapStatus&quot;: null,
+    &quot;snapshotInfo&quot;: null,
+    &quot;state&quot;: &quot;Running&quot;,
+    &quot;suspendedTill&quot;: null,
+    &quot;tags&quot;: {
+    &quot;hidden-related:/subscriptions/b2faf878-6232-4834-8e65-5e2baeab5939/resourcegroups/blog/providers/Microsoft.Web/serverfarms/WestUS-D1-Shared&quot;: &quot;empty&quot;
+    },
+    &quot;targetSwapSlot&quot;: null,
+    &quot;trafficManagerHostNames&quot;: null,
+    &quot;type&quot;: &quot;Microsoft.Web/sites&quot;,
+    &quot;usageState&quot;: &quot;Normal&quot;
+}
+]
+</code></pre>
+<p>list accounts,</p>
+<pre><code>az&gt;&gt; az account list
+[
+{
+    &quot;cloudName&quot;: &quot;AzureCloud&quot;,
+    &quot;id&quot;: &quot;b2faf878-6232-4834-8e65-5e2baeab5939&quot;,
+    &quot;isDefault&quot;: true,
+    &quot;name&quot;: &quot;Free Trial&quot;,
+    &quot;state&quot;: &quot;Enabled&quot;,
+    &quot;tenantId&quot;: &quot;cbd5d855-bf04-4fa4-8da1-a3282cdb742b&quot;,
+    &quot;user&quot;: {
+    &quot;name&quot;: &quot;sodadrinkerthree&#64;hotmail.com&quot;,
+    &quot;type&quot;: &quot;user&quot;
+    }
+}
+]
+</code></pre>
+<p>List locations,</p>
+<p>az&gt;&gt; az appservice list-locations --sku F1
+[
+{
+&quot;name&quot;: &quot;Central US&quot;
+},
+{
+&quot;name&quot;: &quot;North Europe&quot;
+},
+{
+&quot;name&quot;: &quot;West Europe&quot;
+},
+{
+&quot;name&quot;: &quot;Southeast Asia&quot;
+},
+{
+&quot;name&quot;: &quot;East Asia&quot;
+},
+{
+&quot;name&quot;: &quot;West US&quot;
+},
+{
+&quot;name&quot;: &quot;East US&quot;
+},
+{
+&quot;name&quot;: &quot;Japan West&quot;
+},
+{
+&quot;name&quot;: &quot;Japan East&quot;
+},
+{
+&quot;name&quot;: &quot;East US 2&quot;
+},
+{
+&quot;name&quot;: &quot;North Central US&quot;
+},
+{
+&quot;name&quot;: &quot;South Central US&quot;
+},
+{
+&quot;name&quot;: &quot;Brazil South&quot;
+},
+{
+&quot;name&quot;: &quot;Australia East&quot;
+},
+{
+&quot;name&quot;: &quot;Australia Southeast&quot;
+},
+{
+&quot;name&quot;: &quot;Central India&quot;
+},
+{
+&quot;name&quot;: &quot;West India&quot;
+},
+{
+&quot;name&quot;: &quot;South India&quot;
+},
+{
+&quot;name&quot;: &quot;Canada Central&quot;
+},
+{
+&quot;name&quot;: &quot;Canada East&quot;
+},
+{
+&quot;name&quot;: &quot;West Central US&quot;
+},
+{
+&quot;name&quot;: &quot;West US 2&quot;
+},
+{
+&quot;name&quot;: &quot;UK West&quot;
+},
+{
+&quot;name&quot;: &quot;UK South&quot;
+},
+{
+&quot;name&quot;: &quot;Korea South&quot;
+},
+{
+&quot;name&quot;: &quot;Korea Central&quot;
+},
+{
+&quot;name&quot;: &quot;France South&quot;
+},
+{
+&quot;name&quot;: &quot;France Central&quot;
+}
+]</p>
+<p>List available groups,</p>
+<pre><code>az&gt;&gt; az group list
+[
+{
+    &quot;id&quot;: &quot;/subscriptions/b2faf878-6232-4834-8e65-5e2baeab5939/resourceGroups/asynctest&quot;,
+    &quot;location&quot;: &quot;westus&quot;,
+    &quot;managedBy&quot;: null,
+    &quot;name&quot;: &quot;asynctest&quot;,
+    &quot;properties&quot;: {
+    &quot;provisioningState&quot;: &quot;Succeeded&quot;
+    },
+    &quot;tags&quot;: null
+},
+{
+    &quot;id&quot;: &quot;/subscriptions/b2faf878-6232-4834-8e65-5e2baeab5939/resourceGroups/blog&quot;,
+    &quot;location&quot;: &quot;centralus&quot;,
+    &quot;managedBy&quot;: null,
+    &quot;name&quot;: &quot;blog&quot;,
+    &quot;properties&quot;: {
+    &quot;provisioningState&quot;: &quot;Succeeded&quot;
+    },
+    &quot;tags&quot;: null
+},
+{
+    &quot;id&quot;: &quot;/subscriptions/b2faf878-6232-4834-8e65-5e2baeab5939/resourceGroups/docker&quot;,
+    &quot;location&quot;: &quot;westus&quot;,
+    &quot;managedBy&quot;: null,
+    &quot;name&quot;: &quot;docker&quot;,
+    &quot;properties&quot;: {
+    &quot;provisioningState&quot;: &quot;Succeeded&quot;
+    },
+    &quot;tags&quot;: null
+},
+{
+    &quot;id&quot;: &quot;/subscriptions/b2faf878-6232-4834-8e65-5e2baeab5939/resourceGroups/ML&quot;,
+    &quot;location&quot;: &quot;westus2&quot;,
+    &quot;managedBy&quot;: null,
+    &quot;name&quot;: &quot;ML&quot;,
+    &quot;properties&quot;: {
+    &quot;provisioningState&quot;: &quot;Succeeded&quot;
+    },
+    &quot;tags&quot;: null
+},
+{
+    &quot;id&quot;: &quot;/subscriptions/b2faf878-6232-4834-8e65-5e2baeab5939/resourceGroups/Speech&quot;,
+    &quot;location&quot;: &quot;westus&quot;,
+    &quot;managedBy&quot;: null,
+    &quot;name&quot;: &quot;Speech&quot;,
+    &quot;properties&quot;: {
+    &quot;provisioningState&quot;: &quot;Succeeded&quot;
+    },
+    &quot;tags&quot;: null
+}
+]
+</code></pre>
+<p>list end points,</p>
+<pre><code>az&gt;&gt; az cloud list
+[
+{
+    &quot;endpoints&quot;: {
+    &quot;activeDirectory&quot;: &quot;https://login.microsoftonline.com&quot;,
+    &quot;activeDirectoryDataLakeResourceId&quot;: &quot;https://datalake.azure.net/&quot;,
+    &quot;activeDirectoryGraphResourceId&quot;: &quot;https://graph.windows.net/&quot;,
+    &quot;activeDirectoryResourceId&quot;: &quot;https://management.core.windows.net/&quot;,
+    &quot;batchResourceId&quot;: &quot;https://batch.core.windows.net/&quot;,
+    &quot;gallery&quot;: &quot;https://gallery.azure.com/&quot;,
+    &quot;management&quot;: &quot;https://management.core.windows.net/&quot;,
+    &quot;resourceManager&quot;: &quot;https://management.azure.com/&quot;,
+    &quot;sqlManagement&quot;: &quot;https://management.core.windows.net:8443/&quot;,
+    &quot;vmImageAliasDoc&quot;: &quot;https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-compute/quickstart-templates/aliases.json&quot;
+    },
+    &quot;isActive&quot;: true,
+    &quot;name&quot;: &quot;AzureCloud&quot;,
+    &quot;profile&quot;: &quot;latest&quot;,
+    &quot;suffixes&quot;: {
+    &quot;acrLoginServerEndpoint&quot;: &quot;.azurecr.io&quot;,
+    &quot;azureDatalakeAnalyticsCatalogAndJobEndpoint&quot;: &quot;azuredatalakeanalytics.net&quot;,
+    &quot;azureDatalakeStoreFileSystemEndpoint&quot;: &quot;azuredatalakestore.net&quot;,
+    &quot;keyvaultDns&quot;: &quot;.vault.azure.net&quot;,
+    &quot;sqlServerHostname&quot;: &quot;.database.windows.net&quot;,
+    &quot;storageEndpoint&quot;: &quot;core.windows.net&quot;
+    }
+},
+{
+    &quot;endpoints&quot;: {
+    &quot;activeDirectory&quot;: &quot;https://login.chinacloudapi.cn&quot;,
+    &quot;activeDirectoryDataLakeResourceId&quot;: null,
+    &quot;activeDirectoryGraphResourceId&quot;: &quot;https://graph.chinacloudapi.cn/&quot;,
+    &quot;activeDirectoryResourceId&quot;: &quot;https://management.core.chinacloudapi.cn/&quot;,
+    &quot;batchResourceId&quot;: &quot;https://batch.chinacloudapi.cn/&quot;,
+    &quot;gallery&quot;: &quot;https://gallery.chinacloudapi.cn/&quot;,
+    &quot;management&quot;: &quot;https://management.core.chinacloudapi.cn/&quot;,
+    &quot;resourceManager&quot;: &quot;https://management.chinacloudapi.cn&quot;,
+    &quot;sqlManagement&quot;: &quot;https://management.core.chinacloudapi.cn:8443/&quot;,
+    &quot;vmImageAliasDoc&quot;: &quot;https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-compute/quickstart-templates/aliases.json&quot;
+    },
+    &quot;isActive&quot;: false,
+    &quot;name&quot;: &quot;AzureChinaCloud&quot;,
+    &quot;profile&quot;: &quot;latest&quot;,
+    &quot;suffixes&quot;: {
+    &quot;acrLoginServerEndpoint&quot;: &quot;.azurecr.cn&quot;,
+    &quot;azureDatalakeAnalyticsCatalogAndJobEndpoint&quot;: null,
+    &quot;azureDatalakeStoreFileSystemEndpoint&quot;: null,
+    &quot;keyvaultDns&quot;: &quot;.vault.azure.cn&quot;,
+    &quot;sqlServerHostname&quot;: &quot;.database.chinacloudapi.cn&quot;,
+    &quot;storageEndpoint&quot;: &quot;core.chinacloudapi.cn&quot;
+    }
+},
+{
+    &quot;endpoints&quot;: {
+    &quot;activeDirectory&quot;: &quot;https://login.microsoftonline.us&quot;,
+    &quot;activeDirectoryDataLakeResourceId&quot;: null,
+    &quot;activeDirectoryGraphResourceId&quot;: &quot;https://graph.windows.net/&quot;,
+    &quot;activeDirectoryResourceId&quot;: &quot;https://management.core.usgovcloudapi.net/&quot;,
+    &quot;batchResourceId&quot;: &quot;https://batch.core.usgovcloudapi.net/&quot;,
+    &quot;gallery&quot;: &quot;https://gallery.usgovcloudapi.net/&quot;,
+    &quot;management&quot;: &quot;https://management.core.usgovcloudapi.net/&quot;,
+    &quot;resourceManager&quot;: &quot;https://management.usgovcloudapi.net/&quot;,
+    &quot;sqlManagement&quot;: &quot;https://management.core.usgovcloudapi.net:8443/&quot;,
+    &quot;vmImageAliasDoc&quot;: &quot;https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-compute/quickstart-templates/aliases.json&quot;
+    },
+    &quot;isActive&quot;: false,
+    &quot;name&quot;: &quot;AzureUSGovernment&quot;,
+    &quot;profile&quot;: &quot;latest&quot;,
+    &quot;suffixes&quot;: {
+    &quot;acrLoginServerEndpoint&quot;: &quot;.azurecr.us&quot;,
+    &quot;azureDatalakeAnalyticsCatalogAndJobEndpoint&quot;: null,
+    &quot;azureDatalakeStoreFileSystemEndpoint&quot;: null,
+    &quot;keyvaultDns&quot;: &quot;.vault.usgovcloudapi.net&quot;,
+    &quot;sqlServerHostname&quot;: &quot;.database.usgovcloudapi.net&quot;,
+    &quot;storageEndpoint&quot;: &quot;core.usgovcloudapi.net&quot;
+    }
+},
+{
+    &quot;endpoints&quot;: {
+    &quot;activeDirectory&quot;: &quot;https://login.microsoftonline.de&quot;,
+    &quot;activeDirectoryDataLakeResourceId&quot;: null,
+    &quot;activeDirectoryGraphResourceId&quot;: &quot;https://graph.cloudapi.de/&quot;,
+    &quot;activeDirectoryResourceId&quot;: &quot;https://management.core.cloudapi.de/&quot;,
+    &quot;batchResourceId&quot;: &quot;https://batch.cloudapi.de/&quot;,
+    &quot;gallery&quot;: &quot;https://gallery.cloudapi.de/&quot;,
+    &quot;management&quot;: &quot;https://management.core.cloudapi.de/&quot;,
+    &quot;resourceManager&quot;: &quot;https://management.microsoftazure.de&quot;,
+    &quot;sqlManagement&quot;: &quot;https://management.core.cloudapi.de:8443/&quot;,
+    &quot;vmImageAliasDoc&quot;: &quot;https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-compute/quickstart-templates/aliases.json&quot;
+    },
+    &quot;isActive&quot;: false,
+    &quot;name&quot;: &quot;AzureGermanCloud&quot;,
+    &quot;profile&quot;: &quot;latest&quot;,
+    &quot;suffixes&quot;: {
+    &quot;acrLoginServerEndpoint&quot;: null,
+    &quot;azureDatalakeAnalyticsCatalogAndJobEndpoint&quot;: null,
+    &quot;azureDatalakeStoreFileSystemEndpoint&quot;: null,
+    &quot;keyvaultDns&quot;: &quot;.vault.microsoftazure.de&quot;,
+    &quot;sqlServerHostname&quot;: &quot;.database.cloudapi.de&quot;,
+    &quot;storageEndpoint&quot;: &quot;core.cloudapi.de&quot;
+    }
+}
+]
+</code></pre>
+
+
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Footer -->  
+  <footer>
+    <div class="container">
+        <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright text-muted m-0">Copyright &#xA9; 2021</p>
+                    <br />
+                    <ul class="list-inline text-center small">
+                            <li class="list-inline-item">
+                                <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                            </li>
+                    </ul>
+                    <br />
+                    <div class="font-weight-bold small"><a href="https://statiq.dev">Generated by Statiq</a></div>
+                </div>
+        </div>
+    </div>
+</footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  
+
+
+  
+
+  <!-- Custom scripts for this template -->
+  <script src="/js/clean-blog.js"></script>
+
+</body>
+
+</html>

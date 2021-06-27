@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Heads in the cloud! A Qubit Blog!">
+
+  <title>Notes from Qubit Inc. - Quick Sort</title>
+
+  <link rel="canonical" href="https://note.iqubit.xyz/posts/algo-quick-sort">
+
+      <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
+      <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
+  
+  <meta name="application-name" content="Notes from Qubit Inc." />
+  <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
+  <meta name="msapplication-starturl" content="/" />
+
+  <meta property="og:title" content="Notes from Qubit Inc. - Quick Sort" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://note.iqubit.xyz/posts/algo-quick-sort" />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="/vendor/bootstrap/scss/bootstrap.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/fontawesome-free/css/brands.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css' data-no-mirror>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' data-no-mirror>
+  
+  <!-- Custom styles for this template -->
+  <link href="/scss/clean-blog.css" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/plugins/autoloader/prism-autoloader.min.js" data-no-mirror></script>
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/themes/prism.css">
+  
+  
+
+
+  
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Notes from Qubit Inc.</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/tags">Tags</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/posts">Posts</a>
+            </li>
+</ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Page Header -->
+  <header class="masthead">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="post-heading">
+          <h1>
+            Quick Sort
+          </h1>
+              <div class="meta">Published on Thursday, 14 September 2017</div>
+                <div class="mt-3">
+                      <a href="/tags/problem-solving" class="badge badge-light"> Problem Solving</a>
+                      <a href="/tags/algorithms" class="badge badge-light"> Algorithms</a>
+                      <a href="/tags/sorting" class="badge badge-light"> Sorting</a>
+                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- Main Content -->
+  <div class="container"> 
+    <div class="row">
+      <div id="content" class="col-md-12">  
+        <p>Based on the idea that we can partition an array around a pivot (chosen element of the array), we can put the smaller (than pivot) elements on the left side and place greater elements on the right side of the pivot, then, we keep doing the same thing for the left side and the right side. More details of how this algorithm works is on &quot;How it works&quot; section.</p>
+<p><img src="https://github.com/atiq-cs/atiqcs-wp-com/raw/master/images/2017/09/QuickSort-Partitioning.png" alt="quick sort with pivot figure" /></p>
+<p>Fig: fundamental concept of Quick-Sort, partitioning</p>
+<p><strong>Quick sort</strong>, <em>one of the fundamental sorting algorithms of computer science sorts an array efficiently on average</em>.</p>
+<p>A few important things about Quick Sort,</p>
+<ul>
+<li>expected running time θ(n lg n)</li>
+<li>sorts in place (does not use additional memory)</li>
+<li>works well even in virtual environment</li>
+<li>worst case does not depend on any particular input</li>
+</ul>
+<h2 id="description-of-the-algorithm">Description of the Algorithm</h2>
+<p>Steps,</p>
+<ul>
+<li>Divide</li>
+<li>Conquer</li>
+<li>Combine</li>
+</ul>
+<h3 id="divide">Divide</h3>
+<p>Partition of the array <code>A[pr..r]</code> into 2 parts, <code>A[p .. q-1]</code> and <code>A[q-1 .. r]</code>. Index <code>q</code> comes from the partitioning procedure.</p>
+<p>Pivot can be chosen in a number of ways,</p>
+<ul>
+<li>The last index as pivot (C.L.R.S - Intro to Algo)</li>
+<li>middle element as pivot: <a href="https://www.youtube.com/watch?v=SLauY6PpjW4">Gayle Mcdowell's youtube video on quick sort</a></li>
+<li>first index or some other index (can be randomized)</li>
+</ul>
+<h3 id="conquer">Conquer</h3>
+<p>We start with partitioning the array. We sort 2 sub-arrays recursively by calling quick sort on partitions.</p>
+<h3 id="combine">Combine</h3>
+<p>Each recursive call to 'quick-sort' sorts the particular segment of the array. After recursive calls return the array is already sorted. Therefore, no action is required to be taken on combine step.</p>
+<h2 id="how-it-works">How it works</h2>
+<p>The idea is that we choose a pivot element from the array. We put all elements less than the pivot to the left side and we put all elements greater than the pivot item to the right side. We consider the left side and the right side as 2 sub-arrays where we apply the same procedure. After recursively applying the mechanism in the end, the array is sorted.</p>
+<h3 id="worst-case-of-quick-sort">Worst Case of Quick Sort</h3>
+<p>Worst case happens if every call of partition the chosen pivot creates a partition with (n-1) element and 1 element. This can be the case when an array is sorted in reverse order.</p>
+<pre><code>For example an array with 5 elements,
+ 5 4 3 2 1
+
+Steps can be visualized below,
+1. QuickSort(A, 0, 4)
+
+Partition procedure chooses A[4] = 1 as pivot. Nothing is smaller than 1 so the
+iteration/traversing element does nothing. In the end, it swaps A[4] and A[0]. 
+At this stage, the array looks like,
+ 1 4 3 2 5
+
+and the procedure returns 0. After partition function returns two calls are spawned,
+ QuickSort(A, 0, -1)
+ QuickSort(A, 1, 4)
+
+2. QuickSort(A, 0, -1) does nothing
+3. QuickSort(A, 1, 4) has following input,
+ 4 3 2 5
+
+its partition procedure chooses A[4] as pivot and returns 4. All elements swap
+with themselves; array stays unchanged.
+
+It spawns two quick sorts.
+ QuickSort(A, 1, 3)
+ QuickSort(A, 5, 4)
+
+4. QuickSort(A, 1, 3) has input as,
+ 4 3 2
+
+Partition does a swap in the end and leaves 2 in index 1. It returns 1.
+it looks like following then,
+ 2 3 4
+ 
+It spawns two quick sort calls.
+ QuickSort(A, 1, 0)
+ QuickSort(A, 2, 3)
+ 
+5. QuickSort(A, 5, 4) does nothing and the array is sorted.
+6. QuickSort(A, 1, 0) takes no action.
+7. QuickSort(A, 2, 3) Partition takes index 3 as pivot. Array stays
+unchanged. 3 is returned by Partition. 2 calls are spawned,
+ QuickSort(A, 2, 2)
+ QuickSort(A, 4, 3)
+
+
+Worst case of quick sort depends on the partitioning. As we can see index
+returned by partition function are,
+ 0, 4, 1, 3, 2
+</code></pre>
+<p>It means instead pivot dividing the array into two parts it has traversed through every index of the array.
+Therefore, we get O(N) for each call of quick sort. pivot is selected n times.
+This gives overall O(n^2) time for quick sort.</p>
+<p>The Generic Algorithm written in book, Intro to Algo by C.L.R.S can be applied to sort a part of an array specifying starting index and the ending index. Usually when I write a sorting algorithm we apply to the entire array calling like this,</p>
+<pre><code>QuickSort(A);
+</code></pre>
+<p>Usually in C# or Java languages there is a Length attribute of the array, C has <code>sizeof</code>. Another example input,</p>
+<pre><code>5
+1 4 2 4 3
+</code></pre>
+<h3 id="primary-references">Primary References</h3>
+<ol>
+<li>From the book, <a href="https://dl.acm.org/citation.cfm?id=1614191">Introduction to Algorithm - C.L.R.S</a></li>
+</ol>
+<ul>
+<li>Performance analysis on Section# 7.2</li>
+<li>Random Sampling on Section# 7.3</li>
+<li>Worst case analysis on Section# 7.4</li>
+</ul>
+<ol start="2">
+<li>CS Stony Brook Dr Rezaul's Lecture</li>
+<li>Cracking the Coding Interview, 3rd ed. - Gayle Mcdowell</li>
+</ol>
+
+
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Footer -->  
+  <footer>
+    <div class="container">
+        <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright text-muted m-0">Copyright &#xA9; 2021</p>
+                    <br />
+                    <ul class="list-inline text-center small">
+                            <li class="list-inline-item">
+                                <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                            </li>
+                    </ul>
+                    <br />
+                    <div class="font-weight-bold small"><a href="https://statiq.dev">Generated by Statiq</a></div>
+                </div>
+        </div>
+    </div>
+</footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  
+
+
+  
+
+  <!-- Custom scripts for this template -->
+  <script src="/js/clean-blog.js"></script>
+
+</body>
+
+</html>

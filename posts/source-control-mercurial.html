@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Heads in the cloud! A Qubit Blog!">
+
+  <title>Notes from Qubit Inc. - Mercurial Useful Commands</title>
+
+  <link rel="canonical" href="https://note.iqubit.xyz/posts/source-control-mercurial">
+
+      <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
+      <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
+  
+  <meta name="application-name" content="Notes from Qubit Inc." />
+  <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
+  <meta name="msapplication-starturl" content="/" />
+
+  <meta property="og:title" content="Notes from Qubit Inc. - Mercurial Useful Commands" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://note.iqubit.xyz/posts/source-control-mercurial" />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="/vendor/bootstrap/scss/bootstrap.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/fontawesome-free/css/brands.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css' data-no-mirror>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' data-no-mirror>
+  
+  <!-- Custom styles for this template -->
+  <link href="/scss/clean-blog.css" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/plugins/autoloader/prism-autoloader.min.js" data-no-mirror></script>
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/themes/prism.css">
+  
+  
+
+
+  
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Notes from Qubit Inc.</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/tags">Tags</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/posts">Posts</a>
+            </li>
+</ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Page Header -->
+  <header class="masthead">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="post-heading">
+          <h1>
+            Mercurial Useful Commands
+          </h1>
+              <div class="meta">Published on Thursday, 14 November 2019</div>
+                <div class="mt-3">
+                      <a href="/tags/mercurial" class="badge badge-light"> mercurial</a>
+                      <a href="/tags/source-control" class="badge badge-light"> source control</a>
+                      <a href="/tags/version-control" class="badge badge-light"> version control</a>
+                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- Main Content -->
+  <div class="container"> 
+    <div class="row">
+      <div id="content" class="col-md-12">  
+        <p>List files changed in previous commit,</p>
+<pre><code>hg show D12345678 --stat --template 'List of files: \n{files}\n'
+hg show tip~2
+</code></pre>
+<p>Show commit log by short-id,</p>
+<pre><code>hg show 501c70899
+</code></pre>
+<p>Show commit with file names only,</p>
+<pre><code>hg show --stat --template 'List of files: \n{files}\n'
+</code></pre>
+<p>Fancy syntax, demonstrating spaces, blank lines etc</p>
+<pre><code>hg show D123456 --ignore-all-space --ignore-space-change --ignore-blank-lines --ignore-space-at-eol --exclude &quot;extra_configs/*&quot;
+</code></pre>
+<p><code>hg status</code> has an equivalent. . represents current <code>HEAD</code> of bookmark/repo,</p>
+<pre><code>hg status --rev .~1:.
+</code></pre>
+<p>using alias <code>tip</code> (=HEAD) here's one more example,</p>
+<pre><code>hg status --rev tip~1:tip
+</code></pre>
+<h3 id="examining-differentials">Examining differentials</h3>
+<p>show current diff (uncommitted),</p>
+<pre><code>hg diff
+</code></pre>
+<p>show difference w.r.t revisions,</p>
+<pre><code>hg diff --rev tip~1::tip
+</code></pre>
+<p>same as above, but with exclude syntax and demonstrate whilte-space and newline changes,</p>
+<pre><code>hg diff --rev tip~1::tip --ignore-all-space --ignore-space-change --ignore-blank-lines --ignore-space-at-eol --exclude &quot;extra_configs/*&quot;
+</code></pre>
+<p>supparts naming to bookmarks,</p>
+<pre><code>hg diff --rev D12345~1::D12345
+</code></pre>
+<p><em>Creating traditional diff/patch file</em>
+trying some patch related cmd, but, it's not working,</p>
+<pre><code>hg diff --rev tip -p &gt; 'Feature engineering for my awesome project.patch'
+</code></pre>
+<p>Status to see file list changed,</p>
+<pre><code>hg status --rev tip~1:tip
+</code></pre>
+<h3 id="rebasing">Rebasing</h3>
+<p>specifying soure of rebase toward a destination,</p>
+<pre><code>hg rebase --source e630a3b5 --dest -d master
+</code></pre>
+<p>revisions can be named using bookmarks,</p>
+<pre><code>hg rebase --source D12345-MyCoolFeature --dest master
+</code></pre>
+<p>To identify the working directory or specified revision,</p>
+<pre><code>hg identify
+64541997a288 tip events_text_location_node
+</code></pre>
+<h3 id="revert">Revert</h3>
+<p>Example to revert a file to previous commit,</p>
+<pre><code>hg revert --rev tip~1 my_file_path
+hg revert --rev master file_path
+</code></pre>
+<p>get a clean state of file
+similar to git reset all,</p>
+<pre><code>hg revert --all
+</code></pre>
+<p>Following seems awesome,</p>
+<pre><code>hg revert --rev .~1 --all
+hg revert --rev .~1 file_path..
+hg revert --rev .~1 file_path
+</code></pre>
+<p>Revert a file to specific revision (short-id in example, would work with any commit id),</p>
+<pre><code>hg revert --rev d48959b33 users/tests/tests_seti.py
+</code></pre>
+<p>in case of a terrible merge conflict on json files, we can undo that,</p>
+<pre><code>hg revert --rev .~1 materialized_configs/search/*
+</code></pre>
+<h3 id="misc">Misc</h3>
+<p>Find short-id of latest commit,</p>
+<pre><code>hg log -l 1 --template=&quot;{node|short} {date} {author}\n&quot;
+</code></pre>
+<p>check log,</p>
+<pre><code>hg log -l 10
+</code></pre>
+<p>Find log of a specific file,</p>
+<pre><code>hg log file_path
+</code></pre>
+<p>Find commit logs by user name,</p>
+<pre><code>hg log -u 'Atiq Rahman'
+</code></pre>
+<p>common cmds,</p>
+<pre><code>hg rebase
+hg fold
+hg forget
+</code></pre>
+<p>this will also delete the file,</p>
+<pre><code>hg remove
+</code></pre>
+<p>hg command line to do checkout with first 9 digits/letters as SHA id of the commit,</p>
+<pre><code>hg checkout 3d5b62937
+</code></pre>
+<p>get hg log upto 10 commits,</p>
+<pre><code>hg log -l 10
+</code></pre>
+<p>Show content of a file in specific revision,</p>
+<pre><code>hg cat --rev 2e5af81a file_path
+</code></pre>
+<p>checkout to a specific revision and also to delete current change,</p>
+<pre><code>hg checkout d48959b331d747a10603ebdbef608ff2080a25a0 --clean
+</code></pre>
+<p>Bring current changes for tracker bookmarks/branches,</p>
+<pre><code>hg pull
+</code></pre>
+<p>To update specific bookmark,</p>
+<pre><code>hg pull
+hg rebase --dest master
+</code></pre>
+<p>Or, in single line,</p>
+<pre><code>hg pull --bookmark master --rebase
+</code></pre>
+<p>View hg history (actually journal)</p>
+<pre><code>hg reflog
+</code></pre>
+<p>Or,</p>
+<pre><code>$ hg journal -v
+previous locations of '.':
+ae1a4365ac25 -&gt; 1f42eb37f4fc atiq     2019-11-25 12:15 -0800  amend
+ca82aa92fa48 -&gt; ae1a4365ac25 atiq     2019-11-25 12:14 -0800  unshelve shelve_5ddc3610aa3b0
+ae1a4365ac25 -&gt; ca82aa92fa48 atiq     2019-11-25 12:14 -0800  unshelve shelve_5ddc3610aa3b0
+ae1a4365ac25,6f878a7e4100 -&gt; ae1a4365ac25 atiq     2019-11-25 12:14 -0800  unshelve shelve_5ddc3610aa3b0
+... ...
+</code></pre>
+<p>After finding commit sha of interest we can do <code>hg reset</code>.</p>
+<h3 id="bookmarks">Bookmarks</h3>
+<p>The other name of branches,
+to create and checkout,</p>
+<pre><code>hg checkout --rev master --bookmark pages_exp
+</code></pre>
+<p>rename,</p>
+<pre><code>hg bookmark --rename old_name new_name
+</code></pre>
+<p>And we can use <code>--force</code> in case of a conflict.</p>
+<p>Just create,</p>
+<pre><code>hg bookmark --rev master trebek_exp
+</code></pre>
+<h3 id="mercurial-on-solaris-2017-02">mercurial on Solaris (2017-02)</h3>
+<p><em>mercurial and webrev (diffs)</em>
+Some commands</p>
+<pre><code>hg config --edit
+</code></pre>
+<p>During webRTI, we do,</p>
+<pre><code>hg commit -m '22720551 aalib should switch from slang to ncurses'
+</code></pre>
+<p>Searching inside component projects
+We automate some stuff for components using <code>/opt/onbld/bin/pbchk</code>,</p>
+<pre><code>hg pbchk
+hg: unknown command 'pbchk'
+Mercurial Distributed SCM
+
+hg config --edit
+the user name first hg edit --
+
+$ pbchk
+-ksh: pbchk: not found [No such file or directory]
+
+hg commit -m remove
+hg recommit
+hg push ssh://user&#64;domain.com//gates/incoming
+</code></pre>
+<p>some examples,</p>
+<pre><code>hg serve
+hg view
+hg log -G
+
+hg tip - absolute
+hg parent
+hg summary - working dir and tons of other thing
+hg reconnect
+</code></pre>
+<p><strong>Rewriting history</strong></p>
+<p>commit id/hashes will change for changing some of the fields
+There are phases</p>
+<ul>
+<li>public commits are immutable though</li>
+</ul>
+<p>amend example,</p>
+<pre><code>hg commit --amend -m &quot;include missed file&quot;
+</code></pre>
+
+
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Footer -->  
+  <footer>
+    <div class="container">
+        <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright text-muted m-0">Copyright &#xA9; 2021</p>
+                    <br />
+                    <ul class="list-inline text-center small">
+                            <li class="list-inline-item">
+                                <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                            </li>
+                    </ul>
+                    <br />
+                    <div class="font-weight-bold small"><a href="https://statiq.dev">Generated by Statiq</a></div>
+                </div>
+        </div>
+    </div>
+</footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  
+
+
+  
+
+  <!-- Custom scripts for this template -->
+  <script src="/js/clean-blog.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Heads in the cloud! A Qubit Blog!">
+
+  <title>Notes from Qubit Inc. - C&#x2B;&#x2B; ifstream::get method overloads</title>
+
+  <link rel="canonical" href="https://note.iqubit.xyz/posts/cpp-ifstream-get">
+
+      <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
+      <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
+  
+  <meta name="application-name" content="Notes from Qubit Inc." />
+  <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
+  <meta name="msapplication-starturl" content="/" />
+
+  <meta property="og:title" content="Notes from Qubit Inc. - C&#x2B;&#x2B; ifstream::get method overloads" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://note.iqubit.xyz/posts/cpp-ifstream-get" />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="/vendor/bootstrap/scss/bootstrap.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/fontawesome-free/css/brands.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css' data-no-mirror>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' data-no-mirror>
+  
+  <!-- Custom styles for this template -->
+  <link href="/scss/clean-blog.css" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/plugins/autoloader/prism-autoloader.min.js" data-no-mirror></script>
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/themes/prism.css">
+  
+  
+
+
+  
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Notes from Qubit Inc.</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/tags">Tags</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/posts">Posts</a>
+            </li>
+</ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Page Header -->
+  <header class="masthead">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="post-heading">
+          <h1>
+            C&#x2B;&#x2B; ifstream::get method overloads
+          </h1>
+              <div class="meta">Published on Tuesday, 27 November 2012</div>
+                <div class="mt-3">
+                      <a href="/tags/c" class="badge badge-light"> C&#x2B;&#x2B;</a>
+                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- Main Content -->
+  <div class="container"> 
+    <div class="row">
+      <div id="content" class="col-md-12">  
+        <p>As stated on the reference, <code>istream::get()</code> has 6 overloads,</p>
+<pre><code>int get();
+istream&amp; get ( char&amp; c );
+istream&amp; get ( char* s, streamsize n );
+istream&amp; get ( char* s, streamsize n, char delim );
+istream&amp; get ( streambuf&amp; sb);
+istream&amp; get ( streambuf&amp; sb, char delim );
+</code></pre>
+<p>It is also stated that <code>int get();</code> Extracts a character from the stream and returns its value (casted to an integer).</p>
+<p>On the other hand.</p>
+<pre><code>istream&amp; get ( char&amp; c );
+</code></pre>
+<p>extracts a character from the stream and stores it in c.</p>
+<pre><code>istream&amp; get (char* s, streamsize n );
+</code></pre>
+<p><a href="http://www.cplusplus.com/reference/istream/istream/get">cplusplus.com - istream::get</a> has further details.</p>
+<h2 id="sampe-program-and-output">Sampe Program and Output</h2>
+<p>We shall write a simple program that counts words on each line of a text file. If we cut to the chess, strategy is to take every character, if the character is a separator set a flag, depending on that when a char is found other than separator increment word count and unset the flag until next separator is found. When newline character is found print number of words found on that line. Here's the program,</p>
+<pre><code class="language-cpp">#include &lt;ifstream&gt;
+#include &lt;iostream&gt;
+using namespace std;
+    
+int main () {
+        string separators(&quot;:;.!\&quot;\' \t\n&quot;);
+        ifstream ifs ( &quot;test.txt&quot; , ifstream::in );
+        bool shouldCountNewWord = true;
+        int wordCount=0;
+    
+        while (ifs.good()) {
+            char ch = ifs.get();
+            int i = 0;
+            for (; i&lt;separators.length(); i++) {
+                if (ch == separators[i]) {
+                    shouldCountNewWord = true;
+                    break;
+                }
+            }
+    
+            if (i== (int) separators.length() &amp;&amp; shouldCountNewWord == true) {
+                wordCount++;
+                shouldCountNewWord = false;
+            }
+    
+    
+            if (ch == '\n') {
+                cout&lt;&lt;&quot;We have encountered &quot;&lt;&lt;wordCount&lt;&lt;&quot; words in this line.&quot;&lt;&lt;endl;
+                wordCount = 0;
+            }
+        }
+        ifs.close();
+        return 0;
+}
+</code></pre>
+<p>So the input text file test.txt. Let's create it inside the same directory with some random contents,</p>
+<pre><code>Mazel tov! Jewish tradition.
+He is not stingy; she is not like him.
+&quot;Experilus!&quot; He cried.
+I have 2 houses. How many do you have?
+</code></pre>
+<p>After compiling and executing the binary output of this program appears,</p>
+<pre><code>We have encountered 4 words in this line.
+We have encountered 9 words in this line.
+We have encountered 3 words in this line.
+We have encountered 9 words in this line.
+</code></pre>
+<p>If you are using Linux stay aware that on Linux, editors like vi, gedit adds an extra newline before end of line as convention. Hence, Hence on that platform, if you add a newline yourself after last line you will see that output prints an extra line saying it has encountered 0 lines on that line. Therefore don't add any newline after last line.</p>
+<h3 id="the-variation">The Variation</h3>
+<p>We have tested <code>int istream::get()</code>. Let's go ahead and replace it with <code>istream&amp; istream::get ( char&amp; c )</code>. Let's just replace the line <code>char ch = ifs.get();</code> with lines as shown below,</p>
+<pre><code>while (ifs.good()) {
+     char ch;
+     ifs.get(ch);
+     .............. // code continues
+}
+</code></pre>
+<p>After we compile and run the program new output is,</p>
+<pre><code>We have encountered 4 words in this line.
+We have encountered 9 words in this line.
+We have encountered 3 words in this line.
+We have encountered 9 words in this line.
+We have encountered 0 words in this line.
+</code></pre>
+<h3 id="reason-for-such-unexpected-output">Reason for such unexpected output</h3>
+<p>Apparently second version of the code is getting an extra newline character. But the file hasn't changed. Where did it come from? If we add an extra statement and print all characters taken as input we see that there variable ch contains newline twice! On the last one ch contains newline value which 10 though eof has already been reached.</p>
+<p>Why this behavior? Answer is that, when function get (signature: istream&amp; istream::get ( char&amp; c )) encounters EOF it does not assign it to the character variable because it is not really valid character.</p>
+<h3 id="first-solution">First Solution</h3>
+<p>A solution can be resetting variable 'ch' after each time loop runs as presented in code below,</p>
+<pre><code>   if (ch == '\n') {
+        cout&lt;&lt;&quot;We have encountered &quot;&lt;&lt;wordCount&lt;&lt;&quot; words in this line.&quot;&lt;&lt;endl;
+        wordCount = 0;
+   }
+   ch = '\0';
+}
+</code></pre>
+<p>Previously read character is erased each time the loop runs and ch cannot contain the same newline value anymore unless it really occurs on the input.</p>
+<h3 id="second-solution">Second Solution</h3>
+<p>We can check whether input stream is still good after character has been read like this,</p>
+<pre><code>ifs.get(ch);
+if (!ifs.good())
+   break;
+   // code
+</code></pre>
+<h3 id="finally">Finally</h3>
+<p>We can improve it further,</p>
+<pre><code>#include &lt;ifstream&gt;
+#include &lt;iostream&gt;
+using namespace std;
+  
+int main () {
+    string separators(&quot;:;.!\&quot;\' \t\n&quot;);
+    ifstream ifs ( &quot;test.txt&quot; , ifstream::in );
+    bool shouldCountNewWord = true;
+    int wordCount=0;
+ 
+    char ch;
+ 
+    while (ifs.get(ch).good()) {
+        int i = 0;
+        for (; i&lt;separators.length(); i++) {
+            if (ch == separators[i]) {
+                shouldCountNewWord = true;
+                break;
+            }
+        }
+ 
+        if (i== (int) separators.length() &amp;&amp; shouldCountNewWord == true) {
+            wordCount++;
+            shouldCountNewWord = false;
+        }
+ 
+ 
+        if (ch == '\n') {
+            cout&lt;&lt;&quot;We have encountered &quot;&lt;&lt;wordCount&lt;&lt;&quot; words in this line.&quot;&lt;&lt;endl;
+            wordCount = 0;
+        }
+    }
+    ifs.close();
+    return 0;
+}
+</code></pre>
+<p>Conclusive remark is that it is easy to make mistake without remembering how istream&amp; istream<span>get ( char&amp; c ) behaves. It is always safe to use int istream</span>get() because whenever it encounters EOF it returns -1.</p>
+<p>And remember that, on Linux/Unix editors like vi, gedit adds an extra new line before END OF FILE.</p>
+<p>Code has been tested on Microsoft Compiler, Visual Studio and on Linux Compiler [ gcc version 4.4.6 20110731 (Red Hat 4.4.6-3) (GCC) ]</p>
+
+
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Footer -->  
+  <footer>
+    <div class="container">
+        <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright text-muted m-0">Copyright &#xA9; 2021</p>
+                    <br />
+                    <ul class="list-inline text-center small">
+                            <li class="list-inline-item">
+                                <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                            </li>
+                    </ul>
+                    <br />
+                    <div class="font-weight-bold small"><a href="https://statiq.dev">Generated by Statiq</a></div>
+                </div>
+        </div>
+    </div>
+</footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  
+
+
+  
+
+  <!-- Custom scripts for this template -->
+  <script src="/js/clean-blog.js"></script>
+
+</body>
+
+</html>

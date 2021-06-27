@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Heads in the cloud! A Qubit Blog!">
+
+  <title>Notes from Qubit Inc. - Useful Git Commands</title>
+
+  <link rel="canonical" href="https://note.iqubit.xyz/posts/source-control-git">
+
+      <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
+      <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
+  
+  <meta name="application-name" content="Notes from Qubit Inc." />
+  <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
+  <meta name="msapplication-starturl" content="/" />
+
+  <meta property="og:title" content="Notes from Qubit Inc. - Useful Git Commands" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://note.iqubit.xyz/posts/source-control-git" />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="/vendor/bootstrap/scss/bootstrap.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/fontawesome-free/css/brands.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css' data-no-mirror>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' data-no-mirror>
+  
+  <!-- Custom styles for this template -->
+  <link href="/scss/clean-blog.css" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/plugins/autoloader/prism-autoloader.min.js" data-no-mirror></script>
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/themes/prism.css">
+  
+  
+
+
+  
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Notes from Qubit Inc.</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/tags">Tags</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/posts">Posts</a>
+            </li>
+</ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Page Header -->
+  <header class="masthead">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="post-heading">
+          <h1>
+            Useful Git Commands
+          </h1>
+              <div class="meta">Published on Saturday, 25 July 2020</div>
+                <div class="mt-3">
+                      <a href="/tags/git" class="badge badge-light"> git</a>
+                      <a href="/tags/source-control" class="badge badge-light"> source control</a>
+                      <a href="/tags/version-control" class="badge badge-light"> version control</a>
+                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- Main Content -->
+  <div class="container"> 
+    <div class="row">
+      <div id="content" class="col-md-12">  
+        <p>[first few sections are complete, later sections yet to be updated]</p>
+<h1 id="introduction">Introduction</h1>
+<p>A push to the remote repo consists of following two steps,</p>
+<ol>
+<li>To add changes to the staging area</li>
+<li>push the staged changes to remote repo</li>
+</ol>
+<h2 id="how-to-add-files-or-changes-to-staged-area-to-commit-later">How to add files or changes to staged area (to commit later)</h2>
+<p>[update not complete yet]</p>
+<p>Note: commit stores file locally. Commit is not sent to remote repository unless a <code>push</code> command is applied.</p>
+<p>Here, we give some examples of adding files/directories to staged area. Staged area<a href="https://git-scm.com/book/en/v2/Getting-Started-Git-Basics">[1]</a> means the stage before commit. Anything that are modified (added/changed/deleted) in the stage area will be performed whenever a <code>commit</code> command is applied.</p>
+<p>To add files/directories to staged area, at first, we modify or change files,</p>
+<p>Then we can add all those changes to staged area. This will include any new file as well,</p>
+<pre><code>git add --all
+</code></pre>
+<p>But if we want to add only modifications on previously added files on repo we do this,</p>
+<pre><code>git add --update
+</code></pre>
+<p>This means new files won't be added to the staged area.</p>
+<p>Or, we can add selectively a few (after all modifications are done on those files), the files we want to commit we add them by applying a series of <code>git add</code> commands,</p>
+<pre><code>git add file-1
+git add file-2
+	………….
+	………….
+	……………
+git add file-n
+</code></pre>
+<p>Or, we can choose to add directory or files inside another directory (is this recursive, has to check),</p>
+<pre><code>git add code_python/*
+</code></pre>
+<p>Remove a dir entirely,</p>
+<pre><code>git rm -r _old_code/res/
+</code></pre>
+<p>How to remove a file,</p>
+<pre><code>git rm file1.txt
+git commit --message &quot;remove file1.txt&quot;
+</code></pre>
+<p>How to rename or move a file in the repo,</p>
+<pre><code>git mv original_name new_name
+</code></pre>
+<p>Pleae don't be confused by &quot;name&quot; here. It supports renaming using full path as wel. It also support renaming a directories.</p>
+<p>Removing a file from staged area, <a href="http://data.agaric.com/undo-git-add-remove-files-staged-git-commit">ref</a></p>
+<pre><code>git reset /location/to/file
+</code></pre>
+<p>Note, this will not touch the file; only removes it from git staged area.</p>
+<p>Show the changes which have been staged (git add`ed but not committed)?, <a href="https://stackoverflow.com/questions/1587846/how-do-i-show-the-changes-which-have-been-staged">ref</a></p>
+<pre><code>git diff --cached
+</code></pre>
+<p>The changes we made are called deltas.</p>
+<h2 id="how-to-commit-staged-changes-git-commit">How to commit staged changes (git commit)</h2>
+<p>Commit to actually push the changes to local repo (will be in remote as soon as pushed). If you are doing this for the first time in the git client you installed, you need to configure committer email and user-name,</p>
+<pre><code>git config --global user.name &quot;John Doe&quot;
+git config --global user.email &quot;John.Doe&#64;Domain.Com&quot;
+</code></pre>
+<p>To check if those are set,</p>
+<pre><code>git config --global --get user.name
+git config --global --get user.email
+</code></pre>
+<p>Get git config global info all props,</p>
+<pre><code>$ git config --global --get-regexp .*
+user.email one&#64;iqubit.xyz
+user.name The Matrix
+</code></pre>
+<p><code>git commit</code> is different than <code>svn commit</code> as <code>svn commit</code> pushes to remote repo immediately whereas git commit does not. git usually have the entire copy just like remote repo, svn does not have entire copy.</p>
+<p>Note: commit stores file locally. Commit is not sent to remote repository unless a <code>push</code> command is applied (we will discuss push command on next section).</p>
+<p>To add the commit message use <code>-m</code> switch in arguments as showed below, this supports multiline,</p>
+<pre><code>git commit --message &quot;first commit message&quot;
+</code></pre>
+<p>Here is an example of multi-line commit message, surrounding the entire commit message with double quotes works,</p>
+<pre><code>git commit --message &quot;Implemented secure functions - line1
+	line2 - example line that means code won't work on Linux, we'll have to add separate
+	line3 - branch for Linux
+	line4 - Update on logic based on tests&quot;
+</code></pre>
+<p>In powershell, single quote works for multi-line commit message,</p>
+<pre><code>git commit --message &quot;line1
+	line2
+	line3
+	line4&quot;
+</code></pre>
+<h2 id="pushing-to-remotesending-deltas-to-remote-repo-server">Pushing to remote(sending deltas to remote repo server)</h2>
+<p>Then use &quot;git push origin branch_name&quot;</p>
+<p>Here is an example of Pushing to remote master branch,</p>
+<pre><code>git push origin master
+</code></pre>
+<p>To show info about git repo's remote origin,</p>
+<pre><code>git remote show origin
+</code></pre>
+<h2 id="git-undo-edit-commit-etc">git undo, edit commit etc</h2>
+<p>To Rollback to a specific previous commit we do,</p>
+<pre><code>git reset --hard 
+git push --force
+</code></pre>
+<p>To roll back to previous to last commit we do,</p>
+<pre><code>git reset --hard ~HEAD
+git push --force
+</code></pre>
+<p>We can edit commit message of the last commit anytime before push,</p>
+<pre><code>git commit --amend
+</code></pre>
+<p>If we want to use commit message from a file,</p>
+<pre><code>git commit --file filepath.ext
+</code></pre>
+<p>Commit message from file (amend previous one),</p>
+<pre><code>git commit --edit --file filepath.ext
+</code></pre>
+<p>After pushing you still can edit the commit message in 2 steps,
+step 1:</p>
+<pre><code>git commit --edit --file filepath.ext
+</code></pre>
+<p>step 2:
+Do a force push (ths is usually combined with <code>git commit --amend</code>),</p>
+<pre><code>git push --force origin master
+</code></pre>
+<p>However, if someone has made another commit, in the mean time, those commits will be gone. So be aware of that!</p>
+<p>To edit previous commit messages that are pushed,</p>
+<pre><code>git rebase --interactive 88af37e
+</code></pre>
+<p>Then, we press Ctrl + X,</p>
+<pre><code>git rebase --continue
+git push --force origin master
+</code></pre>
+<p>Again, a force push destroys commit made by others.</p>
+<p>To correct commit author name upto specific commit (probably? or is it only for single commit?),</p>
+<pre><code>git reset author
+git rebase --interactive -p 7508a2627bee2a28535e7ae306c51788fd287f9f
+</code></pre>
+<p>mark all of them as 'e' and keep applying following commands. In this example, the author's email address is 'alex&#64;corp.xyz',</p>
+<pre><code>git commit --amend --author &quot;Alex Roy &lt;alex&#64;corp.xyz&gt;&quot; --no-edit
+git rebase --continue
+</code></pre>
+<p><strong>Removing a single commit from history</strong></p>
+<p>There might be conflicts during the operation, some commit order gets changed as well (not order by date anymore), Be aware this is dangerous and might now work,</p>
+<pre><code>git rebase --onto dadfe3e^ dadfe3e HEAD
+</code></pre>
+<p>Then, after conflict resolution, ref</p>
+<pre><code>git rebase --continue
+</code></pre>
+<h2 id="stash-commands">Stash Commands</h2>
+<p>Be careful while applying these commands.</p>
+<p>Stashing all local changes
+Hard - stash all local changes and pull updated code. <a href="https://stackoverflow.com/q/4157189">[6]</a></p>
+<p>This is better than ‘git stash’ It deletes unstaged changes,</p>
+<pre><code>git checkout -- .
+</code></pre>
+<p>Clean up all non version controlled files (<code>-d</code>: recurse into untracked directories),</p>
+<pre><code>git clean --force -d
+</code></pre>
+<p>Find last commit id,
+To get long commit id,</p>
+<pre><code>git rev-parse HEAD
+</code></pre>
+<p>To get short commit id,</p>
+<pre><code>git rev-parse --short HEAD
+</code></pre>
+<h2 id="checking-specific-revision-of-a-file-or-getting-specific-revision">Checking specific revision of a file or getting specific revision</h2>
+<p>Checkout specific revision of a file,</p>
+<pre><code>git checkout abcde file/to/restore
+</code></pre>
+<p>git checkout specific commit</p>
+<pre><code>git checkout -b old_state f5bf0d670686143a67177e9d81474687535a761e
+</code></pre>
+<p>Or do following,</p>
+<pre><code>git reset --hard origin/master
+git fetch
+git checkout -b old_state f5bf0d6
+</code></pre>
+<p>git checkout can be useful in restoring a mistakenly delete file as well or to stash changes on a specific file,</p>
+<pre><code>git checkout abcde file/to/restore
+</code></pre>
+<p>This restore the file of the current revision. [<a href="http://stackoverflow.com/questions/953481/find-and-restore-a-deleted-file-in-a-git-repository">4</a>]</p>
+<p>View a commit,</p>
+<pre><code>git show commit_id
+</code></pre>
+<p>Show specific revision of a file, ref</p>
+<pre><code>git show commit_id:file_path
+git show 61c2ac6:src/bootstrapper.cc
+</code></pre>
+<h2 id="misc">Misc</h2>
+<p>Check history of all git commits, snapshots using reflog<a href="http://alblue.bandlem.com/2011/05/git-tip-of-week-reflogs.html">[7]</a> argument,</p>
+<pre><code>$ git reflog
+813d871 (HEAD -&gt; source, origin/source) HEAD&#64;{0}: commit: more contents added to posts
+7eabf08 HEAD&#64;{1}: commit: Add Windows Cmd Cache idle
+79ff45d HEAD&#64;{2}: commit: Add more content to pwsh post
+3c7eee2 HEAD&#64;{3}: commit (amend): tags syntax updated for wyam
+... ...
+</code></pre>
+<h2 id="conflict-resolution">Conflict Resolution</h2>
+<p>Most common approach in resolving conflict is to check which files are having conflict,</p>
+<pre><code>git status
+</code></pre>
+<p>And what changes are coming from what side that is causing the conflict,</p>
+<pre><code>git diff
+</code></pre>
+<p>Addionally, a file path can be specified to see what changes are coming from the remote and local,</p>
+<pre><code>git diff /path/to/file
+</code></pre>
+<p>Then, we use a merge tool or manually modify the content file and finalize the conflict resolution. Afterwards, when are done doing that with that file we do,</p>
+<pre><code>git add file_path
+</code></pre>
+<p>When conflict  resolved for all files finally we do,</p>
+<pre><code>git commit --message 'conflict resolved commit and so on..'
+</code></pre>
+<p>However, in some case conflict resolution can be easier. For example, you might want to discard local changes and just accept remote forcefully. In such a case we can follow this:</p>
+<p>A basic overview how to merge is on this <a href="http://www.gitguys.com/topics/merging-with-a-conflict-conflicts-and-resolutions">gitguys' article</a></p>
+<pre><code>git fetch
+</code></pre>
+<p>Accept their change for single file, ref</p>
+<pre><code>git checkout --theirs src/register-configuration.cc
+</code></pre>
+<h2 id="origin-tricks-and-branches">Origin tricks and Branches</h2>
+<p>Change repository URL,</p>
+<pre><code>git remote set-url origin https://github.com/user_name/testing.git
+</code></pre>
+<p>switch to a new branch,</p>
+<pre><code>git checkout -b dev_branch
+</code></pre>
+<p>show current branch and other branches,</p>
+<pre><code>git branch
+</code></pre>
+<p>Delete a branch on your local filesystem,</p>
+<pre><code>git branch -d testing_branch
+</code></pre>
+<p>The git push syntax is: git push [remote-repository-name] [branch-or-commit-name],</p>
+<pre><code>git push origin dev_branch
+</code></pre>
+<p>Change remote origin,</p>
+<pre><code>git remote set-url origin URL
+</code></pre>
+<h2 id="detached-head">Detached Head</h2>
+<p>If we want our git repo to have no current branch then we can do this,</p>
+<pre><code>git checkout COMMIT-SHA-ID
+</code></pre>
+<h2 id="git-configuration-files">Git configuration Files</h2>
+<p>When we perform <code>git config</code> it applies only to the current project. The configuration file that gets update is,</p>
+<pre><code>./.git/config
+</code></pre>
+<p>When we apply <code>git config --global</code> it updates following file,</p>
+<pre><code>~/.gitconfig
+</code></pre>
+<p>If none of these exist then the systems git config file is applied. According to priority these files are presented below,</p>
+<pre><code>./.git/config
+~/.gitconfig
+/etc/gitconfig (guessing I don't recall the exact location)
+</code></pre>
+<h1 id="references">References</h1>
+<ol>
+<li><a href="https://git-scm.com/book/en/v2/Getting-Started-Git-Basics">git-scm - Getting Started - Git Basics</a></li>
+<li><a href="http://data.agaric.com/undo-git-add-remove-files-staged-git-commit">agaric - undo, remove staged file</a></li>
+<li><a href="https://stackoverflow.com/q/4157189">SO - Git Pull While Ignoring Local Changes</a></li>
+</ol>
+
+
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Footer -->  
+  <footer>
+    <div class="container">
+        <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright text-muted m-0">Copyright &#xA9; 2021</p>
+                    <br />
+                    <ul class="list-inline text-center small">
+                            <li class="list-inline-item">
+                                <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                            </li>
+                    </ul>
+                    <br />
+                    <div class="font-weight-bold small"><a href="https://statiq.dev">Generated by Statiq</a></div>
+                </div>
+        </div>
+    </div>
+</footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  
+
+
+  
+
+  <!-- Custom scripts for this template -->
+  <script src="/js/clean-blog.js"></script>
+
+</body>
+
+</html>

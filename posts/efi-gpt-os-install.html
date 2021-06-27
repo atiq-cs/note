@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Heads in the cloud! A Qubit Blog!">
+
+  <title>Notes from Qubit Inc. - Operating System Installation on GPT Disks (EFI boot enabled Systems)</title>
+
+  <link rel="canonical" href="https://note.iqubit.xyz/posts/efi-gpt-os-install">
+
+      <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
+      <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
+  
+  <meta name="application-name" content="Notes from Qubit Inc." />
+  <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
+  <meta name="msapplication-starturl" content="/" />
+
+  <meta property="og:title" content="Notes from Qubit Inc. - Operating System Installation on GPT Disks (EFI boot enabled Systems)" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://note.iqubit.xyz/posts/efi-gpt-os-install" />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="/vendor/bootstrap/scss/bootstrap.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/fontawesome-free/css/brands.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css' data-no-mirror>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' data-no-mirror>
+  
+  <!-- Custom styles for this template -->
+  <link href="/scss/clean-blog.css" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/plugins/autoloader/prism-autoloader.min.js" data-no-mirror></script>
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/themes/prism.css">
+  
+  
+
+
+  
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Notes from Qubit Inc.</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/tags">Tags</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/posts">Posts</a>
+            </li>
+</ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Page Header -->
+  <header class="masthead">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="post-heading">
+          <h1>
+            Operating System Installation on GPT Disks (EFI boot enabled Systems)
+          </h1>
+              <div class="meta">Published on Monday, 04 February 2013</div>
+                <div class="mt-3">
+                      <a href="/tags/efi" class="badge badge-light"> efi</a>
+                      <a href="/tags/system-boot" class="badge badge-light"> system boot</a>
+                      <a href="/tags/linux" class="badge badge-light"> linux</a>
+                      <a href="/tags/windows" class="badge badge-light"> windows</a>
+                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- Main Content -->
+  <div class="container"> 
+    <div class="row">
+      <div id="content" class="col-md-12">  
+        <p>This article includes instruction for both Windows and Linux. However, for knowledge, feel free to explore the article.</p>
+<h2 id="windows-installation-with-efi">Windows Installation with EFI</h2>
+<p>Legacy boot enabled OSs install bootloader on first 446 bytes of active primary partition in MBR disks (disks with MBR/Legacy Partition Layout). On EFI disks, EFI enabled operating systems put required EFI files for boot into a reserved EFI partition. EFI bootloader applications are EFI files which should properly be put in System's EFI partition.</p>
+<p>As for Windows installations Windows automatically detects whether the system is using EFI or legacy and thus, installation proceeds. Usually there is also an option in modern mainboards: BIOS to enable/disable EFI boot feature. When this feature is enabled for GPT disks Windows will install EFI bootloader instead of legacy/mbr bootloader.</p>
+<p>When your hard-disk size is 2 TB or more GPT is better. Legacy mbr layout for hard disks are getting out-dated. The future is GPT which has advantage of creating numerous primary partitions and, has built-in recovery features.</p>
+<h2 id="finding-out-what-partition-layout-your-hard-disk-uses">Finding Out What Partition Layout your Hard disk uses</h2>
+<p>To know what partition layout is used by your hard disk follow procedure below. If you are using Linux skip Windows section</p>
+<h3 id="procedure-to-find-out-partition-layout-on-windows">Procedure to Find Out Partition Layout on Windows</h3>
+<p>Fire up a command prompt with admin privilege and run command as illustrated below. Commands are given after '&gt;' symbol. A command is follows by single or several lines of output,</p>
+<pre><code>Microsoft Windows [Version 6.3.9600]
+(c) 2013 Microsoft Corporation. All rights reserved.
+ 
+C:\Windows\system32&gt; diskpart
+Microsoft DiskPart version 6.3.9600
+Copyright (C) 1999-2013 Microsoft Corporation.
+On computer: Qubit_WS
+ 
+DISKPART&gt; list disk
+  Disk ###  Status         Size     Free     Dyn  Gpt
+  --------  -------------  -------  -------  ---  ---
+* Disk 0    Online          931 GB      0 B        *
+</code></pre>
+<p>As you can see a * on Gpt column indicates that the disk uses GPT layout (for EFI boot).</p>
+<h3 id="procedure-to-find-out-partition-layout-on-linux">Procedure to Find Out Partition Layout on Linux</h3>
+<p>First of all you need to login as root in a terminal.</p>
+<pre><code>$ su - root
+Enter password:     
+#
+</code></pre>
+<p>The prompt '#' indicates that you are logged in as root. Now, if you have multiple drives in your system, to find out the drive id apply following command,</p>
+<pre><code># fdisk -l
+</code></pre>
+<p>It will give you the list of drives with information from which you will be able to recognize your hard-drive that you want to view partition layout. If you have single hard drive its drive id will be sda. If you have multiple drives second one will be sdb, third sdc and so on. For example, you want to view partition layout info for drive sda apply following command,</p>
+<pre><code># parted /dev/sda p
+</code></pre>
+<p>If your hard drive uses mbr/legacy layout it will be displayed as layout: msdos on the output of the command you just applied.</p>
+<p>If you're decided that you shall go with GPT but you have a hard-disk which has legacy/mbr/msdos layout you should follow procedure presented below,</p>
+<h2 id="converting-mbr-disk-to-gpt-disk">Converting MBR disk to GPT disk</h2>
+<p>You can use an existing Windows or use the command prompt of recovery tool of Windows 7/8 Installation DVD to follow the procedure. You have to start command prompt as administrator if you run from existing Windows and then apply 'diskpart' command. If you are running from recovery console you only to run diskpart,</p>
+<pre><code>C:\Windows\system32&gt; diskpart
+</code></pre>
+<p>On <code>diskpart</code> prompt list your disks and select the disk that you want to convert to GPT,</p>
+<pre><code>DISKPART&gt; list disk     
+  Disk ###  Status         Size     Free     Dyn  Gpt
+  --------  -------------  -------  -------  ---  ---
+  Disk 0    Online          465 GB  3072 KB
+  Disk 1    Online          465 GB    15 MB
+ 
+DISKPART&gt; select disk 1     
+Disk 1 is now the selected disk.
+</code></pre>
+<p>Run clean command to delete all partitions, Be sure to backup data from the hard-disk before proceeding with this command,</p>
+<pre><code>DISKPART&gt; clean
+</code></pre>
+<p>This should wipe out all partitions.</p>
+<p>Now run convert,</p>
+<pre><code>DISKPART&gt; convert gpt
+</code></pre>
+<p>Where <code>convert gpt</code> command converts a disk layout to GPT 'convert mbr' converts to mbr. Before proceeding with installation of Windows or other OS we need to create the EFI and MSR partitions. Following commands perform this,</p>
+<pre><code>DISKPART&gt; create partition efi size=112
+</code></pre>
+<p>which creates an EFI partition of 112 MB. To format the partition,</p>
+<pre><code>DISKPART&gt; format fs=fat32 quick
+</code></pre>
+<p>the efi partition is formatted used fat32 filesystem. EFI requires fat or fat32 filesystem. We also need to create a microsoft reserved partition which can be of size 50 MB</p>
+<pre><code>DISKPART&gt; create partition msr size=50
+</code></pre>
+<p>Now let's go ahead and create a primary partition where Windows will be installed.</p>
+<pre><code>DISKPART&gt; create partition primary size=102400
+</code></pre>
+<p>It creates a partition with size 100 GB. Let's mark it as active partition.</p>
+<pre><code>DISKPART&gt; active
+</code></pre>
+<p>The format operation is optional, which can be done with following command,</p>
+<pre><code>DISKPART&gt; format fs=ntfs label=&quot;WinOS&quot; quick
+</code></pre>
+<p>Now we can go ahead with Windows installation. During installation of Windows when partition selection screen appears we have to select the partition of 100 GB for installation. Window will automatically put its efi bootloader files inside EFI partition.</p>
+<h2 id="installation-of-fedora-18-on-gpt-disks-with-efi-boot-enabled-systems-dual-boot-with-windows">Installation of Fedora 18 on GPT disks with EFI boot enabled systems (dual boot with Windows)</h2>
+<p>Fedora 18, 17, 16 releases have by default EFI support. I am not sure about the earlier releases to Fedora 16 about EFI support (I haven't tested in them). If you are creating a bootable USB stick using <code>livecd-tools</code> be sure to add these options: <code>--efi --format --msdos --reset-mbr</code>. Otherwise, EFI support will not be available with installation from bootable usb.</p>
+<p>Installation procedure for Fedora 18 with EFI bootable usb is same to the usual installation except the part where we select the boot partition. During partition selection after selecting the root partition we have to change the mount point of EFI partition that we have created earlier with <code>/boot/efi</code></p>
+<p>Rest of the installation procedure is as usual. After the installation is complete, Fedora will be listed on EFI boot managers. Usually, Windows is boot by osbootmgr, Fedora is named as Fedora. Only problem is that I have to manually select Fedora each time otherwise Windows gets booted by default. However, with latest EFI firmware it is possible to choose the default OS to boot. As I see OS selection from EFI BIOS is working with recent Dell Lattitude and some other Models I have tested.</p>
+
+
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Footer -->  
+  <footer>
+    <div class="container">
+        <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright text-muted m-0">Copyright &#xA9; 2021</p>
+                    <br />
+                    <ul class="list-inline text-center small">
+                            <li class="list-inline-item">
+                                <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                            </li>
+                    </ul>
+                    <br />
+                    <div class="font-weight-bold small"><a href="https://statiq.dev">Generated by Statiq</a></div>
+                </div>
+        </div>
+    </div>
+</footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  
+
+
+  
+
+  <!-- Custom scripts for this template -->
+  <script src="/js/clean-blog.js"></script>
+
+</body>
+
+</html>

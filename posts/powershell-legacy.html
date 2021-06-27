@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Heads in the cloud! A Qubit Blog!">
+
+  <title>Notes from Qubit Inc. - Legacy Powershell Useful Commands</title>
+
+  <link rel="canonical" href="https://note.iqubit.xyz/posts/powershell-legacy">
+
+      <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
+      <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
+  
+  <meta name="application-name" content="Notes from Qubit Inc." />
+  <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
+  <meta name="msapplication-starturl" content="/" />
+
+  <meta property="og:title" content="Notes from Qubit Inc. - Legacy Powershell Useful Commands" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://note.iqubit.xyz/posts/powershell-legacy" />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="/vendor/bootstrap/scss/bootstrap.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/fontawesome-free/css/brands.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css' data-no-mirror>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' data-no-mirror>
+  
+  <!-- Custom styles for this template -->
+  <link href="/scss/clean-blog.css" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/plugins/autoloader/prism-autoloader.min.js" data-no-mirror></script>
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/themes/prism.css">
+  
+  
+
+
+  
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Notes from Qubit Inc.</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/tags">Tags</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/posts">Posts</a>
+            </li>
+</ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Page Header -->
+  <header class="masthead">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="post-heading">
+          <h1>
+            Legacy Powershell Useful Commands
+          </h1>
+              <div class="meta">Published on Saturday, 18 July 2020</div>
+                <div class="mt-3">
+                      <a href="/tags/powershell" class="badge badge-light"> powershell</a>
+                      <a href="/tags/system-administration" class="badge badge-light"> system administration</a>
+                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- Main Content -->
+  <div class="container"> 
+    <div class="row">
+      <div id="content" class="col-md-12">  
+        <p>Please be aware of notation below in command outlines. <code>$</code> represents a command; following rest of the lines represent output. Powershell is superset of traditional command prompt. Hence, all usual binaries still run on powershell for example, <code>takeown</code>.</p>
+<p><strong>Power Options</strong>
+Open Power Options Window,</p>
+<pre><code>Show-ControlPanelItem -Name &quot;Power Options&quot;
+</code></pre>
+<h2 id="service-management">Service Management</h2>
+<p>Get list of services currently running,</p>
+<pre><code>Get-Service | Where-Object {$_.Status -eq &quot;Running&quot;}
+</code></pre>
+<p>Start a service,</p>
+<pre><code>Start-Service -Name VPNAgent
+</code></pre>
+<p>Stop one,</p>
+<pre><code>Stop-Service -Name VPNAgent
+</code></pre>
+<h2 id="scripting-using-pwsh">Scripting using pwsh</h2>
+<p>These basic stuffs might come handy,</p>
+<p>Passing all arguments, untouched to another script,</p>
+<pre><code>$saArgs = $args[0 .. ($args.Count)]
+&amp; &quot;$Env:HOME\ss.ps1&quot; $saArgs
+</code></pre>
+<h3 id="changing-window-size">Changing Window Size</h3>
+<p>To change Window ize we change buffer size first, because Window Size depends on it.</p>
+<pre><code>$cUI = (Get-Host).UI.RawUI
+$b = $cUI.BufferSize
+$b.Width = $width
+$b.Height = $history_size
+$cUI.BufferSize = $b
+
+# change window height and width
+$b = $cUI.WindowSize
+$b.Width = $width
+$b.Height = $height
+$cUI.WindowSize = $b
+</code></pre>
+<p>There's oneliner to do it as well,</p>
+<pre><code>(Get-Host).UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size -Property &#64;{Width=$width; Height=$history_size}
+(Get-Host).UI.RawUI.WindowSize = New-Object System.Management.Automation.Host.Size -Property &#64;{Width=$width; Height=$height}
+</code></pre>
+<p>To change the title of the console we do,</p>
+<pre><code>$cUI.WindowTitle = $title
+</code></pre>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/system.management.automation.host.pshostuserinterface.rawui">ms docs ref</a></p>
+<h2 id="continue">continue</h2>
+<p>rest of the contents yet to be appended..</p>
+
+
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Footer -->  
+  <footer>
+    <div class="container">
+        <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright text-muted m-0">Copyright &#xA9; 2021</p>
+                    <br />
+                    <ul class="list-inline text-center small">
+                            <li class="list-inline-item">
+                                <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                            </li>
+                    </ul>
+                    <br />
+                    <div class="font-weight-bold small"><a href="https://statiq.dev">Generated by Statiq</a></div>
+                </div>
+        </div>
+    </div>
+</footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  
+
+
+  
+
+  <!-- Custom scripts for this template -->
+  <script src="/js/clean-blog.js"></script>
+
+</body>
+
+</html>

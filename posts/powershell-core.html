@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Heads in the cloud! A Qubit Blog!">
+
+  <title>Notes from Qubit Inc. - Powershell Core Useful Commands</title>
+
+  <link rel="canonical" href="https://note.iqubit.xyz/posts/powershell-core">
+
+      <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
+      <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
+  
+  <meta name="application-name" content="Notes from Qubit Inc." />
+  <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
+  <meta name="msapplication-starturl" content="/" />
+
+  <meta property="og:title" content="Notes from Qubit Inc. - Powershell Core Useful Commands" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://note.iqubit.xyz/posts/powershell-core" />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="/vendor/bootstrap/scss/bootstrap.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/fontawesome-free/css/brands.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css' data-no-mirror>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' data-no-mirror>
+  
+  <!-- Custom styles for this template -->
+  <link href="/scss/clean-blog.css" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/plugins/autoloader/prism-autoloader.min.js" data-no-mirror></script>
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/themes/prism.css">
+  
+  
+
+
+  
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Notes from Qubit Inc.</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/tags">Tags</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/posts">Posts</a>
+            </li>
+</ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Page Header -->
+  <header class="masthead">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="post-heading">
+          <h1>
+            Powershell Core Useful Commands
+          </h1>
+            <h2 class="subheading">Powershell Core Cheat Sheet and Intro</h2>
+              <div class="meta">Published on Friday, 19 March 2021</div>
+                <div class="mt-3">
+                      <a href="/tags/powershell-core" class="badge badge-light"> powershell core</a>
+                      <a href="/tags/pwsh" class="badge badge-light"> pwsh</a>
+                      <a href="/tags/system-administration" class="badge badge-light"> system administration</a>
+                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- Main Content -->
+  <div class="container"> 
+    <div class="row">
+      <div id="content" class="col-md-12">  
+        <p><em>This article formerly titled as 'Powershell Frequently Used Commands. Even though the article is titled &quot;core&quot; it includes some Powershell contents as well.'</em></p>
+<p>More cmdlets are on the other article: <code>powershell-core-cmdlets</code></p>
+<h2 id="initialization-of-shell">Initialization of Shell</h2>
+<p><em>This section is for my personalized shell; please feel free to skip it.</em></p>
+<p>Initiate a shell using a specified init script (replaced <code>Env:WinDir/*</code> symbolic link),</p>
+<pre><code>pwsh -NoExit D:\pwsh\Init.ps1
+</code></pre>
+<p>For Machine Learning customized shell, I try adding an arg,</p>
+<pre><code>pwsh -NoExit D:\pwsh\Init.ps1 ML
+</code></pre>
+<h2 id="new-to-pwsh">New to pwsh?</h2>
+<p>clear-host is equivalent to cls
+<code>Get-Location</code> instead of pwd`
+ls, cat, popd, pushd etc still work</p>
+<p>Write-Host is equivalent to echo. For example,</p>
+<pre><code>echo 'hello'
+</code></pre>
+<p>works just fine.</p>
+<p>ps is equivalent to Get-Process or to List processes or doing <code>tasklist</code>.
+Stop-Proccess instead of taskkill</p>
+<p>Example of starting pwsh with an initiazation script or calling a script with an arg,</p>
+<pre><code>Start-Process pwsh -ArgumentList '-NoExit', 'Init-App.ps1 foo' -ErrorAction 'stop'
+</code></pre>
+<p>above, <code>foo</code> is argument.</p>
+<p>Split string based on delimeter,</p>
+<pre><code>$Env:Path –split ';'
+</code></pre>
+<h3 id="cmdlets">Cmdlets</h3>
+<h2 id="file-management">File Management</h2>
+<p>Filter files containing name pattern,</p>
+<pre><code>gci -filter '*word*'
+</code></pre>
+<p>Create directory,</p>
+<pre><code>New-Item D:\work\git -Type Directory
+</code></pre>
+<p>Create file (alternative of Unix <code>touch</code>),</p>
+<pre><code>New-Item C:\scripts\new_file.txt -type file
+</code></pre>
+<p>Show files in order of modified time,</p>
+<pre><code>$ Get-ChildItem -Path C:\windows\CPE\Chef\outputs | Where-Object { -not $_.PsIsContainer } |
+    Sort-Object LastWriteTime -Descending | Select-Object -first 10 
+</code></pre>
+<h2 id="control-panel-cmdlet">Control Panel Cmdlet</h2>
+<p>Handy cmds follow, <a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/show-controlpanelitem">ref</a> to access sys properties,</p>
+<pre><code>Show-ControlPanelItem -Name System
+</code></pre>
+<p>Names supported by <code>Show-ControlPanelItem</code>,</p>
+<ul>
+<li>Network and Sharing Center</li>
+<li>Device Manager</li>
+<li>Programs and Features</li>
+<li>Default Programs</li>
+</ul>
+<p>For, Sound mouse etc we do,</p>
+<ul>
+<li>Sound</li>
+<li>Mouse</li>
+</ul>
+<h2 id="network-cmdlets">Network Cmdlets</h2>
+<p>Ping hosts,</p>
+<pre><code>Test-Connection -Count 64 google.com
+Test-Connection -Count 1024 google.com
+</code></pre>
+<p>host <code>bing.com</code> does not reply to ICMP requests anymore, hence it's not worth trying <code>Test-Connection bing.com</code>.</p>
+<p>if help modules are outdated this updates it,</p>
+<pre><code>Update-Help
+</code></pre>
+<p>More network related cmdlets or commands are at <a href="network-wifi-cmd">wifi cmd article</a></p>
+<h2 id="other-cmdlets">Other Cmdlets</h2>
+<p>Get list of running processes (unique), show full path,</p>
+<pre><code>Get-Process | Select-Object -Unique Path
+</code></pre>
+<p>When Windows Explorer or taskbar has trouble,</p>
+<pre><code>Stop-Process -Name explorer
+</code></pre>
+<p>Find difference between 2 text files,</p>
+<pre><code>Compare-Object (get-content one.txt) (get-content two.txt)
+</code></pre>
+<p>Scheduled Tasks,</p>
+<pre><code>Get-ScheduledTask -TaskName *chef*
+Get-ScheduledTask -TaskPath \
+Get-ScheduledTask -TaskPath \MSIT\
+</code></pre>
+<p>Rename Machine,</p>
+<pre><code>Rename-Computer -NewName JohnPC -Restart
+</code></pre>
+<p>Event Log,</p>
+<pre><code>Show-EventLog
+</code></pre>
+<p>Show console host info,</p>
+<pre><code>$ Get-Host
+Name             : ConsoleHost
+Version          : 6.2.3
+InstanceId       : cddce532-924c-4a66-a671-bbea53caf430
+UI               : System.Management.Automation.Internal.Host.InternalHostUserInterface
+CurrentCulture   : en-US
+CurrentUICulture : en-US
+PrivateData      : Microsoft.PowerShell.ConsoleHost+ConsoleColorProxy
+DebuggerEnabled  : True
+IsRunspacePushed : False
+Runspace         : System.Management.Automation.Runspaces.LocalRunspace
+</code></pre>
+<p>How to uninstall store application i.e., skype</p>
+<pre><code>Get-AppxPackage Microsoft.SkypeApp | Remove-AppxPackage
+</code></pre>
+<p>Get Software List,</p>
+<pre><code>Get-WmiObject -Class Win32_Product -Filter &quot;Name = 'Java 8 (64 bit)'&quot;
+</code></pre>
+<p>How to uninstall application,</p>
+<pre><code>$app = Get-WmiObject -Class Win32_Product -Filter &quot;Name = 'Java 8 (64-bit)'&quot;
+$app.Uninstall()
+</code></pre>
+<h3 id="type-conversion">Type Conversion</h3>
+<p>This part also demonstrates how to use some datatype libraries in commands.</p>
+<p>Example 1, how do we find ascii number of a bunch of characters?</p>
+<pre><code>$ [int[]][char[]] 'abcd'
+97
+98
+99
+100
+</code></pre>
+<p>Additionally, to find ascii number of single char,</p>
+<pre><code>$ [int][char] 'z'
+122
+</code></pre>
+<p>Moroever we can call <code>Array.Sort</code> in following way,</p>
+<pre><code>$a = [int[]] &#64;(9,5)
+[Array]::Sort($a)
+</code></pre>
+<p>Because these literatls i.e., 'xxx' in powershell is considered as string literal like python.</p>
+<pre><code>$ 'z'.gettype()
+IsPublic IsSerial Name                                     BaseType
+-------- -------- ----                                     --------
+True     True     String                                   System.Object
+</code></pre>
+<h4 id="mathematics-library">Mathematics Library</h4>
+<p>Example usage of .net math library, using old friend the <code>power</code> method,</p>
+<pre><code>[Math]::Pow(2,13)
+</code></pre>
+<p>Or finding a square root,</p>
+<pre><code>[Math]::Sqrt(9)
+</code></pre>
+<h4 id="string-helpers">String Helpers</h4>
+<p>nll or empty related where <code>$ConfigName</code> is an example variable,</p>
+<pre><code>[string]::IsNullOrEmpty($ConfigName)
+[string]::IsEmpty($ConfigName)
+[string]::Empty($ConfigName)
+</code></pre>
+<p>substring example,</p>
+<pre><code>if ($loc.EndsWith(&quot;\&quot;)) {
+    return $loc.Substring(0, $loc.Length-1)
+}
+</code></pre>
+<p>which is fine to be replaced with,</p>
+<pre><code>if (($lastindex = [int] $loc.lastindexof('\')) -ne -1) {
+    return $loc.Substring(0, $lastindex)
+}
+</code></pre>
+<h2 id="show-os-version">Show OS Version</h2>
+<p>Using Net Framework Library,</p>
+<pre><code>$ [Environment]::OSVersion
+Platform ServicePack Version      VersionString
+-------- ----------- -------      -------------
+Win32NT             10.0.18362.0 Microsoft Windows NT 10.0.18362.0
+
+$ [Environment]::OSVersion.Version
+Major  Minor  Build  Revision
+-----  -----  -----  --------
+10     0      18362  0
+</code></pre>
+<p>Additionally, we can do this inspecting <code>hal.dll</code>,</p>
+<pre><code>$ [Version](Get-ItemProperty -Path &quot;$($Env:Windir)\System32\hal.dll&quot; -ErrorAction SilentlyContinue).VersionInfo.FileVersion.Split()[0]
+Major  Minor  Build  Revision
+-----  -----  -----  --------
+10     0      18362  356
+</code></pre>
+<h2 id="shell-variables">Shell Variables</h2>
+<p>To delete all contents of USB drive (this is dangerous as it deletea all contents and files/dirs from a drive),</p>
+<pre><code>Remove-Item -force l:\*
+</code></pre>
+<p>On pwsh,</p>
+<pre><code>$ $profile
+DocumentsDir\PowerShell\Microsoft.PowerShell_profile.ps1
+</code></pre>
+<p>On Powershell (Windows),</p>
+<pre><code>$ $profile
+DocumentsDir\\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+</code></pre>
+<p>Access history file,</p>
+<pre><code>$ (Get-PSReadlineOption).HistorySavePath
+</code></pre>
+<h2 id="invoking-legacy-powershell-features-from-pwsh">Invoking Legacy Powershell Features from pwsh</h2>
+<p>Say you have a script named <code>Bluetooth.ps1</code> that uses Windows features i.e., COM. We invoke old Powershell to execute those.</p>
+<pre><code>Powershell -NoProfile -File Bluetooth.ps1 On
+</code></pre>
+<h2 id="setting-permission-for-running-pwsh-on-a-new-machine">Setting permission for running pwsh on a new machine</h2>
+<p>By default, there are lot of warnings and requests for permission. To make things easier, we relax the permission by setting execution policy.
+Set execution policy for current user <a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy">ref</a>,</p>
+<pre><code>Set-Executionpolicy Unrestricted -scope CurrentUser
+</code></pre>
+<p>In old days, that used to be enough. If you get following,</p>
+<pre><code>PowerShell 6.2.3
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+https://aka.ms/pscore6-docs
+Type 'help' to get help.
+
+Security warning
+Run only scripts that you trust. While scripts from the internet can be useful, this script can potentially harm your computer. If you trust this script, use the Unblock-File cmdlet to allow the script to run without this warning
+message. Do you want to run D:\Doc\PowerShell\Microsoft.PowerShell_profile.ps1?
+[D] Do not run  [R] Run once  [S] Suspend  [?] Help (default is &quot;D&quot;): R
+Loading personal and system profiles took 4862ms.
+</code></pre>
+<p>Try unblocking,</p>
+<pre><code>Unblock-File D:\Doc\PowerShell\Microsoft.PowerShell_profile.ps1
+</code></pre>
+<p>In worst situation, in corporate environments if that still does not work,</p>
+<pre><code>File D:\Doc\PowerShell\Microsoft.PowerShell_profile.ps1 cannot be loaded. The file D:\Doc\PowerShell\Microsoft.PowerShell_profile.ps1 is not digitally signed. You cannot run this script on the current system. For more information about running scripts and setting execution policy, see about_Execution_Policies at https://go.microsoft.com/fwlink/?LinkID=135170.
+At line:1 char:3
++ . 'D:\Doc\PowerShell\Microsoft.PowerShell_profile.ps1'
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++ CategoryInfo          : SecurityError: (:) [], PSSecurityException
++ FullyQualifiedErrorId : UnauthorizedAccess
+</code></pre>
+<p>we can apply bypass changing Registry,</p>
+<pre><code>Set-ItemProperty -Path HKLM:\Software\Policies\Microsoft\Windows\PowerShell -Name ExecutionPolicy -Value ByPass
+</code></pre>
+<p>In environments like school computers that are running SINC Site, bypassing in Process scope can be useful,</p>
+<pre><code>Set-ExecutionPolicy Bypass -Scope Process
+</code></pre>
+<h2 id="variables-pwsh-vs-powershell">Variables pwsh vs Powershell</h2>
+<p>Following are new pwsh variables,</p>
+<pre><code>EnabledExperimentalFeatures    {}
+
+IsCoreCLR                      True
+IsLinux                        False
+IsMacOS                        False
+isSinglePS                     True
+IsWindows                      True
+LASTEXITCODE                   0
+
+psConsoleType
+</code></pre>
+<p>The shell modified following previously known Powershell variables,</p>
+<pre><code>OutputEncoding
+PROFILE
+PSCommandPath
+PSEdition
+PSHOME
+</code></pre>
+<h2 id="continue">continue</h2>
+<p>rest of the contents yet to be appended..</p>
+
+
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Footer -->  
+  <footer>
+    <div class="container">
+        <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright text-muted m-0">Copyright &#xA9; 2021</p>
+                    <br />
+                    <ul class="list-inline text-center small">
+                            <li class="list-inline-item">
+                                <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                            </li>
+                    </ul>
+                    <br />
+                    <div class="font-weight-bold small"><a href="https://statiq.dev">Generated by Statiq</a></div>
+                </div>
+        </div>
+    </div>
+</footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  
+
+
+  
+
+  <!-- Custom scripts for this template -->
+  <script src="/js/clean-blog.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Heads in the cloud! A Qubit Blog!">
+
+  <title>Notes from Qubit Inc. - Binary Related Problems</title>
+
+  <link rel="canonical" href="https://note.iqubit.xyz/posts/ds-binary-tree-problems">
+
+      <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
+      <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
+  
+  <meta name="application-name" content="Notes from Qubit Inc." />
+  <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
+  <meta name="msapplication-starturl" content="/" />
+
+  <meta property="og:title" content="Notes from Qubit Inc. - Binary Related Problems" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://note.iqubit.xyz/posts/ds-binary-tree-problems" />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="/vendor/bootstrap/scss/bootstrap.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/fontawesome-free/css/brands.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css' data-no-mirror>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' data-no-mirror>
+  
+  <!-- Custom styles for this template -->
+  <link href="/scss/clean-blog.css" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/plugins/autoloader/prism-autoloader.min.js" data-no-mirror></script>
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/themes/prism.css">
+  
+  
+
+
+  
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Notes from Qubit Inc.</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/tags">Tags</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/posts">Posts</a>
+            </li>
+</ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Page Header -->
+  <header class="masthead">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="post-heading">
+          <h1>
+            Binary Related Problems
+          </h1>
+              <div class="meta">Published on Saturday, 06 October 2018</div>
+                <div class="mt-3">
+                      <a href="/tags/problem-solving" class="badge badge-light"> Problem Solving</a>
+                      <a href="/tags/algorithms" class="badge badge-light"> Algorithms</a>
+                      <a href="/tags/binary-tree" class="badge badge-light"> Binary Tree</a>
+                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- Main Content -->
+  <div class="container"> 
+    <div class="row">
+      <div id="content" class="col-md-12">  
+        <p>ToDo: split the article later by topic.</p>
+<h2 id="related-problems-list">Related Problems List</h2>
+<ol>
+<li><p>Construct binary Tree from inorder and postorder <a href="https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal">leetcode problem link</a></p>
+</li>
+<li><p>cartesian tree problems in <a href="https://codeforces.com/blog/entry/3767">codeforces blog</a></p>
+</li>
+<li><p>Given an inorder traversal of a cartesian tree, construct the tree. following <a href="https://www.meetup.com/Bay-Area-JavaScript-Interview-Prep-Meetup/events/254210621">js meetup</a> works on this on 09-06, here's the <a href="https://docs.google.com/document/d/1GzSrxwIakPdZYDLD-69MWhrbrfpMavdnqArTlzVYa4w">google doc</a> with work on code from few members.</p>
+</li>
+</ol>
+<p>Woud this help?</p>
+<pre><code>int findInorderPosition(int[] inorder, int value, int start, int end) {
+    for (int i = start; i &lt;= end; i++)
+    if (inorder[i] == value)
+        return i;
+    return -1;
+}
+</code></pre>
+<p>dynamic programming find max sum from array, <a href="https://stackoverflow.com/q/29236837">SO hint</a></p>
+<h3 id="string-problems">string problems</h3>
+<p>codeforces String Problems and Solutions
+<a href="https://codeforces.com/blog/entry/49938">https://codeforces.com/blog/entry/49938</a></p>
+<p><a href="https://codeforces.com/problemset/problem/126/B">https://codeforces.com/problemset/problem/126/B</a>
+<a href="https://codeforces.com/problemset/problem/471/D">https://codeforces.com/problemset/problem/471/D</a></p>
+<p>segment tree (probably a solution on Battle with you know who) <a href="https://ideone.com/uihDVe">code link</a></p>
+<h4 id="competitive-programming-with-lewin-gan">Competitive programming, with Lewin Gan</h4>
+<ul>
+<li>Contest 02 on 08-19 <a href="https://www.meetup.com/Competitive-Programming/events/253040202">event link</a> and solutions discussion <a href="https://paper.dropbox.com/doc/Contest-2-Solutions--AR7af%7En02Sq37GkMp1nEQyO7Ag-MoU0f0AH6cXOPZcJZzxOC">article link</a></li>
+</ul>
+<h2 id="system-design-problems">System Design Problems</h2>
+<ol>
+<li><a href="https://fipg.slack.com/files/U5ZM4RSS1/FD0412RB9/Design_Twitter__Part_2_">Design Twitter (Part 2)</a></li>
+</ol>
+<h3 id="misc">Misc</h3>
+<p><a href="https://www3.cs.stonybrook.edu/%7Erezaul/Fall-2017/CSE548/CSE548-lecture-4.pdf">Rezaul convolution</a></p>
+<p>Problem set &amp; Analysis from the Finals and Qualification rounds
+<a href="http://bubblecup.org/Content/Media/Booklet2018.pdf">http://bubblecup.org/Content/Media/Booklet2018.pdf</a></p>
+<p>Why does a = b (mod n) iff a - b is divisible by n?
+<a href="https://math.stackexchange.com/questions/1856128/why-does-a-b-mod-n-iff-a-b-is-divisible-by-n">https://math.stackexchange.com/questions/1856128/why-does-a-b-mod-n-iff-a-b-is-divisible-by-n</a></p>
+<p>may be related to some problem from innoworld
+<a href="https://codeforces.com/contest/455/problem/D">https://codeforces.com/contest/455/problem/D</a></p>
+<h4 id="binary-indexed-tree">binary indexed tree</h4>
+<p>codeforces editorials on</p>
+<ul>
+<li><a href="https://hk.saowen.com/a/06617b9cf1dd01762b591b6dedb0c5bfd4318d4f1bf12cf58cf4621889a884ed">https://hk.saowen.com/a/06617b9cf1dd01762b591b6dedb0c5bfd4318d4f1bf12cf58cf4621889a884ed</a></li>
+<li><a href="https://codeforces.com/comments/with/Z38">https://codeforces.com/comments/with/Z38</a></li>
+<li><a href="https://codeforces.com/blog/entry/60511">https://codeforces.com/blog/entry/60511</a></li>
+<li><a href="https://codeforces.com/problemset/gymProblem/100741/A">https://codeforces.com/problemset/gymProblem/100741/A</a></li>
+<li><a href="https://codeforces.com/contest/575/problem/H">https://codeforces.com/contest/575/problem/H</a></li>
+</ul>
+
+
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Footer -->  
+  <footer>
+    <div class="container">
+        <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright text-muted m-0">Copyright &#xA9; 2021</p>
+                    <br />
+                    <ul class="list-inline text-center small">
+                            <li class="list-inline-item">
+                                <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                            </li>
+                    </ul>
+                    <br />
+                    <div class="font-weight-bold small"><a href="https://statiq.dev">Generated by Statiq</a></div>
+                </div>
+        </div>
+    </div>
+</footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  
+
+
+  
+
+  <!-- Custom scripts for this template -->
+  <script src="/js/clean-blog.js"></script>
+
+</body>
+
+</html>

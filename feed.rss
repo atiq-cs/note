@@ -1,11 +1,1256 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0">
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
 	<channel>
 		<title />
 		<link>https://note.iqubit.xyz/</link>
 		<description>Heads in the cloud! A Qubit Blog!</description>
 		<copyright>Copyright © 2021</copyright>
-		<pubDate>Sun, 27 Jun 2021 00:20:43 GMT</pubDate>
-		<lastBuildDate>Sun, 27 Jun 2021 00:20:43 GMT</lastBuildDate>
+		<pubDate>Sun, 27 Jun 2021 00:27:04 GMT</pubDate>
+		<lastBuildDate>Sun, 27 Jun 2021 00:27:04 GMT</lastBuildDate>
+		<item>
+			<title>Powershell Core Useful Commands</title>
+			<link>https://note.iqubit.xyz/posts/powershell-core</link>
+			<description>Heads in the cloud! A Qubit Blog!</description>
+			<guid>https://note.iqubit.xyz/posts/powershell-core</guid>
+			<pubDate>Fri, 19 Mar 2021 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;&lt;em&gt;This article formerly titled as 'Powershell Frequently Used Commands. Even though the article is titled "core" it includes some Powershell contents as well.'&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;More cmdlets are on the other article: &lt;code&gt;powershell-core-cmdlets&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="initialization-of-shell"&gt;Initialization of Shell&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;This section is for my personalized shell; please feel free to skip it.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Initiate a shell using a specified init script (replaced &lt;code&gt;Env:WinDir/*&lt;/code&gt; symbolic link),&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pwsh -NoExit D:\pwsh\Init.ps1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For Machine Learning customized shell, I try adding an arg,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pwsh -NoExit D:\pwsh\Init.ps1 ML
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="new-to-pwsh"&gt;New to pwsh?&lt;/h2&gt;
+&lt;p&gt;clear-host is equivalent to cls
+&lt;code&gt;Get-Location&lt;/code&gt; instead of pwd`
+ls, cat, popd, pushd etc still work&lt;/p&gt;
+&lt;p&gt;Write-Host is equivalent to echo. For example,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;echo 'hello'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;works just fine.&lt;/p&gt;
+&lt;p&gt;ps is equivalent to Get-Process or to List processes or doing &lt;code&gt;tasklist&lt;/code&gt;.
+Stop-Proccess instead of taskkill&lt;/p&gt;
+&lt;p&gt;Example of starting pwsh with an initiazation script or calling a script with an arg,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Start-Process pwsh -ArgumentList '-NoExit', 'Init-App.ps1 foo' -ErrorAction 'stop'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;above, &lt;code&gt;foo&lt;/code&gt; is argument.&lt;/p&gt;
+&lt;p&gt;Split string based on delimeter,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$Env:Path –split ';'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="cmdlets"&gt;Cmdlets&lt;/h3&gt;
+&lt;h2 id="file-management"&gt;File Management&lt;/h2&gt;
+&lt;p&gt;Filter files containing name pattern,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gci -filter '*word*'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Create directory,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;New-Item D:\work\git -Type Directory
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Create file (alternative of Unix &lt;code&gt;touch&lt;/code&gt;),&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;New-Item C:\scripts\new_file.txt -type file
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Show files in order of modified time,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ Get-ChildItem -Path C:\windows\CPE\Chef\outputs | Where-Object { -not $_.PsIsContainer } |
+    Sort-Object LastWriteTime -Descending | Select-Object -first 10 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="control-panel-cmdlet"&gt;Control Panel Cmdlet&lt;/h2&gt;
+&lt;p&gt;Handy cmds follow, &lt;a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/show-controlpanelitem"&gt;ref&lt;/a&gt; to access sys properties,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Show-ControlPanelItem -Name System
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Names supported by &lt;code&gt;Show-ControlPanelItem&lt;/code&gt;,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Network and Sharing Center&lt;/li&gt;
+&lt;li&gt;Device Manager&lt;/li&gt;
+&lt;li&gt;Programs and Features&lt;/li&gt;
+&lt;li&gt;Default Programs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For, Sound mouse etc we do,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Sound&lt;/li&gt;
+&lt;li&gt;Mouse&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="network-cmdlets"&gt;Network Cmdlets&lt;/h2&gt;
+&lt;p&gt;Ping hosts,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Test-Connection -Count 64 google.com
+Test-Connection -Count 1024 google.com
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;host &lt;code&gt;bing.com&lt;/code&gt; does not reply to ICMP requests anymore, hence it's not worth trying &lt;code&gt;Test-Connection bing.com&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;if help modules are outdated this updates it,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Update-Help
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;More network related cmdlets or commands are at &lt;a href="https://note.iqubit.xyz/network-wifi-cmd"&gt;wifi cmd article&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="other-cmdlets"&gt;Other Cmdlets&lt;/h2&gt;
+&lt;p&gt;Get list of running processes (unique), show full path,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Get-Process | Select-Object -Unique Path
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;When Windows Explorer or taskbar has trouble,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Stop-Process -Name explorer
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Find difference between 2 text files,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Compare-Object (get-content one.txt) (get-content two.txt)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Scheduled Tasks,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Get-ScheduledTask -TaskName *chef*
+Get-ScheduledTask -TaskPath \
+Get-ScheduledTask -TaskPath \MSIT\
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Rename Machine,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Rename-Computer -NewName JohnPC -Restart
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Event Log,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Show-EventLog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Show console host info,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ Get-Host
+Name             : ConsoleHost
+Version          : 6.2.3
+InstanceId       : cddce532-924c-4a66-a671-bbea53caf430
+UI               : System.Management.Automation.Internal.Host.InternalHostUserInterface
+CurrentCulture   : en-US
+CurrentUICulture : en-US
+PrivateData      : Microsoft.PowerShell.ConsoleHost+ConsoleColorProxy
+DebuggerEnabled  : True
+IsRunspacePushed : False
+Runspace         : System.Management.Automation.Runspaces.LocalRunspace
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;How to uninstall store application i.e., skype&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Get-AppxPackage Microsoft.SkypeApp | Remove-AppxPackage
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Get Software List,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Get-WmiObject -Class Win32_Product -Filter "Name = 'Java 8 (64 bit)'"
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;How to uninstall application,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$app = Get-WmiObject -Class Win32_Product -Filter "Name = 'Java 8 (64-bit)'"
+$app.Uninstall()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="type-conversion"&gt;Type Conversion&lt;/h3&gt;
+&lt;p&gt;This part also demonstrates how to use some datatype libraries in commands.&lt;/p&gt;
+&lt;p&gt;Example 1, how do we find ascii number of a bunch of characters?&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ [int[]][char[]] 'abcd'
+97
+98
+99
+100
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Additionally, to find ascii number of single char,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ [int][char] 'z'
+122
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Moroever we can call &lt;code&gt;Array.Sort&lt;/code&gt; in following way,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$a = [int[]] @(9,5)
+[Array]::Sort($a)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Because these literatls i.e., 'xxx' in powershell is considered as string literal like python.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ 'z'.gettype()
+IsPublic IsSerial Name                                     BaseType
+-------- -------- ----                                     --------
+True     True     String                                   System.Object
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="mathematics-library"&gt;Mathematics Library&lt;/h4&gt;
+&lt;p&gt;Example usage of .net math library, using old friend the &lt;code&gt;power&lt;/code&gt; method,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[Math]::Pow(2,13)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Or finding a square root,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[Math]::Sqrt(9)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="string-helpers"&gt;String Helpers&lt;/h4&gt;
+&lt;p&gt;nll or empty related where &lt;code&gt;$ConfigName&lt;/code&gt; is an example variable,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[string]::IsNullOrEmpty($ConfigName)
+[string]::IsEmpty($ConfigName)
+[string]::Empty($ConfigName)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;substring example,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;if ($loc.EndsWith("\")) {
+    return $loc.Substring(0, $loc.Length-1)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;which is fine to be replaced with,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;if (($lastindex = [int] $loc.lastindexof('\')) -ne -1) {
+    return $loc.Substring(0, $lastindex)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="show-os-version"&gt;Show OS Version&lt;/h2&gt;
+&lt;p&gt;Using Net Framework Library,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ [Environment]::OSVersion
+Platform ServicePack Version      VersionString
+-------- ----------- -------      -------------
+Win32NT             10.0.18362.0 Microsoft Windows NT 10.0.18362.0
+
+$ [Environment]::OSVersion.Version
+Major  Minor  Build  Revision
+-----  -----  -----  --------
+10     0      18362  0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Additionally, we can do this inspecting &lt;code&gt;hal.dll&lt;/code&gt;,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ [Version](Get-ItemProperty -Path "$($Env:Windir)\System32\hal.dll" -ErrorAction SilentlyContinue).VersionInfo.FileVersion.Split()[0]
+Major  Minor  Build  Revision
+-----  -----  -----  --------
+10     0      18362  356
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="shell-variables"&gt;Shell Variables&lt;/h2&gt;
+&lt;p&gt;To delete all contents of USB drive (this is dangerous as it deletea all contents and files/dirs from a drive),&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Remove-Item -force l:\*
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;On pwsh,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ $profile
+DocumentsDir\PowerShell\Microsoft.PowerShell_profile.ps1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;On Powershell (Windows),&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ $profile
+DocumentsDir\\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Access history file,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ (Get-PSReadlineOption).HistorySavePath
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="invoking-legacy-powershell-features-from-pwsh"&gt;Invoking Legacy Powershell Features from pwsh&lt;/h2&gt;
+&lt;p&gt;Say you have a script named &lt;code&gt;Bluetooth.ps1&lt;/code&gt; that uses Windows features i.e., COM. We invoke old Powershell to execute those.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Powershell -NoProfile -File Bluetooth.ps1 On
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="setting-permission-for-running-pwsh-on-a-new-machine"&gt;Setting permission for running pwsh on a new machine&lt;/h2&gt;
+&lt;p&gt;By default, there are lot of warnings and requests for permission. To make things easier, we relax the permission by setting execution policy.
+Set execution policy for current user &lt;a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy"&gt;ref&lt;/a&gt;,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Set-Executionpolicy Unrestricted -scope CurrentUser
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In old days, that used to be enough. If you get following,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;PowerShell 6.2.3
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+https://aka.ms/pscore6-docs
+Type 'help' to get help.
+
+Security warning
+Run only scripts that you trust. While scripts from the internet can be useful, this script can potentially harm your computer. If you trust this script, use the Unblock-File cmdlet to allow the script to run without this warning
+message. Do you want to run D:\Doc\PowerShell\Microsoft.PowerShell_profile.ps1?
+[D] Do not run  [R] Run once  [S] Suspend  [?] Help (default is "D"): R
+Loading personal and system profiles took 4862ms.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Try unblocking,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Unblock-File D:\Doc\PowerShell\Microsoft.PowerShell_profile.ps1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In worst situation, in corporate environments if that still does not work,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;File D:\Doc\PowerShell\Microsoft.PowerShell_profile.ps1 cannot be loaded. The file D:\Doc\PowerShell\Microsoft.PowerShell_profile.ps1 is not digitally signed. You cannot run this script on the current system. For more information about running scripts and setting execution policy, see about_Execution_Policies at https://go.microsoft.com/fwlink/?LinkID=135170.
+At line:1 char:3
++ . 'D:\Doc\PowerShell\Microsoft.PowerShell_profile.ps1'
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++ CategoryInfo          : SecurityError: (:) [], PSSecurityException
++ FullyQualifiedErrorId : UnauthorizedAccess
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;we can apply bypass changing Registry,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Set-ItemProperty -Path HKLM:\Software\Policies\Microsoft\Windows\PowerShell -Name ExecutionPolicy -Value ByPass
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In environments like school computers that are running SINC Site, bypassing in Process scope can be useful,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Set-ExecutionPolicy Bypass -Scope Process
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="variables-pwsh-vs-powershell"&gt;Variables pwsh vs Powershell&lt;/h2&gt;
+&lt;p&gt;Following are new pwsh variables,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;EnabledExperimentalFeatures    {}
+
+IsCoreCLR                      True
+IsLinux                        False
+IsMacOS                        False
+isSinglePS                     True
+IsWindows                      True
+LASTEXITCODE                   0
+
+psConsoleType
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The shell modified following previously known Powershell variables,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;OutputEncoding
+PROFILE
+PSCommandPath
+PSEdition
+PSHOME
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="continue"&gt;continue&lt;/h2&gt;
+&lt;p&gt;rest of the contents yet to be appended..&lt;/p&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
+		<item>
+			<title>Powershell Core Cmdlets</title>
+			<link>https://note.iqubit.xyz/posts/powershell-core-cmdlets</link>
+			<description>Heads in the cloud! A Qubit Blog!</description>
+			<guid>https://note.iqubit.xyz/posts/powershell-core-cmdlets</guid>
+			<pubDate>Thu, 10 Dec 2020 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h3 id="start-process"&gt;Start-Process&lt;/h3&gt;
+&lt;p&gt;Here are some handy cmds (Application Run Examples),&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Start&lt;/code&gt; is an alias of &lt;code&gt;Start-Process&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Start DevEnv /Edit, Stream-Converter.ps1
+Start TeamViewer
+Start CVpn-Client
+
+Start Atom
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;where I link &lt;code&gt;CVpn-Client&lt;/code&gt; to &lt;code&gt;C:\Program Files (x86)\Cisco\Cisco AnyConnect Secure Mobility Client\vpnui.exe&lt;/code&gt;,&lt;/p&gt;
+&lt;p&gt;and, atom is usually linked to &lt;code&gt;C:\Users\atiq\AppData\Local\atom\atom.exe&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Syntax for microsoft store apps,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Start Microsoft-Edge:https://google.com
+Start Skype:
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For passing arguments to an application we can either add it right after the app name with a seperating space,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Start Notepad++ file_path
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Or, specify it in &lt;code&gt;ArgumentList&lt;/code&gt;,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Start Notepad++ -ArgumentList file_path
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;However, it's tricky if passed argument for example, &lt;code&gt;file_path&lt;/code&gt; above contains a space character.&lt;/p&gt;
+&lt;p&gt;To make it work, we need to double quote them &lt;a href="https://stackoverflow.com/questions/22840882/powershell-opening-file-path-with-spaces"&gt;ref&lt;/a&gt;,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Start Notepad++ -ArgumentList &amp;quot;`&amp;quot;D:\Cool Soft\my awesome file.txt`&amp;quot;&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="service-management"&gt;Service Management&lt;/h2&gt;
+&lt;p&gt;Get list of services currently running,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Get-Service | Where-Object {$_.Status -eq &amp;quot;Running&amp;quot;}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Start a service,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Start-Service -Name VPNAgent
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Stop one,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Stop-Service -Name VPNAgent
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Useful for bluetooth service,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Start-Service bthserv
+Stop-Service -Force bthserv
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
+		<item>
+			<title>Useful Git Commands</title>
+			<link>https://note.iqubit.xyz/posts/source-control-git</link>
+			<description>Heads in the cloud! A Qubit Blog!</description>
+			<guid>https://note.iqubit.xyz/posts/source-control-git</guid>
+			<pubDate>Sat, 25 Jul 2020 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;[first few sections are complete, later sections yet to be updated]&lt;/p&gt;
+&lt;h1 id="introduction"&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;A push to the remote repo consists of following two steps,&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;To add changes to the staging area&lt;/li&gt;
+&lt;li&gt;push the staged changes to remote repo&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="how-to-add-files-or-changes-to-staged-area-to-commit-later"&gt;How to add files or changes to staged area (to commit later)&lt;/h2&gt;
+&lt;p&gt;[update not complete yet]&lt;/p&gt;
+&lt;p&gt;Note: commit stores file locally. Commit is not sent to remote repository unless a &lt;code&gt;push&lt;/code&gt; command is applied.&lt;/p&gt;
+&lt;p&gt;Here, we give some examples of adding files/directories to staged area. Staged area&lt;a href="https://git-scm.com/book/en/v2/Getting-Started-Git-Basics"&gt;[1]&lt;/a&gt; means the stage before commit. Anything that are modified (added/changed/deleted) in the stage area will be performed whenever a &lt;code&gt;commit&lt;/code&gt; command is applied.&lt;/p&gt;
+&lt;p&gt;To add files/directories to staged area, at first, we modify or change files,&lt;/p&gt;
+&lt;p&gt;Then we can add all those changes to staged area. This will include any new file as well,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git add --all
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;But if we want to add only modifications on previously added files on repo we do this,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git add --update
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This means new files won't be added to the staged area.&lt;/p&gt;
+&lt;p&gt;Or, we can add selectively a few (after all modifications are done on those files), the files we want to commit we add them by applying a series of &lt;code&gt;git add&lt;/code&gt; commands,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git add file-1
+git add file-2
+	………….
+	………….
+	……………
+git add file-n
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Or, we can choose to add directory or files inside another directory (is this recursive, has to check),&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git add code_python/*
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Remove a dir entirely,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git rm -r _old_code/res/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;How to remove a file,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git rm file1.txt
+git commit --message &amp;quot;remove file1.txt&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;How to rename or move a file in the repo,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git mv original_name new_name
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Pleae don't be confused by &amp;quot;name&amp;quot; here. It supports renaming using full path as wel. It also support renaming a directories.&lt;/p&gt;
+&lt;p&gt;Removing a file from staged area, &lt;a href="http://data.agaric.com/undo-git-add-remove-files-staged-git-commit"&gt;ref&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git reset /location/to/file
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Note, this will not touch the file; only removes it from git staged area.&lt;/p&gt;
+&lt;p&gt;Show the changes which have been staged (git add`ed but not committed)?, &lt;a href="https://stackoverflow.com/questions/1587846/how-do-i-show-the-changes-which-have-been-staged"&gt;ref&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git diff --cached
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The changes we made are called deltas.&lt;/p&gt;
+&lt;h2 id="how-to-commit-staged-changes-git-commit"&gt;How to commit staged changes (git commit)&lt;/h2&gt;
+&lt;p&gt;Commit to actually push the changes to local repo (will be in remote as soon as pushed). If you are doing this for the first time in the git client you installed, you need to configure committer email and user-name,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git config --global user.name &amp;quot;John Doe&amp;quot;
+git config --global user.email &amp;quot;John.Doe&amp;#64;Domain.Com&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To check if those are set,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git config --global --get user.name
+git config --global --get user.email
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Get git config global info all props,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git config --global --get-regexp .*
+user.email one&amp;#64;iqubit.xyz
+user.name The Matrix
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;git commit&lt;/code&gt; is different than &lt;code&gt;svn commit&lt;/code&gt; as &lt;code&gt;svn commit&lt;/code&gt; pushes to remote repo immediately whereas git commit does not. git usually have the entire copy just like remote repo, svn does not have entire copy.&lt;/p&gt;
+&lt;p&gt;Note: commit stores file locally. Commit is not sent to remote repository unless a &lt;code&gt;push&lt;/code&gt; command is applied (we will discuss push command on next section).&lt;/p&gt;
+&lt;p&gt;To add the commit message use &lt;code&gt;-m&lt;/code&gt; switch in arguments as showed below, this supports multiline,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git commit --message &amp;quot;first commit message&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here is an example of multi-line commit message, surrounding the entire commit message with double quotes works,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git commit --message &amp;quot;Implemented secure functions - line1
+	line2 - example line that means code won't work on Linux, we'll have to add separate
+	line3 - branch for Linux
+	line4 - Update on logic based on tests&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In powershell, single quote works for multi-line commit message,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git commit --message &amp;quot;line1
+	line2
+	line3
+	line4&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="pushing-to-remotesending-deltas-to-remote-repo-server"&gt;Pushing to remote(sending deltas to remote repo server)&lt;/h2&gt;
+&lt;p&gt;Then use &amp;quot;git push origin branch_name&amp;quot;&lt;/p&gt;
+&lt;p&gt;Here is an example of Pushing to remote master branch,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git push origin master
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To show info about git repo's remote origin,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git remote show origin
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="git-undo-edit-commit-etc"&gt;git undo, edit commit etc&lt;/h2&gt;
+&lt;p&gt;To Rollback to a specific previous commit we do,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git reset --hard 
+git push --force
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To roll back to previous to last commit we do,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git reset --hard ~HEAD
+git push --force
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can edit commit message of the last commit anytime before push,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git commit --amend
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If we want to use commit message from a file,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git commit --file filepath.ext
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Commit message from file (amend previous one),&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git commit --edit --file filepath.ext
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After pushing you still can edit the commit message in 2 steps,
+step 1:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git commit --edit --file filepath.ext
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;step 2:
+Do a force push (ths is usually combined with &lt;code&gt;git commit --amend&lt;/code&gt;),&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git push --force origin master
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;However, if someone has made another commit, in the mean time, those commits will be gone. So be aware of that!&lt;/p&gt;
+&lt;p&gt;To edit previous commit messages that are pushed,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git rebase --interactive 88af37e
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then, we press Ctrl + X,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git rebase --continue
+git push --force origin master
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Again, a force push destroys commit made by others.&lt;/p&gt;
+&lt;p&gt;To correct commit author name upto specific commit (probably? or is it only for single commit?),&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git reset author
+git rebase --interactive -p 7508a2627bee2a28535e7ae306c51788fd287f9f
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;mark all of them as 'e' and keep applying following commands. In this example, the author's email address is 'alex&amp;#64;corp.xyz',&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git commit --amend --author &amp;quot;Alex Roy &amp;lt;alex&amp;#64;corp.xyz&amp;gt;&amp;quot; --no-edit
+git rebase --continue
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Removing a single commit from history&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;There might be conflicts during the operation, some commit order gets changed as well (not order by date anymore), Be aware this is dangerous and might now work,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git rebase --onto dadfe3e^ dadfe3e HEAD
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then, after conflict resolution, ref&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git rebase --continue
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="stash-commands"&gt;Stash Commands&lt;/h2&gt;
+&lt;p&gt;Be careful while applying these commands.&lt;/p&gt;
+&lt;p&gt;Stashing all local changes
+Hard - stash all local changes and pull updated code. &lt;a href="https://stackoverflow.com/q/4157189"&gt;[6]&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;This is better than ‘git stash’ It deletes unstaged changes,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git checkout -- .
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Clean up all non version controlled files (&lt;code&gt;-d&lt;/code&gt;: recurse into untracked directories),&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git clean --force -d
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Find last commit id,
+To get long commit id,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git rev-parse HEAD
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To get short commit id,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git rev-parse --short HEAD
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="checking-specific-revision-of-a-file-or-getting-specific-revision"&gt;Checking specific revision of a file or getting specific revision&lt;/h2&gt;
+&lt;p&gt;Checkout specific revision of a file,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git checkout abcde file/to/restore
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;git checkout specific commit&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git checkout -b old_state f5bf0d670686143a67177e9d81474687535a761e
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Or do following,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git reset --hard origin/master
+git fetch
+git checkout -b old_state f5bf0d6
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;git checkout can be useful in restoring a mistakenly delete file as well or to stash changes on a specific file,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git checkout abcde file/to/restore
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This restore the file of the current revision. [&lt;a href="http://stackoverflow.com/questions/953481/find-and-restore-a-deleted-file-in-a-git-repository"&gt;4&lt;/a&gt;]&lt;/p&gt;
+&lt;p&gt;View a commit,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git show commit_id
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Show specific revision of a file, ref&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git show commit_id:file_path
+git show 61c2ac6:src/bootstrapper.cc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="misc"&gt;Misc&lt;/h2&gt;
+&lt;p&gt;Check history of all git commits, snapshots using reflog&lt;a href="http://alblue.bandlem.com/2011/05/git-tip-of-week-reflogs.html"&gt;[7]&lt;/a&gt; argument,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git reflog
+813d871 (HEAD -&amp;gt; source, origin/source) HEAD&amp;#64;{0}: commit: more contents added to posts
+7eabf08 HEAD&amp;#64;{1}: commit: Add Windows Cmd Cache idle
+79ff45d HEAD&amp;#64;{2}: commit: Add more content to pwsh post
+3c7eee2 HEAD&amp;#64;{3}: commit (amend): tags syntax updated for wyam
+... ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="conflict-resolution"&gt;Conflict Resolution&lt;/h2&gt;
+&lt;p&gt;Most common approach in resolving conflict is to check which files are having conflict,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git status
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And what changes are coming from what side that is causing the conflict,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git diff
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Addionally, a file path can be specified to see what changes are coming from the remote and local,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git diff /path/to/file
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then, we use a merge tool or manually modify the content file and finalize the conflict resolution. Afterwards, when are done doing that with that file we do,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git add file_path
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;When conflict  resolved for all files finally we do,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git commit --message 'conflict resolved commit and so on..'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;However, in some case conflict resolution can be easier. For example, you might want to discard local changes and just accept remote forcefully. In such a case we can follow this:&lt;/p&gt;
+&lt;p&gt;A basic overview how to merge is on this &lt;a href="http://www.gitguys.com/topics/merging-with-a-conflict-conflicts-and-resolutions"&gt;gitguys' article&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git fetch
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Accept their change for single file, ref&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git checkout --theirs src/register-configuration.cc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="origin-tricks-and-branches"&gt;Origin tricks and Branches&lt;/h2&gt;
+&lt;p&gt;Change repository URL,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git remote set-url origin https://github.com/user_name/testing.git
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;switch to a new branch,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git checkout -b dev_branch
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;show current branch and other branches,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git branch
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Delete a branch on your local filesystem,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git branch -d testing_branch
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The git push syntax is: git push [remote-repository-name] [branch-or-commit-name],&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git push origin dev_branch
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Change remote origin,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git remote set-url origin URL
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="detached-head"&gt;Detached Head&lt;/h2&gt;
+&lt;p&gt;If we want our git repo to have no current branch then we can do this,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git checkout COMMIT-SHA-ID
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="git-configuration-files"&gt;Git configuration Files&lt;/h2&gt;
+&lt;p&gt;When we perform &lt;code&gt;git config&lt;/code&gt; it applies only to the current project. The configuration file that gets update is,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;./.git/config
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;When we apply &lt;code&gt;git config --global&lt;/code&gt; it updates following file,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;~/.gitconfig
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If none of these exist then the systems git config file is applied. According to priority these files are presented below,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;./.git/config
+~/.gitconfig
+/etc/gitconfig (guessing I don't recall the exact location)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="references"&gt;References&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="https://git-scm.com/book/en/v2/Getting-Started-Git-Basics"&gt;git-scm - Getting Started - Git Basics&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://data.agaric.com/undo-git-add-remove-files-staged-git-commit"&gt;agaric - undo, remove staged file&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://stackoverflow.com/q/4157189"&gt;SO - Git Pull While Ignoring Local Changes&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
+		<item>
+			<title>Legacy Powershell Useful Commands</title>
+			<link>https://note.iqubit.xyz/posts/powershell-legacy</link>
+			<description>Heads in the cloud! A Qubit Blog!</description>
+			<guid>https://note.iqubit.xyz/posts/powershell-legacy</guid>
+			<pubDate>Sat, 18 Jul 2020 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Please be aware of notation below in command outlines. &lt;code&gt;$&lt;/code&gt; represents a command; following rest of the lines represent output. Powershell is superset of traditional command prompt. Hence, all usual binaries still run on powershell for example, &lt;code&gt;takeown&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Power Options&lt;/strong&gt;
+Open Power Options Window,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Show-ControlPanelItem -Name &amp;quot;Power Options&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="service-management"&gt;Service Management&lt;/h2&gt;
+&lt;p&gt;Get list of services currently running,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Get-Service | Where-Object {$_.Status -eq &amp;quot;Running&amp;quot;}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Start a service,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Start-Service -Name VPNAgent
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Stop one,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Stop-Service -Name VPNAgent
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="scripting-using-pwsh"&gt;Scripting using pwsh&lt;/h2&gt;
+&lt;p&gt;These basic stuffs might come handy,&lt;/p&gt;
+&lt;p&gt;Passing all arguments, untouched to another script,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$saArgs = $args[0 .. ($args.Count)]
+&amp;amp; &amp;quot;$Env:HOME\ss.ps1&amp;quot; $saArgs
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="changing-window-size"&gt;Changing Window Size&lt;/h3&gt;
+&lt;p&gt;To change Window ize we change buffer size first, because Window Size depends on it.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$cUI = (Get-Host).UI.RawUI
+$b = $cUI.BufferSize
+$b.Width = $width
+$b.Height = $history_size
+$cUI.BufferSize = $b
+
+# change window height and width
+$b = $cUI.WindowSize
+$b.Width = $width
+$b.Height = $height
+$cUI.WindowSize = $b
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There's oneliner to do it as well,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;(Get-Host).UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size -Property &amp;#64;{Width=$width; Height=$history_size}
+(Get-Host).UI.RawUI.WindowSize = New-Object System.Management.Automation.Host.Size -Property &amp;#64;{Width=$width; Height=$height}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To change the title of the console we do,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$cUI.WindowTitle = $title
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/dotnet/api/system.management.automation.host.pshostuserinterface.rawui"&gt;ms docs ref&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="continue"&gt;continue&lt;/h2&gt;
+&lt;p&gt;rest of the contents yet to be appended..&lt;/p&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
+		<item>
+			<title>Command Line for Utilities and Tools</title>
+			<link>https://note.iqubit.xyz/posts/windows-tools-cmd</link>
+			<description>Heads in the cloud! A Qubit Blog!</description>
+			<guid>https://note.iqubit.xyz/posts/windows-tools-cmd</guid>
+			<pubDate>Fri, 29 Nov 2019 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Please be aware of notation below in command outlines. &lt;code&gt;$&lt;/code&gt; represents a command and rests of the lines following that line are output. Powershell is superset of traditional command prompt. Hence, all usual binaries still run on powershell for exxample, &lt;code&gt;takeown&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id="windows-os-tools"&gt;Windows OS Tools&lt;/h2&gt;
+&lt;h3 id="balanced-power-options"&gt;Balanced Power options&lt;/h3&gt;
+&lt;p&gt;Turn hibernation off (run from elevated PS),&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;powercfg.exe /h off
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;List Power plans,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ powercfg list
+Existing Power Schemes (* Active)
+-----------------------------------
+Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced) *
+Power Scheme GUID: 433299bd-efc0-474e-a61e-4a940c85e632  (Timers off (Presentation))
+Power Scheme GUID: 496d75e1-8cba-4d72-b778-535d67c976ea  (Airplane)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;How to export Balanced plan (we copy paste id from output of above command),&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;powercfg -Export D:\Efficient_BP.pow 381b4222-f694-41f0-9685-ff5bb260df2e
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;automate importing registry (requires privilege) ref,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;reg import 'D:\Soft\reg files soft settings\app_paths\KeePass.reg'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="winrar"&gt;WinRar&lt;/h3&gt;
+&lt;p&gt;An example use of rar (in my system referring to &lt;code&gt;D:\ProgData\WinRAR\rar.exe&lt;/code&gt;),&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;rar a -m5 -psa1 -ep1 I:\Doc\docs.rar I:\Doc\Office_Docs\
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;without &lt;code&gt;-ep1&lt;/code&gt; it makes a big directory tree&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="gnuwin32-tools"&gt;gnuwin32 tools&lt;/h2&gt;
+&lt;p&gt;similar to Unix,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;quot;D:\ProgramFiles_x86\GnuWin32\bin\gzip.exe&amp;quot; -d .\bitarray-ex-0.8.1.tar.gz
+&amp;quot;D:\ProgramFiles_x86\GnuWin32\bin\tar.exe&amp;quot; -xvf .\bitarray-ex-0.8.1.tar
+&amp;quot;D:\ProgramFiles_x86\GnuWin32\bin\tar.exe&amp;quot; --version
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="external-applications"&gt;External Applications&lt;/h2&gt;
+&lt;p&gt;Here are some command line examples for External Applications.&lt;/p&gt;
+&lt;p&gt;using &lt;code&gt;tftp&lt;/code&gt; to uplod a file into ftp server,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; tftp -i 192.168.1.10 PUT 'E:\LinkSys E2000\images\FW_E2000_1.0.04.007_US_20101201_code.bin' FW_E2000_1.0.04.007_US_20101201_code.bin
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I used to use this one for 'ATA Automation'.&lt;/p&gt;
+&lt;p&gt;Identify image format info using image magick's &lt;code&gt;identiy&lt;/code&gt; (referring to &lt;code&gt;C:\Program Files\ImageMagick-6.8.8-Q16\identify.exe&lt;/code&gt; in my system as an example),&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;identify &amp;quot;F:\Documents\Images\From Previous Cell-Phone\2011-09\01092011.jpg&amp;quot;
+identify -verbose &amp;quot;F:\Sourcecodes\Web\ASP .Net\Icons\saos_favicon.ico&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Identify image format info using image magick's &lt;code&gt;convert&lt;/code&gt; tool (referring to &lt;code&gt;C:\Program Files\ImageMagick-6.8.8-Q16\convert.exe&lt;/code&gt; in my system as an example),&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;convert -background transparent
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;ps2pdf&lt;/code&gt; tool (location in my system &lt;code&gt;C:\Program Files\MiKTex\miktex\bin\x64\ps2pdf.exe&lt;/code&gt;) from Miktex from example,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ps2pdf D:\Source\ml-95-ripper.ps
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="video-applications"&gt;Video Applications&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;mkvextract&lt;/strong&gt;
+Extract subtitle using &lt;code&gt;mkvextract&lt;/code&gt; (referring to &lt;code&gt;C:\Program Files (x86)\MKVToolNix\mkvextract.exe&lt;/code&gt; in my system),&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mkvextract tracks D:\Movies\Fences.mkv &amp;quot;2:D:\Movies\Fences.srt&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;mkvmerge&lt;/code&gt; (in my system &lt;code&gt;C:\Program Files (x86)\MKVToolNix\mkvmerge.exe&lt;/code&gt;) show info on mkv file,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mkvmerge -i D:\Movies\Fences.mkv
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
+		<item>
+			<title>Rheumatoid Vasculitis and Granulomatosis with Polyangiitis (GPA)</title>
+			<link>https://note.iqubit.xyz/posts/medical-rheumatoid-vasculitis</link>
+			<description>Heads in the cloud! A Qubit Blog!</description>
+			<guid>https://note.iqubit.xyz/posts/medical-rheumatoid-vasculitis</guid>
+			<pubDate>Thu, 28 Nov 2019 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h2 id="rheumatoid-vasculitis"&gt;Rheumatoid Vasculitis&lt;/h2&gt;
+&lt;h3 id="intro"&gt;Intro&lt;/h3&gt;
+&lt;p&gt;update..&lt;/p&gt;
+&lt;h3 id="gpa"&gt;GPA&lt;/h3&gt;
+&lt;p&gt;Granulomatosis with Polyangiitis or wegener's granulomatosis vs rheumatoid arthritis&lt;/p&gt;
+&lt;p&gt;wegener Granulomatosis ref Articles,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.indiatoday.in/lifestyle/health/story/story/wegeners-granulomatosis/1/391068-300511-2014-09-24"&gt;indiatoday&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.ncbi.nlm.nih.gov/pubmed/18610662"&gt;Wegner, a study in india&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="rheumatoid-arthritis-and-gpa"&gt;Rheumatoid Arthritis and GPA&lt;/h3&gt;
+&lt;p&gt;Refs,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://journal.chestnet.org/article/S0012-3692(16)55832-2/fulltext"&gt;journal.chestnet - Evans Syndrome and Granulomatosis With Polyangiitis: An Interesting Concomitant Occurrence&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4869584/#bib16"&gt;nlm.nih.gov - Granulomatosis with polyangiitis (Wegener's disease): An updated review of ocular disease manifestations&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://annals.org/aim/article-abstract/705389"&gt;annals.org - Wegener Granulomatosis: An Analysis of 158 Patients&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5285513"&gt;Extreme Thrombocytosis Presenting in Anti-Neutrophil Cytoplasmic Autoantibodies-Associated Crescentic Glomerulonephritis with Immune Complex Deposits: A Case Report&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Cyclophosphamide vs Plasmapheresis&lt;/strong&gt;
+related to thrombocytopenia wegener's granulomatosis. Platelet counts as a biomarker in ANCA-associated vasculitis, &lt;a href="https://www.ncbi.nlm.nih.gov/pubmed/25744854"&gt;ref&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Why is my platelet count low?&lt;/p&gt;
+&lt;p&gt;Thrombocytopenia (low platelet count) is related.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://journal.chestnet.org/article/S0012-3692(17)31844-5/pdf"&gt;Plasma Exchange and Cyclophosphamide in Combination as Rescue Therapy for Severe Granulomatosis With Polyangiitis Refractory to Rituximab Therapy&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
+		<item>
+			<title>Hospitals in India</title>
+			<link>https://note.iqubit.xyz/posts/medical-hospitals-india</link>
+			<description>Heads in the cloud! A Qubit Blog!</description>
+			<guid>https://note.iqubit.xyz/posts/medical-hospitals-india</guid>
+			<pubDate>Thu, 28 Nov 2019 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h2 id="best-hospitals"&gt;Best Hospitals&lt;/h2&gt;
+&lt;p&gt;As folk says here are recommended few,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CMC - Vallore &lt;a href="https://clin.cmcvellore.ac.in/webapt/New/NewInstr.aspx"&gt;register link&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.aiims.edu/"&gt;AIIMS&lt;/a&gt;, ref: online, Parth&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Cons&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Long waiting for appointments. Sometimes, it takes about one and half months. If patient requires dialysis it might take a while to get appointment for that. Apparently, for emergency treatment requirements like that this might not be suitable.&lt;/p&gt;
+&lt;h2 id="hospitals-in-bengaluru"&gt;Hospitals in Bengaluru&lt;/h2&gt;
+&lt;p&gt;A few are recommended by a friend in Bangladesh.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Manipal Hospital
+There are chain of hospital branches for this one. For starter, the main one can be good.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Mazumdar Shaw Medical Center, Bommasandra&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;And other more commercial and expensive hospitals to seek opinions.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;apollo&lt;/li&gt;
+&lt;li&gt;Fortis (found a &lt;a href="https://www.dailyo.in/voices/modi-stent-surgery-health-doctors-private-hospitals-india-cheating/story/1/24036.html"&gt;bad review regarding stent surgery&lt;/a&gt;)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="transportation"&gt;Transportation&lt;/h2&gt;
+&lt;p&gt;The City is busy. It suffers high traffic situations. Hence, be prepared to spend time on the road while travelling to places.&lt;/p&gt;
+&lt;h2 id="data-plans"&gt;Data Plans&lt;/h2&gt;
+&lt;p&gt;A good cell phone carrier helps. It's easy to register a SIM card with one of the carriers to make communication easier to tmake cals hospitls or indian contacts.&lt;/p&gt;
+&lt;h2 id="misc"&gt;Misc&lt;/h2&gt;
+&lt;p&gt;few points,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;You could use a translator if there's language barrier i.e., you don't know hindi or English language.&lt;/li&gt;
+&lt;li&gt;For acquiring VISA to india for treatment, it might help to provide appointment document with the hospital/specialist.&lt;/li&gt;
+&lt;li&gt;For kidney related diseases, it might as well be a good idea to consult with neurology and oncology.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Recommendation from a friend form Mumbai&lt;/strong&gt;
+I would bet on Hospitals on Delhi and Mumbai.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Lilavati Hospital and Research Centre, Mumbai&lt;/li&gt;
+&lt;li&gt;
+&lt;ol type="A" start="16"&gt;
+&lt;li&gt;
+&lt;ol type="A" start="4"&gt;
+&lt;li&gt;Hinduja National Hospital &amp;amp; Medical Research Centre, Mumbai&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;Appolo Hospital, Chennai&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;My understanding is that Delhi have AIIMS and Mumbai in general have good hospitals. ref, Parth&lt;/p&gt;
+&lt;h2 id="other-countries"&gt;Other Countries&lt;/h2&gt;
+&lt;p&gt;[to do: move to another article later]&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Hospitals in Thailand&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;quot;Little expensive but excellent service&amp;quot;:  Bumrungrad International Hospital, &lt;a href="https://www.bumrungrad.com/en"&gt;site&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Bangkok Hospital, &lt;a href="https://www.bangkokhospital.com/en"&gt;site&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Samitivej Hospital - Bangkok &lt;a href="https://www.samitivejhospitals.com/"&gt;site&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Hospitals in Thailand&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Mount Elizabeth Hospitals&lt;/li&gt;
+&lt;li&gt;To add more&lt;/li&gt;
+&lt;/ul&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
+		<item>
+			<title>Hospitals in Dhaka An Overview</title>
+			<link>https://note.iqubit.xyz/posts/medical-hospitals-dhaka</link>
+			<description>Heads in the cloud! A Qubit Blog!</description>
+			<guid>https://note.iqubit.xyz/posts/medical-hospitals-dhaka</guid>
+			<pubDate>Thu, 28 Nov 2019 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h2 id="best-hospitals-in-dhaka"&gt;Best Hospitals in Dhaka&lt;/h2&gt;
+&lt;p&gt;To find some good Hospitals in Bangladesh we have to look at affluent medical centers in Dhaka. There is no such thing as Best Hospital in Bangladesh. It's a mix of bad and good experience, bit of luck, type of disease and level of in patient.&lt;/p&gt;
+&lt;p&gt;Public hospitals here are rife with negligence, overflow of patients and reputation of not so hygiene place for patients.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Dhaka Medical Hospital&lt;/li&gt;
+&lt;li&gt;PG / BSMMU&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;There is an example of negligence, where an elderly patient died in Dhaka Medical due to not taking so good care of a diabetes patient.&lt;/p&gt;
+&lt;p&gt;To get appointments in most public hospitals, sometimes you need political influence, birbery or power. For some, being part of a nearby school campus helps.&lt;/p&gt;
+&lt;p&gt;Among private hospitals a few mentionables are,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Green Life&lt;/li&gt;
+&lt;li&gt;Apollo&lt;/li&gt;
+&lt;li&gt;Padma&lt;/li&gt;
+&lt;li&gt;NINS&lt;/li&gt;
+&lt;li&gt;Birdem, &lt;a href="https://note.iqubit.xyz/medical-hospital-birdem"&gt;review&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;ABM Abdullah in Central Hospital&lt;/p&gt;
+&lt;p&gt;Specialists are scattered across private and public hospitals.&lt;/p&gt;
+&lt;h3 id="dialysis-facilities"&gt;Dialysis Facilities&lt;/h3&gt;
+&lt;p&gt;For kidney patients, dialysis is like oxygen to breathe. Please, be careful about pneumonia (vaccinate ahead). In foreign countries, there might be stem cell treatments to parmamnently cure Kidney problems.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Sonar Bangla Foundation Bangladesh
+Address: 23/6 RUPAYAN SHELFORD, LEVEL-5,
+Shyamoli, Dhaka 1207
+Phone: +880 2-9143676
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Central Hospital, unfortunately, doesn't have dialysis yet.&lt;/p&gt;
+&lt;h2 id="misc"&gt;Misc&lt;/h2&gt;
+&lt;p&gt;Few points,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;For kidney related diseases, it might as well be a good idea to consult with neurology and oncology.&lt;/li&gt;
+&lt;li&gt;There are plenty of examples where a poor diagnosis took place or wrong diagnosis did occur which resulted a seriously worse condition of patients or they died.&lt;/li&gt;
+&lt;li&gt;Transportation: Dhaka City is pretty busy and suffers high traffic situations. Hence, be prepared to spend time on the road while travelling to places.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you are a foreigner, considering treatment travelling to Bangladesh it's probably not a good idea unless you are just trying to save money.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;You could use a translator if there's language barrier i.e., you don't know Bangla or English language. Please be aware that average demography don't speak English.&lt;/li&gt;
+&lt;li&gt;For acquiring VISA to india for treatment, it might help to provide appointment document with the hospital/specialist.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Data Plans&lt;/strong&gt;
+A good cell phone carrier helps. It's easy to register a SIM card with one of the carriers to make communication easier to make cals to hospitals or local Bangladesh contacts. Few careers are GrameenPhone, Robi, Airtel. Your roaming service might cover you as well for calling and data; however, please note that &lt;em&gt;cellphone plans are cheaper in Bangladesh compared to other countries&lt;/em&gt;. It's better to just utilize that.&lt;/p&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
+		<item>
+			<title>BIRDEM General Hospital Review</title>
+			<link>https://note.iqubit.xyz/posts/medical-hospital-birdem</link>
+			<description>Heads in the cloud! A Qubit Blog!</description>
+			<guid>https://note.iqubit.xyz/posts/medical-hospital-birdem</guid>
+			<pubDate>Thu, 28 Nov 2019 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;BIRDEM: &lt;a href="https://www.google.com/search?sxsrf=ACYBGNTMLrdeP99E_eiLCVujRWvrGh7t8g%3A1574983392995&amp;amp;ei=4FbgXaSuPOP19APgwoJg&amp;amp;q=birdem+hospital&amp;amp;oq=birdem+hospital&amp;amp;gs_l=psy-ab.3..35i39l2j0l3j0i20i263j0l4.2652.8043..10211...1.1..0.169.1542.11j5......0....1..gws-wiz.......0i71j0i273j0i131j0i67j35i304i39j0i13.QrrR8Vo4Idc&amp;amp;ved=0ahUKEwiknqqtho7mAhXjOn0KHWChAAwQ4dUDCAs&amp;amp;uact=5#lrd=0x3755b8eb2cd9b849:0x7c213c924dd2d324,1,,,"&gt;google review link&lt;/a&gt;
+As a friend quotes,&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Cost is similar to private but environment is identical to public hospitals.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;** Bed bugs are real **: there are bed bugs, dirty environment in wards and cabins follows.&lt;/li&gt;
+&lt;li&gt;wards fees of private, but condition is public.. cabins have few patients..&lt;/li&gt;
+&lt;li&gt;most times doctors are resistant on showing report or taking photos of those.
+hard to get access to Sr Doctor, talks over phone with Sr Doctor, sometimes there are delays in treatment due to that.&lt;/li&gt;
+&lt;li&gt;You need to keep people around the patient during every treatment/dialysis session. Chances are if things go wrong, Nurses might not notice it. They might as well just blame the patient for anything bad happened for example, say that patient moved and saline got disconnected which result cotting of blood. This is their excuse while the patient is unable to move at all. They won't apologize despite their fault/negligence. They even kick you out if you speak out due to their mistake. After all, you are victim.&lt;/li&gt;
+&lt;/ul&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
+		<item>
+			<title>Wyam with Cake Build, Github pages and Azure Pipeline (Windows Server 2019)</title>
+			<link>https://note.iqubit.xyz/posts/blog-platform-wyam</link>
+			<description>Heads in the cloud! A Qubit Blog!</description>
+			<guid>https://note.iqubit.xyz/posts/blog-platform-wyam</guid>
+			<pubDate>Wed, 27 Nov 2019 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h2 id="wyam"&gt;Wyam&lt;/h2&gt;
+&lt;p&gt;First, we install wyam install locally using pwsh admin,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;choco install wyam -y
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then, if we don't have dotnet core in path, we do in current shell,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$Env:Path += ';C:\Program Files\dotnet'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We browse to our source dir and do a build,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dotnet D:\PFiles_x64\Chocolatey\lib\wyam\Wyam.dll help
+dotnet D:\PFiles_x64\Chocolatey\lib\wyam\Wyam.dll help preview
+dotnet D:\PFiles_x64\Chocolatey\lib\wyam\Wyam.dll build --help
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="github-setup-and-local-build"&gt;github setup and local build&lt;/h2&gt;
+&lt;p&gt;Create a new repo. do a clone or (init and add files).&lt;/p&gt;
+&lt;p&gt;However, &lt;em&gt;we don't create master branch&lt;/em&gt;. We only create a branch called &lt;code&gt;source&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/atiq-cs/saos-site
+Rename-Item saos-site wyamBlog
+pushd wyamBlog
+git checkout -b source
+git add .gitignore
+git commit -m 'add git ignore file'
+git push -u origin source
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let's create the blog,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dotnet D:\PFiles_x64\Chocolatey\lib\wyam\Wyam.dll new -r Blog
+dotnet D:\PFiles_x64\Chocolatey\lib\wyam\Wyam.dll build
+dotnet D:\PFiles_x64\Chocolatey\lib\wyam\Wyam.dll preview
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After we add required config file, yml file etc we build on next step. After we are satisfied with local build and previous we push them to the repo.&lt;/p&gt;
+&lt;h2 id="cake-build"&gt;Cake Build&lt;/h2&gt;
+&lt;p&gt;I update package versions in &lt;code&gt;build.cake&lt;/code&gt; file,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#tool nuget:?package=Wyam&amp;amp;version=2.2.9
+#tool nuget:?package=GitVersion.CommandLine&amp;amp;version=5.1.3
+#addin nuget:?package=Cake.Wyam&amp;amp;version=2.2.9
+#addin nuget:?package=Cake.Git&amp;amp;version=0.21.0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For successful build, we need to set the variables properly,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$Env:GITHUB_USERNAME = 'atique'
+$Env:GITHUB_USEREMAIL = 'atiq&amp;#64;github.com'
+$Env:GITHUB_ACCESS_TOKEN = '123abcdef456'
+$Env:CNAME_CONTENT = 'blog.domain.com'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To generate new token visit &lt;a href="https://github.com/settings/tokens/new"&gt;tokens page&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Get build script for cake,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Invoke-WebRequest https://cakebuild.net/download/bootstrapper/windows -OutFile build.ps1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We update in &lt;code&gt;config.wyam&lt;/code&gt;,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Settings[Keys.Host] = &amp;quot;blog.domain.com&amp;quot;;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Otherwise we get,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Compiling build script...
+Error: One or more errors occurred.
+        Expecting state 'Element'.. Encountered 'Text'  with name '', namespace ''.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here's example of local build,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ .\build -Target Build -Verbosity=verbose
+Preparing to run build script...
+Running build script...
+Analyzing build script...
+Processing build script...
+Installing tools...
+Installing addins...
+Compiling build script...
+
+========================================
+Build
+========================================
+Executing task: Build
+Wyam version 2.2.9
+
+                ,&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;p
+              ,&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;g
+            z&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;
+          g&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;,
+        g&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;,
+      ,&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;
+     ,&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;
+     $&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;c
+     &amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;B&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;
+     &amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;  j&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;
+     $&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;F  #&amp;#64;&amp;#64;&amp;#64;&amp;#64;`
+      $&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;P   g&amp;#64;&amp;#64;&amp;#64;&amp;#64;P
+       %&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;     ,g&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;P
+        3&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;B`
+          `%&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;P
+             `*%RB&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;RRP`
+**BUILD**
+Loading configuration from file:///D:/Code/wyamBlog/saos/config.wyam
+Installing NuGet packages
+    Installing packages to C:/Users/atiq/.nuget/packages (using global packages folder)
+    NuGet packages installed in 250 ms
+Loading assemblies
+    Assemblies loaded in 194 ms
+Cataloging classes
+    Classes cataloged in 116 ms
+Evaluating configuration script
+    Evaluated configuration script in 26 ms
+Root path:
+    file:///D:/Code/wyamBlog/saos
+Input path(s):
+    file:///C:/Users/atiq/.nuget/packages/Wyam.Blog.CleanBlog.2.2.9/content
+    theme
+    input
+Output path:
+    output
+Temp path:
+    temp
+Using  as the JavaScript engine
+Cleaning temp path: temp
+Cleaned temp directory
+Cleaning output path: output
+Cleaned output directory
+Executing 15 pipelines
+    Executing pipeline &amp;quot;Pages&amp;quot; (1/15) with 4 child module(s)
+        Executed pipeline &amp;quot;Pages&amp;quot; (1/15) in 502 ms resulting in 1 output document(s)
+    Executing pipeline &amp;quot;BlogPosts&amp;quot; (2/15) with 6 child module(s)
+        Executed pipeline &amp;quot;BlogPosts&amp;quot; (2/15) in 120 ms resulting in 8 output document(s)
+    Executing pipeline &amp;quot;Tags&amp;quot; (3/15) with 4 child module(s)
+        Executed pipeline &amp;quot;Tags&amp;quot; (3/15) in 3737 ms resulting in 15 output document(s)
+    Executing pipeline &amp;quot;TagIndex&amp;quot; (4/15) with 1 child module(s)
+        Executed pipeline &amp;quot;TagIndex&amp;quot; (4/15) in 87 ms resulting in 1 output document(s)
+    Executing pipeline &amp;quot;BlogArchive&amp;quot; (5/15) with 1 child module(s)
+        Executed pipeline &amp;quot;BlogArchive&amp;quot; (5/15) in 93 ms resulting in 1 output document(s)
+    Executing pipeline &amp;quot;Index&amp;quot; (6/15) with 4 child module(s)
+        Executed pipeline &amp;quot;Index&amp;quot; (6/15) in 236 ms resulting in 1 output document(s)
+    Executing pipeline &amp;quot;Feed&amp;quot; (7/15) with 3 child module(s)
+        Executed pipeline &amp;quot;Feed&amp;quot; (7/15) in 151 ms resulting in 2 output document(s)
+    Executing pipeline &amp;quot;RenderBlogPosts&amp;quot; (8/15) with 6 child module(s)
+        Executed pipeline &amp;quot;RenderBlogPosts&amp;quot; (8/15) in 497 ms resulting in 8 output document(s)
+    Executing pipeline &amp;quot;RenderPages&amp;quot; (9/15) with 6 child module(s)
+        Executed pipeline &amp;quot;RenderPages&amp;quot; (9/15) in 141 ms resulting in 1 output document(s)
+    Executing pipeline &amp;quot;Redirects&amp;quot; (10/15) with 3 child module(s)
+        Executed pipeline &amp;quot;Redirects&amp;quot; (10/15) in 15 ms resulting in 0 output document(s)
+    Executing pipeline &amp;quot;Less&amp;quot; (11/15) with 3 child module(s)
+        Executed pipeline &amp;quot;Less&amp;quot; (11/15) in 8 ms resulting in 0 output document(s)
+    Executing pipeline &amp;quot;Sass&amp;quot; (12/15) with 3 child module(s)
+        Executed pipeline &amp;quot;Sass&amp;quot; (12/15) in 6 ms resulting in 0 output document(s)
+    Executing pipeline &amp;quot;Resources&amp;quot; (13/15) with 1 child module(s)
+        Executed pipeline &amp;quot;Resources&amp;quot; (13/15) in 30 ms resulting in 28 output document(s)
+    Executing pipeline &amp;quot;ValidateLinks&amp;quot; (14/15) with 1 child module(s)
+        Executed pipeline &amp;quot;ValidateLinks&amp;quot; (14/15) in 1 ms resulting in 0 output document(s)
+    Executing pipeline &amp;quot;Sitemap&amp;quot; (15/15) with 3 child module(s)
+        Executed pipeline &amp;quot;Sitemap&amp;quot; (15/15) in 10 ms resulting in 1 output document(s)
+    Executed 15/15 pipelines in 5676 ms
+Finished executing task: Build
+
+Task                          Duration
+--------------------------------------------------
+Build                         00:00:06.8752279
+--------------------------------------------------
+Total:                        00:00:06.8752279
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here's example of deployment from local pwsh,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ .\build.ps1 -Target Deploy
+Preparing to run build script...
+Running build script...
+
+========================================
+Build
+========================================
+Wyam version 2.2.9
+
+                ,&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;p
+              ,&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;g
+            z&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;
+          g&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;,
+        g&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;,
+      ,&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;
+     ,&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;
+     $&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;c
+     &amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;B&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;
+     &amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;  j&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;
+     $&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;F  #&amp;#64;&amp;#64;&amp;#64;&amp;#64;`
+      $&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;P   g&amp;#64;&amp;#64;&amp;#64;&amp;#64;P
+       %&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;     ,g&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;P
+        3&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;B`
+          `%&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;P
+             `*%RB&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;RRP`
+**BUILD**
+Loading configuration from file:///D:/Code/wyamBlog/saos/config.wyam
+Installing NuGet packages
+    Installing packages to C:/Users/atiq/.nuget/packages (using global packages folder)
+    NuGet packages installed in 258 ms
+Loading assemblies
+    Assemblies loaded in 248 ms
+Cataloging classes
+    Classes cataloged in 117 ms
+Evaluating configuration script
+    Evaluated configuration script in 5 ms
+Root path:
+    file:///D:/Code/wyamBlog/saos
+Input path(s):
+    file:///C:/Users/atiq/.nuget/packages/Wyam.Blog.CleanBlog.2.2.9/content
+    theme
+    input
+Output path:
+    output
+Temp path:
+    temp
+Using  as the JavaScript engine
+Cleaning temp path: temp
+Cleaned temp directory
+Cleaning output path: output
+Cleaned output directory
+Executing 15 pipelines
+    Executing pipeline &amp;quot;Pages&amp;quot; (1/15) with 4 child module(s)
+        Executed pipeline &amp;quot;Pages&amp;quot; (1/15) in 486 ms resulting in 1 output document(s)
+    Executing pipeline &amp;quot;BlogPosts&amp;quot; (2/15) with 6 child module(s)
+        Executed pipeline &amp;quot;BlogPosts&amp;quot; (2/15) in 67 ms resulting in 8 output document(s)
+    Executing pipeline &amp;quot;Tags&amp;quot; (3/15) with 4 child module(s)
+        Executed pipeline &amp;quot;Tags&amp;quot; (3/15) in 3617 ms resulting in 15 output document(s)
+    Executing pipeline &amp;quot;TagIndex&amp;quot; (4/15) with 1 child module(s)
+        Executed pipeline &amp;quot;TagIndex&amp;quot; (4/15) in 74 ms resulting in 1 output document(s)
+    Executing pipeline &amp;quot;BlogArchive&amp;quot; (5/15) with 1 child module(s)
+        Executed pipeline &amp;quot;BlogArchive&amp;quot; (5/15) in 124 ms resulting in 1 output document(s)
+    Executing pipeline &amp;quot;Index&amp;quot; (6/15) with 4 child module(s)
+        Executed pipeline &amp;quot;Index&amp;quot; (6/15) in 221 ms resulting in 1 output document(s)
+    Executing pipeline &amp;quot;Feed&amp;quot; (7/15) with 3 child module(s)
+        Executed pipeline &amp;quot;Feed&amp;quot; (7/15) in 135 ms resulting in 2 output document(s)
+    Executing pipeline &amp;quot;RenderBlogPosts&amp;quot; (8/15) with 6 child module(s)
+        Executed pipeline &amp;quot;RenderBlogPosts&amp;quot; (8/15) in 411 ms resulting in 8 output document(s)
+    Executing pipeline &amp;quot;RenderPages&amp;quot; (9/15) with 6 child module(s)
+        Executed pipeline &amp;quot;RenderPages&amp;quot; (9/15) in 48 ms resulting in 1 output document(s)
+    Executing pipeline &amp;quot;Redirects&amp;quot; (10/15) with 3 child module(s)
+        Executed pipeline &amp;quot;Redirects&amp;quot; (10/15) in 10 ms resulting in 0 output document(s)
+    Executing pipeline &amp;quot;Less&amp;quot; (11/15) with 3 child module(s)
+        Executed pipeline &amp;quot;Less&amp;quot; (11/15) in 6 ms resulting in 0 output document(s)
+    Executing pipeline &amp;quot;Sass&amp;quot; (12/15) with 3 child module(s)
+        Executed pipeline &amp;quot;Sass&amp;quot; (12/15) in 8 ms resulting in 0 output document(s)
+    Executing pipeline &amp;quot;Resources&amp;quot; (13/15) with 1 child module(s)
+        Executed pipeline &amp;quot;Resources&amp;quot; (13/15) in 67 ms resulting in 28 output document(s)
+    Executing pipeline &amp;quot;ValidateLinks&amp;quot; (14/15) with 1 child module(s)
+        Executed pipeline &amp;quot;ValidateLinks&amp;quot; (14/15) in 3 ms resulting in 0 output document(s)
+    Executing pipeline &amp;quot;Sitemap&amp;quot; (15/15) with 3 child module(s)
+        Executed pipeline &amp;quot;Sitemap&amp;quot; (15/15) in 23 ms resulting in 1 output document(s)
+    Executed 15/15 pipelines in 5343 ms
+
+========================================
+CloneMasterBranch
+========================================
+Cloning master branch into temp directory
+
+========================================
+EmptyMasterBranch
+========================================
+Emptying master branch
+
+========================================
+CopyToMasterBranch
+========================================
+Copying files to master branch
+
+========================================
+CommitMasterBranch
+========================================
+Performing Git commit on master branch
+
+========================================
+PushMasterBranch
+========================================
+Pushing master branch to origin
+
+========================================
+Deploy
+========================================
+
+Task                          Duration
+--------------------------------------------------
+Build                         00:00:06.4142491
+CloneMasterBranch             00:00:04.9115101
+EmptyMasterBranch             00:00:00.0460689
+CopyToMasterBranch            00:00:00.7293069
+CommitMasterBranch            00:00:02.1444625
+PushMasterBranch              00:00:04.0557769
+--------------------------------------------------
+Total:                        00:00:18.3127486
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="azure-pipelines"&gt;Azure Pipelines&lt;/h2&gt;
+&lt;p&gt;Surf &lt;a href="https://github.com/marketplace/azure-pipelines"&gt;azure-pipelines&lt;/a&gt; and choose free plan.
+&lt;code&gt;azure-pipelines.yml&lt;/code&gt; is the pipeline file that triggers the deployment. Additionally, I upgrade it to use the latest VM,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pool:
+  vmImage: 'windows-2019'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;However, this one can be tricky to find the right &lt;code&gt;cake-build&lt;/code&gt; package in azure. For convenience, here's the one that works: &lt;a href="https://marketplace.visualstudio.com/acquisition?itemName=cake-build.cake"&gt;cake build pacakage in marketplacevisualstudio &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Without this package, pipeline build doesn't succeed and encounters following error,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;A task is missing. The pipeline references a task called 'cake-build.cake.cake-build-task.Cake'. This usually indicates the task isn't installed, and you may be able to install it from the Marketplace: https://marketplace.visualstudio.com. (Task version 0, job 'Job', step ''.)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The call flow looks like following,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Deploy
+-&amp;gt; PushMasterBranch
+-&amp;gt; CommitMasterBranch
+  -&amp;gt; CopyToMasterBranch
+  -&amp;gt; Build, EmptyMasterBranch
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To make wyam work, the first one in references section helped a lot.&lt;/p&gt;
+&lt;h2 id="setting-up-a-custom-domain"&gt;Setting up a custom domain&lt;/h2&gt;
+&lt;p&gt;References for setting up custom domain:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.blog/2018-05-01-github-pages-custom-domains-https"&gt;Parker Moore - Custom domains on GitHub Pages gain support for HTTPS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://gohugo.io/hosting-and-deployment/hosting-on-github/#use-a-custom-domain"&gt;Host on GitHub - Use a Custom Domain&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://help.github.com/en/github/working-with-github-pages/managing-a-custom-domain-for-your-github-pages-site"&gt;github - Managing a custom domain for your GitHub Pages site&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I my case I set it up on subdomain, &lt;code&gt;blog.saosx.com&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Additionally, I enable DNSSEC for my primary domain which is not required in your case:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://ph.godaddy.com/help/add-a-ds-record-23865"&gt;godaddy - dnssec add record&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.iana.org/assignments/ds-rr-types/ds-rr-types.xhtml"&gt;numeric representation for digest type&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://blog.cloudflare.com/secure-and-fast-github-pages-with-cloudflare/"&gt;trick to enabling https&lt;/a&gt; (even though github not allowing)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="generating-cname-file-for-the-blog"&gt;Generating CNAME file for the blog&lt;/h3&gt;
+&lt;p&gt;I find the section in deployment where files are being generated,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Task(&amp;quot;CopyToMasterBranch&amp;quot;)
+    .IsDependentOn(&amp;quot;Build&amp;quot;)
+    .IsDependentOn(&amp;quot;EmptyMasterBranch&amp;quot;)
+    .Does(() =&amp;gt; {
+        var sourcePath = &amp;quot;./output&amp;quot;;
+
+        Information(&amp;quot;Copying files to master branch&amp;quot;);
+
+        // Now Create all of the directories
+        foreach (string dirPath in System.IO.Directory.GetDirectories(sourcePath, &amp;quot;*&amp;quot;, SearchOption.AllDirectories))
+        {
+            System.IO.Directory.CreateDirectory(dirPath.Replace(sourcePath, tempDir));
+        }
+
+        // Copy all the files &amp;amp; Replaces any files with the same name
+        foreach (string newPath in System.IO.Directory.GetFiles(sourcePath, &amp;quot;*.*&amp;quot;, SearchOption.AllDirectories))
+            System.IO.File.Copy(newPath, newPath.Replace(sourcePath, tempDir), true);
+    });
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To explain the code segment above,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;sourcePath = the current output dir from wyam&lt;/li&gt;
+&lt;li&gt;tempDir = windows temp dir&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;newPath.Replace(sourcePath, tempDir)&lt;/code&gt; = tempDir + relative Path of the file&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;File.Copy ref,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public static void Copy (string sourceFileName, string destFileName);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After last copy in the code semgent above we add this to add CNAME,&lt;/p&gt;
+&lt;p&gt;We can write the CName in following way,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;string CNameContent = &amp;quot;blog.domain.com&amp;quot;;
+System.IO.File.WriteAllText(System.IO.Path.Combine(tempDir, CNameFileName), CNameContent);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="pipeline-variables"&gt;Pipeline Variables&lt;/h2&gt;
+&lt;p&gt;Probably these variables reset after we do deploy as below,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;.\build -Target Deploy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables"&gt;MS Docs - Pipeline Variables&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;To edit pipeline variables on azure cloud.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Naviagate to your pipeline URL.&lt;/li&gt;
+&lt;li&gt;Click Edit and noow you can access variables&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id="conclusion"&gt;Conclusion&lt;/h4&gt;
+&lt;p&gt;So, far, this is pretty good experience.&lt;/p&gt;
+&lt;p&gt;Finally, my blog URL:
+&lt;a href="https://blog.saosx.com/"&gt;SAOSX blog&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;wyam uses markdig flavor of Markdown of by default: &lt;a href="https://github.com/lunet-io/markdig/blob/master/src/Markdig.Tests/Specs/MathSpecs.md"&gt;markdig math&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Readily, I can think of following cons,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;mathematics/latex notation is not working by default&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="references"&gt;References&lt;/h3&gt;
+&lt;p&gt;Usueful refs are below,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;primary ref: &lt;a href="https://johanvergeer.github.io/posts/wyam-azure-devops"&gt;Johan Vergeer - Wyam, Azure DevOps and GitHub Pages&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://jonathanhiggs.github.io/posts/create-github-pages-with-wyam"&gt;Jonathan Higgs - Create GitHub Pages Blog with Wyam&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://wyam.io/docs"&gt;wyam official documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://daveaglick.com/posts/converting-my-blog-to-wyam"&gt;daveaglick - Converting My Blog to Wyam&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops"&gt;MS Azure Cloud - availabe VMs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/daveaglick/daveaglick"&gt;github daveaglick&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
 	</channel>
 </rss>
