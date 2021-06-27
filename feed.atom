@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<id>https://note.iqubit.xyz/</id>
+	<title />
+	<link rel="self" href="https://note.iqubit.xyz/" />
+	<rights>Copyright © 2021</rights>
+	<updated>2021-06-27T00:20:43Z</updated>
+	<subtitle>Heads in the cloud! A Qubit Blog!</subtitle>
+</feed>
