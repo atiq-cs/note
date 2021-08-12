@@ -1,14 +1,15 @@
-Title: dotnet core Hello World with Entity Framework and Database
+Title: dotnet core Hello World with Entity Framework and Database in 2018
 Published: 7/1/2018
 Tags:
   - dotnet core
   - entity framework
 ---
+Before we show how to create MVC app with entity framework we show how to create a simple console app.
 
 ## Creating a hello world console application
 With .net core things are pretty simple. We run two commands and it does everything we need for a hello world program,
 
-    $ dotnet new console -n P1_Console
+    $ dotnet new console -n P1_ConsoleApp
 
 It creates the directory and puts required hello world source file and project file inside the dir named 'P1_Console'. What type of applications does it support can be found at [microsoft docs - dotnet-new][4]
 
