@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Heads in the cloud! A Qubit Blog!">
 
-  <title>Notes from Qubit Inc. - InterOp Calling C&#x2B;&#x2B; from C#</title>
+  <title>Notes from Qubit Inc. - dotnet core Hello World with Entity Framework and Database</title>
 
-  <link rel="canonical" href="https://note.iqubit.xyz/posts/cshare-interop-calling-cpp">
+  <link rel="canonical" href="https://note.iqubit.xyz/posts/net-core-mvchello-entity-framework2021-08">
 
       <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
       <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
@@ -18,9 +18,9 @@
   <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
   <meta name="msapplication-starturl" content="/" />
 
-  <meta property="og:title" content="Notes from Qubit Inc. - InterOp Calling C&#x2B;&#x2B; from C#" />
+  <meta property="og:title" content="Notes from Qubit Inc. - dotnet core Hello World with Entity Framework and Database" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://note.iqubit.xyz/posts/cshare-interop-calling-cpp" />
+  <meta property="og:url" content="https://note.iqubit.xyz/posts/net-core-mvchello-entity-framework2021-08" />
   
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -80,13 +80,12 @@
       <div class="col-md-12">
         <div class="post-heading">
           <h1>
-            InterOp Calling C&#x2B;&#x2B; from C#
+            dotnet core Hello World with Entity Framework and Database
           </h1>
-              <div class="meta">Published on Thursday, 12 April 2018</div>
+              <div class="meta">Published on Thursday, 12 August 2021</div>
                 <div class="mt-3">
                       <a href="/tags/dotnet-core" class="badge badge-light"> dotnet core</a>
-                      <a href="/tags/cpp" class="badge badge-light"> cpp</a>
-                      <a href="/tags/csharp" class="badge badge-light"> csharp</a>
+                      <a href="/tags/entity-framework" class="badge badge-light"> entity framework</a>
                 </div>
         </div>
       </div>
@@ -98,99 +97,67 @@
   <div class="container"> 
     <div class="row">
       <div id="content" class="col-md-12">  
-        <p>For this demonstration, let's consider a Visual Studio 2017 Solution containing two projects,</p>
-<ul>
-<li>One project containing C++ Code</li>
-<li>Other project contain C# driving code doing the demonstrating interop</li>
-</ul>
-<p>C++ code looks like,</p>
-<pre><code>extern &quot;C&quot;             //No name mangling
-__declspec(dllexport)  //Tells the compiler to export the function
-int                    //Function return type     
-__cdecl                //Specifies calling convention, cdelc is default, 
-                       //so this can be omitted 
-  test(int number) {
-  return number + 1;
-}
-</code></pre>
-<p>Please note the way return type specified compare to traditional function declaration.</p>
-<p>C# driver code looks like following,</p>
-<pre><code>using System;
-using System.Runtime.InteropServices;
+        <h2 id="razor-pages-app">Razor Pages App</h2>
+<p>localdb mdf files are usually stored at <code>$HOME</code> (for example, <code>C:\Users\YOUR_NAME</code>)</p>
+<pre><code>dotnet new webapp -n P03_ContosoUniversity_RP
+cd P03_ContosoUniversity_RP
 
-namespace p1
-{
-  public static class NativeTest
-  {
-    static void Main(string[] args)
-    {
-      Console.WriteLine(&quot;Interop test: &quot; + test(100));
-    }
+dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
+dotnet add package Microsoft.EntityFrameworkCore.SQLite
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Microsoft.EntityFrameworkCore.Tools
 
-    private const string DllFilePath = &#64;&quot;D:\Code\CSharp\InterOp\Debug\Cpp.dll&quot;;
+dotnet add package Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore
 
-    [DllImport(DllFilePath , CallingConvention = CallingConvention.Cdecl)]
-    private extern static int test(int number);
+dotnet aspnet-codegenerator razorpage -m Student -dc ContosoUniversity.Data.SchoolContext -udl -outDir Pages\Students --referenceScriptLibraries -sqlite
+</code></pre>
+<p>And, we keep following the documentation, <a href="https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/intro">https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/intro</a></p>
+<p>We refactor all <code>P03_ContosoUniversity_RP</code> with <code>ContosoUniversity</code>.</p>
+<p>Scaf</p>
+<pre><code>dotnet tool update --global dotnet-ef
+dotnet ef database update
 
-    public static int Test(int number) {
-        return test(number);
-    }
-  }
-}
+$Env:ASPNETCORE_ENVIRONMENT = &quot;Development&quot;
+dotnet run
 </code></pre>
-<p>My projects dir structure looks like,</p>
-<pre><code>D:\CODE\CSHARP\INTEROP
-│   p1.sln
-│
-├───Cpp
-│   │   Cpp.vcxproj
-│   │   Cpp.vcxproj.filters
-│   │   Cpp.vcxproj.user
-│   │   Main.cpp
-│   │
-│   └───Debug
-│       │   Cpp.dll
-│       │   Cpp.exp
-│       │   Cpp.ilk
-│       │   Cpp.lib
-│       │   Cpp.log
-│       │   Cpp.pdb
-│       │   Main.obj
-│       │   vc141.idb
-│       │   vc141.pdb
-│ 
-└───p1
-    │   App.config
-    │   p1.csproj
-    │   Program.cs
-    │
-    ├───bin
-    │   └───Debug
-    │           p1.exe
-    │
-    ├───obj
-    │   └───Debug
-    │       │   p1.exe
-    │       │   p1.pdb
-    └───Properties
-            AssemblyInfo.cs
+<h2 id="mvc-app">MVC App</h2>
+<p>Steps</p>
+<pre><code>dotnet new mvc -n P03_ContosoUniversity
 </code></pre>
-<p>For the project structure above, I can use a relative location of the file,</p>
-<pre><code>private const string DllFilePath = &#64;&quot;..\..\..\Cpp\Debug\Cpp.dll&quot;;
+<p>Replace <code>P03_ContosoUniversity</code> with 'Contoso University'.</p>
+<pre><code>dotnet add package Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore
 </code></pre>
-<p>Additionally, I have changed following for C++ project,</p>
-<p><em>Output Directory:</em> <span class="math">\((SolutionDir)\)</span>(ProjectName)$(Configuration)<br />
-<em>Configuration Type:</em> Dynamic Library (.dll)</p>
-<p>When we are passing arrays and pointers we need data marshalling. ref, <a href="https://stackoverflow.com/questions/741206/using-arrays-and-pointers-in-c-sharp-with-c-dll">Using arrays and pointers in C# with C DLL</a></p>
-<p>msdn documentation provides instructions for this for managed C++ to unmanaged C++.
-<a href="https://docs.microsoft.com/en-us/cpp/dotnet/how-to-call-native-dlls-from-managed-code-using-pinvoke">How to: Call Native DLLs from Managed Code Using PInvoke</a></p>
-<p>So, for a new project it makes sense. Or if it is feasible to create managed C++ wrapper around the unmanaged code. It gives us an assembly that can be directly referenced from C#. Ref, <a href="https://stackoverflow.com/questions/935664/possible-to-call-c-code-from-c">Possible to call C++ code from C#?</a></p>
-<h2 id="references">References</h2>
-<ul>
-<li><a href="https://stackoverflow.com/questions/9407616/how-to-call-c-code-from-c-sharp">How to call C++ code from C#</a></li>
-<li><a href="https://docs.microsoft.com/en-us/cpp/dotnet/calling-native-functions-from-managed-code">Calling Native Functions from Managed Code - PInvoke and the DllImport, Marshaling Arguments</a></li>
-<li>Interop msdn blog posts in 2006 <a href="https://blogs.msdn.microsoft.com/borisj/2006/07/30/interop-101-part-1/">part 1</a> and <a href="https://blogs.msdn.microsoft.com/borisj/2007/02/09/interop-101-part-5/">part 5</a></li>
-</ul>
+<p>we keep following,
+<a href="https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/intro">https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/intro</a></p>
+<p>add default connection in <code>appsettings.Development.json</code></p>
+<h2 id="razor-pages-app-net-core">Razor Pages App (net core)</h2>
+<p>This is a test to be able to run the EF Core Razor App with .net core,</p>
+<p>We require following packages,</p>
+<pre><code>dotnet new webapp -n P03_ContosoUniversity_netcore
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Microsoft.EntityFrameworkCore
+dotnet add package Microsoft.EntityFrameworkCore.SQLite
+</code></pre>
+<p>We add all the scaffolding files from a previous project that target .net6</p>
+<p>We end up finding that,</p>
+<pre><code>// in ConfigureServices
+// services.AddDatabaseDeveloperPageExceptionFilter();
+// in Configure
+// app.UseMigrationsEndPoint();
+</code></pre>
+<p>requires,</p>
+<pre><code>dotnet add package Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore
+Determining projects to restore...
+Writing C:\Users\atiq\AppData\Local\Temp\tmp6CF5.tmp
+info : Adding PackageReference for package 'Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore' into project 'D:\Code\CS\P03_ContosoUniversity_netcore\P03_ContosoUniversity_netcore.csproj'.
+info :   GET https://api.nuget.org/v3/registration5-gz-semver2/microsoft.aspnetcore.diagnostics.entityframeworkcore/index.json
+info :   OK https://api.nuget.org/v3/registration5-gz-semver2/microsoft.aspnetcore.diagnostics.entityframeworkcore/index.json 419ms
+info : Restoring packages for D:\Code\CS\P03_ContosoUniversity_netcore\P03_ContosoUniversity_netcore.csproj...
+error: NU1202: Package Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore 5.0.9 is not compatible with netcoreapp3.1 (.NETCoreApp,Version=v3.1). Package Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore 5.0.9 supports: net5.0 (.NETCoreApp,Version=v5.0)
+error: Package 'Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore' is incompatible with 'all' frameworks in project 'D:\Code\CS\P03_ContosoUniversity_netcore\P03_ContosoUniversity_netcore.csproj'
+</code></pre>
+<p>Also, the old version (3.1.18 supports .net core) of <code>Diagnostics.EntityFrameworkCore</code> doesn't have the definitions mentioned above.</p>
 
 
       </div>

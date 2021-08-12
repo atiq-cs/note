@@ -4,8 +4,77 @@
 	<title />
 	<link rel="self" href="https://note.iqubit.xyz/" />
 	<rights>Copyright © 2021</rights>
-	<updated>2021-06-27T00:27:04Z</updated>
+	<updated>2021-08-12T22:12:46Z</updated>
 	<subtitle>Heads in the cloud! A Qubit Blog!</subtitle>
+	<entry>
+		<id>https://note.iqubit.xyz/posts/net-core-mvchello-entity-framework2021-08</id>
+		<title>dotnet core Hello World with Entity Framework and Database</title>
+		<link href="https://note.iqubit.xyz/posts/net-core-mvchello-entity-framework2021-08" />
+		<updated>2021-08-12T00:00:00Z</updated>
+		<content>&lt;h2 id="razor-pages-app"&gt;Razor Pages App&lt;/h2&gt;
+&lt;p&gt;localdb mdf files are usually stored at &lt;code&gt;$HOME&lt;/code&gt; (for example, &lt;code&gt;C:\Users\YOUR_NAME&lt;/code&gt;)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dotnet new webapp -n P03_ContosoUniversity_RP
+cd P03_ContosoUniversity_RP
+
+dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
+dotnet add package Microsoft.EntityFrameworkCore.SQLite
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Microsoft.EntityFrameworkCore.Tools
+
+dotnet add package Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore
+
+dotnet aspnet-codegenerator razorpage -m Student -dc ContosoUniversity.Data.SchoolContext -udl -outDir Pages\Students --referenceScriptLibraries -sqlite
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And, we keep following the documentation, &lt;a href="https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/intro"&gt;https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/intro&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;We refactor all &lt;code&gt;P03_ContosoUniversity_RP&lt;/code&gt; with &lt;code&gt;ContosoUniversity&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Scaf&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dotnet tool update --global dotnet-ef
+dotnet ef database update
+
+$Env:ASPNETCORE_ENVIRONMENT = &amp;quot;Development&amp;quot;
+dotnet run
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="mvc-app"&gt;MVC App&lt;/h2&gt;
+&lt;p&gt;Steps&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dotnet new mvc -n P03_ContosoUniversity
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Replace &lt;code&gt;P03_ContosoUniversity&lt;/code&gt; with 'Contoso University'.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dotnet add package Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;we keep following,
+&lt;a href="https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/intro"&gt;https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/intro&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;add default connection in &lt;code&gt;appsettings.Development.json&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="razor-pages-app-net-core"&gt;Razor Pages App (net core)&lt;/h2&gt;
+&lt;p&gt;This is a test to be able to run the EF Core Razor App with .net core,&lt;/p&gt;
+&lt;p&gt;We require following packages,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dotnet new webapp -n P03_ContosoUniversity_netcore
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Microsoft.EntityFrameworkCore
+dotnet add package Microsoft.EntityFrameworkCore.SQLite
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We add all the scaffolding files from a previous project that target .net6&lt;/p&gt;
+&lt;p&gt;We end up finding that,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;// in ConfigureServices
+// services.AddDatabaseDeveloperPageExceptionFilter();
+// in Configure
+// app.UseMigrationsEndPoint();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;requires,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dotnet add package Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore
+Determining projects to restore...
+Writing C:\Users\atiq\AppData\Local\Temp\tmp6CF5.tmp
+info : Adding PackageReference for package 'Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore' into project 'D:\Code\CS\P03_ContosoUniversity_netcore\P03_ContosoUniversity_netcore.csproj'.
+info :   GET https://api.nuget.org/v3/registration5-gz-semver2/microsoft.aspnetcore.diagnostics.entityframeworkcore/index.json
+info :   OK https://api.nuget.org/v3/registration5-gz-semver2/microsoft.aspnetcore.diagnostics.entityframeworkcore/index.json 419ms
+info : Restoring packages for D:\Code\CS\P03_ContosoUniversity_netcore\P03_ContosoUniversity_netcore.csproj...
+error: NU1202: Package Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore 5.0.9 is not compatible with netcoreapp3.1 (.NETCoreApp,Version=v3.1). Package Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore 5.0.9 supports: net5.0 (.NETCoreApp,Version=v5.0)
+error: Package 'Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore' is incompatible with 'all' frameworks in project 'D:\Code\CS\P03_ContosoUniversity_netcore\P03_ContosoUniversity_netcore.csproj'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Also, the old version (3.1.18 supports .net core) of &lt;code&gt;Diagnostics.EntityFrameworkCore&lt;/code&gt; doesn't have the definitions mentioned above.&lt;/p&gt;
+</content>
+		<summary>Heads in the cloud! A Qubit Blog!</summary>
+	</entry>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/powershell-core</id>
 		<title>Powershell Core Useful Commands</title>
@@ -856,387 +925,6 @@ As a friend quotes,&lt;/p&gt;
 &lt;li&gt;most times doctors are resistant on showing report or taking photos of those.
 hard to get access to Sr Doctor, talks over phone with Sr Doctor, sometimes there are delays in treatment due to that.&lt;/li&gt;
 &lt;li&gt;You need to keep people around the patient during every treatment/dialysis session. Chances are if things go wrong, Nurses might not notice it. They might as well just blame the patient for anything bad happened for example, say that patient moved and saline got disconnected which result cotting of blood. This is their excuse while the patient is unable to move at all. They won't apologize despite their fault/negligence. They even kick you out if you speak out due to their mistake. After all, you are victim.&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-		<summary>Heads in the cloud! A Qubit Blog!</summary>
-	</entry>
-	<entry>
-		<id>https://note.iqubit.xyz/posts/blog-platform-wyam</id>
-		<title>Wyam with Cake Build, Github pages and Azure Pipeline (Windows Server 2019)</title>
-		<link href="https://note.iqubit.xyz/posts/blog-platform-wyam" />
-		<updated>2019-11-27T00:00:00Z</updated>
-		<content>&lt;h2 id="wyam"&gt;Wyam&lt;/h2&gt;
-&lt;p&gt;First, we install wyam install locally using pwsh admin,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;choco install wyam -y
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Then, if we don't have dotnet core in path, we do in current shell,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$Env:Path += ';C:\Program Files\dotnet'
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;We browse to our source dir and do a build,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;dotnet D:\PFiles_x64\Chocolatey\lib\wyam\Wyam.dll help
-dotnet D:\PFiles_x64\Chocolatey\lib\wyam\Wyam.dll help preview
-dotnet D:\PFiles_x64\Chocolatey\lib\wyam\Wyam.dll build --help
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="github-setup-and-local-build"&gt;github setup and local build&lt;/h2&gt;
-&lt;p&gt;Create a new repo. do a clone or (init and add files).&lt;/p&gt;
-&lt;p&gt;However, &lt;em&gt;we don't create master branch&lt;/em&gt;. We only create a branch called &lt;code&gt;source&lt;/code&gt;.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git clone https://github.com/atiq-cs/saos-site
-Rename-Item saos-site wyamBlog
-pushd wyamBlog
-git checkout -b source
-git add .gitignore
-git commit -m 'add git ignore file'
-git push -u origin source
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Let's create the blog,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;dotnet D:\PFiles_x64\Chocolatey\lib\wyam\Wyam.dll new -r Blog
-dotnet D:\PFiles_x64\Chocolatey\lib\wyam\Wyam.dll build
-dotnet D:\PFiles_x64\Chocolatey\lib\wyam\Wyam.dll preview
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;After we add required config file, yml file etc we build on next step. After we are satisfied with local build and previous we push them to the repo.&lt;/p&gt;
-&lt;h2 id="cake-build"&gt;Cake Build&lt;/h2&gt;
-&lt;p&gt;I update package versions in &lt;code&gt;build.cake&lt;/code&gt; file,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;#tool nuget:?package=Wyam&amp;amp;version=2.2.9
-#tool nuget:?package=GitVersion.CommandLine&amp;amp;version=5.1.3
-#addin nuget:?package=Cake.Wyam&amp;amp;version=2.2.9
-#addin nuget:?package=Cake.Git&amp;amp;version=0.21.0
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;For successful build, we need to set the variables properly,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$Env:GITHUB_USERNAME = 'atique'
-$Env:GITHUB_USEREMAIL = 'atiq&amp;#64;github.com'
-$Env:GITHUB_ACCESS_TOKEN = '123abcdef456'
-$Env:CNAME_CONTENT = 'blog.domain.com'
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To generate new token visit &lt;a href="https://github.com/settings/tokens/new"&gt;tokens page&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Get build script for cake,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Invoke-WebRequest https://cakebuild.net/download/bootstrapper/windows -OutFile build.ps1
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;We update in &lt;code&gt;config.wyam&lt;/code&gt;,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Settings[Keys.Host] = &amp;quot;blog.domain.com&amp;quot;;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Otherwise we get,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Compiling build script...
-Error: One or more errors occurred.
-        Expecting state 'Element'.. Encountered 'Text'  with name '', namespace ''.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Here's example of local build,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ .\build -Target Build -Verbosity=verbose
-Preparing to run build script...
-Running build script...
-Analyzing build script...
-Processing build script...
-Installing tools...
-Installing addins...
-Compiling build script...
-
-========================================
-Build
-========================================
-Executing task: Build
-Wyam version 2.2.9
-
-                ,&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;p
-              ,&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;g
-            z&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;
-          g&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;,
-        g&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;,
-      ,&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;
-     ,&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;
-     $&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;c
-     &amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;B&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;
-     &amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;  j&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;
-     $&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;F  #&amp;#64;&amp;#64;&amp;#64;&amp;#64;`
-      $&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;P   g&amp;#64;&amp;#64;&amp;#64;&amp;#64;P
-       %&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;     ,g&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;P
-        3&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;B`
-          `%&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;P
-             `*%RB&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;RRP`
-**BUILD**
-Loading configuration from file:///D:/Code/wyamBlog/saos/config.wyam
-Installing NuGet packages
-    Installing packages to C:/Users/atiq/.nuget/packages (using global packages folder)
-    NuGet packages installed in 250 ms
-Loading assemblies
-    Assemblies loaded in 194 ms
-Cataloging classes
-    Classes cataloged in 116 ms
-Evaluating configuration script
-    Evaluated configuration script in 26 ms
-Root path:
-    file:///D:/Code/wyamBlog/saos
-Input path(s):
-    file:///C:/Users/atiq/.nuget/packages/Wyam.Blog.CleanBlog.2.2.9/content
-    theme
-    input
-Output path:
-    output
-Temp path:
-    temp
-Using  as the JavaScript engine
-Cleaning temp path: temp
-Cleaned temp directory
-Cleaning output path: output
-Cleaned output directory
-Executing 15 pipelines
-    Executing pipeline &amp;quot;Pages&amp;quot; (1/15) with 4 child module(s)
-        Executed pipeline &amp;quot;Pages&amp;quot; (1/15) in 502 ms resulting in 1 output document(s)
-    Executing pipeline &amp;quot;BlogPosts&amp;quot; (2/15) with 6 child module(s)
-        Executed pipeline &amp;quot;BlogPosts&amp;quot; (2/15) in 120 ms resulting in 8 output document(s)
-    Executing pipeline &amp;quot;Tags&amp;quot; (3/15) with 4 child module(s)
-        Executed pipeline &amp;quot;Tags&amp;quot; (3/15) in 3737 ms resulting in 15 output document(s)
-    Executing pipeline &amp;quot;TagIndex&amp;quot; (4/15) with 1 child module(s)
-        Executed pipeline &amp;quot;TagIndex&amp;quot; (4/15) in 87 ms resulting in 1 output document(s)
-    Executing pipeline &amp;quot;BlogArchive&amp;quot; (5/15) with 1 child module(s)
-        Executed pipeline &amp;quot;BlogArchive&amp;quot; (5/15) in 93 ms resulting in 1 output document(s)
-    Executing pipeline &amp;quot;Index&amp;quot; (6/15) with 4 child module(s)
-        Executed pipeline &amp;quot;Index&amp;quot; (6/15) in 236 ms resulting in 1 output document(s)
-    Executing pipeline &amp;quot;Feed&amp;quot; (7/15) with 3 child module(s)
-        Executed pipeline &amp;quot;Feed&amp;quot; (7/15) in 151 ms resulting in 2 output document(s)
-    Executing pipeline &amp;quot;RenderBlogPosts&amp;quot; (8/15) with 6 child module(s)
-        Executed pipeline &amp;quot;RenderBlogPosts&amp;quot; (8/15) in 497 ms resulting in 8 output document(s)
-    Executing pipeline &amp;quot;RenderPages&amp;quot; (9/15) with 6 child module(s)
-        Executed pipeline &amp;quot;RenderPages&amp;quot; (9/15) in 141 ms resulting in 1 output document(s)
-    Executing pipeline &amp;quot;Redirects&amp;quot; (10/15) with 3 child module(s)
-        Executed pipeline &amp;quot;Redirects&amp;quot; (10/15) in 15 ms resulting in 0 output document(s)
-    Executing pipeline &amp;quot;Less&amp;quot; (11/15) with 3 child module(s)
-        Executed pipeline &amp;quot;Less&amp;quot; (11/15) in 8 ms resulting in 0 output document(s)
-    Executing pipeline &amp;quot;Sass&amp;quot; (12/15) with 3 child module(s)
-        Executed pipeline &amp;quot;Sass&amp;quot; (12/15) in 6 ms resulting in 0 output document(s)
-    Executing pipeline &amp;quot;Resources&amp;quot; (13/15) with 1 child module(s)
-        Executed pipeline &amp;quot;Resources&amp;quot; (13/15) in 30 ms resulting in 28 output document(s)
-    Executing pipeline &amp;quot;ValidateLinks&amp;quot; (14/15) with 1 child module(s)
-        Executed pipeline &amp;quot;ValidateLinks&amp;quot; (14/15) in 1 ms resulting in 0 output document(s)
-    Executing pipeline &amp;quot;Sitemap&amp;quot; (15/15) with 3 child module(s)
-        Executed pipeline &amp;quot;Sitemap&amp;quot; (15/15) in 10 ms resulting in 1 output document(s)
-    Executed 15/15 pipelines in 5676 ms
-Finished executing task: Build
-
-Task                          Duration
---------------------------------------------------
-Build                         00:00:06.8752279
---------------------------------------------------
-Total:                        00:00:06.8752279
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Here's example of deployment from local pwsh,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ .\build.ps1 -Target Deploy
-Preparing to run build script...
-Running build script...
-
-========================================
-Build
-========================================
-Wyam version 2.2.9
-
-                ,&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;p
-              ,&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;g
-            z&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;
-          g&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;,
-        g&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;,
-      ,&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;
-     ,&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;
-     $&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;c
-     &amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;B&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;
-     &amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;  j&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;
-     $&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;F  #&amp;#64;&amp;#64;&amp;#64;&amp;#64;`
-      $&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;P   g&amp;#64;&amp;#64;&amp;#64;&amp;#64;P
-       %&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;     ,g&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;P
-        3&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;B`
-          `%&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;P
-             `*%RB&amp;#64;&amp;#64;&amp;#64;&amp;#64;&amp;#64;RRP`
-**BUILD**
-Loading configuration from file:///D:/Code/wyamBlog/saos/config.wyam
-Installing NuGet packages
-    Installing packages to C:/Users/atiq/.nuget/packages (using global packages folder)
-    NuGet packages installed in 258 ms
-Loading assemblies
-    Assemblies loaded in 248 ms
-Cataloging classes
-    Classes cataloged in 117 ms
-Evaluating configuration script
-    Evaluated configuration script in 5 ms
-Root path:
-    file:///D:/Code/wyamBlog/saos
-Input path(s):
-    file:///C:/Users/atiq/.nuget/packages/Wyam.Blog.CleanBlog.2.2.9/content
-    theme
-    input
-Output path:
-    output
-Temp path:
-    temp
-Using  as the JavaScript engine
-Cleaning temp path: temp
-Cleaned temp directory
-Cleaning output path: output
-Cleaned output directory
-Executing 15 pipelines
-    Executing pipeline &amp;quot;Pages&amp;quot; (1/15) with 4 child module(s)
-        Executed pipeline &amp;quot;Pages&amp;quot; (1/15) in 486 ms resulting in 1 output document(s)
-    Executing pipeline &amp;quot;BlogPosts&amp;quot; (2/15) with 6 child module(s)
-        Executed pipeline &amp;quot;BlogPosts&amp;quot; (2/15) in 67 ms resulting in 8 output document(s)
-    Executing pipeline &amp;quot;Tags&amp;quot; (3/15) with 4 child module(s)
-        Executed pipeline &amp;quot;Tags&amp;quot; (3/15) in 3617 ms resulting in 15 output document(s)
-    Executing pipeline &amp;quot;TagIndex&amp;quot; (4/15) with 1 child module(s)
-        Executed pipeline &amp;quot;TagIndex&amp;quot; (4/15) in 74 ms resulting in 1 output document(s)
-    Executing pipeline &amp;quot;BlogArchive&amp;quot; (5/15) with 1 child module(s)
-        Executed pipeline &amp;quot;BlogArchive&amp;quot; (5/15) in 124 ms resulting in 1 output document(s)
-    Executing pipeline &amp;quot;Index&amp;quot; (6/15) with 4 child module(s)
-        Executed pipeline &amp;quot;Index&amp;quot; (6/15) in 221 ms resulting in 1 output document(s)
-    Executing pipeline &amp;quot;Feed&amp;quot; (7/15) with 3 child module(s)
-        Executed pipeline &amp;quot;Feed&amp;quot; (7/15) in 135 ms resulting in 2 output document(s)
-    Executing pipeline &amp;quot;RenderBlogPosts&amp;quot; (8/15) with 6 child module(s)
-        Executed pipeline &amp;quot;RenderBlogPosts&amp;quot; (8/15) in 411 ms resulting in 8 output document(s)
-    Executing pipeline &amp;quot;RenderPages&amp;quot; (9/15) with 6 child module(s)
-        Executed pipeline &amp;quot;RenderPages&amp;quot; (9/15) in 48 ms resulting in 1 output document(s)
-    Executing pipeline &amp;quot;Redirects&amp;quot; (10/15) with 3 child module(s)
-        Executed pipeline &amp;quot;Redirects&amp;quot; (10/15) in 10 ms resulting in 0 output document(s)
-    Executing pipeline &amp;quot;Less&amp;quot; (11/15) with 3 child module(s)
-        Executed pipeline &amp;quot;Less&amp;quot; (11/15) in 6 ms resulting in 0 output document(s)
-    Executing pipeline &amp;quot;Sass&amp;quot; (12/15) with 3 child module(s)
-        Executed pipeline &amp;quot;Sass&amp;quot; (12/15) in 8 ms resulting in 0 output document(s)
-    Executing pipeline &amp;quot;Resources&amp;quot; (13/15) with 1 child module(s)
-        Executed pipeline &amp;quot;Resources&amp;quot; (13/15) in 67 ms resulting in 28 output document(s)
-    Executing pipeline &amp;quot;ValidateLinks&amp;quot; (14/15) with 1 child module(s)
-        Executed pipeline &amp;quot;ValidateLinks&amp;quot; (14/15) in 3 ms resulting in 0 output document(s)
-    Executing pipeline &amp;quot;Sitemap&amp;quot; (15/15) with 3 child module(s)
-        Executed pipeline &amp;quot;Sitemap&amp;quot; (15/15) in 23 ms resulting in 1 output document(s)
-    Executed 15/15 pipelines in 5343 ms
-
-========================================
-CloneMasterBranch
-========================================
-Cloning master branch into temp directory
-
-========================================
-EmptyMasterBranch
-========================================
-Emptying master branch
-
-========================================
-CopyToMasterBranch
-========================================
-Copying files to master branch
-
-========================================
-CommitMasterBranch
-========================================
-Performing Git commit on master branch
-
-========================================
-PushMasterBranch
-========================================
-Pushing master branch to origin
-
-========================================
-Deploy
-========================================
-
-Task                          Duration
---------------------------------------------------
-Build                         00:00:06.4142491
-CloneMasterBranch             00:00:04.9115101
-EmptyMasterBranch             00:00:00.0460689
-CopyToMasterBranch            00:00:00.7293069
-CommitMasterBranch            00:00:02.1444625
-PushMasterBranch              00:00:04.0557769
---------------------------------------------------
-Total:                        00:00:18.3127486
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="azure-pipelines"&gt;Azure Pipelines&lt;/h2&gt;
-&lt;p&gt;Surf &lt;a href="https://github.com/marketplace/azure-pipelines"&gt;azure-pipelines&lt;/a&gt; and choose free plan.
-&lt;code&gt;azure-pipelines.yml&lt;/code&gt; is the pipeline file that triggers the deployment. Additionally, I upgrade it to use the latest VM,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;pool:
-  vmImage: 'windows-2019'
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;However, this one can be tricky to find the right &lt;code&gt;cake-build&lt;/code&gt; package in azure. For convenience, here's the one that works: &lt;a href="https://marketplace.visualstudio.com/acquisition?itemName=cake-build.cake"&gt;cake build pacakage in marketplacevisualstudio &lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Without this package, pipeline build doesn't succeed and encounters following error,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;A task is missing. The pipeline references a task called 'cake-build.cake.cake-build-task.Cake'. This usually indicates the task isn't installed, and you may be able to install it from the Marketplace: https://marketplace.visualstudio.com. (Task version 0, job 'Job', step ''.)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The call flow looks like following,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Deploy
--&amp;gt; PushMasterBranch
--&amp;gt; CommitMasterBranch
-  -&amp;gt; CopyToMasterBranch
-  -&amp;gt; Build, EmptyMasterBranch
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To make wyam work, the first one in references section helped a lot.&lt;/p&gt;
-&lt;h2 id="setting-up-a-custom-domain"&gt;Setting up a custom domain&lt;/h2&gt;
-&lt;p&gt;References for setting up custom domain:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.blog/2018-05-01-github-pages-custom-domains-https"&gt;Parker Moore - Custom domains on GitHub Pages gain support for HTTPS&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://gohugo.io/hosting-and-deployment/hosting-on-github/#use-a-custom-domain"&gt;Host on GitHub - Use a Custom Domain&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://help.github.com/en/github/working-with-github-pages/managing-a-custom-domain-for-your-github-pages-site"&gt;github - Managing a custom domain for your GitHub Pages site&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;I my case I set it up on subdomain, &lt;code&gt;blog.saosx.com&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Additionally, I enable DNSSEC for my primary domain which is not required in your case:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://ph.godaddy.com/help/add-a-ds-record-23865"&gt;godaddy - dnssec add record&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.iana.org/assignments/ds-rr-types/ds-rr-types.xhtml"&gt;numeric representation for digest type&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://blog.cloudflare.com/secure-and-fast-github-pages-with-cloudflare/"&gt;trick to enabling https&lt;/a&gt; (even though github not allowing)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="generating-cname-file-for-the-blog"&gt;Generating CNAME file for the blog&lt;/h3&gt;
-&lt;p&gt;I find the section in deployment where files are being generated,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Task(&amp;quot;CopyToMasterBranch&amp;quot;)
-    .IsDependentOn(&amp;quot;Build&amp;quot;)
-    .IsDependentOn(&amp;quot;EmptyMasterBranch&amp;quot;)
-    .Does(() =&amp;gt; {
-        var sourcePath = &amp;quot;./output&amp;quot;;
-
-        Information(&amp;quot;Copying files to master branch&amp;quot;);
-
-        // Now Create all of the directories
-        foreach (string dirPath in System.IO.Directory.GetDirectories(sourcePath, &amp;quot;*&amp;quot;, SearchOption.AllDirectories))
-        {
-            System.IO.Directory.CreateDirectory(dirPath.Replace(sourcePath, tempDir));
-        }
-
-        // Copy all the files &amp;amp; Replaces any files with the same name
-        foreach (string newPath in System.IO.Directory.GetFiles(sourcePath, &amp;quot;*.*&amp;quot;, SearchOption.AllDirectories))
-            System.IO.File.Copy(newPath, newPath.Replace(sourcePath, tempDir), true);
-    });
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To explain the code segment above,&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;sourcePath = the current output dir from wyam&lt;/li&gt;
-&lt;li&gt;tempDir = windows temp dir&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;newPath.Replace(sourcePath, tempDir)&lt;/code&gt; = tempDir + relative Path of the file&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;File.Copy ref,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;public static void Copy (string sourceFileName, string destFileName);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;After last copy in the code semgent above we add this to add CNAME,&lt;/p&gt;
-&lt;p&gt;We can write the CName in following way,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;string CNameContent = &amp;quot;blog.domain.com&amp;quot;;
-System.IO.File.WriteAllText(System.IO.Path.Combine(tempDir, CNameFileName), CNameContent);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="pipeline-variables"&gt;Pipeline Variables&lt;/h2&gt;
-&lt;p&gt;Probably these variables reset after we do deploy as below,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;.\build -Target Deploy
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables"&gt;MS Docs - Pipeline Variables&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;To edit pipeline variables on azure cloud.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Naviagate to your pipeline URL.&lt;/li&gt;
-&lt;li&gt;Click Edit and noow you can access variables&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h4 id="conclusion"&gt;Conclusion&lt;/h4&gt;
-&lt;p&gt;So, far, this is pretty good experience.&lt;/p&gt;
-&lt;p&gt;Finally, my blog URL:
-&lt;a href="https://blog.saosx.com/"&gt;SAOSX blog&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;wyam uses markdig flavor of Markdown of by default: &lt;a href="https://github.com/lunet-io/markdig/blob/master/src/Markdig.Tests/Specs/MathSpecs.md"&gt;markdig math&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Readily, I can think of following cons,&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;mathematics/latex notation is not working by default&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="references"&gt;References&lt;/h3&gt;
-&lt;p&gt;Usueful refs are below,&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;primary ref: &lt;a href="https://johanvergeer.github.io/posts/wyam-azure-devops"&gt;Johan Vergeer - Wyam, Azure DevOps and GitHub Pages&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://jonathanhiggs.github.io/posts/create-github-pages-with-wyam"&gt;Jonathan Higgs - Create GitHub Pages Blog with Wyam&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://wyam.io/docs"&gt;wyam official documentation&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://daveaglick.com/posts/converting-my-blog-to-wyam"&gt;daveaglick - Converting My Blog to Wyam&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops"&gt;MS Azure Cloud - availabe VMs&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/daveaglick/daveaglick"&gt;github daveaglick&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </content>
 		<summary>Heads in the cloud! A Qubit Blog!</summary>
