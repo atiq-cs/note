@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://note.iqubit.xyz/" />
 	<rights>Copyright © 2021</rights>
-	<updated>2021-08-12T22:12:46Z</updated>
+	<updated>2021-08-26T16:52:15Z</updated>
 	<subtitle>Heads in the cloud! A Qubit Blog!</subtitle>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/net-core-mvchello-entity-framework2021-08</id>
@@ -12,7 +12,7 @@
 		<link href="https://note.iqubit.xyz/posts/net-core-mvchello-entity-framework2021-08" />
 		<updated>2021-08-12T00:00:00Z</updated>
 		<content>&lt;h2 id="razor-pages-app"&gt;Razor Pages App&lt;/h2&gt;
-&lt;p&gt;localdb mdf files are usually stored at &lt;code&gt;$HOME&lt;/code&gt; (for example, &lt;code&gt;C:\Users\YOUR_NAME&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;We follow this primary reference documentation, &lt;a href="https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/intro"&gt;MS Docs - aspnet/core/data/ef-rp/intro&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;dotnet new webapp -n P03_ContosoUniversity_RP
 cd P03_ContosoUniversity_RP
 
@@ -24,17 +24,53 @@ dotnet add package Microsoft.EntityFrameworkCore.Tools
 
 dotnet add package Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore
 
-dotnet aspnet-codegenerator razorpage -m Student -dc ContosoUniversity.Data.SchoolContext -udl -outDir Pages\Students --referenceScriptLibraries -sqlite
+dotnet aspnet-codegenerator razorpage -m Student -dc ContosoUniversity.Data.SchoolContext `
+-udl -outDir Pages\Students --referenceScriptLibraries -sqlite
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And, we keep following the documentation, &lt;a href="https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/intro"&gt;https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/intro&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;We refactor all &lt;code&gt;P03_ContosoUniversity_RP&lt;/code&gt; with &lt;code&gt;ContosoUniversity&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Scaf&lt;/p&gt;
+&lt;p&gt;Scaffolding source files have &lt;code&gt;context.Student&lt;/code&gt; which is not correct. We update those with &lt;code&gt;context.Students&lt;/code&gt;.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;dotnet tool update --global dotnet-ef
 dotnet ef database update
-
-$Env:ASPNETCORE_ENVIRONMENT = &amp;quot;Development&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;EF supports dev environment as well,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dotnet ef database update -- --environment Development
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally, we run it,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$Env:ASPNETCORE_ENVIRONMENT = &amp;quot;Development&amp;quot;
 dotnet run
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There's some differences with the cu50 sample.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;Pages\Students\Index.cshtml.cs&lt;/code&gt; is much larger not just one line,&lt;/p&gt;
+&lt;p&gt;Student = await _context.Students.ToListAsync();&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Indentations under &lt;code&gt;Data&lt;/code&gt; folder&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Code for Error messages, logger etc in a number of files&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;they have some region definitions with snippet names&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In summary, the actual cu50 sample is much more complete than the one we create by following the tutorial.&lt;/p&gt;
+&lt;p&gt;Some observations,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;localdb mdf files are usually stored at &lt;code&gt;$HOME&lt;/code&gt; (for example, &lt;code&gt;C:\Users\YOUR_NAME&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="references"&gt;References&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Refs on Razor Pages&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://docs.microsoft.com/en-us/aspnet/core/razor-pages"&gt;Razor Pages&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.learnrazorpages.com/razor-pages/handler-methods"&gt;learnrazorpages - Handler Methods in Razor Pages&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Refs on Entity Framework Performance&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://medium.com/swlh/entity-framework-common-performance-mistakes-cdb8861cf0e7"&gt;Common performance mistakes&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Example to connect from Visual Studio Server Explorer&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Server Name: (LocalDb)\MSSQLLocalDB
+DB: CU-1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ref: 1. &lt;a href="https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/introduction/creating-a-connection-string"&gt;connection strings example&lt;/a&gt;, 2. &lt;a href="https://stackoverflow.com/questions/21563940/how-to-connect-to-localdb-in-visual-studio-server-explorer"&gt;how to connect database in visual studio data explorer&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="mvc-app"&gt;MVC App&lt;/h2&gt;
 &lt;p&gt;Steps&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;dotnet new mvc -n P03_ContosoUniversity
@@ -42,25 +78,25 @@ dotnet run
 &lt;p&gt;Replace &lt;code&gt;P03_ContosoUniversity&lt;/code&gt; with 'Contoso University'.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;dotnet add package Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;we keep following,
-&lt;a href="https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/intro"&gt;https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/intro&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;add default connection in &lt;code&gt;appsettings.Development.json&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Primary reference documentation, &lt;a href="https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/intro"&gt;MS Docs - aspnet/core/data/ef-mvc/intro&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;We add default connection in &lt;code&gt;appsettings.Development.json&lt;/code&gt;. We pretty much follow the steps in tutorial and able to produce working version. Only, using VS Code instead of Visual Studio Pro is bit of work since all CLI commands are not provided and we need to repro them, especially scaffolding ones.&lt;/p&gt;
 &lt;h2 id="razor-pages-app-net-core"&gt;Razor Pages App (net core)&lt;/h2&gt;
-&lt;p&gt;This is a test to be able to run the EF Core Razor App with .net core,&lt;/p&gt;
-&lt;p&gt;We require following packages,&lt;/p&gt;
+&lt;p&gt;This is an experiment to run the EF Core Razor App with .net core,&lt;/p&gt;
+&lt;p&gt;We update net framework target in &lt;code&gt;.csproj&lt;/code&gt; file.&lt;/p&gt;
+&lt;p&gt;We add following nuget packages,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;dotnet new webapp -n P03_ContosoUniversity_netcore
 dotnet add package Microsoft.EntityFrameworkCore.Design
 dotnet add package Microsoft.EntityFrameworkCore
 dotnet add package Microsoft.EntityFrameworkCore.SQLite
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;We add all the scaffolding files from a previous project that target .net6&lt;/p&gt;
-&lt;p&gt;We end up finding that,&lt;/p&gt;
+&lt;p&gt;We add all the scaffolding files from previous project (above) that targets .net6&lt;/p&gt;
+&lt;p&gt;We end up finding that the following method calls:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;// in ConfigureServices
 // services.AddDatabaseDeveloperPageExceptionFilter();
 // in Configure
 // app.UseMigrationsEndPoint();
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;requires,&lt;/p&gt;
+&lt;p&gt;require &lt;code&gt;Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore&lt;/code&gt; package,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;dotnet add package Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore
 Determining projects to restore...
 Writing C:\Users\atiq\AppData\Local\Temp\tmp6CF5.tmp
@@ -72,6 +108,7 @@ error: NU1202: Package Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore 5.0.
 error: Package 'Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore' is incompatible with 'all' frameworks in project 'D:\Code\CS\P03_ContosoUniversity_netcore\P03_ContosoUniversity_netcore.csproj'
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Also, the old version (3.1.18 supports .net core) of &lt;code&gt;Diagnostics.EntityFrameworkCore&lt;/code&gt; doesn't have the definitions mentioned above.&lt;/p&gt;
+&lt;p&gt;Conclusion: since some of the packages i.e., &lt;code&gt;Diagnostics.EntityFrameworkCore&lt;/code&gt; don't target .net core and only targets newer versions of net framework, for example, .net 6. We cannot run the examples from official tutorial that uses EF Core or Diagnostics (may be Logging package as well).&lt;/p&gt;
 </content>
 		<summary>Heads in the cloud! A Qubit Blog!</summary>
 	</entry>
