@@ -41,6 +41,8 @@
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/plugins/autoloader/prism-autoloader.min.js" data-no-mirror></script>
   <script src="https://cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/themes/prism.css">
+
+  <!-- Lunr search -->
   
   
 
@@ -85,7 +87,7 @@
               <div class="meta">Published on Wednesday, 27 November 2019</div>
                 <div class="mt-3">
                       <a href="/tags/markdown" class="badge badge-light"> markdown</a>
-                      <a href="/tags/wyam" class="badge badge-light"> wyam</a>
+                      <a href="/tags/statiq" class="badge badge-light"> statiq</a>
                       <a href="/tags/cloud" class="badge badge-light"> Cloud</a>
                       <a href="/tags/pipelines" class="badge badge-light"> Pipelines</a>
                 </div>
@@ -99,7 +101,8 @@
   <div class="container"> 
     <div class="row">
       <div id="content" class="col-md-12">  
-        <h2 id="wyam">Wyam</h2>
+        <p>Wyam is deprecated. Replacement is <a href="https://github.com/statiqdev">statiq</a>.</p>
+<h2 id="wyam">Wyam</h2>
 <p>First, we install wyam install locally using pwsh admin,</p>
 <pre><code>choco install wyam -y
 </code></pre>
@@ -114,8 +117,8 @@ dotnet D:\PFiles_x64\Chocolatey\lib\wyam\Wyam.dll build --help
 <h2 id="github-setup-and-local-build">github setup and local build</h2>
 <p>Create a new repo. do a clone or (init and add files).</p>
 <p>However, <em>we don't create master branch</em>. We only create a branch called <code>source</code>.</p>
-<pre><code>git clone https://github.com/atiq-cs/saos-site
-Rename-Item saos-site wyamBlog
+<pre><code>git clone https://github.com/atiq-cs/fftsys-site
+Rename-Item fftsys-site wyamBlog
 pushd wyamBlog
 git checkout -b source
 git add .gitignore
@@ -186,7 +189,7 @@ Wyam version 2.2.9
           `%&#64;&#64;&#64;&#64;&#64;&#64;&#64;&#64;&#64;&#64;&#64;&#64;&#64;&#64;&#64;&#64;&#64;P
              `*%RB&#64;&#64;&#64;&#64;&#64;RRP`
 **BUILD**
-Loading configuration from file:///D:/Code/wyamBlog/saos/config.wyam
+Loading configuration from file:///D:/Code/wyamBlog/fftsys/config.wyam
 Installing NuGet packages
     Installing packages to C:/Users/atiq/.nuget/packages (using global packages folder)
     NuGet packages installed in 250 ms
@@ -197,7 +200,7 @@ Cataloging classes
 Evaluating configuration script
     Evaluated configuration script in 26 ms
 Root path:
-    file:///D:/Code/wyamBlog/saos
+    file:///D:/Code/wyamBlog/fftsys
 Input path(s):
     file:///C:/Users/atiq/.nuget/packages/Wyam.Blog.CleanBlog.2.2.9/content
     theme
@@ -278,7 +281,7 @@ Wyam version 2.2.9
           `%&#64;&#64;&#64;&#64;&#64;&#64;&#64;&#64;&#64;&#64;&#64;&#64;&#64;&#64;&#64;&#64;&#64;P
              `*%RB&#64;&#64;&#64;&#64;&#64;RRP`
 **BUILD**
-Loading configuration from file:///D:/Code/wyamBlog/saos/config.wyam
+Loading configuration from file:///D:/Code/wyamBlog/fftsys/config.wyam
 Installing NuGet packages
     Installing packages to C:/Users/atiq/.nuget/packages (using global packages folder)
     NuGet packages installed in 258 ms
@@ -289,7 +292,7 @@ Cataloging classes
 Evaluating configuration script
     Evaluated configuration script in 5 ms
 Root path:
-    file:///D:/Code/wyamBlog/saos
+    file:///D:/Code/wyamBlog/fftsys
 Input path(s):
     file:///C:/Users/atiq/.nuget/packages/Wyam.Blog.CleanBlog.2.2.9/content
     theme
@@ -401,7 +404,7 @@ Total:                        00:00:18.3127486
 <li><a href="https://gohugo.io/hosting-and-deployment/hosting-on-github/#use-a-custom-domain">Host on GitHub - Use a Custom Domain</a></li>
 <li><a href="https://help.github.com/en/github/working-with-github-pages/managing-a-custom-domain-for-your-github-pages-site">github - Managing a custom domain for your GitHub Pages site</a></li>
 </ul>
-<p>I my case I set it up on subdomain, <code>blog.saosx.com</code></p>
+<p>I my case I set it up on subdomain, <code>blog.fftsysx.com</code></p>
 <p>Additionally, I enable DNSSEC for my primary domain which is not required in your case:</p>
 <ul>
 <li><a href="https://ph.godaddy.com/help/add-a-ds-record-23865">godaddy - dnssec add record</a></li>
@@ -456,7 +459,7 @@ System.IO.File.WriteAllText(System.IO.Path.Combine(tempDir, CNameFileName), CNam
 <h4 id="conclusion">Conclusion</h4>
 <p>So, far, this is pretty good experience.</p>
 <p>Finally, my blog URL:
-<a href="https://blog.saosx.com/">SAOSX blog</a></p>
+<a href="https://blog.fftsysx.com/">fftsysX blog</a></p>
 <p>wyam uses markdig flavor of Markdown of by default: <a href="https://github.com/lunet-io/markdig/blob/master/src/Markdig.Tests/Specs/MathSpecs.md">markdig math</a></p>
 <p>Readily, I can think of following cons,</p>
 <ul>

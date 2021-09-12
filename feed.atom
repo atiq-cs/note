@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://note.iqubit.xyz/" />
 	<rights>Copyright © 2021</rights>
-	<updated>2021-08-26T16:52:15Z</updated>
+	<updated>2021-09-12T19:33:14Z</updated>
 	<subtitle>Heads in the cloud! A Qubit Blog!</subtitle>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/net-core-mvchello-entity-framework2021-08</id>
@@ -25,6 +25,10 @@ dotnet add package Microsoft.EntityFrameworkCore.Tools
 dotnet add package Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore
 
 dotnet aspnet-codegenerator razorpage -m Student -dc ContosoUniversity.Data.SchoolContext `
+-udl -outDir Pages\Students --referenceScriptLibraries
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If we are using SQLite database,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dotnet aspnet-codegenerator razorpage -m Student -dc ContosoUniversity.Data.SchoolContext `
 -udl -outDir Pages\Students --referenceScriptLibraries -sqlite
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We refactor all &lt;code&gt;P03_ContosoUniversity_RP&lt;/code&gt; with &lt;code&gt;ContosoUniversity&lt;/code&gt;.&lt;/p&gt;
