@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://note.iqubit.xyz/" />
 	<rights>Copyright © 2021</rights>
-	<updated>2021-09-12T20:19:21Z</updated>
+	<updated>2021-10-09T18:52:00Z</updated>
 	<subtitle>Heads in the cloud! A Qubit Blog!</subtitle>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/net-core-mvchello-entity-framework2021-08</id>
@@ -548,9 +548,28 @@ Do a force push (ths is usually combined with &lt;code&gt;git commit --amend&lt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Then, we press Ctrl + X,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;git rebase --continue
-git push --force origin master
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Again, a force push destroys commit made by others.&lt;/p&gt;
+&lt;p&gt;Examples look like this,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# Commands:
+# p, pick = use commit
+# r, reword = use commit, but edit the commit message
+# e, edit = use commit, but stop for amending
+# s, squash = use commit, but meld into previous commit
+# f, fixup = like &amp;quot;squash&amp;quot;, but discard this commit's log message
+# x, exec = run command (the rest of the line) using shell
+#
+# These lines can be re-ordered; they are executed from top to bottom.
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+#
+# However, if you remove everything, the rebase will be aborted.
+#
+# Note that empty commits are commented out
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git push --force origin master
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Note: a force push destroys commits made by others (if they pushed in the mean time).&lt;/p&gt;
 &lt;p&gt;To correct commit author name upto specific commit (probably? or is it only for single commit?),&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;git reset author
 git rebase --interactive -p 7508a2627bee2a28535e7ae306c51788fd287f9f
@@ -558,6 +577,9 @@ git rebase --interactive -p 7508a2627bee2a28535e7ae306c51788fd287f9f
 &lt;p&gt;mark all of them as 'e' and keep applying following commands. In this example, the author's email address is 'alex&amp;#64;corp.xyz',&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;git commit --amend --author &amp;quot;Alex Roy &amp;lt;alex&amp;#64;corp.xyz&amp;gt;&amp;quot; --no-edit
 git rebase --continue
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Changing the message of the most recently pushed commit, &lt;a href="https://docs.github.com/en/github/committing-changes-to-your-project/creating-and-editing-commits/changing-a-commit-message"&gt;ref&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git push --force-with-lease example-branch
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;Removing a single commit from history&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;There might be conflicts during the operation, some commit order gets changed as well (not order by date anymore), Be aware this is dangerous and might now work,&lt;/p&gt;
