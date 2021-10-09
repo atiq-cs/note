@@ -167,9 +167,30 @@ To edit previous commit messages that are pushed,
 Then, we press Ctrl + X,
 
 	git rebase --continue
+
+Examples look like this,
+
+	# Commands:
+	# p, pick = use commit
+	# r, reword = use commit, but edit the commit message
+	# e, edit = use commit, but stop for amending
+	# s, squash = use commit, but meld into previous commit
+	# f, fixup = like "squash", but discard this commit's log message
+	# x, exec = run command (the rest of the line) using shell
+	#
+	# These lines can be re-ordered; they are executed from top to bottom.
+	#
+	# If you remove a line here THAT COMMIT WILL BE LOST.
+	#
+	# However, if you remove everything, the rebase will be aborted.
+	#
+	# Note that empty commits are commented out
+
+Finally,
+
 	git push --force origin master
 
-Again, a force push destroys commit made by others.
+Note: a force push destroys commits made by others (if they pushed in the mean time).
 
 To correct commit author name upto specific commit (probably? or is it only for single commit?),
 
@@ -180,6 +201,12 @@ mark all of them as 'e' and keep applying following commands. In this example, t
 
 	git commit --amend --author "Alex Roy <alex@corp.xyz>" --no-edit
 	git rebase --continue
+
+
+Changing the message of the most recently pushed commit, [ref](https://docs.github.com/en/github/committing-changes-to-your-project/creating-and-editing-commits/changing-a-commit-message)
+
+	git push --force-with-lease example-branch
+
 
 **Removing a single commit from history**
 
