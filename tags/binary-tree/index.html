@@ -43,6 +43,9 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/themes/prism.css">
 
   <!-- Lunr search -->
+    <script src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pako@2.0.3/dist/pako_inflate.min.js"></script>
+    <script src="/search.js"></script>
   
   
 
@@ -70,6 +73,10 @@
                 <a class="nav-link" href="/posts">Posts</a>
             </li>
 </ul>
+        <form class="form-inline my-2 my-lg-0" action="/search" method="GET">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query">
+          <input type="submit" hidden />
+        </form>
     </div>
   </div>
 </nav>
