@@ -5,8 +5,8 @@
 		<link>https://note.iqubit.xyz/</link>
 		<description>Heads in the cloud! A Qubit Blog!</description>
 		<copyright>Copyright © 2021</copyright>
-		<pubDate>Tue, 26 Oct 2021 23:24:27 GMT</pubDate>
-		<lastBuildDate>Tue, 26 Oct 2021 23:24:27 GMT</lastBuildDate>
+		<pubDate>Tue, 26 Oct 2021 23:30:10 GMT</pubDate>
+		<lastBuildDate>Tue, 26 Oct 2021 23:30:10 GMT</lastBuildDate>
 		<item>
 			<title>Creating Token, NFT using Solana</title>
 			<link>https://note.iqubit.xyz/posts/solana-cli</link>
@@ -126,6 +126,20 @@ GjvWk83m1vKQjmQU2dPnLTRvAKjtAKsAmKKNu7Gyk93   100
 &lt;h3 id="creating-nft"&gt;Creating NFT&lt;/h3&gt;
 &lt;p&gt;[TODO]
 will post after fixing AWS RHEL instance..&lt;/p&gt;
+&lt;h3 id="notes-on-ubuntu-build"&gt;Notes on Ubuntu Build&lt;/h3&gt;
+&lt;p&gt;A successful build looks like this,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ tail ~/logs/solana_log.txt
+Compiling zstd v0.5.4+zstd.1.4.7
+Compiling solana-account-decoder v1.7.11
+Compiling solana-transaction-status v1.7.11
+Compiling solana-client v1.7.11
+Compiling solana-cli-output v1.7.11
+Compiling spl-token-cli v2.0.15
+    Finished release [optimized] target(s) in 6m 47s
+Installing /home/atiq/.cargo/bin/spl-token
+Installed package `spl-token-cli v2.0.15` (executable `spl-token`)
+warning: be sure to add `/home/atiq/.cargo/bin` to your PATH to be able to run the installed binaries
+&lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
 		</item>

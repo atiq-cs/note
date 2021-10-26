@@ -220,6 +220,20 @@ GjvWk83m1vKQjmQU2dPnLTRvAKjtAKsAmKKNu7Gyk93   100
 <h3 id="creating-nft">Creating NFT</h3>
 <p>[TODO]
 will post after fixing AWS RHEL instance..</p>
+<h3 id="notes-on-ubuntu-build">Notes on Ubuntu Build</h3>
+<p>A successful build looks like this,</p>
+<pre><code>$ tail ~/logs/solana_log.txt
+Compiling zstd v0.5.4+zstd.1.4.7
+Compiling solana-account-decoder v1.7.11
+Compiling solana-transaction-status v1.7.11
+Compiling solana-client v1.7.11
+Compiling solana-cli-output v1.7.11
+Compiling spl-token-cli v2.0.15
+    Finished release [optimized] target(s) in 6m 47s
+Installing /home/atiq/.cargo/bin/spl-token
+Installed package `spl-token-cli v2.0.15` (executable `spl-token`)
+warning: be sure to add `/home/atiq/.cargo/bin` to your PATH to be able to run the installed binaries
+</code></pre>
 
 
 
