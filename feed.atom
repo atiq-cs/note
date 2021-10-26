@@ -4,8 +4,129 @@
 	<title />
 	<link rel="self" href="https://note.iqubit.xyz/" />
 	<rights>Copyright © 2021</rights>
-	<updated>2021-10-11T18:56:06Z</updated>
+	<updated>2021-10-26T23:24:27Z</updated>
 	<subtitle>Heads in the cloud! A Qubit Blog!</subtitle>
+	<entry>
+		<id>https://note.iqubit.xyz/posts/solana-cli</id>
+		<title>Creating Token, NFT using Solana</title>
+		<link href="https://note.iqubit.xyz/posts/solana-cli" />
+		<updated>2021-10-24T00:00:00Z</updated>
+		<content>&lt;p&gt;Using the Token Program we are able to create fungible and non-fungible tokens.&lt;/p&gt;
+&lt;h3 id="pre-requisites"&gt;Pre-requisites&lt;/h3&gt;
+&lt;p&gt;We need the token program to be able to accomplish those. We follow official documentation: &lt;a href="https://spl.solana.com/token"&gt;SPL Solana Token&lt;/a&gt;. We need a Linux Machine or VM with about 16GB or more main memory. Free tier aws linux vm doesn't work.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Install Rust&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Install Solana CLI&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;As per &lt;a href="https://docs.solana.com/cli/install-solana-cli-tools"&gt;solana docs - install-solana-cli-tools&lt;/a&gt; we install solana cli and export its installation location into &lt;code&gt;PATH&lt;/code&gt; variable.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sh -c &amp;quot;$(curl -sSfL https://release.solana.com/v1.8.1/install)&amp;quot;
+export PATH=&amp;quot;/home/atiq/.local/share/solana/install/active_release/bin:$PATH&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Install required packages for building &lt;code&gt;spl-token-cli&lt;/code&gt;,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo dnf install openssl-devel --assumeyes
+sudo dnf install libudev-devel --assumeyes
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally, we install the token library program,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cargo install spl-token-cli
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;aws free tier linux VM usually hit following OOM error,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;could not compile libsecp256k1 signal: 9, SIGKILL: kill
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Once the build is successful, we check config,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ solana config get
+Config File: /home/atiq/.config/solana/cli/config.yml
+RPC URL: https://api.mainnet-beta.solana.com 
+WebSocket URL: wss://api.mainnet-beta.solana.com/ (computed)
+Keypair Path: /home/atiq/.config/solana/id.json 
+Commitment: confirmed 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;By default, RPC is set to mainnet. Let's change it to dev so that we can do some interesting experiments.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ solana config set --url https://api.devnet.solana.com
+Config File: /home/atiq/.config/solana/cli/config.yml
+RPC URL: https://api.devnet.solana.com 
+WebSocket URL: wss://api.devnet.solana.com/ (computed)
+Keypair Path: /home/atiq/.config/solana/id.json 
+Commitment: confirmed 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To get keypair let's create a FileSystem Wallet.&lt;/p&gt;
+&lt;h2 id="creating-file-system-wallet"&gt;Creating File System Wallet&lt;/h2&gt;
+&lt;p&gt;main reference: &lt;a href="https://docs.solana.com/wallet-guide/file-system-wallet"&gt;https://docs.solana.com/wallet-guide/file-system-wallet&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;It is insecure because the keypair files are unencrypted.&lt;/p&gt;
+&lt;p&gt;Let's create key pair,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ mkdir ~/solana-wallet
+
+$ solana-keygen new --outfile ~/solana-wallet/keypair.json
+Generating a new keypair
+For added security, enter a BIP39 passphrase
+
+NOTE! This passphrase improves security of the recovery seed phrase NOT the
+keypair file itself, which is stored as insecure plain text
+
+BIP39 Passphrase (empty for none): 
+Wrote new keypair to /home/atiq/solana-wallet/keypair.json
+==============================================================================
+pubkey: 5cESBj8D4d6heCiYTKxJSs5Adtbf9rsFedVoZJnRRM7c
+==============================================================================
+Save this seed phrase and your BIP39 passphrase to recover your new keypair:
+key battle mystery control bonus manual thought jazz kidney slam plastic token
+==============================================================================
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Verify, just in case,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;solana-keygen verify 5cESBj8D4d6heCiYTKxJSs5Adtbf9rsFedVoZJnRRM7c ~/solana-wallet/keypair.json
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="creating-tokens"&gt;Creating Tokens&lt;/h2&gt;
+&lt;p&gt;If we have successfully previous sections we can create Tokens now.&lt;/p&gt;
+&lt;p&gt;Let's set keypair in solana config that we got from file system wallet (previous section),&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ solana config set --keypair $HOME/solana-wallet/keypair.json
+Config File: /home/atiq/.config/solana/cli/config.yml
+RPC URL: https://api.devnet.solana.com 
+WebSocket URL: wss://api.devnet.solana.com/ (computed)
+Keypair Path: /home/atiq/solana-wallet/keypair.json 
+Commitment: confirmed
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We need some SOL to perform our next actions.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ solana airdrop 1
+Requesting airdrop of 1 SOL
+Signature: 6GVKHvFdBrTC93i4m7Jp2o12VLVsSyJFYHHBvcXBMwSsa8MBz83TCnfDgcijrUHBcuZrsyud4d5oUrBFMfUyt1tM
+1 SOL
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="creating-fungible-token"&gt;Creating Fungible Token&lt;/h3&gt;
+&lt;p&gt;Let's create token,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;spl-token create-token
+Creating token GjvWk83m1vKQjmQU2dPnLTRvAKjtAKsAmKKNu7Gyk93
+Signature: 2ivgjD3N7xpj2vhDg4YoF3gYMAwkytmbydYeyWVRLzFuUYusUZ4oko6eLTMAws4NKW9YtUuFTcMfEQHYiwgceaCD
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Mint 100 new tokens,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;spl-token mint GjvWk83m1vKQjmQU2dPnLTRvAKjtAKsAmKKNu7Gyk93 100
+Minting 100 tokens
+Token: GjvWk83m1vKQjmQU2dPnLTRvAKjtAKsAmKKNu7Gyk93
+Recipient: F8xUCvGx19sZJVy1cMkZgFRMmU7DWCyXTzDebDzDPnwv
+Signature: 5i2y9eBAYipJVGsqU6fLR8q61CgJpX1B9iU6BdHh5iPcE9JtefsGPJ7nKQuEjGSqVxqXKHAPC5hPFp7uSzXJpJMn
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Check token supply,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ spl-token supply GjvWk83m1vKQjmQU2dPnLTRvAKjtAKsAmKKNu7Gyk93
+100
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Check token balance,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ spl-token balance GjvWk83m1vKQjmQU2dPnLTRvAKjtAKsAmKKNu7Gyk93
+100
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Accounts,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ spl-token accounts
+Token                                         Balance
+---------------------------------------------------------------
+GjvWk83m1vKQjmQU2dPnLTRvAKjtAKsAmKKNu7Gyk93   100
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="creating-nft"&gt;Creating NFT&lt;/h3&gt;
+&lt;p&gt;[TODO]
+will post after fixing AWS RHEL instance..&lt;/p&gt;
+</content>
+		<summary>Heads in the cloud! A Qubit Blog!</summary>
+	</entry>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/net-core-mvchello-entity-framework2021-08</id>
 		<title>dotnet core Hello World with Entity Framework and Database</title>
@@ -969,26 +1090,6 @@ Phone: +880 2-9143676
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;Data Plans&lt;/strong&gt;
 A good cell phone carrier helps. It's easy to register a SIM card with one of the carriers to make communication easier to make cals to hospitals or local Bangladesh contacts. Few careers are GrameenPhone, Robi, Airtel. Your roaming service might cover you as well for calling and data; however, please note that &lt;em&gt;cellphone plans are cheaper in Bangladesh compared to other countries&lt;/em&gt;. It's better to just utilize that.&lt;/p&gt;
-</content>
-		<summary>Heads in the cloud! A Qubit Blog!</summary>
-	</entry>
-	<entry>
-		<id>https://note.iqubit.xyz/posts/medical-hospital-birdem</id>
-		<title>BIRDEM General Hospital Review</title>
-		<link href="https://note.iqubit.xyz/posts/medical-hospital-birdem" />
-		<updated>2019-11-28T00:00:00Z</updated>
-		<content>&lt;p&gt;BIRDEM: &lt;a href="https://www.google.com/search?sxsrf=ACYBGNTMLrdeP99E_eiLCVujRWvrGh7t8g%3A1574983392995&amp;amp;ei=4FbgXaSuPOP19APgwoJg&amp;amp;q=birdem+hospital&amp;amp;oq=birdem+hospital&amp;amp;gs_l=psy-ab.3..35i39l2j0l3j0i20i263j0l4.2652.8043..10211...1.1..0.169.1542.11j5......0....1..gws-wiz.......0i71j0i273j0i131j0i67j35i304i39j0i13.QrrR8Vo4Idc&amp;amp;ved=0ahUKEwiknqqtho7mAhXjOn0KHWChAAwQ4dUDCAs&amp;amp;uact=5#lrd=0x3755b8eb2cd9b849:0x7c213c924dd2d324,1,,,"&gt;google review link&lt;/a&gt;
-As a friend quotes,&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Cost is similar to private but environment is identical to public hospitals.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;** Bed bugs are real **: there are bed bugs, dirty environment in wards and cabins follows.&lt;/li&gt;
-&lt;li&gt;wards fees of private, but condition is public.. cabins have few patients..&lt;/li&gt;
-&lt;li&gt;most times doctors are resistant on showing report or taking photos of those.
-hard to get access to Sr Doctor, talks over phone with Sr Doctor, sometimes there are delays in treatment due to that.&lt;/li&gt;
-&lt;li&gt;You need to keep people around the patient during every treatment/dialysis session. Chances are if things go wrong, Nurses might not notice it. They might as well just blame the patient for anything bad happened for example, say that patient moved and saline got disconnected which result cotting of blood. This is their excuse while the patient is unable to move at all. They won't apologize despite their fault/negligence. They even kick you out if you speak out due to their mistake. After all, you are victim.&lt;/li&gt;
-&lt;/ul&gt;
 </content>
 		<summary>Heads in the cloud! A Qubit Blog!</summary>
 	</entry>
