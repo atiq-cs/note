@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Heads in the cloud! A Qubit Blog!">
 
-  <title>Notes from Qubit Inc. - mercurial</title>
+  <title>Notes from Qubit Inc. - Subversion Basics</title>
 
-  <link rel="canonical" href="https://note.iqubit.xyz/tags/mercurial">
+  <link rel="canonical" href="https://note.iqubit.xyz/posts/scm/svn">
 
       <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
       <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
@@ -18,9 +18,9 @@
   <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
   <meta name="msapplication-starturl" content="/" />
 
-  <meta property="og:title" content="Notes from Qubit Inc. - mercurial" />
+  <meta property="og:title" content="Notes from Qubit Inc. - Subversion Basics" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://note.iqubit.xyz/tags/mercurial" />
+  <meta property="og:url" content="https://note.iqubit.xyz/posts/scm/svn" />
   
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -89,7 +89,7 @@
       <div class="col-md-12">
         <div class="site-heading">
           <h1>
-            mercurial
+            Subversion Basics
           </h1>
         </div>
       </div>
@@ -101,65 +101,43 @@
   <div class="container"> 
     <div class="row">
       <div id="content" class="col-md-12">  
-            <div class="container-sm-height">
-        <div class="row row-sm-height">
-            <div class="col-md-6 right-border col-sm-height">
-                
-
-
-<div class="post-preview">
-    <h2 class="post-title"><a href="/posts/source-control-mercurial">Mercurial Useful Commands</a></h2>
-    <p class="post-meta">Published on Thursday, 14 November 2019</p>                
-<p>List files changed in previous commit,</p>        <p class="small"><a href="/posts/source-control-mercurial">Read more...</a></p>
-</div>
-
-            </div>
-            <div class="col-md-4 mt-4 mt-md-0 col-sm-height">
-                    <a href="/tags/system-administration" class="badge badge-light"> system administration (6)</a>
-                    <a href="/tags/health-care" class="badge badge-light"> health care (5)</a>
-                    <a href="/tags/problem-solving" class="badge badge-light"> Problem Solving (4)</a>
-                    <a href="/tags/algorithms" class="badge badge-light"> Algorithms (4)</a>
-                    <a href="/tags/linux" class="badge badge-light"> linux (3)</a>
-                    <a href="/tags/dotnet-core" class="badge badge-light"> dotnet core (3)</a>
-                    <a href="/tags/powershell-core" class="badge badge-light"> powershell core (3)</a>
-                    <a href="/tags/source-control" class="badge badge-light"> source control (3)</a>
-                    <a href="/tags/version-control" class="badge badge-light"> version control (3)</a>
-                    <a href="/tags/windows-command-prompt" class="badge badge-light"> windows command prompt (3)</a>
-                    <a href="/tags/programming-languages" class="badge badge-light"> programming languages (3)</a>
-                    <a href="/tags/c" class="badge badge-light"> C&#x2B;&#x2B; (3)</a>
-                    <a href="/tags/entity-framework" class="badge badge-light"> entity framework (2)</a>
-                    <a href="/tags/pwsh" class="badge badge-light"> pwsh (2)</a>
-                    <a href="/tags/markdown" class="badge badge-light"> markdown (2)</a>
-                    <a href="/tags/python" class="badge badge-light"> python (2)</a>
-                    <a href="/tags/data-structure" class="badge badge-light"> Data Structure (2)</a>
-                    <a href="/tags/heap" class="badge badge-light"> Heap (2)</a>
-                    <a href="/tags/efi" class="badge badge-light"> efi (2)</a>
-                    <a href="/tags/system-boot" class="badge badge-light"> system boot (2)</a>
-                    <a href="/tags/windows" class="badge badge-light"> windows (2)</a>
-                    <a href="/tags/solana" class="badge badge-light"> solana (1)</a>
-                    <a href="/tags/crypto" class="badge badge-light"> crypto (1)</a>
-                    <a href="/tags/git" class="badge badge-light"> git (1)</a>
-                    <a href="/tags/powershell" class="badge badge-light"> powershell (1)</a>
-                    <a href="/tags/statiq" class="badge badge-light"> statiq (1)</a>
-                    <a href="/tags/cloud" class="badge badge-light"> Cloud (1)</a>
-                    <a href="/tags/pipelines" class="badge badge-light"> Pipelines (1)</a>
-                    <a href="/tags/network" class="badge badge-light"> network (1)</a>
-                    <a href="/tags/math" class="badge badge-light"> math (1)</a>
-                    <a href="/tags/latex" class="badge badge-light"> latex (1)</a>
-                    <a href="/tags/mercurial" class="badge badge-dark"> mercurial (1)</a>
-                    <a href="/tags/binary-tree" class="badge badge-light"> Binary Tree (1)</a>
-                    <a href="/tags/azure-cloud" class="badge badge-light"> Azure Cloud (1)</a>
-                    <a href="/tags/system-adiministration" class="badge badge-light"> System Adiministration (1)</a>
-                    <a href="/tags/cpp" class="badge badge-light"> cpp (1)</a>
-                    <a href="/tags/csharp" class="badge badge-light"> csharp (1)</a>
-                    <a href="/tags/system-programming" class="badge badge-light"> System Programming (1)</a>
-                    <a href="/tags/sorting" class="badge badge-light"> Sorting (1)</a>
-                    <a href="/tags/partitioning" class="badge badge-light"> partitioning (1)</a>
-                    <a href="/tags/windows-programming" class="badge badge-light"> windows programming (1)</a>
-                    <a href="/tags/mfc" class="badge badge-light"> MFC (1)</a>
-            </div>
-        </div>
-    </div>
+        <h2 id="svn-version-control">SVN - Version Control</h2>
+<p>Checking out a fresh copy from the remote repo,</p>
+<pre><code>svn checkout URL local_target_dir_path --username name&#64;company.com --password password_for_repo
+</code></pre>
+<p>Add files to svn repo,</p>
+<pre><code>svn add file_path
+svn add directory_path/pattern*
+</code></pre>
+<p>Exporting a file from SVN repo,</p>
+<pre><code>svn export -r 5 &quot;file:///D:/svnrepo/repo1/CoolApp/cpp/app.cpp&quot; D:\Projects\CoolApp\app.cpp `
+    --username YOUR_USER_NAME --password YOUR_PASS
+</code></pre>
+<p>Removing files,</p>
+<pre><code>svn remove file_path
+</code></pre>
+<p>Finally, commit, unlike git/hg in svn a commit pushes files to server as well,</p>
+<pre><code>svn commit D:\Projects\CoolApp --username YOUR_USER_NAME --password YOUR_PASS -m &quot;my change summary&quot;
+</code></pre>
+<p>Also we can do,</p>
+<pre><code>svn update
+svn info
+svn status
+</code></pre>
+<h2 id="running-svn-server-locally">Running SVN Server Locally</h2>
+<p>I used to use &quot;CollabNet Subversion&quot; to be able to do this. The software installed svnadmin in <code>C:\Program Files\CollabNet\Subversion Client</code>. Using <code>svnadmin</code> we can create repositories locally.</p>
+<pre><code>svnadmin create &quot;D:\svnrepo\repo1&quot;
+</code></pre>
+<p>Initial import of a project into this repo,</p>
+<pre><code>svn import D:\Projects\CoolApp &quot;file:///D:\svnrepo\repo1\CoolApp&quot; -m &quot;Initial import&quot;
+</code></pre>
+<p>Later, to checkout from this local repo,</p>
+<pre><code>svn checkout &quot;file:///D:\svnrepo\repo1\CoolApp&quot; D:\Projects\CoolApp `
+    --username YOUR_USER_NAME --password YOUR_PASS
+</code></pre>
+<p>If <code>svn info</code> shows an outdated local repo, we should do update,</p>
+<pre><code>svn update
+</code></pre>
 
       </div>
     </div>

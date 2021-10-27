@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://note.iqubit.xyz/" />
 	<rights>Copyright © 2021</rights>
-	<updated>2021-10-27T18:54:07Z</updated>
+	<updated>2021-10-27T19:05:57Z</updated>
 	<subtitle>Heads in the cloud! A Qubit Blog!</subtitle>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/solana-cli</id>
@@ -669,287 +669,6 @@ Stop-Service -Force bthserv
 		<summary>Heads in the cloud! A Qubit Blog!</summary>
 	</entry>
 	<entry>
-		<id>https://note.iqubit.xyz/posts/source-control-git</id>
-		<title>Useful Git Commands</title>
-		<link href="https://note.iqubit.xyz/posts/source-control-git" />
-		<updated>2020-07-25T00:00:00Z</updated>
-		<content>&lt;p&gt;[first few sections are complete, later sections yet to be updated]&lt;/p&gt;
-&lt;h1 id="introduction"&gt;Introduction&lt;/h1&gt;
-&lt;p&gt;A push to the remote repo consists of following two steps,&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;To add changes to the staging area&lt;/li&gt;
-&lt;li&gt;push the staged changes to remote repo&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id="how-to-add-files-or-changes-to-staged-area-to-commit-later"&gt;How to add files or changes to staged area (to commit later)&lt;/h2&gt;
-&lt;p&gt;[update not complete yet]&lt;/p&gt;
-&lt;p&gt;Note: commit stores file locally. Commit is not sent to remote repository unless a &lt;code&gt;push&lt;/code&gt; command is applied.&lt;/p&gt;
-&lt;p&gt;Here, we give some examples of adding files/directories to staged area. Staged area&lt;a href="https://git-scm.com/book/en/v2/Getting-Started-Git-Basics"&gt;[1]&lt;/a&gt; means the stage before commit. Anything that are modified (added/changed/deleted) in the stage area will be performed whenever a &lt;code&gt;commit&lt;/code&gt; command is applied.&lt;/p&gt;
-&lt;p&gt;To add files/directories to staged area, at first, we modify or change files,&lt;/p&gt;
-&lt;p&gt;Then we can add all those changes to staged area. This will include any new file as well,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git add --all
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;But if we want to add only modifications on previously added files on repo we do this,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git add --update
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This means new files won't be added to the staged area.&lt;/p&gt;
-&lt;p&gt;Or, we can add selectively a few (after all modifications are done on those files), the files we want to commit we add them by applying a series of &lt;code&gt;git add&lt;/code&gt; commands,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git add file-1
-git add file-2
-	………….
-	………….
-	……………
-git add file-n
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Or, we can choose to add directory or files inside another directory (is this recursive, has to check),&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git add code_python/*
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Remove a dir entirely,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git rm -r _old_code/res/
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;How to remove a file,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git rm file1.txt
-git commit --message &amp;quot;remove file1.txt&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;How to rename or move a file in the repo,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git mv original_name new_name
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Pleae don't be confused by &amp;quot;name&amp;quot; here. It supports renaming using full path as wel. It also support renaming a directories.&lt;/p&gt;
-&lt;p&gt;Removing a file from staged area, &lt;a href="http://data.agaric.com/undo-git-add-remove-files-staged-git-commit"&gt;ref&lt;/a&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git reset /location/to/file
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Note, this will not touch the file; only removes it from git staged area.&lt;/p&gt;
-&lt;p&gt;Show the changes which have been staged (git add`ed but not committed)?, &lt;a href="https://stackoverflow.com/questions/1587846/how-do-i-show-the-changes-which-have-been-staged"&gt;ref&lt;/a&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git diff --cached
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The changes we made are called deltas.&lt;/p&gt;
-&lt;h2 id="how-to-commit-staged-changes-git-commit"&gt;How to commit staged changes (git commit)&lt;/h2&gt;
-&lt;p&gt;Commit to actually push the changes to local repo (will be in remote as soon as pushed). If you are doing this for the first time in the git client you installed, you need to configure committer email and user-name,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git config --global user.name &amp;quot;John Doe&amp;quot;
-git config --global user.email &amp;quot;John.Doe&amp;#64;Domain.Com&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To check if those are set,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git config --global --get user.name
-git config --global --get user.email
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Get git config global info all props,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ git config --global --get-regexp .*
-user.email one&amp;#64;iqubit.xyz
-user.name The Matrix
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;git commit&lt;/code&gt; is different than &lt;code&gt;svn commit&lt;/code&gt; as &lt;code&gt;svn commit&lt;/code&gt; pushes to remote repo immediately whereas git commit does not. git usually have the entire copy just like remote repo, svn does not have entire copy.&lt;/p&gt;
-&lt;p&gt;Note: commit stores file locally. Commit is not sent to remote repository unless a &lt;code&gt;push&lt;/code&gt; command is applied (we will discuss push command on next section).&lt;/p&gt;
-&lt;p&gt;To add the commit message use &lt;code&gt;-m&lt;/code&gt; switch in arguments as showed below, this supports multiline,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git commit --message &amp;quot;first commit message&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Here is an example of multi-line commit message, surrounding the entire commit message with double quotes works,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git commit --message &amp;quot;Implemented secure functions - line1
-	line2 - example line that means code won't work on Linux, we'll have to add separate
-	line3 - branch for Linux
-	line4 - Update on logic based on tests&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;In powershell, single quote works for multi-line commit message,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git commit --message &amp;quot;line1
-	line2
-	line3
-	line4&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="pushing-to-remotesending-deltas-to-remote-repo-server"&gt;Pushing to remote(sending deltas to remote repo server)&lt;/h2&gt;
-&lt;p&gt;Then use &amp;quot;git push origin branch_name&amp;quot;&lt;/p&gt;
-&lt;p&gt;Here is an example of Pushing to remote master branch,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git push origin master
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To show info about git repo's remote origin,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git remote show origin
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="git-undo-edit-commit-etc"&gt;git undo, edit commit etc&lt;/h2&gt;
-&lt;p&gt;To Rollback to a specific previous commit we do,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git reset --hard 
-git push --force
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To roll back to previous to last commit we do,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git reset --hard ~HEAD
-git push --force
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;We can edit commit message of the last commit anytime before push,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git commit --amend
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;If we want to use commit message from a file,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git commit --file filepath.ext
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Commit message from file (amend previous one),&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git commit --edit --file filepath.ext
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;After pushing you still can edit the commit message in 2 steps,
-step 1:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git commit --edit --file filepath.ext
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;step 2:
-Do a force push (ths is usually combined with &lt;code&gt;git commit --amend&lt;/code&gt;),&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git push --force origin master
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;However, if someone has made another commit, in the mean time, those commits will be gone. So be aware of that!&lt;/p&gt;
-&lt;p&gt;To edit previous commit messages that are pushed,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git rebase --interactive 88af37e
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Then, we press Ctrl + X,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git rebase --continue
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Examples look like this,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# Commands:
-# p, pick = use commit
-# r, reword = use commit, but edit the commit message
-# e, edit = use commit, but stop for amending
-# s, squash = use commit, but meld into previous commit
-# f, fixup = like &amp;quot;squash&amp;quot;, but discard this commit's log message
-# x, exec = run command (the rest of the line) using shell
-#
-# These lines can be re-ordered; they are executed from top to bottom.
-#
-# If you remove a line here THAT COMMIT WILL BE LOST.
-#
-# However, if you remove everything, the rebase will be aborted.
-#
-# Note that empty commits are commented out
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Finally,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git push --force origin master
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Note: a force push destroys commits made by others (if they pushed in the mean time).&lt;/p&gt;
-&lt;p&gt;To correct commit author name upto specific commit (probably? or is it only for single commit?),&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git reset author
-git rebase --interactive -p 7508a2627bee2a28535e7ae306c51788fd287f9f
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;mark all of them as 'e' and keep applying following commands. In this example, the author's email address is 'alex&amp;#64;corp.xyz',&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git commit --amend --author &amp;quot;Alex Roy &amp;lt;alex&amp;#64;corp.xyz&amp;gt;&amp;quot; --no-edit
-git rebase --continue
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Changing the message of the most recently pushed commit, &lt;a href="https://docs.github.com/en/github/committing-changes-to-your-project/creating-and-editing-commits/changing-a-commit-message"&gt;ref&lt;/a&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git push --force-with-lease example-branch
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;Removing a single commit from history&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;There might be conflicts during the operation, some commit order gets changed as well (not order by date anymore), Be aware this is dangerous and might now work,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git rebase --onto dadfe3e^ dadfe3e HEAD
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Then, after conflict resolution, ref&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git rebase --continue
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="stash-commands"&gt;Stash Commands&lt;/h2&gt;
-&lt;p&gt;Be careful while applying these commands.&lt;/p&gt;
-&lt;p&gt;Stashing all local changes
-Hard - stash all local changes and pull updated code. &lt;a href="https://stackoverflow.com/q/4157189"&gt;[6]&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;This is better than ‘git stash’ It deletes unstaged changes,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git checkout -- .
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Clean up all non version controlled files (&lt;code&gt;-d&lt;/code&gt;: recurse into untracked directories),&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git clean --force -d
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Find last commit id,
-To get long commit id,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git rev-parse HEAD
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To get short commit id,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git rev-parse --short HEAD
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="checking-specific-revision-of-a-file-or-getting-specific-revision"&gt;Checking specific revision of a file or getting specific revision&lt;/h2&gt;
-&lt;p&gt;Checkout specific revision of a file,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git checkout abcde file/to/restore
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;git checkout specific commit&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git checkout -b old_state f5bf0d670686143a67177e9d81474687535a761e
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Or do following,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git reset --hard origin/master
-git fetch
-git checkout -b old_state f5bf0d6
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;git checkout can be useful in restoring a mistakenly delete file as well or to stash changes on a specific file,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git checkout abcde file/to/restore
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This restore the file of the current revision. [&lt;a href="http://stackoverflow.com/questions/953481/find-and-restore-a-deleted-file-in-a-git-repository"&gt;4&lt;/a&gt;]&lt;/p&gt;
-&lt;p&gt;View a commit,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git show commit_id
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Show specific revision of a file, ref&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git show commit_id:file_path
-git show 61c2ac6:src/bootstrapper.cc
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="misc"&gt;Misc&lt;/h2&gt;
-&lt;p&gt;Check history of all git commits, snapshots using reflog&lt;a href="http://alblue.bandlem.com/2011/05/git-tip-of-week-reflogs.html"&gt;[7]&lt;/a&gt; argument,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ git reflog
-813d871 (HEAD -&amp;gt; source, origin/source) HEAD&amp;#64;{0}: commit: more contents added to posts
-7eabf08 HEAD&amp;#64;{1}: commit: Add Windows Cmd Cache idle
-79ff45d HEAD&amp;#64;{2}: commit: Add more content to pwsh post
-3c7eee2 HEAD&amp;#64;{3}: commit (amend): tags syntax updated for wyam
-... ...
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="conflict-resolution"&gt;Conflict Resolution&lt;/h2&gt;
-&lt;p&gt;Most common approach in resolving conflict is to check which files are having conflict,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git status
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And what changes are coming from what side that is causing the conflict,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git diff
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Addionally, a file path can be specified to see what changes are coming from the remote and local,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git diff /path/to/file
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Then, we use a merge tool or manually modify the content file and finalize the conflict resolution. Afterwards, when are done doing that with that file we do,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git add file_path
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;When conflict  resolved for all files finally we do,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git commit --message 'conflict resolved commit and so on..'
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;However, in some case conflict resolution can be easier. For example, you might want to discard local changes and just accept remote forcefully. In such a case we can follow this:&lt;/p&gt;
-&lt;p&gt;A basic overview how to merge is on this &lt;a href="http://www.gitguys.com/topics/merging-with-a-conflict-conflicts-and-resolutions"&gt;gitguys' article&lt;/a&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git fetch
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Accept their change for single file, ref&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git checkout --theirs src/register-configuration.cc
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="origin-tricks-and-branches"&gt;Origin tricks and Branches&lt;/h2&gt;
-&lt;p&gt;Change repository URL,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git remote set-url origin https://github.com/user_name/testing.git
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;switch to a new branch,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git checkout -b dev_branch
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;show current branch and other branches,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git branch
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Delete a branch on your local filesystem,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git branch -d testing_branch
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The git push syntax is: git push [remote-repository-name] [branch-or-commit-name],&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git push origin dev_branch
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Change remote origin,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git remote set-url origin URL
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="detached-head"&gt;Detached Head&lt;/h2&gt;
-&lt;p&gt;If we want our git repo to have no current branch then we can do this,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git checkout COMMIT-SHA-ID
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="git-configuration-files"&gt;Git configuration Files&lt;/h2&gt;
-&lt;p&gt;When we perform &lt;code&gt;git config&lt;/code&gt; it applies only to the current project. The configuration file that gets update is,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;./.git/config
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;When we apply &lt;code&gt;git config --global&lt;/code&gt; it updates following file,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;~/.gitconfig
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;If none of these exist then the systems git config file is applied. According to priority these files are presented below,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;./.git/config
-~/.gitconfig
-/etc/gitconfig (guessing I don't recall the exact location)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="references"&gt;References&lt;/h1&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;a href="https://git-scm.com/book/en/v2/Getting-Started-Git-Basics"&gt;git-scm - Getting Started - Git Basics&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="http://data.agaric.com/undo-git-add-remove-files-staged-git-commit"&gt;agaric - undo, remove staged file&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://stackoverflow.com/q/4157189"&gt;SO - Git Pull While Ignoring Local Changes&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</content>
-		<summary>Heads in the cloud! A Qubit Blog!</summary>
-	</entry>
-	<entry>
 		<id>https://note.iqubit.xyz/posts/powershell-legacy</id>
 		<title>Legacy Powershell Useful Commands</title>
 		<link href="https://note.iqubit.xyz/posts/powershell-legacy" />
@@ -1165,6 +884,55 @@ I would bet on Hospitals on Delhi and Mumbai.&lt;/p&gt;
 &lt;li&gt;Mount Elizabeth Hospitals&lt;/li&gt;
 &lt;li&gt;To add more&lt;/li&gt;
 &lt;/ul&gt;
+</content>
+		<summary>Heads in the cloud! A Qubit Blog!</summary>
+	</entry>
+	<entry>
+		<id>https://note.iqubit.xyz/posts/medical-hospitals-dhaka</id>
+		<title>Hospitals in Dhaka An Overview</title>
+		<link href="https://note.iqubit.xyz/posts/medical-hospitals-dhaka" />
+		<updated>2019-11-28T00:00:00Z</updated>
+		<content>&lt;h2 id="best-hospitals-in-dhaka"&gt;Best Hospitals in Dhaka&lt;/h2&gt;
+&lt;p&gt;To find some good Hospitals in Bangladesh we have to look at affluent medical centers in Dhaka. There is no such thing as Best Hospital in Bangladesh. It's a mix of bad and good experience, bit of luck, type of disease and level of in patient.&lt;/p&gt;
+&lt;p&gt;Public hospitals here are rife with negligence, overflow of patients and reputation of not so hygiene place for patients.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Dhaka Medical Hospital&lt;/li&gt;
+&lt;li&gt;PG / BSMMU&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;There is an example of negligence, where an elderly patient died in Dhaka Medical due to not taking so good care of a diabetes patient.&lt;/p&gt;
+&lt;p&gt;To get appointments in most public hospitals, sometimes you need political influence, birbery or power. For some, being part of a nearby school campus helps.&lt;/p&gt;
+&lt;p&gt;Among private hospitals a few mentionables are,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Green Life&lt;/li&gt;
+&lt;li&gt;Apollo&lt;/li&gt;
+&lt;li&gt;Padma&lt;/li&gt;
+&lt;li&gt;NINS&lt;/li&gt;
+&lt;li&gt;Birdem, &lt;a href="https://note.iqubit.xyz/medical-hospital-birdem"&gt;review&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;ABM Abdullah in Central Hospital&lt;/p&gt;
+&lt;p&gt;Specialists are scattered across private and public hospitals.&lt;/p&gt;
+&lt;h3 id="dialysis-facilities"&gt;Dialysis Facilities&lt;/h3&gt;
+&lt;p&gt;For kidney patients, dialysis is like oxygen to breathe. Please, be careful about pneumonia (vaccinate ahead). In foreign countries, there might be stem cell treatments to parmamnently cure Kidney problems.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Sonar Bangla Foundation Bangladesh
+Address: 23/6 RUPAYAN SHELFORD, LEVEL-5,
+Shyamoli, Dhaka 1207
+Phone: +880 2-9143676
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Central Hospital, unfortunately, doesn't have dialysis yet.&lt;/p&gt;
+&lt;h2 id="misc"&gt;Misc&lt;/h2&gt;
+&lt;p&gt;Few points,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;For kidney related diseases, it might as well be a good idea to consult with neurology and oncology.&lt;/li&gt;
+&lt;li&gt;There are plenty of examples where a poor diagnosis took place or wrong diagnosis did occur which resulted a seriously worse condition of patients or they died.&lt;/li&gt;
+&lt;li&gt;Transportation: Dhaka City is pretty busy and suffers high traffic situations. Hence, be prepared to spend time on the road while travelling to places.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you are a foreigner, considering treatment travelling to Bangladesh it's probably not a good idea unless you are just trying to save money.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;You could use a translator if there's language barrier i.e., you don't know Bangla or English language. Please be aware that average demography don't speak English.&lt;/li&gt;
+&lt;li&gt;For acquiring VISA to india for treatment, it might help to provide appointment document with the hospital/specialist.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Data Plans&lt;/strong&gt;
+A good cell phone carrier helps. It's easy to register a SIM card with one of the carriers to make communication easier to make cals to hospitals or local Bangladesh contacts. Few careers are GrameenPhone, Robi, Airtel. Your roaming service might cover you as well for calling and data; however, please note that &lt;em&gt;cellphone plans are cheaper in Bangladesh compared to other countries&lt;/em&gt;. It's better to just utilize that.&lt;/p&gt;
 </content>
 		<summary>Heads in the cloud! A Qubit Blog!</summary>
 	</entry>
