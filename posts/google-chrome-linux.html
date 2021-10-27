@@ -107,8 +107,9 @@
     <div class="row">
       <div id="content" class="col-md-12">  
         <p>In new system, i.e, fedora 34/35 etc this is the way,</p>
-<p>sudo dnf config-manager --set-enabled google-chrome
-sudo dnf install google-chrome-stable</p>
+<pre><code>sudo dnf config-manager --set-enabled google-chrome
+sudo dnf install google-chrome-stable
+</code></pre>
 <p>If you want to install a beta release of google-chrome apply this command,</p>
 <pre><code>$ sudo dnf install google-chrome-beta
 </code></pre>
@@ -123,7 +124,7 @@ sudo dnf install google-chrome-stable</p>
 <li>last option: Download all dependencies manually and install them one by one, then install google-chrome package.</li>
 </ul>
 <h1 id="earlier-systems-fedora-core-rhel-cent-os-etc">Earlier Systems (Fedora Core, RHEL, Cent-OS etc)</h1>
-<p>To enable google's dnf repository add a repo file inside directory /etc/dnf.repos.d/ named google-chrome.repo For 64 bit systems contents should be like this,</p>
+<p>To enable google's dnf repository add a repo file inside directory <code>/etc/dnf.repos.d/</code> named google-chrome.repo For 64 bit systems contents should look like this,</p>
 <pre><code>[google-chrome]
 name=google-chrome - \$basearch
 baseurl=http://dl.google.com/linux/chrome/rpm/stable/\$basearch
@@ -156,7 +157,7 @@ enabled=1
 gpgcheck=1
 gpgkey=http://dl-ssl.google.com/linux/linux_signing_key.pub
 </code></pre>
-<p>Beaware, google stopped updating 32 bit builds for Linux. So, even if you install you won't receive updates.</p>
+<p>Beaware that, google stopped updating 32 bit builds for Linux. If you install those versions you won't receive updates.</p>
 <h1 id="rhelcent-os-7">RHEL/Cent-OS 7</h1>
 <p>RHEL/CentOS 7 have all required packages available for Google Chrome. Hence, a simple,</p>
 <pre><code>dnf install google-chrome-stable   
@@ -184,7 +185,7 @@ sudo apt-get install google-chrome-stable
 <p>With RHEL 6 you will run into issues while installing google-chrome. Officially, Google Chrome is not supported on RHEL 6 or earlier since Google Chrome 28. If you are okay with experimental third party script to install google chrome you can follow <a href="http://tecadmin.net/install-google-chrome-in-centos-rhel-and-fedora/#">tecadmin's article</a>. You can install chromium as an alternative. <a href="http://www.if-not-true-then-false.com/">If Not True Then False</a> provides instructions <a href="http://www.if-not-true-then-false.com/2013/install-chromium-on-centos-red-hat-rhel/">if-not-true-then-false's blog - how to install chromium on rhel</a>. If an updated firefox does the job for you in RHEL old OSs in that case you can try <a href="http://rpms.famillecollet.com/">remi repository</a> to update firefox. Check <a href="http://blog.famillecollet.com/pages/Config-en">remi famillecollet's site</a> for info, tecmint also has an article <a href="http://www.tecmint.com/install-firefox-in-rhelcentos-6-3-fedora-17-16/">Installing or Updating Firefox 30 using Remi</a>. If you hate 3rd parties you can simply download the archive from firefox's site, extract it and run (possibly add few links such as in /usr/bin for convenience)</p>
 <h1 id="installing-using-direct-full-package">Installing using direct full package</h1>
 <p>Download google chrome linux package first from <a href="https://www.google.com/intl/en/chrome/browser/">Chrome's page</a>. Apply this command in the directory where you downloaded <a href="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm">the file</a>,</p>
-<pre><code>sudo dnf localinstall google-chrome-stable_current_x86_64.rpm
+<pre><code>sudo dnf localinstall google-chrome-stable_current_x86_64.rpm    
 </code></pre>
 <p>If you want to install the package manually the command will be like this:</p>
 <pre><code>sudo dpkg -i google-chrome-stable_current_x86_64.deb
@@ -196,8 +197,8 @@ sudo apt-get install google-chrome-stable
 <h1 id="commit-history">Commit history</h1>
 <ol>
 <li>update fedora 34-35 - Oct 26, 2021</li>
-<li>update fedora section (r3) - Dec 19, 2016</li>
-<li>update (r2) - June 29, 2014</li>
+<li>update fedora section - Dec 19, 2016</li>
+<li>update - June 29, 2014</li>
 </ol>
 
 
