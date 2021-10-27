@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://note.iqubit.xyz/" />
 	<rights>Copyright © 2021</rights>
-	<updated>2021-10-27T01:22:28Z</updated>
+	<updated>2021-10-27T01:24:56Z</updated>
 	<subtitle>Heads in the cloud! A Qubit Blog!</subtitle>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/solana-cli</id>
@@ -154,13 +154,7 @@ warning: be sure to add `/home/atiq/.cargo/bin` to your PATH to be able to run t
 		<title>Google Chrome on Linux</title>
 		<link href="https://note.iqubit.xyz/posts/google-chrome-linux" />
 		<updated>2021-10-24T00:00:00Z</updated>
-		<content>&lt;p&gt;There are 3 ways of installing Google Chrome:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Using dnf (or apt-get for ubuntu), setting up with google's repository in dnf configuration file or ubuntu's source.lst&lt;/li&gt;
-&lt;li&gt;Locally download chrome rpm or debian package and apply dnf localinstall command&lt;/li&gt;
-&lt;li&gt;last option: Download all dependencies manually and install them one by one, then install google-chrome package.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;In new system, i.e, fedora 34/35 etc this is the way,&lt;/p&gt;
+		<content>&lt;p&gt;In new system, i.e, fedora 34/35 etc this is the way,&lt;/p&gt;
 &lt;p&gt;sudo dnf config-manager --set-enabled google-chrome
 sudo dnf install google-chrome-stable&lt;/p&gt;
 &lt;p&gt;If you want to install a beta release of google-chrome apply this command,&lt;/p&gt;
@@ -169,6 +163,13 @@ sudo dnf install google-chrome-stable&lt;/p&gt;
 &lt;p&gt;To install the latest development release apply following,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ sudo dnf install google-chrome
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you are using other operating systems continue reading.&lt;/p&gt;
+&lt;p&gt;Generally, there are 3 ways of installing Google Chrome:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Using dnf (&lt;code&gt;apt-get&lt;/code&gt; on Ubuntu), setting up with google's repository in dnf configuration file or ubuntu's aptitude source.lst&lt;/li&gt;
+&lt;li&gt;Locally download chrome rpm or debian package and apply dnf localinstall command&lt;/li&gt;
+&lt;li&gt;last option: Download all dependencies manually and install them one by one, then install google-chrome package.&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h1 id="earlier-systems-fedora-core-rhel-cent-os-etc"&gt;Earlier Systems (Fedora Core, RHEL, Cent-OS etc)&lt;/h1&gt;
 &lt;p&gt;To enable google's dnf repository add a repo file inside directory /etc/dnf.repos.d/ named google-chrome.repo For 64 bit systems contents should be like this,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;[google-chrome]

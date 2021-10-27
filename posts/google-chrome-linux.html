@@ -106,13 +106,7 @@
   <div class="container"> 
     <div class="row">
       <div id="content" class="col-md-12">  
-        <p>There are 3 ways of installing Google Chrome:</p>
-<ul>
-<li>Using dnf (or apt-get for ubuntu), setting up with google's repository in dnf configuration file or ubuntu's source.lst</li>
-<li>Locally download chrome rpm or debian package and apply dnf localinstall command</li>
-<li>last option: Download all dependencies manually and install them one by one, then install google-chrome package.</li>
-</ul>
-<p>In new system, i.e, fedora 34/35 etc this is the way,</p>
+        <p>In new system, i.e, fedora 34/35 etc this is the way,</p>
 <p>sudo dnf config-manager --set-enabled google-chrome
 sudo dnf install google-chrome-stable</p>
 <p>If you want to install a beta release of google-chrome apply this command,</p>
@@ -121,6 +115,13 @@ sudo dnf install google-chrome-stable</p>
 <p>To install the latest development release apply following,</p>
 <pre><code>$ sudo dnf install google-chrome
 </code></pre>
+<p>If you are using other operating systems continue reading.</p>
+<p>Generally, there are 3 ways of installing Google Chrome:</p>
+<ul>
+<li>Using dnf (<code>apt-get</code> on Ubuntu), setting up with google's repository in dnf configuration file or ubuntu's aptitude source.lst</li>
+<li>Locally download chrome rpm or debian package and apply dnf localinstall command</li>
+<li>last option: Download all dependencies manually and install them one by one, then install google-chrome package.</li>
+</ul>
 <h1 id="earlier-systems-fedora-core-rhel-cent-os-etc">Earlier Systems (Fedora Core, RHEL, Cent-OS etc)</h1>
 <p>To enable google's dnf repository add a repo file inside directory /etc/dnf.repos.d/ named google-chrome.repo For 64 bit systems contents should be like this,</p>
 <pre><code>[google-chrome]
