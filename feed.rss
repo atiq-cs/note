@@ -5,8 +5,8 @@
 		<link>https://note.iqubit.xyz/</link>
 		<description>Heads in the cloud! A Qubit Blog!</description>
 		<copyright>Copyright © 2021</copyright>
-		<pubDate>Wed, 27 Oct 2021 01:13:43 GMT</pubDate>
-		<lastBuildDate>Wed, 27 Oct 2021 01:13:43 GMT</lastBuildDate>
+		<pubDate>Wed, 27 Oct 2021 01:20:48 GMT</pubDate>
+		<lastBuildDate>Wed, 27 Oct 2021 01:20:48 GMT</lastBuildDate>
 		<item>
 			<title>Creating Token, NFT using Solana</title>
 			<link>https://note.iqubit.xyz/posts/solana-cli</link>
@@ -128,7 +128,7 @@ GjvWk83m1vKQjmQU2dPnLTRvAKjtAKsAmKKNu7Gyk93   100
 will post after fixing AWS RHEL instance..&lt;/p&gt;
 &lt;h3 id="notes-on-ubuntu-build"&gt;Notes on Ubuntu Build&lt;/h3&gt;
 &lt;p&gt;Requires following,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo apt install pkg-config libssl-devel libudev-devel
+&lt;pre&gt;&lt;code&gt;sudo apt install pkg-config libssl-dev libudev-dev
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Otherwise it complains,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Package openssl was not found in the pkg-config search path.
