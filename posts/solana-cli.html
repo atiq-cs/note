@@ -221,6 +221,14 @@ GjvWk83m1vKQjmQU2dPnLTRvAKjtAKsAmKKNu7Gyk93   100
 <p>[TODO]
 will post after fixing AWS RHEL instance..</p>
 <h3 id="notes-on-ubuntu-build">Notes on Ubuntu Build</h3>
+<p>Requires following,</p>
+<pre><code>sudo apt install pkg-config libssl-devel libudev-devel
+</code></pre>
+<p>Otherwise it complains,</p>
+<pre><code>Package openssl was not found in the pkg-config search path.
+Perhaps you should add the directory containing `openssl.pc' to the PKG_CONFIG_PATH environment variable
+No package 'openssl' found
+</code></pre>
 <p>A successful build looks like this,</p>
 <pre><code>$ tail ~/logs/solana_log.txt
 Compiling zstd v0.5.4+zstd.1.4.7
