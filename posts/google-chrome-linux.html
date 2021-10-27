@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Heads in the cloud! A Qubit Blog!">
+
+  <title>Notes from Qubit Inc. - Google Chrome on Linux</title>
+
+  <link rel="canonical" href="https://note.iqubit.xyz/posts/google-chrome-linux">
+
+      <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
+      <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
+  
+  <meta name="application-name" content="Notes from Qubit Inc." />
+  <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
+  <meta name="msapplication-starturl" content="/" />
+
+  <meta property="og:title" content="Notes from Qubit Inc. - Google Chrome on Linux" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://note.iqubit.xyz/posts/google-chrome-linux" />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="/vendor/bootstrap/scss/bootstrap.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/fontawesome-free/css/brands.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css' data-no-mirror>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' data-no-mirror>
+  
+  <!-- Custom styles for this template -->
+  <link href="/scss/clean-blog.css" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/plugins/autoloader/prism-autoloader.min.js" data-no-mirror></script>
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/themes/prism.css">
+
+  <!-- Lunr search -->
+    <script src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pako@2.0.3/dist/pako_inflate.min.js"></script>
+    <script src="/search.js"></script>
+  
+  
+
+
+  
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Notes from Qubit Inc.</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/tags">Tags</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/posts">Posts</a>
+            </li>
+</ul>
+        <form class="form-inline my-2 my-lg-0" action="/search" method="GET">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query">
+          <input type="submit" hidden />
+        </form>
+    </div>
+  </div>
+</nav>
+
+  <!-- Page Header -->
+  <header class="masthead">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="post-heading">
+          <h1>
+            Google Chrome on Linux
+          </h1>
+            <h2 class="subheading">How to Install Google Chrome on Different Linux Distributions</h2>
+              <div class="meta">Published on Sunday, 24 October 2021</div>
+                <div class="mt-3">
+                      <a href="/tags/linux" class="badge badge-light"> linux</a>
+                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- Main Content -->
+  <div class="container"> 
+    <div class="row">
+      <div id="content" class="col-md-12">  
+        <p>There are 3 ways of installing Google Chrome:</p>
+<ul>
+<li>Using dnf (or apt-get for ubuntu), setting up with google's repository in dnf configuration file or ubuntu's source.lst</li>
+<li>Locally download chrome rpm or debian package and apply dnf localinstall command</li>
+<li>last option: Download all dependencies manually and install them one by one, then install google-chrome package.</li>
+</ul>
+<p>In new system, i.e, fedora 34/35 etc this is the way,</p>
+<p>sudo dnf config-manager --set-enabled google-chrome
+sudo dnf install google-chrome-stable</p>
+<p>If you want to install a beta release of google-chrome apply this command,</p>
+<pre><code>$ sudo dnf install google-chrome-beta
+</code></pre>
+<p>To install the latest development release apply following,</p>
+<pre><code>$ sudo dnf install google-chrome
+</code></pre>
+<h1 id="earlier-systems-fedora-core-rhel-cent-os-etc">Earlier Systems (Fedora Core, RHEL, Cent-OS etc)</h1>
+<p>To enable google's dnf repository add a repo file inside directory /etc/dnf.repos.d/ named google-chrome.repo For 64 bit systems contents should be like this,</p>
+<pre><code>[google-chrome]
+name=google-chrome - \$basearch
+baseurl=http://dl.google.com/linux/chrome/rpm/stable/\$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub
+</code></pre>
+<p>Afterwards, if you want to install a stable release of google-chrome apply this command,</p>
+<pre><code>$ sudo dnf install google-chrome-stable
+</code></pre>
+<p>If you have trouble accessing https URLs substitute https using http on the gpgkey field. This is useful when you hit errors like this,</p>
+<pre><code>Error: failure: No more mirrors to try.
+</code></pre>
+<p>Or error such as this,</p>
+<pre><code>GPG key retrieval failed: [Errno 14] problem making ssl connection
+</code></pre>
+<p>Previously, we used to manually substitute the base url like this (not required anymore),</p>
+<pre><code>[google-chrome]
+name=google-chrome - 64-bit
+baseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64
+enabled=1
+gpgcheck=1
+gpgkey=http://dl-ssl.google.com/linux/linux_signing_key.pub
+</code></pre>
+<p>For 32 bit systems contents should be like this,</p>
+<pre><code>[google-chrome]
+name=google-chrome - 32-bit
+baseurl=http://dl.google.com/linux/chrome/rpm/stable/i386
+enabled=1
+gpgcheck=1
+gpgkey=http://dl-ssl.google.com/linux/linux_signing_key.pub
+</code></pre>
+<p>Beaware, google stopped updating 32 bit builds for Linux. So, even if you install you won't receive updates.</p>
+<h1 id="rhelcent-os-7">RHEL/Cent-OS 7</h1>
+<p>RHEL/CentOS 7 have all required packages available for Google Chrome. Hence, a simple,</p>
+<pre><code>dnf install google-chrome-stable   
+</code></pre>
+<p>command dies the job. However, if you don't have redhat subscription you might get following error,</p>
+<pre><code>libxss.so.1()(64bit) is needed by google-chrome-stable
+</code></pre>
+<p>If you enable local repository following instruction at <a href="https://fftsys.azurewebsites.net/tech/how-to-setup-rhel-fedora-cent-os-dvd-or-iso-as-local-repository-to-install-packages">fftsys - Setup-RHEL-DVD-ISO-as-local-repository-to-install-packages</a> the same previous dnf command completes without any error.</p>
+<h1 id="using-apt-get-on-debian-system-ubuntu-etc">Using apt-get on debian system (ubuntu etc)</h1>
+<p>Add signing key</p>
+<pre><code>wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+</code></pre>
+<p>Add google repository to the sources list,</p>
+<pre><code>sudo sh -c 'echo &quot;deb http://dl.google.com/linux/chrome/deb/ stable main&quot; &amp;gt;&amp;gt; /etc/apt/sources.list.d/google.list'
+</code></pre>
+<p>Update and install chrome,</p>
+<pre><code>sudo apt-get update
+sudo apt-get install google-chrome-stable
+</code></pre>
+<p>For Ubuntu's new release 13.04 if you face following error &quot;Error: Dependency is not satisfiable: libudev0(&gt;=147)&quot; use the beta version of chrome which has already resolved it.</p>
+<pre><code>sudo apt-get install google-chrome-beta
+</code></pre>
+<p>Chromium project has details on the issue <a href="https://code.google.com/p/chromium/issues/detail?id=226002">here</a>.</p>
+<h1 id="chrome-on-rhel-6-or-earlier">Chrome on RHEL 6 or Earlier</h1>
+<p>With RHEL 6 you will run into issues while installing google-chrome. Officially, Google Chrome is not supported on RHEL 6 or earlier since Google Chrome 28. If you are okay with experimental third party script to install google chrome you can follow <a href="http://tecadmin.net/install-google-chrome-in-centos-rhel-and-fedora/#">tecadmin's article</a>. You can install chromium as an alternative. <a href="http://www.if-not-true-then-false.com/">If Not True Then False</a> provides instructions <a href="http://www.if-not-true-then-false.com/2013/install-chromium-on-centos-red-hat-rhel/">if-not-true-then-false's blog - how to install chromium on rhel</a>. If an updated firefox does the job for you in RHEL old OSs in that case you can try <a href="http://rpms.famillecollet.com/">remi repository</a> to update firefox. Check <a href="http://blog.famillecollet.com/pages/Config-en">remi famillecollet's site</a> for info, tecmint also has an article <a href="http://www.tecmint.com/install-firefox-in-rhelcentos-6-3-fedora-17-16/">Installing or Updating Firefox 30 using Remi</a>. If you hate 3rd parties you can simply download the archive from firefox's site, extract it and run (possibly add few links such as in /usr/bin for convenience)</p>
+<h1 id="installing-using-direct-full-package">Installing using direct full package</h1>
+<p>Download google chrome linux package first from <a href="https://www.google.com/intl/en/chrome/browser/">Chrome's page</a>. Apply this command in the directory where you downloaded <a href="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm">the file</a>,</p>
+<pre><code>sudo dnf localinstall google-chrome-stable_current_x86_64.rpm
+</code></pre>
+<p>If you want to install the package manually the command will be like this:</p>
+<pre><code>sudo dpkg -i google-chrome-stable_current_x86_64.deb
+</code></pre>
+<h2 id="references">References</h2>
+<ol>
+<li><a href="https://www.if-not-true-then-false.com/2010/install-google-chrome-with-dnf-on-fedora-red-hat-rhel/">Install Google Chrome on Fedora 17/16, CentOS/Red Hat (RHEL) 6.3</a></li>
+</ol>
+<h1 id="commit-history">Commit history</h1>
+<ol>
+<li>update fedora 34-35 - Oct 26, 2021</li>
+<li>update fedora section (r3) - Dec 19, 2016</li>
+<li>update (r2) - June 29, 2014</li>
+</ol>
+
+
+
+
+<div id="giscus_thread"></div>
+<script src="https://giscus.app/client.js"
+        data-repo="atiq-cs/note"
+        data-repo-id="R_kgDOGMJt-w"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOGMJt-84B_XUr"
+        data-mapping="pathname"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-theme="dark"
+        crossorigin="anonymous"
+        async>
+</script>
+<noscript>Please enable JavaScript to view the comments powered by giscus.</noscript>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Footer -->  
+  <footer>
+    <div class="container">
+        <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright text-muted m-0">Copyright &#xA9; 2021</p>
+                    <br />
+                    <ul class="list-inline text-center small">
+                            <li class="list-inline-item">
+                                <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                            </li>
+                    </ul>
+                    <br />
+                    <div class="font-weight-bold small"><a href="https://statiq.dev">Generated by Statiq</a></div>
+                </div>
+        </div>
+    </div>
+</footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  
+
+
+  
+
+  <!-- Custom scripts for this template -->
+  <script src="/js/clean-blog.js"></script>
+
+</body>
+
+</html>

@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://note.iqubit.xyz/" />
 	<rights>Copyright © 2021</rights>
-	<updated>2021-10-27T01:20:48Z</updated>
+	<updated>2021-10-27T01:22:28Z</updated>
 	<subtitle>Heads in the cloud! A Qubit Blog!</subtitle>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/solana-cli</id>
@@ -146,6 +146,106 @@ Installing /home/atiq/.cargo/bin/spl-token
 Installed package `spl-token-cli v2.0.15` (executable `spl-token`)
 warning: be sure to add `/home/atiq/.cargo/bin` to your PATH to be able to run the installed binaries
 &lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>Heads in the cloud! A Qubit Blog!</summary>
+	</entry>
+	<entry>
+		<id>https://note.iqubit.xyz/posts/google-chrome-linux</id>
+		<title>Google Chrome on Linux</title>
+		<link href="https://note.iqubit.xyz/posts/google-chrome-linux" />
+		<updated>2021-10-24T00:00:00Z</updated>
+		<content>&lt;p&gt;There are 3 ways of installing Google Chrome:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Using dnf (or apt-get for ubuntu), setting up with google's repository in dnf configuration file or ubuntu's source.lst&lt;/li&gt;
+&lt;li&gt;Locally download chrome rpm or debian package and apply dnf localinstall command&lt;/li&gt;
+&lt;li&gt;last option: Download all dependencies manually and install them one by one, then install google-chrome package.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In new system, i.e, fedora 34/35 etc this is the way,&lt;/p&gt;
+&lt;p&gt;sudo dnf config-manager --set-enabled google-chrome
+sudo dnf install google-chrome-stable&lt;/p&gt;
+&lt;p&gt;If you want to install a beta release of google-chrome apply this command,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ sudo dnf install google-chrome-beta
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To install the latest development release apply following,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ sudo dnf install google-chrome
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="earlier-systems-fedora-core-rhel-cent-os-etc"&gt;Earlier Systems (Fedora Core, RHEL, Cent-OS etc)&lt;/h1&gt;
+&lt;p&gt;To enable google's dnf repository add a repo file inside directory /etc/dnf.repos.d/ named google-chrome.repo For 64 bit systems contents should be like this,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[google-chrome]
+name=google-chrome - \$basearch
+baseurl=http://dl.google.com/linux/chrome/rpm/stable/\$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Afterwards, if you want to install a stable release of google-chrome apply this command,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ sudo dnf install google-chrome-stable
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you have trouble accessing https URLs substitute https using http on the gpgkey field. This is useful when you hit errors like this,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Error: failure: No more mirrors to try.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Or error such as this,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GPG key retrieval failed: [Errno 14] problem making ssl connection
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Previously, we used to manually substitute the base url like this (not required anymore),&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[google-chrome]
+name=google-chrome - 64-bit
+baseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64
+enabled=1
+gpgcheck=1
+gpgkey=http://dl-ssl.google.com/linux/linux_signing_key.pub
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For 32 bit systems contents should be like this,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[google-chrome]
+name=google-chrome - 32-bit
+baseurl=http://dl.google.com/linux/chrome/rpm/stable/i386
+enabled=1
+gpgcheck=1
+gpgkey=http://dl-ssl.google.com/linux/linux_signing_key.pub
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Beaware, google stopped updating 32 bit builds for Linux. So, even if you install you won't receive updates.&lt;/p&gt;
+&lt;h1 id="rhelcent-os-7"&gt;RHEL/Cent-OS 7&lt;/h1&gt;
+&lt;p&gt;RHEL/CentOS 7 have all required packages available for Google Chrome. Hence, a simple,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dnf install google-chrome-stable   
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;command dies the job. However, if you don't have redhat subscription you might get following error,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;libxss.so.1()(64bit) is needed by google-chrome-stable
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you enable local repository following instruction at &lt;a href="https://fftsys.azurewebsites.net/tech/how-to-setup-rhel-fedora-cent-os-dvd-or-iso-as-local-repository-to-install-packages"&gt;fftsys - Setup-RHEL-DVD-ISO-as-local-repository-to-install-packages&lt;/a&gt; the same previous dnf command completes without any error.&lt;/p&gt;
+&lt;h1 id="using-apt-get-on-debian-system-ubuntu-etc"&gt;Using apt-get on debian system (ubuntu etc)&lt;/h1&gt;
+&lt;p&gt;Add signing key&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Add google repository to the sources list,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo sh -c 'echo &amp;quot;deb http://dl.google.com/linux/chrome/deb/ stable main&amp;quot; &amp;amp;gt;&amp;amp;gt; /etc/apt/sources.list.d/google.list'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Update and install chrome,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo apt-get update
+sudo apt-get install google-chrome-stable
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For Ubuntu's new release 13.04 if you face following error &amp;quot;Error: Dependency is not satisfiable: libudev0(&amp;gt;=147)&amp;quot; use the beta version of chrome which has already resolved it.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo apt-get install google-chrome-beta
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Chromium project has details on the issue &lt;a href="https://code.google.com/p/chromium/issues/detail?id=226002"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h1 id="chrome-on-rhel-6-or-earlier"&gt;Chrome on RHEL 6 or Earlier&lt;/h1&gt;
+&lt;p&gt;With RHEL 6 you will run into issues while installing google-chrome. Officially, Google Chrome is not supported on RHEL 6 or earlier since Google Chrome 28. If you are okay with experimental third party script to install google chrome you can follow &lt;a href="http://tecadmin.net/install-google-chrome-in-centos-rhel-and-fedora/#"&gt;tecadmin's article&lt;/a&gt;. You can install chromium as an alternative. &lt;a href="http://www.if-not-true-then-false.com/"&gt;If Not True Then False&lt;/a&gt; provides instructions &lt;a href="http://www.if-not-true-then-false.com/2013/install-chromium-on-centos-red-hat-rhel/"&gt;if-not-true-then-false's blog - how to install chromium on rhel&lt;/a&gt;. If an updated firefox does the job for you in RHEL old OSs in that case you can try &lt;a href="http://rpms.famillecollet.com/"&gt;remi repository&lt;/a&gt; to update firefox. Check &lt;a href="http://blog.famillecollet.com/pages/Config-en"&gt;remi famillecollet's site&lt;/a&gt; for info, tecmint also has an article &lt;a href="http://www.tecmint.com/install-firefox-in-rhelcentos-6-3-fedora-17-16/"&gt;Installing or Updating Firefox 30 using Remi&lt;/a&gt;. If you hate 3rd parties you can simply download the archive from firefox's site, extract it and run (possibly add few links such as in /usr/bin for convenience)&lt;/p&gt;
+&lt;h1 id="installing-using-direct-full-package"&gt;Installing using direct full package&lt;/h1&gt;
+&lt;p&gt;Download google chrome linux package first from &lt;a href="https://www.google.com/intl/en/chrome/browser/"&gt;Chrome's page&lt;/a&gt;. Apply this command in the directory where you downloaded &lt;a href="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"&gt;the file&lt;/a&gt;,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo dnf localinstall google-chrome-stable_current_x86_64.rpm
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you want to install the package manually the command will be like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo dpkg -i google-chrome-stable_current_x86_64.deb
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="references"&gt;References&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="https://www.if-not-true-then-false.com/2010/install-google-chrome-with-dnf-on-fedora-red-hat-rhel/"&gt;Install Google Chrome on Fedora 17/16, CentOS/Red Hat (RHEL) 6.3&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id="commit-history"&gt;Commit history&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;update fedora 34-35 - Oct 26, 2021&lt;/li&gt;
+&lt;li&gt;update fedora section (r3) - Dec 19, 2016&lt;/li&gt;
+&lt;li&gt;update (r2) - June 29, 2014&lt;/li&gt;
+&lt;/ol&gt;
 </content>
 		<summary>Heads in the cloud! A Qubit Blog!</summary>
 	</entry>
@@ -1063,55 +1163,6 @@ I would bet on Hospitals on Delhi and Mumbai.&lt;/p&gt;
 &lt;li&gt;Mount Elizabeth Hospitals&lt;/li&gt;
 &lt;li&gt;To add more&lt;/li&gt;
 &lt;/ul&gt;
-</content>
-		<summary>Heads in the cloud! A Qubit Blog!</summary>
-	</entry>
-	<entry>
-		<id>https://note.iqubit.xyz/posts/medical-hospitals-dhaka</id>
-		<title>Hospitals in Dhaka An Overview</title>
-		<link href="https://note.iqubit.xyz/posts/medical-hospitals-dhaka" />
-		<updated>2019-11-28T00:00:00Z</updated>
-		<content>&lt;h2 id="best-hospitals-in-dhaka"&gt;Best Hospitals in Dhaka&lt;/h2&gt;
-&lt;p&gt;To find some good Hospitals in Bangladesh we have to look at affluent medical centers in Dhaka. There is no such thing as Best Hospital in Bangladesh. It's a mix of bad and good experience, bit of luck, type of disease and level of in patient.&lt;/p&gt;
-&lt;p&gt;Public hospitals here are rife with negligence, overflow of patients and reputation of not so hygiene place for patients.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Dhaka Medical Hospital&lt;/li&gt;
-&lt;li&gt;PG / BSMMU&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;There is an example of negligence, where an elderly patient died in Dhaka Medical due to not taking so good care of a diabetes patient.&lt;/p&gt;
-&lt;p&gt;To get appointments in most public hospitals, sometimes you need political influence, birbery or power. For some, being part of a nearby school campus helps.&lt;/p&gt;
-&lt;p&gt;Among private hospitals a few mentionables are,&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Green Life&lt;/li&gt;
-&lt;li&gt;Apollo&lt;/li&gt;
-&lt;li&gt;Padma&lt;/li&gt;
-&lt;li&gt;NINS&lt;/li&gt;
-&lt;li&gt;Birdem, &lt;a href="https://note.iqubit.xyz/medical-hospital-birdem"&gt;review&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;ABM Abdullah in Central Hospital&lt;/p&gt;
-&lt;p&gt;Specialists are scattered across private and public hospitals.&lt;/p&gt;
-&lt;h3 id="dialysis-facilities"&gt;Dialysis Facilities&lt;/h3&gt;
-&lt;p&gt;For kidney patients, dialysis is like oxygen to breathe. Please, be careful about pneumonia (vaccinate ahead). In foreign countries, there might be stem cell treatments to parmamnently cure Kidney problems.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Sonar Bangla Foundation Bangladesh
-Address: 23/6 RUPAYAN SHELFORD, LEVEL-5,
-Shyamoli, Dhaka 1207
-Phone: +880 2-9143676
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Central Hospital, unfortunately, doesn't have dialysis yet.&lt;/p&gt;
-&lt;h2 id="misc"&gt;Misc&lt;/h2&gt;
-&lt;p&gt;Few points,&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;For kidney related diseases, it might as well be a good idea to consult with neurology and oncology.&lt;/li&gt;
-&lt;li&gt;There are plenty of examples where a poor diagnosis took place or wrong diagnosis did occur which resulted a seriously worse condition of patients or they died.&lt;/li&gt;
-&lt;li&gt;Transportation: Dhaka City is pretty busy and suffers high traffic situations. Hence, be prepared to spend time on the road while travelling to places.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;If you are a foreigner, considering treatment travelling to Bangladesh it's probably not a good idea unless you are just trying to save money.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;You could use a translator if there's language barrier i.e., you don't know Bangla or English language. Please be aware that average demography don't speak English.&lt;/li&gt;
-&lt;li&gt;For acquiring VISA to india for treatment, it might help to provide appointment document with the hospital/specialist.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Data Plans&lt;/strong&gt;
-A good cell phone carrier helps. It's easy to register a SIM card with one of the carriers to make communication easier to make cals to hospitals or local Bangladesh contacts. Few careers are GrameenPhone, Robi, Airtel. Your roaming service might cover you as well for calling and data; however, please note that &lt;em&gt;cellphone plans are cheaper in Bangladesh compared to other countries&lt;/em&gt;. It's better to just utilize that.&lt;/p&gt;
 </content>
 		<summary>Heads in the cloud! A Qubit Blog!</summary>
 	</entry>
