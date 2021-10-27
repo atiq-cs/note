@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://note.iqubit.xyz/" />
 	<rights>Copyright © 2021</rights>
-	<updated>2021-10-27T01:27:45Z</updated>
+	<updated>2021-10-27T18:54:07Z</updated>
 	<subtitle>Heads in the cloud! A Qubit Blog!</subtitle>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/solana-cli</id>
@@ -171,7 +171,7 @@ sudo dnf install google-chrome-stable
 &lt;li&gt;Locally download chrome rpm or debian package and apply dnf localinstall command&lt;/li&gt;
 &lt;li&gt;last option: Download all dependencies manually and install them one by one, then install google-chrome package.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id="earlier-systems-fedora-core-rhel-cent-os-etc"&gt;Earlier Systems (Fedora Core, RHEL, Cent-OS etc)&lt;/h1&gt;
+&lt;h3 id="earlier-systems-fedora-core-rhel-cent-os-etc"&gt;Earlier Systems (Fedora Core, RHEL, Cent-OS etc)&lt;/h3&gt;
 &lt;p&gt;To enable google's dnf repository add a repo file inside directory &lt;code&gt;/etc/dnf.repos.d/&lt;/code&gt; named google-chrome.repo For 64 bit systems contents should look like this,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;[google-chrome]
 name=google-chrome - \$basearch
@@ -206,7 +206,7 @@ gpgcheck=1
 gpgkey=http://dl-ssl.google.com/linux/linux_signing_key.pub
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Beaware that, google stopped updating 32 bit builds for Linux. If you install those versions you won't receive updates.&lt;/p&gt;
-&lt;h1 id="rhelcent-os-7"&gt;RHEL/Cent-OS 7&lt;/h1&gt;
+&lt;h3 id="rhelcent-os-7"&gt;RHEL/Cent-OS 7&lt;/h3&gt;
 &lt;p&gt;RHEL/CentOS 7 have all required packages available for Google Chrome. Hence, a simple,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;dnf install google-chrome-stable   
 &lt;/code&gt;&lt;/pre&gt;
@@ -214,12 +214,12 @@ gpgkey=http://dl-ssl.google.com/linux/linux_signing_key.pub
 &lt;pre&gt;&lt;code&gt;libxss.so.1()(64bit) is needed by google-chrome-stable
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;If you enable local repository following instruction at &lt;a href="https://fftsys.azurewebsites.net/tech/how-to-setup-rhel-fedora-cent-os-dvd-or-iso-as-local-repository-to-install-packages"&gt;fftsys - Setup-RHEL-DVD-ISO-as-local-repository-to-install-packages&lt;/a&gt; the same previous dnf command completes without any error.&lt;/p&gt;
-&lt;h1 id="using-apt-get-on-debian-system-ubuntu-etc"&gt;Using apt-get on debian system (ubuntu etc)&lt;/h1&gt;
+&lt;h3 id="using-apt-get-on-debian-system-ubuntu-etc"&gt;Using apt-get on debian system (ubuntu etc)&lt;/h3&gt;
 &lt;p&gt;Add signing key&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Add google repository to the sources list,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo sh -c 'echo &amp;quot;deb http://dl.google.com/linux/chrome/deb/ stable main&amp;quot; &amp;amp;gt;&amp;amp;gt; /etc/apt/sources.list.d/google.list'
+&lt;pre&gt;&lt;code&gt;sudo sh -c 'echo &amp;quot;deb http://dl.google.com/linux/chrome/deb/ stable main&amp;quot; &amp;gt;&amp;gt; /etc/apt/sources.list.d/google.list'
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Update and install chrome,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo apt-get update
@@ -229,20 +229,20 @@ sudo apt-get install google-chrome-stable
 &lt;pre&gt;&lt;code&gt;sudo apt-get install google-chrome-beta
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Chromium project has details on the issue &lt;a href="https://code.google.com/p/chromium/issues/detail?id=226002"&gt;here&lt;/a&gt;.&lt;/p&gt;
-&lt;h1 id="chrome-on-rhel-6-or-earlier"&gt;Chrome on RHEL 6 or Earlier&lt;/h1&gt;
+&lt;h3 id="chrome-on-rhel-6-or-earlier"&gt;Chrome on RHEL 6 or Earlier&lt;/h3&gt;
 &lt;p&gt;With RHEL 6 you will run into issues while installing google-chrome. Officially, Google Chrome is not supported on RHEL 6 or earlier since Google Chrome 28. If you are okay with experimental third party script to install google chrome you can follow &lt;a href="http://tecadmin.net/install-google-chrome-in-centos-rhel-and-fedora/#"&gt;tecadmin's article&lt;/a&gt;. You can install chromium as an alternative. &lt;a href="http://www.if-not-true-then-false.com/"&gt;If Not True Then False&lt;/a&gt; provides instructions &lt;a href="http://www.if-not-true-then-false.com/2013/install-chromium-on-centos-red-hat-rhel/"&gt;if-not-true-then-false's blog - how to install chromium on rhel&lt;/a&gt;. If an updated firefox does the job for you in RHEL old OSs in that case you can try &lt;a href="http://rpms.famillecollet.com/"&gt;remi repository&lt;/a&gt; to update firefox. Check &lt;a href="http://blog.famillecollet.com/pages/Config-en"&gt;remi famillecollet's site&lt;/a&gt; for info, tecmint also has an article &lt;a href="http://www.tecmint.com/install-firefox-in-rhelcentos-6-3-fedora-17-16/"&gt;Installing or Updating Firefox 30 using Remi&lt;/a&gt;. If you hate 3rd parties you can simply download the archive from firefox's site, extract it and run (possibly add few links such as in /usr/bin for convenience)&lt;/p&gt;
-&lt;h1 id="installing-using-direct-full-package"&gt;Installing using direct full package&lt;/h1&gt;
+&lt;h3 id="installing-using-direct-full-package"&gt;Installing using direct full package&lt;/h3&gt;
 &lt;p&gt;Download google chrome linux package first from &lt;a href="https://www.google.com/intl/en/chrome/browser/"&gt;Chrome's page&lt;/a&gt;. Apply this command in the directory where you downloaded &lt;a href="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"&gt;the file&lt;/a&gt;,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo dnf localinstall google-chrome-stable_current_x86_64.rpm    
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;If you want to install the package manually the command will be like this:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo dpkg -i google-chrome-stable_current_x86_64.deb
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="references"&gt;References&lt;/h2&gt;
+&lt;h4 id="references"&gt;References&lt;/h4&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a href="https://www.if-not-true-then-false.com/2010/install-google-chrome-with-dnf-on-fedora-red-hat-rhel/"&gt;Install Google Chrome on Fedora 17/16, CentOS/Red Hat (RHEL) 6.3&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h1 id="commit-history"&gt;Commit history&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;Commit history&lt;/strong&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;update fedora 34-35 - Oct 26, 2021&lt;/li&gt;
 &lt;li&gt;update fedora section - Dec 19, 2016&lt;/li&gt;
