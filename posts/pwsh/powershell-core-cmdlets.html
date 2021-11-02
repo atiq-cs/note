@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Heads in the cloud! A Qubit Blog!">
 
-  <title>Notes from Qubit Inc. - Legacy Powershell Useful Commands</title>
+  <title>Notes from Qubit Inc. - Powershell Core Cmdlets</title>
 
-  <link rel="canonical" href="https://note.iqubit.xyz/posts/powershell-legacy">
+  <link rel="canonical" href="https://note.iqubit.xyz/posts/pwsh/powershell-core-cmdlets">
 
       <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
       <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
@@ -18,9 +18,9 @@
   <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
   <meta name="msapplication-starturl" content="/" />
 
-  <meta property="og:title" content="Notes from Qubit Inc. - Legacy Powershell Useful Commands" />
+  <meta property="og:title" content="Notes from Qubit Inc. - Powershell Core Cmdlets" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://note.iqubit.xyz/posts/powershell-legacy" />
+  <meta property="og:url" content="https://note.iqubit.xyz/posts/pwsh/powershell-core-cmdlets" />
   
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -89,11 +89,12 @@
       <div class="col-md-12">
         <div class="post-heading">
           <h1>
-            Legacy Powershell Useful Commands
+            Powershell Core Cmdlets
           </h1>
-              <div class="meta">Published on Saturday, 18 July 2020</div>
+              <div class="meta">Published on Thursday, 10 December 2020</div>
                 <div class="mt-3">
-                      <a href="/tags/powershell" class="badge badge-light"> powershell</a>
+                      <a href="/tags/powershell-core" class="badge badge-light"> powershell core</a>
+                      <a href="/tags/pwsh" class="badge badge-light"> pwsh</a>
                       <a href="/tags/system-administration" class="badge badge-light"> system administration</a>
                 </div>
         </div>
@@ -106,10 +107,30 @@
   <div class="container"> 
     <div class="row">
       <div id="content" class="col-md-12">  
-        <p>Please be aware of notation below in command outlines. <code>$</code> represents a command; following rest of the lines represent output. Powershell is superset of traditional command prompt. Hence, all usual binaries still run on powershell for example, <code>takeown</code>.</p>
-<p><strong>Power Options</strong>
-Open Power Options Window,</p>
-<pre><code>Show-ControlPanelItem -Name &quot;Power Options&quot;
+        <h3 id="start-process">Start-Process</h3>
+<p>Here are some handy cmds (Application Run Examples),</p>
+<p><code>Start</code> is an alias of <code>Start-Process</code></p>
+<pre><code>Start DevEnv /Edit, Stream-Converter.ps1
+Start TeamViewer
+Start CVpn-Client
+
+Start Atom
+</code></pre>
+<p>where I link <code>CVpn-Client</code> to <code>C:\Program Files (x86)\Cisco\Cisco AnyConnect Secure Mobility Client\vpnui.exe</code>,</p>
+<p>and, atom is usually linked to <code>C:\Users\atiq\AppData\Local\atom\atom.exe</code></p>
+<p>Syntax for microsoft store apps,</p>
+<pre><code>Start Microsoft-Edge:https://google.com
+Start Skype:
+</code></pre>
+<p>For passing arguments to an application we can either add it right after the app name with a seperating space,</p>
+<pre><code>Start Notepad++ file_path
+</code></pre>
+<p>Or, specify it in <code>ArgumentList</code>,</p>
+<pre><code>Start Notepad++ -ArgumentList file_path
+</code></pre>
+<p>However, it's tricky if passed argument for example, <code>file_path</code> above contains a space character.</p>
+<p>To make it work, we need to double quote them <a href="https://stackoverflow.com/questions/22840882/powershell-opening-file-path-with-spaces">ref</a>,</p>
+<pre><code>Start Notepad++ -ArgumentList &quot;`&quot;D:\Cool Soft\my awesome file.txt`&quot;&quot;
 </code></pre>
 <h2 id="service-management">Service Management</h2>
 <p>Get list of services currently running,</p>
@@ -121,36 +142,10 @@ Open Power Options Window,</p>
 <p>Stop one,</p>
 <pre><code>Stop-Service -Name VPNAgent
 </code></pre>
-<h2 id="scripting-using-pwsh">Scripting using pwsh</h2>
-<p>These basic stuffs might come handy,</p>
-<p>Passing all arguments, untouched to another script,</p>
-<pre><code>$saArgs = $args[0 .. ($args.Count)]
-&amp; &quot;$Env:HOME\ss.ps1&quot; $saArgs
+<p>Useful for bluetooth service,</p>
+<pre><code>Start-Service bthserv
+Stop-Service -Force bthserv
 </code></pre>
-<h3 id="changing-window-size">Changing Window Size</h3>
-<p>To change Window ize we change buffer size first, because Window Size depends on it.</p>
-<pre><code>$cUI = (Get-Host).UI.RawUI
-$b = $cUI.BufferSize
-$b.Width = $width
-$b.Height = $history_size
-$cUI.BufferSize = $b
-
-# change window height and width
-$b = $cUI.WindowSize
-$b.Width = $width
-$b.Height = $height
-$cUI.WindowSize = $b
-</code></pre>
-<p>There's oneliner to do it as well,</p>
-<pre><code>(Get-Host).UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size -Property &#64;{Width=$width; Height=$history_size}
-(Get-Host).UI.RawUI.WindowSize = New-Object System.Management.Automation.Host.Size -Property &#64;{Width=$width; Height=$height}
-</code></pre>
-<p>To change the title of the console we do,</p>
-<pre><code>$cUI.WindowTitle = $title
-</code></pre>
-<p><a href="https://docs.microsoft.com/en-us/dotnet/api/system.management.automation.host.pshostuserinterface.rawui">ms docs ref</a></p>
-<h2 id="continue">continue</h2>
-<p>rest of the contents yet to be appended..</p>
 
 
 

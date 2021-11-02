@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Heads in the cloud! A Qubit Blog!">
 
-  <title>Notes from Qubit Inc.</title>
+  <title>Notes from Qubit Inc. - Command Line for Utilities and Tools</title>
 
-  <link rel="canonical" href="https://note.iqubit.xyz/page/13">
+  <link rel="canonical" href="https://note.iqubit.xyz/posts/pwsh/windows-tools-cmd">
 
       <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
       <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
@@ -18,9 +18,9 @@
   <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
   <meta name="msapplication-starturl" content="/" />
 
-  <meta property="og:title" content="Notes from Qubit Inc." />
+  <meta property="og:title" content="Notes from Qubit Inc. - Command Line for Utilities and Tools" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://note.iqubit.xyz/page/13" />
+  <meta property="og:url" content="https://note.iqubit.xyz/posts/pwsh/windows-tools-cmd" />
   
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -87,11 +87,15 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <div class="site-heading">
+        <div class="post-heading">
           <h1>
-            Notes from Qubit Inc.
-              <small>(Page 13)</small>
+            Command Line for Utilities and Tools
           </h1>
+              <div class="meta">Published on Friday, 29 November 2019</div>
+                <div class="mt-3">
+                      <a href="/tags/windows-command-prompt" class="badge badge-light"> windows command prompt</a>
+                      <a href="/tags/system-administration" class="badge badge-light"> system administration</a>
+                </div>
         </div>
       </div>
     </div>
@@ -102,60 +106,79 @@
   <div class="container"> 
     <div class="row">
       <div id="content" class="col-md-12">  
-        <div class="container-sm-height">
-    <div class="row row-sm-height">
-        <div class="col-md-6 right-border col-sm-height">
-            
+        <p>Please be aware of notation below in command outlines. <code>$</code> represents a command and rests of the lines following that line are output. Powershell is superset of traditional command prompt. Hence, all usual binaries still run on powershell for exxample, <code>takeown</code>.</p>
+<h2 id="windows-os-tools">Windows OS Tools</h2>
+<h3 id="balanced-power-options">Balanced Power options</h3>
+<p>Turn hibernation off (run from elevated PS),</p>
+<pre><code>powercfg.exe /h off
+</code></pre>
+<p>List Power plans,</p>
+<pre><code>$ powercfg list
+Existing Power Schemes (* Active)
+-----------------------------------
+Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced) *
+Power Scheme GUID: 433299bd-efc0-474e-a61e-4a940c85e632  (Timers off (Presentation))
+Power Scheme GUID: 496d75e1-8cba-4d72-b778-535d67c976ea  (Airplane)
+</code></pre>
+<p>How to export Balanced plan (we copy paste id from output of above command),</p>
+<pre><code>powercfg -Export D:\Efficient_BP.pow 381b4222-f694-41f0-9685-ff5bb260df2e
+</code></pre>
+<p>automate importing registry (requires privilege) ref,</p>
+<pre><code>reg import 'D:\Soft\reg files soft settings\app_paths\KeePass.reg'
+</code></pre>
+<h3 id="winrar">WinRar</h3>
+<p>An example use of rar (in my system referring to <code>D:\ProgData\WinRAR\rar.exe</code>),</p>
+<pre><code>rar a -m5 -psa1 -ep1 I:\Doc\docs.rar I:\Doc\Office_Docs\
+</code></pre>
+<p><em>without <code>-ep1</code> it makes a big directory tree</em></p>
+<h2 id="gnuwin32-tools">gnuwin32 tools</h2>
+<p>similar to Unix,</p>
+<pre><code>&quot;D:\ProgramFiles_x86\GnuWin32\bin\gzip.exe&quot; -d .\bitarray-ex-0.8.1.tar.gz
+&quot;D:\ProgramFiles_x86\GnuWin32\bin\tar.exe&quot; -xvf .\bitarray-ex-0.8.1.tar
+&quot;D:\ProgramFiles_x86\GnuWin32\bin\tar.exe&quot; --version
+</code></pre>
+<h2 id="external-applications">External Applications</h2>
+<p>Here are some command line examples for External Applications.</p>
+<p>using <code>tftp</code> to uplod a file into ftp server,</p>
+<pre><code> tftp -i 192.168.1.10 PUT 'E:\LinkSys E2000\images\FW_E2000_1.0.04.007_US_20101201_code.bin' FW_E2000_1.0.04.007_US_20101201_code.bin
+</code></pre>
+<p>I used to use this one for 'ATA Automation'.</p>
+<p>Identify image format info using image magick's <code>identiy</code> (referring to <code>C:\Program Files\ImageMagick-6.8.8-Q16\identify.exe</code> in my system as an example),</p>
+<pre><code>identify &quot;F:\Documents\Images\From Previous Cell-Phone\2011-09\01092011.jpg&quot;
+identify -verbose &quot;F:\Sourcecodes\Web\ASP .Net\Icons\saos_favicon.ico&quot;
+</code></pre>
+<p>Identify image format info using image magick's <code>convert</code> tool (referring to <code>C:\Program Files\ImageMagick-6.8.8-Q16\convert.exe</code> in my system as an example),</p>
+<pre><code>convert -background transparent
+</code></pre>
+<p><code>ps2pdf</code> tool (location in my system <code>C:\Program Files\MiKTex\miktex\bin\x64\ps2pdf.exe</code>) from Miktex from example,</p>
+<pre><code>ps2pdf D:\Source\ml-95-ripper.ps
+</code></pre>
+<h2 id="video-applications">Video Applications</h2>
+<p><strong>mkvextract</strong>
+Extract subtitle using <code>mkvextract</code> (referring to <code>C:\Program Files (x86)\MKVToolNix\mkvextract.exe</code> in my system),</p>
+<pre><code>mkvextract tracks D:\Movies\Fences.mkv &quot;2:D:\Movies\Fences.srt&quot;
+</code></pre>
+<p><code>mkvmerge</code> (in my system <code>C:\Program Files (x86)\MKVToolNix\mkvmerge.exe</code>) show info on mkv file,</p>
+<pre><code>mkvmerge -i D:\Movies\Fences.mkv
+</code></pre>
 
 
-<div class="post-preview">
-    <h2 class="post-title"><a href="/posts/cpp-ifstream-get">C&#x2B;&#x2B; ifstream::get method overloads</a></h2>
-    <p class="post-meta">Published on Tuesday, 27 November 2012</p>                
-<p>As stated on the reference, <code>istream::get()</code> has 6 overloads,</p>        <p class="small"><a href="/posts/cpp-ifstream-get">Read more...</a></p>
-</div>
 
-<div class="post-preview">
-    <h2 class="post-title"><a href="/posts/cpp-win-app-check-window-handle">Multi-threaded Windows C&#x2B;&#x2B; Application</a></h2>
-        <div class="post-subtitle">Check Window Handle before Updating Child Items</div>
-    <p class="post-meta">Published on Friday, 08 July 2011</p>                
-<p>In an MFC Application, you might use a thread to update some control of a dialog box or Window. Now, while this application is running, user may press any of the buttons for example, OK, Cancel or simply close the Windows or Dialog without performing any of the options while your thread is still performing some background operation. After the operation is complete it tries to update Windows/Dialog. In the meantime, because user has already closed the Window an attempt to update the interface will cause application to crash due to invalid handle.</p>        <p class="small"><a href="/posts/cpp-win-app-check-window-handle">Read more...</a></p>
-</div>
-    <div>
-        <div class="float-sm-left">
-                <a class="btn btn-primary" href="/page/12" role="button"><i class="fas fa-angle-double-left"></i> Newer</a>
-        </div>
-        <div class="float-sm-right">
-        </div>
-        <div class="clearfix"></div>
-    </div>
 
-        </div>
-        <div class="col-md-4 mt-4 mt-md-0 col-sm-height">
-                    <div>
-                        <h5>Tags</h5>
-                            <a href="/tags/system-administration" class="badge badge-light"> system administration (6)</a>
-                            <a href="/tags/health-care" class="badge badge-light"> health care (5)</a>
-                            <a href="/tags/powershell-core" class="badge badge-light"> powershell core (4)</a>
-                            <a href="/tags/version-control" class="badge badge-light"> version control (4)</a>
-                            <a href="/tags/problem-solving" class="badge badge-light"> Problem Solving (4)</a>
-                            <a href="/tags/algorithms" class="badge badge-light"> Algorithms (4)</a>
-                            <a href="/tags/linux" class="badge badge-light"> linux (3)</a>
-                            <a href="/tags/dotnet-core" class="badge badge-light"> dotnet core (3)</a>
-                            <a href="/tags/pwsh" class="badge badge-light"> pwsh (3)</a>
-                            <a href="/tags/source-control" class="badge badge-light"> source control (3)</a>
-                        <div class="mt-3">
-                            <div class="float-sm-right">
-                                <a class="btn btn-sm btn-primary" href="/tags" role="button">All Tags <i class="fas fa-angle-double-right"></i></a>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-            
-            
-
-        </div>
-    </div>
-</div>
+<div id="giscus_thread"></div>
+<script src="https://giscus.app/client.js"
+        data-repo="atiq-cs/note"
+        data-repo-id="R_kgDOGMJt-w"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOGMJt-84B_XUr"
+        data-mapping="pathname"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-theme="dark"
+        crossorigin="anonymous"
+        async>
+</script>
+<noscript>Please enable JavaScript to view the comments powered by giscus.</noscript>
       </div>
     </div>
   </div>

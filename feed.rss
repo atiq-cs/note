@@ -5,8 +5,8 @@
 		<link>https://note.iqubit.xyz/</link>
 		<description>Heads in the cloud! A Qubit Blog!</description>
 		<copyright>Copyright © 2021</copyright>
-		<pubDate>Tue, 02 Nov 2021 19:35:57 GMT</pubDate>
-		<lastBuildDate>Tue, 02 Nov 2021 19:35:57 GMT</lastBuildDate>
+		<pubDate>Tue, 02 Nov 2021 19:40:25 GMT</pubDate>
+		<lastBuildDate>Tue, 02 Nov 2021 19:40:25 GMT</lastBuildDate>
 		<item>
 			<title>Creating Token, NFT using Solana</title>
 			<link>https://note.iqubit.xyz/posts/solana-cli</link>
@@ -367,9 +367,9 @@ error: Package 'Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore' is incompa
 		</item>
 		<item>
 			<title>Powershell Core Useful Commands</title>
-			<link>https://note.iqubit.xyz/posts/powershell-core</link>
+			<link>https://note.iqubit.xyz/posts/pwsh/powershell-core</link>
 			<description>Heads in the cloud! A Qubit Blog!</description>
-			<guid>https://note.iqubit.xyz/posts/powershell-core</guid>
+			<guid>https://note.iqubit.xyz/posts/pwsh/powershell-core</guid>
 			<pubDate>Fri, 19 Mar 2021 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;p&gt;&lt;em&gt;This article formerly titled as 'Powershell Frequently Used Commands. Even though the article is titled "core" it includes some Powershell contents as well.'&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;More cmdlets are on the other article: &lt;code&gt;powershell-core-cmdlets&lt;/code&gt;&lt;/p&gt;
@@ -629,9 +629,9 @@ PSHOME
 		</item>
 		<item>
 			<title>Powershell Core Cmdlets</title>
-			<link>https://note.iqubit.xyz/posts/powershell-core-cmdlets</link>
+			<link>https://note.iqubit.xyz/posts/pwsh/powershell-core-cmdlets</link>
 			<description>Heads in the cloud! A Qubit Blog!</description>
-			<guid>https://note.iqubit.xyz/posts/powershell-core-cmdlets</guid>
+			<guid>https://note.iqubit.xyz/posts/pwsh/powershell-core-cmdlets</guid>
 			<pubDate>Thu, 10 Dec 2020 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h3 id="start-process"&gt;Start-Process&lt;/h3&gt;
 &lt;p&gt;Here are some handy cmds (Application Run Examples),&lt;/p&gt;
@@ -671,6 +671,133 @@ Start Skype:
 &lt;p&gt;Useful for bluetooth service,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Start-Service bthserv
 Stop-Service -Force bthserv
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
+		<item>
+			<title>Switch among multiple Git Config/Profiles using Powershell</title>
+			<link>https://note.iqubit.xyz/posts/pwsh/git-config-switch-using-powershell-script</link>
+			<description>Heads in the cloud! A Qubit Blog!</description>
+			<guid>https://note.iqubit.xyz/posts/pwsh/git-config-switch-using-powershell-script</guid>
+			<pubDate>Mon, 02 Nov 2020 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h2 id="overview"&gt;Overview&lt;/h2&gt;
+&lt;p&gt;Overview of the script,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;verify user name stuff, arguments&lt;/li&gt;
+&lt;li&gt;switch profile based on first command line argument&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="final-script"&gt;final script&lt;/h2&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;# Copyright (c) iQubit Inc.
+&amp;lt;#
+.Synopsis
+    Switch git config
+.DESCRIPTION
+    Switch to provided git config profile. Runs series of git config commands.
+    Suggests updating GH Token
+    ToDo:
+    Fow now, go with this..
+    provide Force flag
+    probably read from a local json config file
+    too many params to pass otherwise..
+
+    facilitate proper checkout with GitUtil
+
+    Demonstrates,
+    - switch syntax
+    - case insensitive string comparison: [System.StringComparison]
+
+.Parameter ProfileName
+    Select among available profiles
+.Parameter CredUserNames
+    Available git user names
+.EXAMPLE
+    Switch-GitConfig.ps1 USER_NAME_1 &amp;#64;('USER_NAME_1', 'USER_NAME_2')
+#&amp;gt;
+
+[CmdletBinding()]
+param(
+    [ValidateSet('USER_NAME_1', 'USER_NAME_2')]
+    [Parameter(Mandatory=$true)] [string] $ProfileName,
+    [Parameter(Mandatory=$true)] [string[]] $CredUserNames
+)
+
+
+&amp;lt;#
+.SYNOPSIS
+    Switch to given git config profile
+.DESCRIPTION
+    Sets for both git repo local and global,
+    - user name
+    - user email
+    - credential user name
+#&amp;gt;
+function Main() {
+    # Expecting switch between 2 users
+    if ($CredUserNames.Length -lt 2) {
+        throw [ArgumentException] ('Unexpected number of gUser Names!')
+    }
+
+    switch ($ProfileName) {
+        &amp;quot;USER_NAME_1&amp;quot; {
+            $gitUserName = git config --get user.name
+            $shellUserName = $($Home.SubString($Home.LastIndexOf('\')+1))
+
+            # Expecting git user name to start with Windows Login UserName
+            # For example,
+            #   windows username Mak will match with
+            #   git user full name 'Atiq Rahman'
+            if (-not ($gitUserName).StartsWith($shellUserName, [System.StringComparison]::`
+                InvariantCultureIgnoreCase)) {
+                throw [ArgumentException] ('Unexpected user name ' + $gitUserName + '!')
+            }
+
+            $gitUserEmail = git config --get user.email
+            # global
+            git config --global user.name &amp;quot;$gitUserName&amp;quot;
+            git config --global user.email $gitUserEmail
+
+            git config credential.username $CredUserNames[0]
+            $Env:GITHUB_TOKEN = 'gxp_clylM69Sjj0OZz5JOKX98TzcIE2xBo1MjNTO'
+            Break
+        }
+        &amp;quot;USER_NAME_2&amp;quot; {
+            $gitUserName = git config --get user.name
+            # last name of user 2, just for validation
+            $userNameSuffix = 'USER2_SUFFIX'
+
+            if (-not ($gitUserName).EndsWith($userNameSuffix)) {
+                throw [ArgumentException] ('Unexpected user name ' + $gitUserName + '!')
+            }
+
+            $gitUserEmail = git config --get user.email
+            # global
+            git config --global user.name &amp;quot;$gitUserName&amp;quot;
+            git config --global user.email $gitUserEmail
+
+            git config credential.username $CredUserNames[1]
+            $Env:GITHUB_TOKEN = 'gxp_84770a857cb1482de0e8af7c39a06de4ccf001eeb'
+            Break
+        }
+        Default { &amp;quot;Unexpected $ProfileName!&amp;quot; }
+    }
+
+    VerifyGitProfile
+
+    'Remember to set your GITHUB_TOKEN before invoking ''deploy'''
+}
+
+function VerifyGitProfile() {
+    'Final Git Configuration:'
+    git config --global --get user.name
+    git config --global --get user.email
+    git config --get user.name
+    git config --get user.email
+    git config --get credential.username
+}
+
+
+Main
 &lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
@@ -983,9 +1110,9 @@ git show 61c2ac6:src/bootstrapper.cc
 		</item>
 		<item>
 			<title>Legacy Powershell Useful Commands</title>
-			<link>https://note.iqubit.xyz/posts/powershell-legacy</link>
+			<link>https://note.iqubit.xyz/posts/pwsh/powershell-legacy</link>
 			<description>Heads in the cloud! A Qubit Blog!</description>
-			<guid>https://note.iqubit.xyz/posts/powershell-legacy</guid>
+			<guid>https://note.iqubit.xyz/posts/pwsh/powershell-legacy</guid>
 			<pubDate>Sat, 18 Jul 2020 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;p&gt;Please be aware of notation below in command outlines. &lt;code&gt;$&lt;/code&gt; represents a command; following rest of the lines represent output. Powershell is superset of traditional command prompt. Hence, all usual binaries still run on powershell for example, &lt;code&gt;takeown&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Power Options&lt;/strong&gt;
@@ -1037,9 +1164,9 @@ $cUI.WindowSize = $b
 		</item>
 		<item>
 			<title>Command Line for Utilities and Tools</title>
-			<link>https://note.iqubit.xyz/posts/windows-tools-cmd</link>
+			<link>https://note.iqubit.xyz/posts/pwsh/windows-tools-cmd</link>
 			<description>Heads in the cloud! A Qubit Blog!</description>
-			<guid>https://note.iqubit.xyz/posts/windows-tools-cmd</guid>
+			<guid>https://note.iqubit.xyz/posts/pwsh/windows-tools-cmd</guid>
 			<pubDate>Fri, 29 Nov 2019 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;p&gt;Please be aware of notation below in command outlines. &lt;code&gt;$&lt;/code&gt; represents a command and rests of the lines following that line are output. Powershell is superset of traditional command prompt. Hence, all usual binaries still run on powershell for exxample, &lt;code&gt;takeown&lt;/code&gt;.&lt;/p&gt;
 &lt;h2 id="windows-os-tools"&gt;Windows OS Tools&lt;/h2&gt;
@@ -1129,77 +1256,6 @@ related to thrombocytopenia wegener's granulomatosis. Platelet counts as a bioma
 &lt;p&gt;Thrombocytopenia (low platelet count) is related.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://journal.chestnet.org/article/S0012-3692(17)31844-5/pdf"&gt;Plasma Exchange and Cyclophosphamide in Combination as Rescue Therapy for Severe Granulomatosis With Polyangiitis Refractory to Rituximab Therapy&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content:encoded>
-			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
-		</item>
-		<item>
-			<title>Hospitals in India</title>
-			<link>https://note.iqubit.xyz/posts/medical-hospitals-india</link>
-			<description>Heads in the cloud! A Qubit Blog!</description>
-			<guid>https://note.iqubit.xyz/posts/medical-hospitals-india</guid>
-			<pubDate>Thu, 28 Nov 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h2 id="best-hospitals"&gt;Best Hospitals&lt;/h2&gt;
-&lt;p&gt;As folk says here are recommended few,&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;CMC - Vallore &lt;a href="https://clin.cmcvellore.ac.in/webapt/New/NewInstr.aspx"&gt;register link&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.aiims.edu/"&gt;AIIMS&lt;/a&gt;, ref: online, Parth&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Cons&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Long waiting for appointments. Sometimes, it takes about one and half months. If patient requires dialysis it might take a while to get appointment for that. Apparently, for emergency treatment requirements like that this might not be suitable.&lt;/p&gt;
-&lt;h2 id="hospitals-in-bengaluru"&gt;Hospitals in Bengaluru&lt;/h2&gt;
-&lt;p&gt;A few are recommended by a friend in Bangladesh.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;Manipal Hospital
-There are chain of hospital branches for this one. For starter, the main one can be good.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Mazumdar Shaw Medical Center, Bommasandra&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;And other more commercial and expensive hospitals to seek opinions.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;apollo&lt;/li&gt;
-&lt;li&gt;Fortis (found a &lt;a href="https://www.dailyo.in/voices/modi-stent-surgery-health-doctors-private-hospitals-india-cheating/story/1/24036.html"&gt;bad review regarding stent surgery&lt;/a&gt;)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id="transportation"&gt;Transportation&lt;/h2&gt;
-&lt;p&gt;The City is busy. It suffers high traffic situations. Hence, be prepared to spend time on the road while travelling to places.&lt;/p&gt;
-&lt;h2 id="data-plans"&gt;Data Plans&lt;/h2&gt;
-&lt;p&gt;A good cell phone carrier helps. It's easy to register a SIM card with one of the carriers to make communication easier to tmake cals hospitls or indian contacts.&lt;/p&gt;
-&lt;h2 id="misc"&gt;Misc&lt;/h2&gt;
-&lt;p&gt;few points,&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;You could use a translator if there's language barrier i.e., you don't know hindi or English language.&lt;/li&gt;
-&lt;li&gt;For acquiring VISA to india for treatment, it might help to provide appointment document with the hospital/specialist.&lt;/li&gt;
-&lt;li&gt;For kidney related diseases, it might as well be a good idea to consult with neurology and oncology.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Recommendation from a friend form Mumbai&lt;/strong&gt;
-I would bet on Hospitals on Delhi and Mumbai.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Lilavati Hospital and Research Centre, Mumbai&lt;/li&gt;
-&lt;li&gt;
-&lt;ol type="A" start="16"&gt;
-&lt;li&gt;
-&lt;ol type="A" start="4"&gt;
-&lt;li&gt;Hinduja National Hospital &amp;amp; Medical Research Centre, Mumbai&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;li&gt;Appolo Hospital, Chennai&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;My understanding is that Delhi have AIIMS and Mumbai in general have good hospitals. ref, Parth&lt;/p&gt;
-&lt;h2 id="other-countries"&gt;Other Countries&lt;/h2&gt;
-&lt;p&gt;[to do: move to another article later]&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Hospitals in Thailand&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&amp;quot;Little expensive but excellent service&amp;quot;:  Bumrungrad International Hospital, &lt;a href="https://www.bumrungrad.com/en"&gt;site&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Bangkok Hospital, &lt;a href="https://www.bangkokhospital.com/en"&gt;site&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Samitivej Hospital - Bangkok &lt;a href="https://www.samitivejhospitals.com/"&gt;site&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Hospitals in Thailand&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Mount Elizabeth Hospitals&lt;/li&gt;
-&lt;li&gt;To add more&lt;/li&gt;
 &lt;/ul&gt;
 </content:encoded>
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
