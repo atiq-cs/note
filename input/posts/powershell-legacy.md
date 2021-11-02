@@ -61,4 +61,3 @@ To change the title of the console we do,
 
 ## continue
 rest of the contents yet to be appended..
-

@@ -23,17 +23,16 @@ For Machine Learning customized shell, I try adding an arg,
     pwsh -NoExit D:\pwsh\Init.ps1 ML
 
 ## New to pwsh?
-clear-host is equivalent to cls
-`Get-Location` instead of pwd`
-ls, cat, popd, pushd etc still work
+- `Clear-Host` is equivalent to cls
+- `Get-Location` is alias to `pwd`
+
+ls, cat, popd, pushd etc are supported through aliases.
 
 Write-Host is equivalent to echo. For example,
 
     echo 'hello'
 
-works just fine.
-
-ps is equivalent to Get-Process or to List processes or doing `tasklist`.
+`ps` is equivalent to Get-Process or to List processes or doing `tasklist`.
 Stop-Proccess instead of taskkill
 
 Example of starting pwsh with an initiazation script or calling a script with an arg,

@@ -34,7 +34,11 @@ Also we can do,
     svn status
 
 ## Running SVN Server Locally
-I used to use "CollabNet Subversion" to be able to do this. The software installed svnadmin in `C:\Program Files\CollabNet\Subversion Client`. Using `svnadmin` we can create repositories locally.
+We complete these parts with the help of `svnadmin` tool.
+
+I used to use "CollabNet Subversion" to accomplish this. The software placed svnadmin binary in `C:\Program Files\CollabNet\Subversion Client`.
+
+Using `svnadmin` we are able to create repositories locally.
 
     svnadmin create "D:\svnrepo\repo1"
 
@@ -47,6 +51,6 @@ Later, to checkout from this local repo,
     svn checkout "file:///D:\svnrepo\repo1\CoolApp" D:\Projects\CoolApp `
         --username YOUR_USER_NAME --password YOUR_PASS
 
-If `svn info` shows an outdated local repo, we should do update,
+If `svn info` shows an outdated local repo, we should update the checkout,
 
     svn update
