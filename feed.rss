@@ -5,8 +5,8 @@
 		<link>https://note.iqubit.xyz/</link>
 		<description>Heads in the cloud! A Qubit Blog!</description>
 		<copyright>Copyright © 2021</copyright>
-		<pubDate>Wed, 27 Oct 2021 20:04:58 GMT</pubDate>
-		<lastBuildDate>Wed, 27 Oct 2021 20:04:58 GMT</lastBuildDate>
+		<pubDate>Tue, 02 Nov 2021 19:35:57 GMT</pubDate>
+		<lastBuildDate>Tue, 02 Nov 2021 19:35:57 GMT</lastBuildDate>
 		<item>
 			<title>Creating Token, NFT using Solana</title>
 			<link>https://note.iqubit.xyz/posts/solana-cli</link>
@@ -382,14 +382,15 @@ error: Package 'Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore' is incompa
 &lt;pre&gt;&lt;code&gt;pwsh -NoExit D:\pwsh\Init.ps1 ML
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="new-to-pwsh"&gt;New to pwsh?&lt;/h2&gt;
-&lt;p&gt;clear-host is equivalent to cls
-&lt;code&gt;Get-Location&lt;/code&gt; instead of pwd`
-ls, cat, popd, pushd etc still work&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Clear-Host&lt;/code&gt; is equivalent to cls&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Get-Location&lt;/code&gt; is alias to &lt;code&gt;pwd&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;ls, cat, popd, pushd etc are supported through aliases.&lt;/p&gt;
 &lt;p&gt;Write-Host is equivalent to echo. For example,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;echo 'hello'
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;works just fine.&lt;/p&gt;
-&lt;p&gt;ps is equivalent to Get-Process or to List processes or doing &lt;code&gt;tasklist&lt;/code&gt;.
+&lt;p&gt;&lt;code&gt;ps&lt;/code&gt; is equivalent to Get-Process or to List processes or doing &lt;code&gt;tasklist&lt;/code&gt;.
 Stop-Proccess instead of taskkill&lt;/p&gt;
 &lt;p&gt;Example of starting pwsh with an initiazation script or calling a script with an arg,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Start-Process pwsh -ArgumentList '-NoExit', 'Init-App.ps1 foo' -ErrorAction 'stop'
@@ -702,9 +703,9 @@ Stop-Service -Force bthserv
 &lt;p&gt;Or, we can add selectively a few (after all modifications are done on those files), the files we want to commit we add them by applying a series of &lt;code&gt;git add&lt;/code&gt; commands,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;git add file-1
 git add file-2
-	………….
-	………….
-	……………
+    ………….
+    ………….
+    ……………
 git add file-n
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Or, we can choose to add directory or files inside another directory (is this recursive, has to check),&lt;/p&gt;
@@ -729,6 +730,9 @@ git commit --message &amp;quot;remove file1.txt&amp;quot;
 &lt;pre&gt;&lt;code&gt;git diff --cached
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The changes we made are called deltas.&lt;/p&gt;
+&lt;h2 id="viewing-logs-files-and-status"&gt;Viewing Logs, Files and Status&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;git --no-pager log
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="how-to-commit-staged-changes-git-commit"&gt;How to commit staged changes (git commit)&lt;/h2&gt;
 &lt;p&gt;Commit to actually push the changes to local repo (will be in remote as soon as pushed). If you are doing this for the first time in the git client you installed, you need to configure committer email and user-name,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;git config --global user.name &amp;quot;John Doe&amp;quot;
@@ -750,15 +754,15 @@ user.name The Matrix
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Here is an example of multi-line commit message, surrounding the entire commit message with double quotes works,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;git commit --message &amp;quot;Implemented secure functions - line1
-	line2 - example line that means code won't work on Linux, we'll have to add separate
-	line3 - branch for Linux
-	line4 - Update on logic based on tests&amp;quot;
+    line2 - example line that means code won't work on Linux, we'll have to add separate
+    line3 - branch for Linux
+    line4 - Update on logic based on tests&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;In powershell, single quote works for multi-line commit message,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;git commit --message &amp;quot;line1
-	line2
-	line3
-	line4&amp;quot;
+    line2
+    line3
+    line4&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="pushing-to-remotesending-deltas-to-remote-repo-server"&gt;Pushing to remote(sending deltas to remote repo server)&lt;/h2&gt;
 &lt;p&gt;Then use &amp;quot;git push origin branch_name&amp;quot;&lt;/p&gt;
@@ -770,12 +774,20 @@ user.name The Matrix
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="git-undo-edit-commit-etc"&gt;git undo, edit commit etc&lt;/h2&gt;
 &lt;p&gt;To Rollback to a specific previous commit we do,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git reset --hard 
-git push --force
+&lt;pre&gt;&lt;code&gt;git reset --hard COMMIT_SHA
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Commands above does a hard reset which means it does not preserve any change locally too!&lt;/p&gt;
+&lt;p&gt;To preserve changes locally so we can work on it,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git reset COMMIT_SHA
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally, we can push this change to remote forcefully (we should only do this if nobody else pushed changes to remote repo).&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git push --force
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;To roll back to previous to last commit we do,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git reset --hard ~HEAD
-git push --force
+&lt;pre&gt;&lt;code&gt;git reset HEAD~
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To hard reset,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git reset --hard HEAD~
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We can edit commit message of the last commit anytime before push,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;git commit --amend
@@ -824,7 +836,7 @@ Do a force push (ths is usually combined with &lt;code&gt;git commit --amend&lt;
 &lt;p&gt;Note: a force push destroys commits made by others (if they pushed in the mean time).&lt;/p&gt;
 &lt;p&gt;To correct commit author name upto specific commit (probably? or is it only for single commit?),&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;git reset author
-git rebase --interactive -p 7508a2627bee2a28535e7ae306c51788fd287f9f
+git rebase --interactive --preserve-merges 7508a2627bee2a28535e7ae306c51788fd287f9f
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;mark all of them as 'e' and keep applying following commands. In this example, the author's email address is 'alex&amp;#64;corp.xyz',&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;git commit --amend --author &amp;quot;Alex Roy &amp;lt;alex&amp;#64;corp.xyz&amp;gt;&amp;quot; --no-edit
@@ -947,7 +959,20 @@ git show 61c2ac6:src/bootstrapper.cc
 ~/.gitconfig
 /etc/gitconfig (guessing I don't recall the exact location)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="references"&gt;References&lt;/h1&gt;
+&lt;h2 id="github-commands"&gt;Github Commands&lt;/h2&gt;
+&lt;p&gt;Rename branch&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git branch --move main dev
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Using github UI set default branch to dev now visiting following URL,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;https://github.com/USER/REPO/settings/branches
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Please replace &lt;code&gt;USER&lt;/code&gt; and &lt;code&gt;REPO&lt;/code&gt; with correct user name and repository name.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git push origin --delete main
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Push the renamed branch to remote and set upstream,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git push origin --set-upstream dev
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="references"&gt;References&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a href="https://git-scm.com/book/en/v2/Getting-Started-Git-Basics"&gt;git-scm - Getting Started - Git Basics&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://data.agaric.com/undo-git-add-remove-files-staged-git-commit"&gt;agaric - undo, remove staged file&lt;/a&gt;&lt;/li&gt;

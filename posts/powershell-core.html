@@ -119,14 +119,15 @@
 <pre><code>pwsh -NoExit D:\pwsh\Init.ps1 ML
 </code></pre>
 <h2 id="new-to-pwsh">New to pwsh?</h2>
-<p>clear-host is equivalent to cls
-<code>Get-Location</code> instead of pwd`
-ls, cat, popd, pushd etc still work</p>
+<ul>
+<li><code>Clear-Host</code> is equivalent to cls</li>
+<li><code>Get-Location</code> is alias to <code>pwd</code></li>
+</ul>
+<p>ls, cat, popd, pushd etc are supported through aliases.</p>
 <p>Write-Host is equivalent to echo. For example,</p>
 <pre><code>echo 'hello'
 </code></pre>
-<p>works just fine.</p>
-<p>ps is equivalent to Get-Process or to List processes or doing <code>tasklist</code>.
+<p><code>ps</code> is equivalent to Get-Process or to List processes or doing <code>tasklist</code>.
 Stop-Proccess instead of taskkill</p>
 <p>Example of starting pwsh with an initiazation script or calling a script with an arg,</p>
 <pre><code>Start-Process pwsh -ArgumentList '-NoExit', 'Init-App.ps1 foo' -ErrorAction 'stop'

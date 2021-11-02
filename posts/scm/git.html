@@ -129,9 +129,9 @@
 <p>Or, we can add selectively a few (after all modifications are done on those files), the files we want to commit we add them by applying a series of <code>git add</code> commands,</p>
 <pre><code>git add file-1
 git add file-2
-	………….
-	………….
-	……………
+    ………….
+    ………….
+    ……………
 git add file-n
 </code></pre>
 <p>Or, we can choose to add directory or files inside another directory (is this recursive, has to check),</p>
@@ -156,6 +156,9 @@ git commit --message &quot;remove file1.txt&quot;
 <pre><code>git diff --cached
 </code></pre>
 <p>The changes we made are called deltas.</p>
+<h2 id="viewing-logs-files-and-status">Viewing Logs, Files and Status</h2>
+<pre><code>git --no-pager log
+</code></pre>
 <h2 id="how-to-commit-staged-changes-git-commit">How to commit staged changes (git commit)</h2>
 <p>Commit to actually push the changes to local repo (will be in remote as soon as pushed). If you are doing this for the first time in the git client you installed, you need to configure committer email and user-name,</p>
 <pre><code>git config --global user.name &quot;John Doe&quot;
@@ -177,15 +180,15 @@ user.name The Matrix
 </code></pre>
 <p>Here is an example of multi-line commit message, surrounding the entire commit message with double quotes works,</p>
 <pre><code>git commit --message &quot;Implemented secure functions - line1
-	line2 - example line that means code won't work on Linux, we'll have to add separate
-	line3 - branch for Linux
-	line4 - Update on logic based on tests&quot;
+    line2 - example line that means code won't work on Linux, we'll have to add separate
+    line3 - branch for Linux
+    line4 - Update on logic based on tests&quot;
 </code></pre>
 <p>In powershell, single quote works for multi-line commit message,</p>
 <pre><code>git commit --message &quot;line1
-	line2
-	line3
-	line4&quot;
+    line2
+    line3
+    line4&quot;
 </code></pre>
 <h2 id="pushing-to-remotesending-deltas-to-remote-repo-server">Pushing to remote(sending deltas to remote repo server)</h2>
 <p>Then use &quot;git push origin branch_name&quot;</p>
@@ -197,12 +200,20 @@ user.name The Matrix
 </code></pre>
 <h2 id="git-undo-edit-commit-etc">git undo, edit commit etc</h2>
 <p>To Rollback to a specific previous commit we do,</p>
-<pre><code>git reset --hard 
-git push --force
+<pre><code>git reset --hard COMMIT_SHA
+</code></pre>
+<p>Commands above does a hard reset which means it does not preserve any change locally too!</p>
+<p>To preserve changes locally so we can work on it,</p>
+<pre><code>git reset COMMIT_SHA
+</code></pre>
+<p>Finally, we can push this change to remote forcefully (we should only do this if nobody else pushed changes to remote repo).</p>
+<pre><code>git push --force
 </code></pre>
 <p>To roll back to previous to last commit we do,</p>
-<pre><code>git reset --hard ~HEAD
-git push --force
+<pre><code>git reset HEAD~
+</code></pre>
+<p>To hard reset,</p>
+<pre><code>git reset --hard HEAD~
 </code></pre>
 <p>We can edit commit message of the last commit anytime before push,</p>
 <pre><code>git commit --amend
@@ -251,7 +262,7 @@ Do a force push (ths is usually combined with <code>git commit --amend</code>),<
 <p>Note: a force push destroys commits made by others (if they pushed in the mean time).</p>
 <p>To correct commit author name upto specific commit (probably? or is it only for single commit?),</p>
 <pre><code>git reset author
-git rebase --interactive -p 7508a2627bee2a28535e7ae306c51788fd287f9f
+git rebase --interactive --preserve-merges 7508a2627bee2a28535e7ae306c51788fd287f9f
 </code></pre>
 <p>mark all of them as 'e' and keep applying following commands. In this example, the author's email address is 'alex&#64;corp.xyz',</p>
 <pre><code>git commit --amend --author &quot;Alex Roy &lt;alex&#64;corp.xyz&gt;&quot; --no-edit
@@ -374,7 +385,20 @@ git show 61c2ac6:src/bootstrapper.cc
 ~/.gitconfig
 /etc/gitconfig (guessing I don't recall the exact location)
 </code></pre>
-<h1 id="references">References</h1>
+<h2 id="github-commands">Github Commands</h2>
+<p>Rename branch</p>
+<pre><code>git branch --move main dev
+</code></pre>
+<p>Using github UI set default branch to dev now visiting following URL,</p>
+<pre><code>https://github.com/USER/REPO/settings/branches
+</code></pre>
+<p>Please replace <code>USER</code> and <code>REPO</code> with correct user name and repository name.</p>
+<pre><code>git push origin --delete main
+</code></pre>
+<p>Push the renamed branch to remote and set upstream,</p>
+<pre><code>git push origin --set-upstream dev
+</code></pre>
+<h2 id="references">References</h2>
 <ol>
 <li><a href="https://git-scm.com/book/en/v2/Getting-Started-Git-Basics">git-scm - Getting Started - Git Basics</a></li>
 <li><a href="http://data.agaric.com/undo-git-add-remove-files-staged-git-commit">agaric - undo, remove staged file</a></li>

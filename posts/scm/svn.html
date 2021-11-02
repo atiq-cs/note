@@ -130,7 +130,9 @@ svn info
 svn status
 </code></pre>
 <h2 id="running-svn-server-locally">Running SVN Server Locally</h2>
-<p>I used to use &quot;CollabNet Subversion&quot; to be able to do this. The software installed svnadmin in <code>C:\Program Files\CollabNet\Subversion Client</code>. Using <code>svnadmin</code> we can create repositories locally.</p>
+<p>We complete these parts with the help of <code>svnadmin</code> tool.</p>
+<p>I used to use &quot;CollabNet Subversion&quot; to accomplish this. The software placed svnadmin binary in <code>C:\Program Files\CollabNet\Subversion Client</code>.</p>
+<p>Using <code>svnadmin</code> we are able to create repositories locally.</p>
 <pre><code>svnadmin create &quot;D:\svnrepo\repo1&quot;
 </code></pre>
 <p>Initial import of a project into this repo,</p>
@@ -140,7 +142,7 @@ svn status
 <pre><code>svn checkout &quot;file:///D:\svnrepo\repo1\CoolApp&quot; D:\Projects\CoolApp `
     --username YOUR_USER_NAME --password YOUR_PASS
 </code></pre>
-<p>If <code>svn info</code> shows an outdated local repo, we should do update,</p>
+<p>If <code>svn info</code> shows an outdated local repo, we should update the checkout,</p>
 <pre><code>svn update
 </code></pre>
 
