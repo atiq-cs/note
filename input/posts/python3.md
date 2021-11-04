@@ -2,7 +2,7 @@ Title: Python Language Reference
 Published: 11/14/2019
 Tags:
   - python
-  - programming languages
+  - programming
 ---
 ## Install
 After install, to verify,

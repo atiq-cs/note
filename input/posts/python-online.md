@@ -2,7 +2,7 @@ Title: Python Editors online
 Published: 11/19/2017
 Tags:
   - python
-  - programming languages
+  - programming
 ---
 We list some Python Editors or compilers online
 

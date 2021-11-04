@@ -40,6 +40,21 @@ To make it work, we need to double quote them [ref](https://stackoverflow.com/qu
 
     Start Notepad++ -ArgumentList "`"D:\Cool Soft\my awesome file.txt`""
 
+### Get-Process
+A simple run gives a technical summary of the process
+
+    $ Get-Process pwsh
+
+    NPM(K)    PM(M)      WS(M)     CPU(s)      Id  SI ProcessName
+    ------    -----      -----     ------      --  -- -----------
+        80   117.16     170.47      25.61   21628   1 pwsh
+
+To get number of instances of a process
+
+    function GetProcessInstanceNumber([string] $process) {
+        @(Get-Process $process -ErrorAction 0).Count
+    }
+
 ## Service Management
 Get list of services currently running,
 

@@ -2,7 +2,7 @@ Title: Regular Expressions
 Lead: RegEx examples primarily for notepad++
 Published: 05/18/2018
 Tags:
-  - programming languages
+  - programming
 ---
 This article currently covers notepad++ flavor or regular expressions.
 

@@ -9,6 +9,8 @@ Tags:
 
 _This article formerly titled as 'Powershell Frequently Used Commands. Even though the article is titled "core" it includes some Powershell contents as well.'_
 
+
+Powershell Core refers to Powershell versions 6 or later.
 More cmdlets are on the other article: `powershell-core-cmdlets`
 
 ## Initialization of Shell
