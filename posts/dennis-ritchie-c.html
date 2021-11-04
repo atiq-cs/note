@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Heads in the cloud! A Qubit Blog!">
+
+  <title>Notes from Qubit Inc. - Dennis Ritchie - The C Programming Language</title>
+
+  <link rel="canonical" href="https://note.iqubit.xyz/posts/dennis-ritchie-c">
+
+      <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
+      <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
+  
+  <meta name="application-name" content="Notes from Qubit Inc." />
+  <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
+  <meta name="msapplication-starturl" content="/" />
+
+  <meta property="og:title" content="Notes from Qubit Inc. - Dennis Ritchie - The C Programming Language" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://note.iqubit.xyz/posts/dennis-ritchie-c" />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="/vendor/bootstrap/scss/bootstrap.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/fontawesome-free/css/brands.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css' data-no-mirror>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' data-no-mirror>
+  
+  <!-- Custom styles for this template -->
+  <link href="/scss/clean-blog.css" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/plugins/autoloader/prism-autoloader.min.js" data-no-mirror></script>
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/themes/prism.css">
+
+  <!-- Lunr search -->
+    <script src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pako@2.0.3/dist/pako_inflate.min.js"></script>
+    <script src="/search.js"></script>
+  
+  
+
+
+  
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Notes from Qubit Inc.</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/tags">Tags</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/posts">Posts</a>
+            </li>
+</ul>
+        <form class="form-inline my-2 my-lg-0" action="/search" method="GET">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query">
+          <input type="submit" hidden />
+        </form>
+    </div>
+  </div>
+</nav>
+
+  <!-- Page Header -->
+  <header class="masthead">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="post-heading">
+          <h1>
+            Dennis Ritchie - The C Programming Language
+          </h1>
+            <h2 class="subheading">small excerpt from book The C Programming Language</h2>
+              <div class="meta">Published on Friday, 19 March 2021</div>
+                <div class="mt-3">
+                      <a href="/tags/book" class="badge badge-light"> book</a>
+                      <a href="/tags/programming" class="badge badge-light"> programming</a>
+                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- Main Content -->
+  <div class="container"> 
+    <div class="row">
+      <div id="content" class="col-md-12">  
+        <h3 id="format-specifiers">Format Specifiers</h3>
+<p>Right justification example,</p>
+<pre><code>printf(&quot;%3d %6d\n&quot;, fahr, celsius);
+</code></pre>
+<h3 id="automatic-type-casting">Automatic Type Casting</h3>
+<p>If an arithmetic operator has integer operands, an integer operation is performed. If an arithmetic operator has one floating-point operand and one integer operand, however, the integer will be converted to floating point before the operation is done. If we had written (fahr-32), the 32 would be automatically converted to floating point. Nevertheless, writing floating-point constants with explicit decimal points even when they have integral values emphasizes their floating-point nature for human readers.</p>
+<p>Among others, <code>printf</code> recognizes,</p>
+<ul>
+<li>%o for octal</li>
+<li>%x for hexadecimal</li>
+<li>%c for character</li>
+<li>%s for character string and,</li>
+<li>%% for itself</li>
+</ul>
+<h3 id="getchar-and-putchar">getchar and putchar</h3>
+<p>The problem is distinguishing the end of input from valid data. The solution is that getchar returns a distinctive value when there is no more input, a value that cannot be confused with any real character. This value is called EOF, for &quot;end of file&quot;. We must declare c to be a type big enough to hold any value that getchar returns. We can't use char since c must be big enough to hold EOF in addition to any possible char. Therefore we use int.</p>
+<p>EOF is an integer defined in <code>&lt;stdio.h&gt;</code>, but the specific numeric value doesn't matter as long as it is not the same as any char value. By using the symbolic constant, we are assured that nothing in the program depends on the specific numeric value.</p>
+<pre><code>#include &lt;stdio.h&gt;  
+
+/* copy input to output; 2nd version */  
+main() {
+int c;
+
+while ((c = getchar()) != EOF)  
+    putchar(c);  
+}
+</code></pre>
+<h3 id="in-and-out-modifiers">IN and OUT Modifiers</h3>
+<p>We prefer the symbolic constants <code>IN</code> and <code>OUT</code> to the literal values 1 and 0 because they make the program more readable.</p>
+<pre><code>#include &lt;stdio.h&gt;
+
+#define IN 1 /* inside a word */
+#define OUT 0 /* outside a word */
+
+/* count lines, words, and characters in input */
+main() {
+    int c, nl, nw, nc, state;
+    state = OUT;
+    nl = nw = nc = 0;
+
+    while ((c = getchar()) != EOF) {
+        ++nc;
+
+        if (c == '\n')
+        ++nl;
+
+        if (c == ' ' || c == '\n' || c = '\t')
+        state = OUT;
+
+        else if (state == OUT) {
+        state = IN;
+        ++nw;
+        }
+    }
+
+    printf(&quot;%d %d %d\n&quot;, nl, nw, nc);
+}
+</code></pre>
+<p>In a program as tiny as this, it makes little difference, but in larger programs, the increase in clarity is well worth the modest extra effort to write it this way from the beginning. You'll also find that it's easier to make extensive changes in programs where magic numbers appear only as symbolic constants.</p>
+<h3 id="arguments-and-parameters">Arguments and parameters</h3>
+<p>The function power is called twice by main, in the line</p>
+<pre><code>printf(&quot;%d %d %d\n&quot;, i, power(2,i), power(-3,i));
+</code></pre>
+<p>Each call passes two arguments to power, which each time returns an integer to be formatted and printed. In an expression, power(2,i) is an integer just as 2 and i are. (Not all functions produce an integer value; we will take this up in Chapter 4.)</p>
+<p>The first line of power itself,</p>
+<pre><code>int power(int base, int n)
+</code></pre>
+<p>declares the parameter types and names, and the type of the result that the function returns. The names used by power for its parameters are local to power, and are not visible to any other function: other routines can use the same names without conflict. This is also true of the variables i and p: the i in power is unrelated to the i in main.</p>
+<p><em>We will generally use <code>parameter</code> for a variable named in the parenthesized list in a function.</em></p>
+<h3 id="argument-passing-call-by-value">Argument Passing: Call by Value</h3>
+<p>In C, all function arguments are passed &quot;by value&quot;. This means that the called function is given the values of its arguments in temporary variables rather than the originals. This leads to some different properties than are seen with &quot;call by reference&quot; languages like Fortran or with var parameters in Pascal, in which the called routine has access to the original argument, not a local copy.</p>
+<h3 id="constant-expressions">Constant Expressions</h3>
+<p>A <em>constant expression</em> is an expression that involves only constants. Such expressions may be evaluated at during compilation rather than run-time, and accordingly may be used in any place that a constant can occur, as in</p>
+<pre><code>#define MAXLINE 1000
+char line[MAXLINE+1];
+</code></pre>
+<p>Or,</p>
+<pre><code>#define LEAP 1 /* in leap years */
+int days[31+28+LEAP+31+30+31+30+31+31+30+31+30+31];
+</code></pre>
+<h3 id="string-constants">String Constants</h3>
+<p>String constants can be concatenated at compile time:</p>
+<pre><code>&quot;hello, &quot; &quot;world&quot;
+</code></pre>
+<p>is equivalent to</p>
+<pre><code>&quot;hello, world&quot;
+</code></pre>
+<p>This is useful for splitting up long strings across several source lines.</p>
+<h3 id="enumeration">Enumeration</h3>
+<p>An enumeration is a list of constant integer values, as in</p>
+<pre><code>enum boolean { NO, YES };
+</code></pre>
+<p>The first name in an enum has value 0, the next 1, and so on, unless explicit values are specified. If not all values are specified, unspecified values continue the progression from the last specified value, as the second of these examples:</p>
+<pre><code>enum escapes { BELL = '\a', BACKSPACE = '\b', TAB = '\t',
+    NEWLINE = '\n', VTAB = '\v', RETURN = '\r' };
+
+enum months { JAN = 1, FEB, MAR, APR, MAY, JUN,
+    JUL, AUG, SEP, OCT, NOV, DEC }; /* FEB = 2, MAR = 3, etc. */
+</code></pre>
+<p>Names in different enumerations must be distinct.</p>
+<p><em>Values need not be distinct in the same enumeration.</em></p>
+<h3 id="variable-initialization">Variable Initialization</h3>
+<p>External and static variables are initialized to zero by default. Automatic variables for which is no explicit initializer have undefined (i.e., garbage) values.</p>
+<h3 id="precedence">Precedence</h3>
+<p>The precedence of <code>&amp;&amp;</code> is higher than that of ||, and both are lower than relational and equality operators, so expressions like</p>
+<pre><code>i &lt; lim-1 &amp;&amp; (c=getchar()) != '\n' &amp;&amp; c != EOF
+</code></pre>
+<p>need no extra parentheses. But since the precedence of != is higher than assignment, parentheses are needed in</p>
+<pre><code>(c=getchar()) != '\n'
+</code></pre>
+<p>to achieve the desired result of assignment to c and then comparison with '\n'.</p>
+<p>By definition, the numeric value of a relational or logical expression is 1 if the relation is true, and 0 if the relation is false.</p>
+<h3 id="type-conversions">Type Conversions</h3>
+<p>Expressions that might lose information, like assigning a longer integer type to a shorter, or a floating-point type to an integer, may draw a warning, but they are not illegal.</p>
+<h3 id="bitwise-operators">Bitwise Operators</h3>
+<p>The bitwise AND operator &amp; is often used to mask off some set of bits, for example</p>
+<pre><code>n = n &amp; 0177;
+</code></pre>
+<p>sets to zero all but the low-order 7 bits of n.</p>
+<p>The bitwise OR operator | is used to turn bits on:</p>
+<pre><code>x = x | SET\_ON;
+</code></pre>
+<p>sets to one in x the bits that are set to one in SET_ON.</p>
+<p>The bitwise exclusive OR operator ^ sets a one in each bit position where its operands have different bits, and zero where they are the same.</p>
+<p>The unary operator ~ yields the one's complement of an integer; that is, it converts each 1-bit into a 0-bit and vice versa. For example</p>
+<pre><code>x = x &amp; ~077
+</code></pre>
+<p>sets the last six bits of x to zero. Note that <code>x &amp; ~077</code> is independent of word length, and is thus preferable to, for example, <code>x &amp; 0177700</code>, which assumes that x is a 16-bit quantity. The portable form involves no extra cost, since <code>~077</code> is a constant expression that can be evaluated at compile time.</p>
+<h3 id="precedence-of-bitwise-operators">Precedence of bitwise operators</h3>
+<p>Note that the precedence of the bitwise operators &amp;, ^, and | falls below == and !=. This implies that bit-testing expressions like</p>
+<pre><code>if ((x &amp; MASK) == 0) ...
+</code></pre>
+<p>must be fully parenthesized to give proper results.</p>
+<h3 id="switch-statement">Switch Statement</h3>
+<p><em>Each case is labeled by one or more integer-valued constants or constant expressions.</em> If a case matches the expression value, execution starts at that case. All case expressions must be different. The case labeled default is executed if none of the other cases are satisfied. A default is optional; if it isn't there and if none of the cases match, no action at all takes place. Cases and the default clause can occur in any order.</p>
+<pre><code>switch (expression) {
+    case const-expr: statements
+    case const-expr: statements
+    default: statements
+}
+</code></pre>
+<p>The break statement causes an immediate exit from the switch. Because cases serve just as labels, after the code for one case is done, execution falls through to the next unless you take explicit action to escape. break and return are the most common ways to leave a switch.</p>
+<p><em>The commas that separate function arguments, variables in declarations, etc., are not comma operators, and do not guarantee left to right evaluation.</em></p>
+<p>Because the else part of an if-else is optional, there is an ambiguity when an else if omitted from a nested if sequence. This is resolved by associating the else with the closest previous else-less if. For example, in</p>
+<pre><code>if (n &gt; 0)
+    if (a &gt; b)
+        z = a;
+    else
+        z = b;
+</code></pre>
+<p>The else goes to the inner if, as we have shown by indentation. If that isn't what you want, braces must be used to force the proper association:</p>
+<pre><code>if (n &gt; 0) {
+    if (a &gt; b)
+        z = a;
+}
+else
+    z = b;
+</code></pre>
+
+
+
+
+<div id="giscus_thread"></div>
+<script src="https://giscus.app/client.js"
+        data-repo="atiq-cs/note"
+        data-repo-id="R_kgDOGMJt-w"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOGMJt-84B_XUr"
+        data-mapping="pathname"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-theme="dark"
+        crossorigin="anonymous"
+        async>
+</script>
+<noscript>Please enable JavaScript to view the comments powered by giscus.</noscript>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Footer -->  
+  <footer>
+    <div class="container">
+        <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright text-muted m-0">Copyright &#xA9; 2021</p>
+                    <br />
+                    <ul class="list-inline text-center small">
+                            <li class="list-inline-item">
+                                <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                            </li>
+                    </ul>
+                    <br />
+                    <div class="font-weight-bold small"><a href="https://statiq.dev">Generated by Statiq</a></div>
+                </div>
+        </div>
+    </div>
+</footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  
+
+
+  
+
+  <!-- Custom scripts for this template -->
+  <script src="/js/clean-blog.js"></script>
+
+</body>
+
+</html>

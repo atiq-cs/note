@@ -132,6 +132,19 @@ Start Skype:
 <p>To make it work, we need to double quote them <a href="https://stackoverflow.com/questions/22840882/powershell-opening-file-path-with-spaces">ref</a>,</p>
 <pre><code>Start Notepad++ -ArgumentList &quot;`&quot;D:\Cool Soft\my awesome file.txt`&quot;&quot;
 </code></pre>
+<h3 id="get-process">Get-Process</h3>
+<p>A simple run gives a technical summary of the process</p>
+<pre><code>$ Get-Process pwsh
+
+NPM(K)    PM(M)      WS(M)     CPU(s)      Id  SI ProcessName
+------    -----      -----     ------      --  -- -----------
+    80   117.16     170.47      25.61   21628   1 pwsh
+</code></pre>
+<p>To get number of instances of a process</p>
+<pre><code>function GetProcessInstanceNumber([string] $process) {
+    &#64;(Get-Process $process -ErrorAction 0).Count
+}
+</code></pre>
 <h2 id="service-management">Service Management</h2>
 <p>Get list of services currently running,</p>
 <pre><code>Get-Service | Where-Object {$_.Status -eq &quot;Running&quot;}
