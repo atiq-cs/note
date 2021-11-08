@@ -265,6 +265,48 @@ enum months { JAN = 1, FEB, MAR, APR, MAY, JUN,
 else
     z = b;
 </code></pre>
+<h3 id="reverse-number-example">Reverse Number Example</h3>
+<p>I tried a usual implementation of reverse number as I was learning,</p>
+<pre><code>#include &lt;stdio.h&gt;
+
+main() {
+    int n;
+
+    printf(&quot;Enter number to reverse: &quot;);
+    scanf(&quot;%d&quot;, &amp;n);
+
+    printf(&quot;Reverse of that number is %d\n&quot;, ReverseNum(n));
+}
+
+int ReverseNum(int a) {
+    int res = 0;
+    while (a) {
+        res = res * 10 + a % 10;
+        a /= 10;
+    }
+    return res;
+}
+</code></pre>
+<p><em>Recursive version</em></p>
+<pre><code>#include &lt;stdio.h&gt;
+
+main() {
+    int n;
+
+    printf(&quot;Enter number to reverse: &quot;);
+    scanf(&quot;%d&quot;, &amp;n);
+
+    printf(&quot;Reverse of that number is %d\n&quot;, ReverseNum(n, 0));
+}
+
+int ReverseNum(int a, int res) {
+    if (a == 0)
+        return res;
+
+    res = ReverseNum(a/10, res) * 10 + a % 10;
+    return res;
+}
+</code></pre>
 
 
 

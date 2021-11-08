@@ -5,8 +5,8 @@
 		<link>https://note.iqubit.xyz/</link>
 		<description>Heads in the cloud! A Qubit Blog!</description>
 		<copyright>Copyright © 2021</copyright>
-		<pubDate>Thu, 04 Nov 2021 21:36:11 GMT</pubDate>
-		<lastBuildDate>Thu, 04 Nov 2021 21:36:11 GMT</lastBuildDate>
+		<pubDate>Mon, 08 Nov 2021 00:01:23 GMT</pubDate>
+		<lastBuildDate>Mon, 08 Nov 2021 00:01:23 GMT</lastBuildDate>
 		<item>
 			<title>Creating Token, NFT using Solana</title>
 			<link>https://note.iqubit.xyz/posts/solana-cli</link>
@@ -528,6 +528,48 @@ enum months { JAN = 1, FEB, MAR, APR, MAY, JUN,
 }
 else
     z = b;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="reverse-number-example"&gt;Reverse Number Example&lt;/h3&gt;
+&lt;p&gt;I tried a usual implementation of reverse number as I was learning,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;stdio.h&amp;gt;
+
+main() {
+    int n;
+
+    printf(&amp;quot;Enter number to reverse: &amp;quot;);
+    scanf(&amp;quot;%d&amp;quot;, &amp;amp;n);
+
+    printf(&amp;quot;Reverse of that number is %d\n&amp;quot;, ReverseNum(n));
+}
+
+int ReverseNum(int a) {
+    int res = 0;
+    while (a) {
+        res = res * 10 + a % 10;
+        a /= 10;
+    }
+    return res;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;Recursive version&lt;/em&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;stdio.h&amp;gt;
+
+main() {
+    int n;
+
+    printf(&amp;quot;Enter number to reverse: &amp;quot;);
+    scanf(&amp;quot;%d&amp;quot;, &amp;amp;n);
+
+    printf(&amp;quot;Reverse of that number is %d\n&amp;quot;, ReverseNum(n, 0));
+}
+
+int ReverseNum(int a, int res) {
+    if (a == 0)
+        return res;
+
+    res = ReverseNum(a/10, res) * 10 + a % 10;
+    return res;
+}
 &lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
