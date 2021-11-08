@@ -5,8 +5,8 @@
 		<link>https://note.iqubit.xyz/</link>
 		<description>Heads in the cloud! A Qubit Blog!</description>
 		<copyright>Copyright © 2021</copyright>
-		<pubDate>Mon, 08 Nov 2021 00:01:23 GMT</pubDate>
-		<lastBuildDate>Mon, 08 Nov 2021 00:01:23 GMT</lastBuildDate>
+		<pubDate>Mon, 08 Nov 2021 00:14:26 GMT</pubDate>
+		<lastBuildDate>Mon, 08 Nov 2021 00:14:26 GMT</lastBuildDate>
 		<item>
 			<title>Creating Token, NFT using Solana</title>
 			<link>https://note.iqubit.xyz/posts/solana-cli</link>
@@ -362,215 +362,6 @@ error: Package 'Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore' is incompa
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Also, the old version (3.1.18 supports .net core) of &lt;code&gt;Diagnostics.EntityFrameworkCore&lt;/code&gt; doesn't have the definitions mentioned above.&lt;/p&gt;
 &lt;p&gt;Conclusion: since some of the packages i.e., &lt;code&gt;Diagnostics.EntityFrameworkCore&lt;/code&gt; don't target .net core and only targets newer versions of net framework, for example, .net 6. We cannot run the examples from official tutorial that uses EF Core or Diagnostics (may be Logging package as well).&lt;/p&gt;
-</content:encoded>
-			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
-		</item>
-		<item>
-			<title>Dennis Ritchie - The C Programming Language</title>
-			<link>https://note.iqubit.xyz/posts/dennis-ritchie-c</link>
-			<description>Heads in the cloud! A Qubit Blog!</description>
-			<guid>https://note.iqubit.xyz/posts/dennis-ritchie-c</guid>
-			<pubDate>Fri, 19 Mar 2021 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h3 id="format-specifiers"&gt;Format Specifiers&lt;/h3&gt;
-&lt;p&gt;Right justification example,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;printf(&amp;quot;%3d %6d\n&amp;quot;, fahr, celsius);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="automatic-type-casting"&gt;Automatic Type Casting&lt;/h3&gt;
-&lt;p&gt;If an arithmetic operator has integer operands, an integer operation is performed. If an arithmetic operator has one floating-point operand and one integer operand, however, the integer will be converted to floating point before the operation is done. If we had written (fahr-32), the 32 would be automatically converted to floating point. Nevertheless, writing floating-point constants with explicit decimal points even when they have integral values emphasizes their floating-point nature for human readers.&lt;/p&gt;
-&lt;p&gt;Among others, &lt;code&gt;printf&lt;/code&gt; recognizes,&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;%o for octal&lt;/li&gt;
-&lt;li&gt;%x for hexadecimal&lt;/li&gt;
-&lt;li&gt;%c for character&lt;/li&gt;
-&lt;li&gt;%s for character string and,&lt;/li&gt;
-&lt;li&gt;%% for itself&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="getchar-and-putchar"&gt;getchar and putchar&lt;/h3&gt;
-&lt;p&gt;The problem is distinguishing the end of input from valid data. The solution is that getchar returns a distinctive value when there is no more input, a value that cannot be confused with any real character. This value is called EOF, for &amp;quot;end of file&amp;quot;. We must declare c to be a type big enough to hold any value that getchar returns. We can't use char since c must be big enough to hold EOF in addition to any possible char. Therefore we use int.&lt;/p&gt;
-&lt;p&gt;EOF is an integer defined in &lt;code&gt;&amp;lt;stdio.h&amp;gt;&lt;/code&gt;, but the specific numeric value doesn't matter as long as it is not the same as any char value. By using the symbolic constant, we are assured that nothing in the program depends on the specific numeric value.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;#include &amp;lt;stdio.h&amp;gt;  
-
-/* copy input to output; 2nd version */  
-main() {
-int c;
-
-while ((c = getchar()) != EOF)  
-    putchar(c);  
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="in-and-out-modifiers"&gt;IN and OUT Modifiers&lt;/h3&gt;
-&lt;p&gt;We prefer the symbolic constants &lt;code&gt;IN&lt;/code&gt; and &lt;code&gt;OUT&lt;/code&gt; to the literal values 1 and 0 because they make the program more readable.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;#include &amp;lt;stdio.h&amp;gt;
-
-#define IN 1 /* inside a word */
-#define OUT 0 /* outside a word */
-
-/* count lines, words, and characters in input */
-main() {
-    int c, nl, nw, nc, state;
-    state = OUT;
-    nl = nw = nc = 0;
-
-    while ((c = getchar()) != EOF) {
-        ++nc;
-
-        if (c == '\n')
-        ++nl;
-
-        if (c == ' ' || c == '\n' || c = '\t')
-        state = OUT;
-
-        else if (state == OUT) {
-        state = IN;
-        ++nw;
-        }
-    }
-
-    printf(&amp;quot;%d %d %d\n&amp;quot;, nl, nw, nc);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;In a program as tiny as this, it makes little difference, but in larger programs, the increase in clarity is well worth the modest extra effort to write it this way from the beginning. You'll also find that it's easier to make extensive changes in programs where magic numbers appear only as symbolic constants.&lt;/p&gt;
-&lt;h3 id="arguments-and-parameters"&gt;Arguments and parameters&lt;/h3&gt;
-&lt;p&gt;The function power is called twice by main, in the line&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;printf(&amp;quot;%d %d %d\n&amp;quot;, i, power(2,i), power(-3,i));
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Each call passes two arguments to power, which each time returns an integer to be formatted and printed. In an expression, power(2,i) is an integer just as 2 and i are. (Not all functions produce an integer value; we will take this up in Chapter 4.)&lt;/p&gt;
-&lt;p&gt;The first line of power itself,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;int power(int base, int n)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;declares the parameter types and names, and the type of the result that the function returns. The names used by power for its parameters are local to power, and are not visible to any other function: other routines can use the same names without conflict. This is also true of the variables i and p: the i in power is unrelated to the i in main.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;We will generally use &lt;code&gt;parameter&lt;/code&gt; for a variable named in the parenthesized list in a function.&lt;/em&gt;&lt;/p&gt;
-&lt;h3 id="argument-passing-call-by-value"&gt;Argument Passing: Call by Value&lt;/h3&gt;
-&lt;p&gt;In C, all function arguments are passed &amp;quot;by value&amp;quot;. This means that the called function is given the values of its arguments in temporary variables rather than the originals. This leads to some different properties than are seen with &amp;quot;call by reference&amp;quot; languages like Fortran or with var parameters in Pascal, in which the called routine has access to the original argument, not a local copy.&lt;/p&gt;
-&lt;h3 id="constant-expressions"&gt;Constant Expressions&lt;/h3&gt;
-&lt;p&gt;A &lt;em&gt;constant expression&lt;/em&gt; is an expression that involves only constants. Such expressions may be evaluated at during compilation rather than run-time, and accordingly may be used in any place that a constant can occur, as in&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;#define MAXLINE 1000
-char line[MAXLINE+1];
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Or,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;#define LEAP 1 /* in leap years */
-int days[31+28+LEAP+31+30+31+30+31+31+30+31+30+31];
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="string-constants"&gt;String Constants&lt;/h3&gt;
-&lt;p&gt;String constants can be concatenated at compile time:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;quot;hello, &amp;quot; &amp;quot;world&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;is equivalent to&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;quot;hello, world&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This is useful for splitting up long strings across several source lines.&lt;/p&gt;
-&lt;h3 id="enumeration"&gt;Enumeration&lt;/h3&gt;
-&lt;p&gt;An enumeration is a list of constant integer values, as in&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;enum boolean { NO, YES };
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The first name in an enum has value 0, the next 1, and so on, unless explicit values are specified. If not all values are specified, unspecified values continue the progression from the last specified value, as the second of these examples:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;enum escapes { BELL = '\a', BACKSPACE = '\b', TAB = '\t',
-    NEWLINE = '\n', VTAB = '\v', RETURN = '\r' };
-
-enum months { JAN = 1, FEB, MAR, APR, MAY, JUN,
-    JUL, AUG, SEP, OCT, NOV, DEC }; /* FEB = 2, MAR = 3, etc. */
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Names in different enumerations must be distinct.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Values need not be distinct in the same enumeration.&lt;/em&gt;&lt;/p&gt;
-&lt;h3 id="variable-initialization"&gt;Variable Initialization&lt;/h3&gt;
-&lt;p&gt;External and static variables are initialized to zero by default. Automatic variables for which is no explicit initializer have undefined (i.e., garbage) values.&lt;/p&gt;
-&lt;h3 id="precedence"&gt;Precedence&lt;/h3&gt;
-&lt;p&gt;The precedence of &lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt; is higher than that of ||, and both are lower than relational and equality operators, so expressions like&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;i &amp;lt; lim-1 &amp;amp;&amp;amp; (c=getchar()) != '\n' &amp;amp;&amp;amp; c != EOF
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;need no extra parentheses. But since the precedence of != is higher than assignment, parentheses are needed in&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;(c=getchar()) != '\n'
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;to achieve the desired result of assignment to c and then comparison with '\n'.&lt;/p&gt;
-&lt;p&gt;By definition, the numeric value of a relational or logical expression is 1 if the relation is true, and 0 if the relation is false.&lt;/p&gt;
-&lt;h3 id="type-conversions"&gt;Type Conversions&lt;/h3&gt;
-&lt;p&gt;Expressions that might lose information, like assigning a longer integer type to a shorter, or a floating-point type to an integer, may draw a warning, but they are not illegal.&lt;/p&gt;
-&lt;h3 id="bitwise-operators"&gt;Bitwise Operators&lt;/h3&gt;
-&lt;p&gt;The bitwise AND operator &amp;amp; is often used to mask off some set of bits, for example&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;n = n &amp;amp; 0177;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;sets to zero all but the low-order 7 bits of n.&lt;/p&gt;
-&lt;p&gt;The bitwise OR operator | is used to turn bits on:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;x = x | SET\_ON;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;sets to one in x the bits that are set to one in SET_ON.&lt;/p&gt;
-&lt;p&gt;The bitwise exclusive OR operator ^ sets a one in each bit position where its operands have different bits, and zero where they are the same.&lt;/p&gt;
-&lt;p&gt;The unary operator ~ yields the one's complement of an integer; that is, it converts each 1-bit into a 0-bit and vice versa. For example&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;x = x &amp;amp; ~077
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;sets the last six bits of x to zero. Note that &lt;code&gt;x &amp;amp; ~077&lt;/code&gt; is independent of word length, and is thus preferable to, for example, &lt;code&gt;x &amp;amp; 0177700&lt;/code&gt;, which assumes that x is a 16-bit quantity. The portable form involves no extra cost, since &lt;code&gt;~077&lt;/code&gt; is a constant expression that can be evaluated at compile time.&lt;/p&gt;
-&lt;h3 id="precedence-of-bitwise-operators"&gt;Precedence of bitwise operators&lt;/h3&gt;
-&lt;p&gt;Note that the precedence of the bitwise operators &amp;amp;, ^, and | falls below == and !=. This implies that bit-testing expressions like&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;if ((x &amp;amp; MASK) == 0) ...
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;must be fully parenthesized to give proper results.&lt;/p&gt;
-&lt;h3 id="switch-statement"&gt;Switch Statement&lt;/h3&gt;
-&lt;p&gt;&lt;em&gt;Each case is labeled by one or more integer-valued constants or constant expressions.&lt;/em&gt; If a case matches the expression value, execution starts at that case. All case expressions must be different. The case labeled default is executed if none of the other cases are satisfied. A default is optional; if it isn't there and if none of the cases match, no action at all takes place. Cases and the default clause can occur in any order.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;switch (expression) {
-    case const-expr: statements
-    case const-expr: statements
-    default: statements
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The break statement causes an immediate exit from the switch. Because cases serve just as labels, after the code for one case is done, execution falls through to the next unless you take explicit action to escape. break and return are the most common ways to leave a switch.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;The commas that separate function arguments, variables in declarations, etc., are not comma operators, and do not guarantee left to right evaluation.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Because the else part of an if-else is optional, there is an ambiguity when an else if omitted from a nested if sequence. This is resolved by associating the else with the closest previous else-less if. For example, in&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;if (n &amp;gt; 0)
-    if (a &amp;gt; b)
-        z = a;
-    else
-        z = b;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The else goes to the inner if, as we have shown by indentation. If that isn't what you want, braces must be used to force the proper association:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;if (n &amp;gt; 0) {
-    if (a &amp;gt; b)
-        z = a;
-}
-else
-    z = b;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="reverse-number-example"&gt;Reverse Number Example&lt;/h3&gt;
-&lt;p&gt;I tried a usual implementation of reverse number as I was learning,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;#include &amp;lt;stdio.h&amp;gt;
-
-main() {
-    int n;
-
-    printf(&amp;quot;Enter number to reverse: &amp;quot;);
-    scanf(&amp;quot;%d&amp;quot;, &amp;amp;n);
-
-    printf(&amp;quot;Reverse of that number is %d\n&amp;quot;, ReverseNum(n));
-}
-
-int ReverseNum(int a) {
-    int res = 0;
-    while (a) {
-        res = res * 10 + a % 10;
-        a /= 10;
-    }
-    return res;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;em&gt;Recursive version&lt;/em&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;#include &amp;lt;stdio.h&amp;gt;
-
-main() {
-    int n;
-
-    printf(&amp;quot;Enter number to reverse: &amp;quot;);
-    scanf(&amp;quot;%d&amp;quot;, &amp;amp;n);
-
-    printf(&amp;quot;Reverse of that number is %d\n&amp;quot;, ReverseNum(n, 0));
-}
-
-int ReverseNum(int a, int res) {
-    if (a == 0)
-        return res;
-
-    res = ReverseNum(a/10, res) * 10 + a % 10;
-    return res;
-}
-&lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
 		</item>
@@ -1446,6 +1237,40 @@ Extract subtitle using &lt;code&gt;mkvextract&lt;/code&gt; (referring to &lt;cod
 &lt;p&gt;&lt;code&gt;mkvmerge&lt;/code&gt; (in my system &lt;code&gt;C:\Program Files (x86)\MKVToolNix\mkvmerge.exe&lt;/code&gt;) show info on mkv file,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;mkvmerge -i D:\Movies\Fences.mkv
 &lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
+		<item>
+			<title>Rheumatoid Vasculitis and Granulomatosis with Polyangiitis (GPA)</title>
+			<link>https://note.iqubit.xyz/posts/medical-rheumatoid-vasculitis</link>
+			<description>Heads in the cloud! A Qubit Blog!</description>
+			<guid>https://note.iqubit.xyz/posts/medical-rheumatoid-vasculitis</guid>
+			<pubDate>Thu, 28 Nov 2019 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h2 id="rheumatoid-vasculitis"&gt;Rheumatoid Vasculitis&lt;/h2&gt;
+&lt;h3 id="intro"&gt;Intro&lt;/h3&gt;
+&lt;p&gt;update..&lt;/p&gt;
+&lt;h3 id="gpa"&gt;GPA&lt;/h3&gt;
+&lt;p&gt;Granulomatosis with Polyangiitis or wegener's granulomatosis vs rheumatoid arthritis&lt;/p&gt;
+&lt;p&gt;wegener Granulomatosis ref Articles,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.indiatoday.in/lifestyle/health/story/story/wegeners-granulomatosis/1/391068-300511-2014-09-24"&gt;indiatoday&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.ncbi.nlm.nih.gov/pubmed/18610662"&gt;Wegner, a study in india&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="rheumatoid-arthritis-and-gpa"&gt;Rheumatoid Arthritis and GPA&lt;/h3&gt;
+&lt;p&gt;Refs,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://journal.chestnet.org/article/S0012-3692(16)55832-2/fulltext"&gt;journal.chestnet - Evans Syndrome and Granulomatosis With Polyangiitis: An Interesting Concomitant Occurrence&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4869584/#bib16"&gt;nlm.nih.gov - Granulomatosis with polyangiitis (Wegener's disease): An updated review of ocular disease manifestations&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://annals.org/aim/article-abstract/705389"&gt;annals.org - Wegener Granulomatosis: An Analysis of 158 Patients&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5285513"&gt;Extreme Thrombocytosis Presenting in Anti-Neutrophil Cytoplasmic Autoantibodies-Associated Crescentic Glomerulonephritis with Immune Complex Deposits: A Case Report&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Cyclophosphamide vs Plasmapheresis&lt;/strong&gt;
+related to thrombocytopenia wegener's granulomatosis. Platelet counts as a biomarker in ANCA-associated vasculitis, &lt;a href="https://www.ncbi.nlm.nih.gov/pubmed/25744854"&gt;ref&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Why is my platelet count low?&lt;/p&gt;
+&lt;p&gt;Thrombocytopenia (low platelet count) is related.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://journal.chestnet.org/article/S0012-3692(17)31844-5/pdf"&gt;Plasma Exchange and Cyclophosphamide in Combination as Rescue Therapy for Severe Granulomatosis With Polyangiitis Refractory to Rituximab Therapy&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </content:encoded>
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
 		</item>
