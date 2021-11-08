@@ -3,14 +3,14 @@
 	<channel>
 		<title />
 		<link>https://note.iqubit.xyz/</link>
-		<description>Heads in the cloud! A Qubit Blog!</description>
+		<description>Head's in the cloud! A Qubit Blog!</description>
 		<copyright>Copyright © 2021</copyright>
-		<pubDate>Mon, 08 Nov 2021 00:18:13 GMT</pubDate>
-		<lastBuildDate>Mon, 08 Nov 2021 00:18:13 GMT</lastBuildDate>
+		<pubDate>Mon, 08 Nov 2021 00:24:36 GMT</pubDate>
+		<lastBuildDate>Mon, 08 Nov 2021 00:24:36 GMT</lastBuildDate>
 		<item>
 			<title>Creating Token, NFT using Solana</title>
 			<link>https://note.iqubit.xyz/posts/solana-cli</link>
-			<description>Heads in the cloud! A Qubit Blog!</description>
+			<description>Head's in the cloud! A Qubit Blog!</description>
 			<guid>https://note.iqubit.xyz/posts/solana-cli</guid>
 			<pubDate>Sun, 24 Oct 2021 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;p&gt;Using the Token Program we are able to create fungible and non-fungible tokens.&lt;/p&gt;
@@ -154,7 +154,7 @@ warning: be sure to add `/home/atiq/.cargo/bin` to your PATH to be able to run t
 		<item>
 			<title>Google Chrome on Linux</title>
 			<link>https://note.iqubit.xyz/posts/google-chrome-linux</link>
-			<description>Heads in the cloud! A Qubit Blog!</description>
+			<description>Head's in the cloud! A Qubit Blog!</description>
 			<guid>https://note.iqubit.xyz/posts/google-chrome-linux</guid>
 			<pubDate>Sun, 24 Oct 2021 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;p&gt;In new system, i.e, fedora 34/35 etc this is the way,&lt;/p&gt;
@@ -257,7 +257,7 @@ sudo apt-get install google-chrome-stable
 		<item>
 			<title>dotnet core Hello World with Entity Framework and Database</title>
 			<link>https://note.iqubit.xyz/posts/net-core-mvchello-entity-framework2021-08</link>
-			<description>Heads in the cloud! A Qubit Blog!</description>
+			<description>Head's in the cloud! A Qubit Blog!</description>
 			<guid>https://note.iqubit.xyz/posts/net-core-mvchello-entity-framework2021-08</guid>
 			<pubDate>Thu, 12 Aug 2021 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="razor-pages-app"&gt;Razor Pages App&lt;/h2&gt;
@@ -368,7 +368,7 @@ error: Package 'Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore' is incompa
 		<item>
 			<title>Dennis Ritchie - The C Programming Language</title>
 			<link>https://note.iqubit.xyz/posts/dennis-ritchie-c</link>
-			<description>Heads in the cloud! A Qubit Blog!</description>
+			<description>Head's in the cloud! A Qubit Blog!</description>
 			<guid>https://note.iqubit.xyz/posts/dennis-ritchie-c</guid>
 			<pubDate>Fri, 19 Mar 2021 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h3 id="format-specifiers"&gt;Format Specifiers&lt;/h3&gt;
@@ -577,7 +577,7 @@ int ReverseNum(int a, int res) {
 		<item>
 			<title>Powershell Core Useful Commands</title>
 			<link>https://note.iqubit.xyz/posts/pwsh/powershell-core</link>
-			<description>Heads in the cloud! A Qubit Blog!</description>
+			<description>Head's in the cloud! A Qubit Blog!</description>
 			<guid>https://note.iqubit.xyz/posts/pwsh/powershell-core</guid>
 			<pubDate>Fri, 19 Mar 2021 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;p&gt;&lt;em&gt;This article formerly titled as 'Powershell Frequently Used Commands. Even though the article is titled "core" it includes some Powershell contents as well.'&lt;/em&gt;&lt;/p&gt;
@@ -840,7 +840,7 @@ PSHOME
 		<item>
 			<title>Powershell Core Cmdlets</title>
 			<link>https://note.iqubit.xyz/posts/pwsh/powershell-core-cmdlets</link>
-			<description>Heads in the cloud! A Qubit Blog!</description>
+			<description>Head's in the cloud! A Qubit Blog!</description>
 			<guid>https://note.iqubit.xyz/posts/pwsh/powershell-core-cmdlets</guid>
 			<pubDate>Thu, 10 Dec 2020 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h3 id="start-process"&gt;Start-Process&lt;/h3&gt;
@@ -901,7 +901,7 @@ Stop-Service -Force bthserv
 		<item>
 			<title>Switch among multiple Git Config/Profiles using Powershell</title>
 			<link>https://note.iqubit.xyz/posts/pwsh/git-config-switch-using-powershell-script</link>
-			<description>Heads in the cloud! A Qubit Blog!</description>
+			<description>Head's in the cloud! A Qubit Blog!</description>
 			<guid>https://note.iqubit.xyz/posts/pwsh/git-config-switch-using-powershell-script</guid>
 			<pubDate>Mon, 02 Nov 2020 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h2 id="overview"&gt;Overview&lt;/h2&gt;
@@ -1028,7 +1028,7 @@ Main
 		<item>
 			<title>Useful Git Commands</title>
 			<link>https://note.iqubit.xyz/posts/scm/git</link>
-			<description>Heads in the cloud! A Qubit Blog!</description>
+			<description>Head's in the cloud! A Qubit Blog!</description>
 			<guid>https://note.iqubit.xyz/posts/scm/git</guid>
 			<pubDate>Sat, 25 Jul 2020 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;p&gt;[first few sections are complete, later sections yet to be updated]&lt;/p&gt;
@@ -1334,7 +1334,7 @@ git show 61c2ac6:src/bootstrapper.cc
 		<item>
 			<title>Legacy Powershell Useful Commands</title>
 			<link>https://note.iqubit.xyz/posts/pwsh/powershell-legacy</link>
-			<description>Heads in the cloud! A Qubit Blog!</description>
+			<description>Head's in the cloud! A Qubit Blog!</description>
 			<guid>https://note.iqubit.xyz/posts/pwsh/powershell-legacy</guid>
 			<pubDate>Sat, 18 Jul 2020 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;p&gt;Please be aware of notation below in command outlines. &lt;code&gt;$&lt;/code&gt; represents a command; following rest of the lines represent output. Powershell is superset of traditional command prompt. Hence, all usual binaries still run on powershell for example, &lt;code&gt;takeown&lt;/code&gt;.&lt;/p&gt;
@@ -1388,7 +1388,7 @@ $cUI.WindowSize = $b
 		<item>
 			<title>Command Line for Utilities and Tools</title>
 			<link>https://note.iqubit.xyz/posts/pwsh/windows-tools-cmd</link>
-			<description>Heads in the cloud! A Qubit Blog!</description>
+			<description>Head's in the cloud! A Qubit Blog!</description>
 			<guid>https://note.iqubit.xyz/posts/pwsh/windows-tools-cmd</guid>
 			<pubDate>Fri, 29 Nov 2019 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;p&gt;Please be aware of notation below in command outlines. &lt;code&gt;$&lt;/code&gt; represents a command and rests of the lines following that line are output. Powershell is superset of traditional command prompt. Hence, all usual binaries still run on powershell for exxample, &lt;code&gt;takeown&lt;/code&gt;.&lt;/p&gt;
