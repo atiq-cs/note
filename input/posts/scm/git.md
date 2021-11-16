@@ -331,36 +331,46 @@ Accept their change for single file, ref
 
     git checkout --theirs src/register-configuration.cc
 
-## Origin tricks and Branches
-Change repository URL,
-
-    git remote set-url origin https://github.com/user_name/testing.git
-
-switch to a new branch,
+### Branches
+Create new branch from current branch's tip and switch to newly created branch,
 
     git checkout -b dev_branch
 
-show current branch and other branches,
+Show current branch and other branches,
 
     git branch
 
-Delete a branch on your local filesystem,
+Delete a branch on your local repo,
 
-    git branch -d testing_branch
+    git branch --delete branch_already_merged
 
-The git push syntax is: git push [remote-repository-name] [branch-or-commit-name],
+Delete a branch from remote,
 
-    git push origin dev_branch
-
-Change remote origin,
-
-    git remote set-url origin URL
+    git push origin --delete main
 
 
-## Detached Head
+Created detached head (no branch)
 If we want our git repo to have no current branch then we can do this,
 
     git checkout COMMIT-SHA-ID
+
+### Remote Origin Related
+Change remote URL syntax,
+
+    git remote set-url origin_name URL
+
+Example,
+
+    git remote set-url origin https://github.com/user_name/repo_name.git
+
+Add an origin to a just initialized repo,
+
+    git remote add origin https://github.com/user_name/repo_name.git
+
+git push examples,
+
+    git push [remote-name] [branch-or-commit-name]
+    git push origin dev_branch
 
 ## Git configuration Files
 When we perform `git config` it applies only to the current project. The configuration file that gets update is,
@@ -377,14 +387,17 @@ If none of these exist then the systems git config file is applied. According to
     ~/.gitconfig
     /etc/gitconfig (guessing I don't recall the exact location)
 
+Push the renamed branch to remote and set upstream,
 
-## Github Commands
-Rename branch
+    git push origin --set-upstream dev
 
+### Github UseCase Examples
+**Renaming main branch**
+1. Rename branch
 
     git branch --move main dev
 
-Using github UI set default branch to dev now visiting following URL,
+2. Using github UI, let's set default branch to dev, visiting following URL,
 
 ```
 https://github.com/USER/REPO/settings/branches
@@ -392,11 +405,9 @@ https://github.com/USER/REPO/settings/branches
 
 Please replace `USER` and `REPO` with correct user name and repository name.
 
+3. Finally, delete the branch from remote,
+
     git push origin --delete main
-
-Push the renamed branch to remote and set upstream,
-
-    git push origin --set-upstream dev
 
 
 ## References
