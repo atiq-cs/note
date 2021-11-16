@@ -116,34 +116,7 @@
 <li>switch profile based on first command line argument</li>
 </ul>
 <h2 id="final-script">final script</h2>
-<pre><code class="language-powershell"># Copyright (c) iQubit Inc.
-&lt;#
-.Synopsis
-    Switch git config
-.DESCRIPTION
-    Switch to provided git config profile. Runs series of git config commands.
-    Suggests updating GH Token
-    ToDo:
-    Fow now, go with this..
-    provide Force flag
-    probably read from a local json config file
-    too many params to pass otherwise..
-
-    facilitate proper checkout with GitUtil
-
-    Demonstrates,
-    - switch syntax
-    - case insensitive string comparison: [System.StringComparison]
-
-.Parameter ProfileName
-    Select among available profiles
-.Parameter CredUserNames
-    Available git user names
-.EXAMPLE
-    Switch-GitConfig.ps1 USER_NAME_1 &#64;('USER_NAME_1', 'USER_NAME_2')
-#&gt;
-
-[CmdletBinding()]
+<pre><code class="language-powershell">[CmdletBinding()]
 param(
     [ValidateSet('USER_NAME_1', 'USER_NAME_2')]
     [Parameter(Mandatory=$true)] [string] $ProfileName,
@@ -224,9 +197,12 @@ function VerifyGitProfile() {
     git config --get credential.username
 }
 
-
 Main
 </code></pre>
+<p>Copy of this script (including documentation) can be found at:
+<a href="https://github.com/atiq-cs/old-scripts/blob/dev/pwsh/Switch-GitConfig.ps1">https://github.com/atiq-cs/old-scripts/blob/dev/pwsh/Switch-GitConfig.ps1</a></p>
+<p>More scripts like this can be found at:
+<a href="https://github.com/atiq-cs/old-scripts/blob/dev/pwsh">https://github.com/atiq-cs/old-scripts/blob/dev/pwsh</a></p>
 
 
 

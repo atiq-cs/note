@@ -350,28 +350,36 @@ git show 61c2ac6:src/bootstrapper.cc
 <p>Accept their change for single file, ref</p>
 <pre><code>git checkout --theirs src/register-configuration.cc
 </code></pre>
-<h2 id="origin-tricks-and-branches">Origin tricks and Branches</h2>
-<p>Change repository URL,</p>
-<pre><code>git remote set-url origin https://github.com/user_name/testing.git
-</code></pre>
-<p>switch to a new branch,</p>
+<h3 id="branches">Branches</h3>
+<p>Create new branch from current branch's tip and switch to newly created branch,</p>
 <pre><code>git checkout -b dev_branch
 </code></pre>
-<p>show current branch and other branches,</p>
+<p>Show current branch and other branches,</p>
 <pre><code>git branch
 </code></pre>
-<p>Delete a branch on your local filesystem,</p>
-<pre><code>git branch -d testing_branch
+<p>Delete a branch on your local repo,</p>
+<pre><code>git branch --delete branch_already_merged
 </code></pre>
-<p>The git push syntax is: git push [remote-repository-name] [branch-or-commit-name],</p>
-<pre><code>git push origin dev_branch
+<p>Delete a branch from remote,</p>
+<pre><code>git push origin --delete main
 </code></pre>
-<p>Change remote origin,</p>
-<pre><code>git remote set-url origin URL
-</code></pre>
-<h2 id="detached-head">Detached Head</h2>
-<p>If we want our git repo to have no current branch then we can do this,</p>
+<p>Created detached head (no branch)
+If we want our git repo to have no current branch then we can do this,</p>
 <pre><code>git checkout COMMIT-SHA-ID
+</code></pre>
+<h3 id="remote-origin-related">Remote Origin Related</h3>
+<p>Change remote URL syntax,</p>
+<pre><code>git remote set-url origin_name URL
+</code></pre>
+<p>Example,</p>
+<pre><code>git remote set-url origin https://github.com/user_name/repo_name.git
+</code></pre>
+<p>Add an origin to a just initialized repo,</p>
+<pre><code>git remote add origin https://github.com/user_name/repo_name.git
+</code></pre>
+<p>git push examples,</p>
+<pre><code>git push [remote-name] [branch-or-commit-name]
+git push origin dev_branch
 </code></pre>
 <h2 id="git-configuration-files">Git configuration Files</h2>
 <p>When we perform <code>git config</code> it applies only to the current project. The configuration file that gets update is,</p>
@@ -385,19 +393,26 @@ git show 61c2ac6:src/bootstrapper.cc
 ~/.gitconfig
 /etc/gitconfig (guessing I don't recall the exact location)
 </code></pre>
-<h2 id="github-commands">Github Commands</h2>
-<p>Rename branch</p>
-<pre><code>git branch --move main dev
-</code></pre>
-<p>Using github UI set default branch to dev now visiting following URL,</p>
-<pre><code>https://github.com/USER/REPO/settings/branches
-</code></pre>
-<p>Please replace <code>USER</code> and <code>REPO</code> with correct user name and repository name.</p>
-<pre><code>git push origin --delete main
-</code></pre>
 <p>Push the renamed branch to remote and set upstream,</p>
 <pre><code>git push origin --set-upstream dev
 </code></pre>
+<h3 id="github-usecase-examples">Github UseCase Examples</h3>
+<p><strong>Renaming main branch</strong></p>
+<ol>
+<li><p>Rename branch</p>
+<p>git branch --move main dev</p>
+</li>
+<li><p>Using github UI, let's set default branch to dev, visiting following URL,</p>
+</li>
+</ol>
+<pre><code>https://github.com/USER/REPO/settings/branches
+</code></pre>
+<p>Please replace <code>USER</code> and <code>REPO</code> with correct user name and repository name.</p>
+<ol start="3">
+<li><p>Finally, delete the branch from remote,</p>
+<p>git push origin --delete main</p>
+</li>
+</ol>
 <h2 id="references">References</h2>
 <ol>
 <li><a href="https://git-scm.com/book/en/v2/Getting-Started-Git-Basics">git-scm - Getting Started - Git Basics</a></li>
