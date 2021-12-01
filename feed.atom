@@ -4,8 +4,8 @@
 	<title />
 	<link rel="self" href="https://note.iqubit.xyz/" />
 	<rights>Copyright © 2021</rights>
-	<updated>2021-12-01T21:24:50Z</updated>
-	<subtitle>Head's in the cloud! A Qubit Blog!</subtitle>
+	<updated>2021-12-01T21:33:53Z</updated>
+	<subtitle>Heads in the cloud! A Qubit Blog!</subtitle>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/solana-cli</id>
 		<title>Creating Token, NFT using Solana</title>
@@ -147,7 +147,7 @@ Installed package `spl-token-cli v2.0.15` (executable `spl-token`)
 warning: be sure to add `/home/atiq/.cargo/bin` to your PATH to be able to run the installed binaries
 &lt;/code&gt;&lt;/pre&gt;
 </content>
-		<summary>Head's in the cloud! A Qubit Blog!</summary>
+		<summary>Heads in the cloud! A Qubit Blog!</summary>
 	</entry>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/google-chrome-linux</id>
@@ -249,7 +249,7 @@ sudo apt-get install google-chrome-stable
 &lt;li&gt;update - June 29, 2014&lt;/li&gt;
 &lt;/ol&gt;
 </content>
-		<summary>Head's in the cloud! A Qubit Blog!</summary>
+		<summary>Heads in the cloud! A Qubit Blog!</summary>
 	</entry>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/linux/fedora</id>
@@ -376,7 +376,7 @@ adding codecs/ plugins for totemplayer,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt; dnf -y install gstreamer-plugins-good gstreamer-plugins-good-extras gstreamer-plugins-ugly
 &lt;/code&gt;&lt;/pre&gt;
 </content>
-		<summary>Head's in the cloud! A Qubit Blog!</summary>
+		<summary>Heads in the cloud! A Qubit Blog!</summary>
 	</entry>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/net-core-mvchello-entity-framework2021-08</id>
@@ -486,7 +486,7 @@ error: Package 'Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore' is incompa
 &lt;p&gt;Also, the old version (3.1.18 supports .net core) of &lt;code&gt;Diagnostics.EntityFrameworkCore&lt;/code&gt; doesn't have the definitions mentioned above.&lt;/p&gt;
 &lt;p&gt;Conclusion: since some of the packages i.e., &lt;code&gt;Diagnostics.EntityFrameworkCore&lt;/code&gt; don't target .net core and only targets newer versions of net framework, for example, .net 6. We cannot run the examples from official tutorial that uses EF Core or Diagnostics (may be Logging package as well).&lt;/p&gt;
 </content>
-		<summary>Head's in the cloud! A Qubit Blog!</summary>
+		<summary>Heads in the cloud! A Qubit Blog!</summary>
 	</entry>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/dennis-ritchie-c</id>
@@ -694,7 +694,7 @@ int ReverseNum(int a, int res) {
 }
 &lt;/code&gt;&lt;/pre&gt;
 </content>
-		<summary>Head's in the cloud! A Qubit Blog!</summary>
+		<summary>Heads in the cloud! A Qubit Blog!</summary>
 	</entry>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/pwsh/powershell-core</id>
@@ -956,7 +956,7 @@ PSHOME
 &lt;h2 id="continue"&gt;continue&lt;/h2&gt;
 &lt;p&gt;rest of the contents yet to be appended..&lt;/p&gt;
 </content>
-		<summary>Head's in the cloud! A Qubit Blog!</summary>
+		<summary>Heads in the cloud! A Qubit Blog!</summary>
 	</entry>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/pwsh/powershell-core-cmdlets</id>
@@ -1016,7 +1016,7 @@ NPM(K)    PM(M)      WS(M)     CPU(s)      Id  SI ProcessName
 Stop-Service -Force bthserv
 &lt;/code&gt;&lt;/pre&gt;
 </content>
-		<summary>Head's in the cloud! A Qubit Blog!</summary>
+		<summary>Heads in the cloud! A Qubit Blog!</summary>
 	</entry>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/pwsh/git-config-switch-using-powershell-script</id>
@@ -1118,7 +1118,7 @@ Main
 &lt;p&gt;More scripts like this can be found at:
 &lt;a href="https://github.com/atiq-cs/old-scripts/blob/dev/pwsh"&gt;https://github.com/atiq-cs/old-scripts/blob/dev/pwsh&lt;/a&gt;&lt;/p&gt;
 </content>
-		<summary>Head's in the cloud! A Qubit Blog!</summary>
+		<summary>Heads in the cloud! A Qubit Blog!</summary>
 	</entry>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/scm/git</id>
@@ -1438,7 +1438,7 @@ git push origin dev_branch
 &lt;li&gt;&lt;a href="https://stackoverflow.com/q/4157189"&gt;SO - Git Pull While Ignoring Local Changes&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </content>
-		<summary>Head's in the cloud! A Qubit Blog!</summary>
+		<summary>Heads in the cloud! A Qubit Blog!</summary>
 	</entry>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/pwsh/powershell-legacy</id>
@@ -1491,6 +1491,6 @@ $cUI.WindowSize = $b
 &lt;h2 id="continue"&gt;continue&lt;/h2&gt;
 &lt;p&gt;rest of the contents yet to be appended..&lt;/p&gt;
 </content>
-		<summary>Head's in the cloud! A Qubit Blog!</summary>
+		<summary>Heads in the cloud! A Qubit Blog!</summary>
 	</entry>
 </feed>
