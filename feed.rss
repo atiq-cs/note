@@ -5,8 +5,8 @@
 		<link>https://note.iqubit.xyz/</link>
 		<description>Head's in the cloud! A Qubit Blog!</description>
 		<copyright>Copyright © 2021</copyright>
-		<pubDate>Tue, 30 Nov 2021 23:54:29 GMT</pubDate>
-		<lastBuildDate>Tue, 30 Nov 2021 23:54:29 GMT</lastBuildDate>
+		<pubDate>Wed, 01 Dec 2021 00:23:02 GMT</pubDate>
+		<lastBuildDate>Wed, 01 Dec 2021 00:23:02 GMT</lastBuildDate>
 		<item>
 			<title>Creating Token, NFT using Solana</title>
 			<link>https://note.iqubit.xyz/posts/solana-cli</link>
@@ -251,6 +251,134 @@ sudo apt-get install google-chrome-stable
 &lt;li&gt;update fedora section - Dec 19, 2016&lt;/li&gt;
 &lt;li&gt;update - June 29, 2014&lt;/li&gt;
 &lt;/ol&gt;
+</content:encoded>
+			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
+		</item>
+		<item>
+			<title>Fedora Linux Motley</title>
+			<link>https://note.iqubit.xyz/posts/linux/fedora</link>
+			<description>Head's in the cloud! A Qubit Blog!</description>
+			<guid>https://note.iqubit.xyz/posts/linux/fedora</guid>
+			<pubDate>Sun, 24 Oct 2021 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;&lt;em&gt;this is still a draft, sections need to be organized, divided into separate posts for certain topics&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;First section is for Fedora 25.&lt;/p&gt;
+&lt;p&gt;New fedora uses in memory swap, swap partitions are no more required.&lt;/p&gt;
+&lt;p&gt;To find devices,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;lsblk
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;How to find unallocated disk partition with parted or another tool?&lt;/p&gt;
+&lt;p&gt;parted /dev/sdb free&lt;/p&gt;
+&lt;p&gt;Creating bootable USB fedora&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;clean
+conver gpt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Create .ssh dir to connect using ssh key,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo su - atiq
+mkdir .ssh
+chmod 700 .ssh
+touch .ssh/authorized_keys
+chmod 600 .ssh/authorized_keys
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Fedora Media Writer,&lt;/p&gt;
+&lt;p&gt;ref,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://docs.fedoraproject.org/en-US/quick-docs/installing-chromium-or-google-chrome-browsers"&gt;https://docs.fedoraproject.org/en-US/quick-docs/installing-chromium-or-google-chrome-browsers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://note.iqubit.xyz/posts/google-chrome-linux"&gt;https://note.iqubit.xyz/posts/google-chrome-linux&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;How to install manual pages for C/C++&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dnf install man-pages libstdc++-docs
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Install TP Link Wireless Driver packages in fedora&lt;/strong&gt;
+(probably from 10 years ago, however, principle still might apply)&lt;/p&gt;
+&lt;p&gt;Our WIFI adapter model is TL-WN722N
+info for linux driver at &lt;a href="https://help.ubuntu.com/community/HardwareSupportComponentsWirelessNetworkCardsTP-Link#USB"&gt;ubunut.com&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;lsusb&lt;/code&gt; command says it has ar9271 chip. Fedora supports it by following &lt;code&gt;ar9271.fw&lt;/code&gt;,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# rpm -q --whatprovides /usr/lib/firmware/ar9271.fw 
+linux-firmware-20120206-0.3.git06c8f81.fc17.noarch
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It has the AR9170 chipset as forum says.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;list loaded modules&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;less /proc/modules
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;see module info&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ath9k_htc
+ath9k_common
+ath9k_hw
+provides
+firmware:       htc_9271.fw
+firmware:       htc_7010.fw
+
+ath
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;current fedora driver &amp;amp; firmware: &lt;code&gt;ar9170-firmware-2009.05.28-4.fc17.noarch&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;When a problem occurs update following packages&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;wireless-tools&lt;/li&gt;
+&lt;li&gt;ar9170-firmware-2009.05.28-4.fc17.noarch (most probably it is working for tp link tl-wn722n)&lt;/li&gt;
+&lt;li&gt;ath_info (provides information)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;install cmd,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dnf -y update ar9170-firmware wireless-tools linux-firmware
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;listing firmware packages,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# rpm -qa | grep firmware
+ar9170-firmware-2009.05.28-4.fc17.noarch
+iwl6000g2b-firmware-17.168.5.2-2.fc17.noarch
+iwl5000-firmware-8.83.5.1_1-2.fc17.noarch
+atmel-firmware-1.3-9.fc17.noarch
+linux-firmware-20120206-0.3.git06c8f81.fc17.noarch
+alsa-firmware-1.0.25-1.fc17.noarch
+iwl1000-firmware-39.31.5.1-2.fc17.noarch
+iwl100-firmware-39.31.5.1-3.fc17.noarch
+ql2500-firmware-5.06.05-1.fc17.noarch
+iwl4965-firmware-228.61.2.24-4.fc17.noarch
+rt73usb-firmware-1.8-9.fc17.noarch
+netxen-firmware-4.0.534-5.fc17.noarch
+iwl6000-firmware-9.221.4.1-3.fc17.noarch
+iwl6050-firmware-41.28.5.1-4.fc17.noarch
+iwl6000g2a-firmware-17.168.5.3-2.fc17.noarch
+ivtv-firmware-20080701-22.noarch
+rt61pci-firmware-1.2-9.fc17.noarch
+iwl3945-firmware-15.32.2.9-6.fc17.noarch
+libertas-usb8388-firmware-5.110.22.p23-6.fc17.noarch
+aic94xx-firmware-30-3.fc17.noarch
+ipw2100-firmware-1.3-13.fc17.noarch
+ipw2200-firmware-3.1-6.fc17.noarch
+alsa-tools-firmware-1.0.25-2.fc17.x86_64
+iwl5150-firmware-8.24.2.2-3.fc17.noarch
+zd1211-firmware-1.4-6.fc17.noarch
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;How to install avro-keyboard in fedora&lt;/strong&gt;
+(from 2016 or earlier)&lt;/p&gt;
+&lt;p&gt;Install scim and development files. We need devel files for compiling scim-avro
+Run following commands as root
+yum -y install scim-devel scim&lt;/p&gt;
+&lt;p&gt;clone scim-avro latest version.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/mominul/scim-avro
+
+cd scim-avro/
+chmod a+x configure
+./configure
+make
+sudo make install
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;As a regular run following command &lt;code&gt;im-chooser&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;some cmds from online,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd 
+chmod a+x configure
+./configure
+cd po
+msginit --input=scim-avro.pot --output-file=ja.po --locale=ja
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In old times, we used to &lt;code&gt;groupinstall bengali-support&lt;/code&gt; for Bangla lang support. ref, &lt;a href="https://github.com/mominul/scim-avro"&gt;scim-avro&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;install video players in fedora core&lt;/strong&gt;
+adding codecs/ plugins for totemplayer,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; dnf -y install gstreamer-plugins-good gstreamer-plugins-good-extras gstreamer-plugins-ugly
+&lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
 		</item>
@@ -1373,70 +1501,6 @@ $cUI.WindowSize = $b
 &lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/dotnet/api/system.management.automation.host.pshostuserinterface.rawui"&gt;ms docs ref&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="continue"&gt;continue&lt;/h2&gt;
 &lt;p&gt;rest of the contents yet to be appended..&lt;/p&gt;
-</content:encoded>
-			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
-		</item>
-		<item>
-			<title>Command Line for Utilities and Tools</title>
-			<link>https://note.iqubit.xyz/posts/pwsh/windows-tools-cmd</link>
-			<description>Head's in the cloud! A Qubit Blog!</description>
-			<guid>https://note.iqubit.xyz/posts/pwsh/windows-tools-cmd</guid>
-			<pubDate>Fri, 29 Nov 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;Please be aware of notation below in command outlines. &lt;code&gt;$&lt;/code&gt; represents a command and rests of the lines following that line are output. Powershell is superset of traditional command prompt. Hence, all usual binaries still run on powershell for exxample, &lt;code&gt;takeown&lt;/code&gt;.&lt;/p&gt;
-&lt;h2 id="windows-os-tools"&gt;Windows OS Tools&lt;/h2&gt;
-&lt;h3 id="balanced-power-options"&gt;Balanced Power options&lt;/h3&gt;
-&lt;p&gt;Turn hibernation off (run from elevated PS),&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;powercfg.exe /h off
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;List Power plans,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ powercfg list
-Existing Power Schemes (* Active)
------------------------------------
-Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced) *
-Power Scheme GUID: 433299bd-efc0-474e-a61e-4a940c85e632  (Timers off (Presentation))
-Power Scheme GUID: 496d75e1-8cba-4d72-b778-535d67c976ea  (Airplane)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;How to export Balanced plan (we copy paste id from output of above command),&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;powercfg -Export D:\Efficient_BP.pow 381b4222-f694-41f0-9685-ff5bb260df2e
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;automate importing registry (requires privilege) ref,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;reg import 'D:\Soft\reg files soft settings\app_paths\KeePass.reg'
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="winrar"&gt;WinRar&lt;/h3&gt;
-&lt;p&gt;An example use of rar (in my system referring to &lt;code&gt;D:\ProgData\WinRAR\rar.exe&lt;/code&gt;),&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;rar a -m5 -psa1 -ep1 I:\Doc\docs.rar I:\Doc\Office_Docs\
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;em&gt;without &lt;code&gt;-ep1&lt;/code&gt; it makes a big directory tree&lt;/em&gt;&lt;/p&gt;
-&lt;h2 id="gnuwin32-tools"&gt;gnuwin32 tools&lt;/h2&gt;
-&lt;p&gt;similar to Unix,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;quot;D:\ProgramFiles_x86\GnuWin32\bin\gzip.exe&amp;quot; -d .\bitarray-ex-0.8.1.tar.gz
-&amp;quot;D:\ProgramFiles_x86\GnuWin32\bin\tar.exe&amp;quot; -xvf .\bitarray-ex-0.8.1.tar
-&amp;quot;D:\ProgramFiles_x86\GnuWin32\bin\tar.exe&amp;quot; --version
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="external-applications"&gt;External Applications&lt;/h2&gt;
-&lt;p&gt;Here are some command line examples for External Applications.&lt;/p&gt;
-&lt;p&gt;using &lt;code&gt;tftp&lt;/code&gt; to uplod a file into ftp server,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt; tftp -i 192.168.1.10 PUT 'E:\LinkSys E2000\images\FW_E2000_1.0.04.007_US_20101201_code.bin' FW_E2000_1.0.04.007_US_20101201_code.bin
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;I used to use this one for 'ATA Automation'.&lt;/p&gt;
-&lt;p&gt;Identify image format info using image magick's &lt;code&gt;identiy&lt;/code&gt; (referring to &lt;code&gt;C:\Program Files\ImageMagick-6.8.8-Q16\identify.exe&lt;/code&gt; in my system as an example),&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;identify &amp;quot;F:\Documents\Images\From Previous Cell-Phone\2011-09\01092011.jpg&amp;quot;
-identify -verbose &amp;quot;F:\Sourcecodes\Web\ASP .Net\Icons\saos_favicon.ico&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Identify image format info using image magick's &lt;code&gt;convert&lt;/code&gt; tool (referring to &lt;code&gt;C:\Program Files\ImageMagick-6.8.8-Q16\convert.exe&lt;/code&gt; in my system as an example),&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;convert -background transparent
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;ps2pdf&lt;/code&gt; tool (location in my system &lt;code&gt;C:\Program Files\MiKTex\miktex\bin\x64\ps2pdf.exe&lt;/code&gt;) from Miktex from example,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;ps2pdf D:\Source\ml-95-ripper.ps
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="video-applications"&gt;Video Applications&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;mkvextract&lt;/strong&gt;
-Extract subtitle using &lt;code&gt;mkvextract&lt;/code&gt; (referring to &lt;code&gt;C:\Program Files (x86)\MKVToolNix\mkvextract.exe&lt;/code&gt; in my system),&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;mkvextract tracks D:\Movies\Fences.mkv &amp;quot;2:D:\Movies\Fences.srt&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;mkvmerge&lt;/code&gt; (in my system &lt;code&gt;C:\Program Files (x86)\MKVToolNix\mkvmerge.exe&lt;/code&gt;) show info on mkv file,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;mkvmerge -i D:\Movies\Fences.mkv
-&lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 			<comments xmlns="http://purl.org/rss/1.0/modules/slash/">0</comments>
 		</item>
