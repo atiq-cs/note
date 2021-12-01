@@ -5,8 +5,8 @@
 		<link>https://note.iqubit.xyz/</link>
 		<description>Head's in the cloud! A Qubit Blog!</description>
 		<copyright>Copyright © 2021</copyright>
-		<pubDate>Wed, 01 Dec 2021 00:23:02 GMT</pubDate>
-		<lastBuildDate>Wed, 01 Dec 2021 00:23:02 GMT</lastBuildDate>
+		<pubDate>Wed, 01 Dec 2021 00:30:02 GMT</pubDate>
+		<lastBuildDate>Wed, 01 Dec 2021 00:30:02 GMT</lastBuildDate>
 		<item>
 			<title>Creating Token, NFT using Solana</title>
 			<link>https://note.iqubit.xyz/posts/solana-cli</link>
@@ -280,7 +280,7 @@ touch .ssh/authorized_keys
 chmod 600 .ssh/authorized_keys
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Fedora Media Writer,&lt;/p&gt;
-&lt;p&gt;ref,&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;refs&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://docs.fedoraproject.org/en-US/quick-docs/installing-chromium-or-google-chrome-browsers"&gt;https://docs.fedoraproject.org/en-US/quick-docs/installing-chromium-or-google-chrome-browsers&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://note.iqubit.xyz/posts/google-chrome-linux"&gt;https://note.iqubit.xyz/posts/google-chrome-linux&lt;/a&gt;&lt;/li&gt;

@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://note.iqubit.xyz/" />
 	<rights>Copyright © 2021</rights>
-	<updated>2021-12-01T00:23:02Z</updated>
+	<updated>2021-12-01T00:30:02Z</updated>
 	<subtitle>Head's in the cloud! A Qubit Blog!</subtitle>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/solana-cli</id>
@@ -276,7 +276,7 @@ touch .ssh/authorized_keys
 chmod 600 .ssh/authorized_keys
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Fedora Media Writer,&lt;/p&gt;
-&lt;p&gt;ref,&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;refs&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://docs.fedoraproject.org/en-US/quick-docs/installing-chromium-or-google-chrome-browsers"&gt;https://docs.fedoraproject.org/en-US/quick-docs/installing-chromium-or-google-chrome-browsers&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://note.iqubit.xyz/posts/google-chrome-linux"&gt;https://note.iqubit.xyz/posts/google-chrome-linux&lt;/a&gt;&lt;/li&gt;
