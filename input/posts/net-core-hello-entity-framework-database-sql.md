@@ -1,7 +1,7 @@
 Title: dotnet core Hello World with Entity Framework and Database in 2018
 Published: 7/1/2018
 Tags:
-  - dotnet core
+  - dotnet
   - entity framework
 ---
 Before we show how to create MVC app with entity framework we show how to create a simple console app.

@@ -1,7 +1,7 @@
 Title: dotnet core Hello World with Entity Framework and Database
 Published: 8/12/2021
 Tags:
-  - dotnet core
+  - dotnet
   - entity framework
 ---
 

@@ -1,9 +1,9 @@
 Title: InterOp Calling C++ from C#
 Published: 4/12/2018
 Tags:
-  - dotnet core
   - cpp
   - csharp
+  - dotnet
 ---
 For this demonstration, let's consider a Visual Studio 2017 Solution containing two projects,
 
