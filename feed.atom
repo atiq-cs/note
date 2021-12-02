@@ -4,8 +4,46 @@
 	<title />
 	<link rel="self" href="https://note.iqubit.xyz/" />
 	<rights>Copyright © 2021</rights>
-	<updated>2021-12-02T18:40:47Z</updated>
+	<updated>2021-12-02T19:10:40Z</updated>
 	<subtitle>Heads in the cloud! A Qubit Blog!</subtitle>
+	<entry>
+		<id>https://note.iqubit.xyz/posts/coin/alt-coins</id>
+		<title>Alt Coins</title>
+		<link href="https://note.iqubit.xyz/posts/coin/alt-coins" />
+		<updated>2021-12-02T00:00:00Z</updated>
+		<content>&lt;h3 id="what-are-alt-coins"&gt;What are Alt Coins?&lt;/h3&gt;
+&lt;p&gt;By Alt Coins I refer to the coins that are,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;not main stream&lt;/li&gt;
+&lt;li&gt;might still be in early stage&lt;/li&gt;
+&lt;li&gt;has potential as it brings someting new to the table&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For example, ETH, ADA, DOGE etc are not alt coins. These are already well known coins.&lt;/p&gt;
+&lt;h3 id="sources"&gt;Sources&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Popular Exchanges&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Tentatively, most stable alt coins can be found at,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;coinbase&lt;/li&gt;
+&lt;li&gt;binance.us *&lt;/li&gt;
+&lt;li&gt;kraken&lt;/li&gt;
+&lt;li&gt;venmo&lt;/li&gt;
+&lt;li&gt;crypto app&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;news source&lt;/strong&gt;
+yet to draft..&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Coinbase&lt;/strong&gt;
+We surf &lt;a href="https://www.coinbase.com/trade"&gt;coinbase.com/trade&lt;/a&gt; and sort them in ascending order of Market Cap. That gives us list of established alt coins. Here's a screenshot from today,&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://note.iqubit.xyz/img/alt-coins-cb.png" alt="Coinbase Assets sorted Market Cap"&gt;&lt;/p&gt;
+&lt;p&gt;There's your potential alt coins. Please note that, coinbase is more toward mainstream, more stable. You find less risky alt coins here and hence less growth, mostly.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Binance US&lt;/strong&gt;
+Similarly, we surf &lt;a href="https://www.binance.us/en/markets"&gt;binance.us/en/markets&lt;/a&gt; and sort them in ascending order of Market Cap. That gives us list of established alt coins. Here's a screenshot today,&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://note.iqubit.xyz/img/alt-coins-bn-us.png" alt="Binance US Assets sorted Market Cap"&gt;&lt;/p&gt;
+&lt;p&gt;* &lt;em&gt;I don't have access to international binance, hence, I mention US product&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="references"&gt;References&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;Not an investment advice. Opions are personal, don't represent my employer.&lt;/em&gt;&lt;/p&gt;
+</content>
+		<summary>Heads in the cloud! A Qubit Blog!</summary>
+	</entry>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/solana-cli</id>
 		<title>Creating Token, NFT using Solana</title>
@@ -1437,59 +1475,6 @@ git push origin dev_branch
 &lt;li&gt;&lt;a href="http://data.agaric.com/undo-git-add-remove-files-staged-git-commit"&gt;agaric - undo, remove staged file&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://stackoverflow.com/q/4157189"&gt;SO - Git Pull While Ignoring Local Changes&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
-</content>
-		<summary>Heads in the cloud! A Qubit Blog!</summary>
-	</entry>
-	<entry>
-		<id>https://note.iqubit.xyz/posts/pwsh/powershell-legacy</id>
-		<title>Legacy Powershell Useful Commands</title>
-		<link href="https://note.iqubit.xyz/posts/pwsh/powershell-legacy" />
-		<updated>2020-07-18T00:00:00Z</updated>
-		<content>&lt;p&gt;Please be aware of notation below in command outlines. &lt;code&gt;$&lt;/code&gt; represents a command; following rest of the lines represent output. Powershell is superset of traditional command prompt. Hence, all usual binaries still run on powershell for example, &lt;code&gt;takeown&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Power Options&lt;/strong&gt;
-Open Power Options Window,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Show-ControlPanelItem -Name &amp;quot;Power Options&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="service-management"&gt;Service Management&lt;/h2&gt;
-&lt;p&gt;Get list of services currently running,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Get-Service | Where-Object {$_.Status -eq &amp;quot;Running&amp;quot;}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Start a service,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Start-Service -Name VPNAgent
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Stop one,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Stop-Service -Name VPNAgent
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="scripting-using-pwsh"&gt;Scripting using pwsh&lt;/h2&gt;
-&lt;p&gt;These basic stuffs might come handy,&lt;/p&gt;
-&lt;p&gt;Passing all arguments, untouched to another script,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$saArgs = $args[0 .. ($args.Count)]
-&amp;amp; &amp;quot;$Env:HOME\ss.ps1&amp;quot; $saArgs
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="changing-window-size"&gt;Changing Window Size&lt;/h3&gt;
-&lt;p&gt;To change Window ize we change buffer size first, because Window Size depends on it.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$cUI = (Get-Host).UI.RawUI
-$b = $cUI.BufferSize
-$b.Width = $width
-$b.Height = $history_size
-$cUI.BufferSize = $b
-
-# change window height and width
-$b = $cUI.WindowSize
-$b.Width = $width
-$b.Height = $height
-$cUI.WindowSize = $b
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;There's oneliner to do it as well,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;(Get-Host).UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size -Property &amp;#64;{Width=$width; Height=$history_size}
-(Get-Host).UI.RawUI.WindowSize = New-Object System.Management.Automation.Host.Size -Property &amp;#64;{Width=$width; Height=$height}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To change the title of the console we do,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$cUI.WindowTitle = $title
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/dotnet/api/system.management.automation.host.pshostuserinterface.rawui"&gt;ms docs ref&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id="continue"&gt;continue&lt;/h2&gt;
-&lt;p&gt;rest of the contents yet to be appended..&lt;/p&gt;
 </content>
 		<summary>Heads in the cloud! A Qubit Blog!</summary>
 	</entry>
