@@ -257,7 +257,10 @@ Do a force push (ths is usually combined with <code>git commit --amend</code>),<
 # Note that empty commits are commented out
 </code></pre>
 <p>Finally,</p>
-<pre><code>git push --force origin master
+<pre><code>git push --force origin dev
+</code></pre>
+<p>To edit the root of the tip (the first commit),</p>
+<pre><code>git rebase --interactive --root
 </code></pre>
 <p>Note: a force push destroys commits made by others (if they pushed in the mean time).</p>
 <p>To correct commit author name upto specific commit (probably? or is it only for single commit?),</p>

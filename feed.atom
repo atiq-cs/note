@@ -4,17 +4,18 @@
 	<title />
 	<link rel="self" href="https://note.iqubit.xyz/" />
 	<rights>Copyright © 2022</rights>
-	<updated>2022-02-02T00:55:18Z</updated>
+	<updated>2022-02-02T02:15:51Z</updated>
 	<subtitle>Head's in the cloud, a Qubit blog</subtitle>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/startup/typeahead-survey-2022-01</id>
 		<title>TypeAhead Product Survey</title>
 		<link href="https://note.iqubit.xyz/posts/startup/typeahead-survey-2022-01" />
-		<updated>2021-12-02T00:00:00Z</updated>
+		<updated>2022-02-01T00:00:00Z</updated>
 		<content>&lt;h3 id="what-is-typeahead"&gt;What is TypeAhead?&lt;/h3&gt;
 &lt;p&gt;By Typeahead we are referring to auto complete suggestion products.&lt;/p&gt;
 &lt;p&gt;A nice high level introduction and general guidelines of predictive search ca be found at
 &lt;a href="https://www.algolia.com/blog/ux/what-are-predictive-search-and-autocomplete"&gt;algolia blog - What is predictive search? What is autocomplete?&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="system-design-examples"&gt;System Design Examples&lt;/h3&gt;
 &lt;p&gt;Here are some example of system Design,&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://medium.com/&amp;#64;iftimiealexandru/learning-to-build-an-autocomplete-system-2c2e9f423537"&gt;Pedro Lopes blog - Learning to build an Autocomplete System&lt;/a&gt; and &lt;a href="https://github.com/lopespm/autocomplete"&gt;his github repository&lt;/a&gt; demos an implemention&lt;/li&gt;
@@ -23,6 +24,7 @@
 &lt;li&gt;From an algorithmic perspective, how to scale TRIE Data Structure
 &lt;a href="https://www.youtube.com/watch?v=jFOR1LBEUgM"&gt;https://www.youtube.com/watch?v=jFOR1LBEUgM&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;h3 id="autocomplete-apis"&gt;Autocomplete APIs&lt;/h3&gt;
 &lt;p&gt;Some existing Autocomplete APIs,&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Bing Autosuggest API, (MS Bing](&lt;a href="https://www.microsoft.com/en-us/bing/apis/bing-autosuggest-api"&gt;https://www.microsoft.com/en-us/bing/apis/bing-autosuggest-api&lt;/a&gt;)&lt;/li&gt;
@@ -40,7 +42,7 @@
 &lt;p&gt;You'll notice we call these autocomplete &amp;quot;predictions&amp;quot; rather than &amp;quot;suggestions&amp;quot; and there's a good reason for that. Autocomplete is designed to help people complete a search they were intending to do, not to suggest new types of searches to be performed. These are our best predictions of the query you were likely to continue entering.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;They identifies areas of integrity as well.&lt;/p&gt;
-&lt;p&gt;google query autocomplete api&lt;/p&gt;
+&lt;p&gt;google query autocomplete api related references&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://simplestepscode.com/autocomplete-data-tutorial"&gt;https://simplestepscode.com/autocomplete-data-tutorial&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Google Maps placce autocomplete api: &lt;a href="https://developers.google.com/maps/documentation/places/web-service/query"&gt;https://developers.google.com/maps/documentation/places/web-service/query&lt;/a&gt;&lt;/li&gt;
@@ -63,7 +65,7 @@
 &lt;h3 id="summary"&gt;Summary&lt;/h3&gt;
 &lt;p&gt;Twitter's typeahead works as nice example on frontent side: static typeahead prediction.&lt;/p&gt;
 &lt;p&gt;We can start with a bootstrap and then gradually build a dataset from people's interactions. It is an interesting problem find good quality dataset to cover some category of predictions.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;NOTE&lt;/em&gt;: this article might seem highly technical, let us know in comments if you&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;NOTE&lt;/em&gt;: this article might seem highly technical, let us know in comments if you have any question or have specific questions.&lt;/p&gt;
 </content>
 		<summary>Head's in the cloud, a Qubit blog</summary>
 	</entry>
@@ -107,6 +109,7 @@ Similarly, we surf &lt;a href="https://www.binance.us/en/markets"&gt;binance.us/
 &lt;p&gt;&lt;img src="https://note.iqubit.xyz/img/alt-coins-bn-us.png" alt="Binance US Assets sorted Market Cap"&gt;&lt;/p&gt;
 &lt;p&gt;* &lt;em&gt;I don't have access to international binance, hence, I mention US product&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;coinmarketcap&lt;/strong&gt;
+Trending crypto: &lt;a href="https://coinmarketcap.com/trending-cryptocurrencies"&gt;coinmarketcap.com/trending-cryptocurrencies&lt;/a&gt;
 Surfing &lt;a href="https://coinmarketcap.com/new"&gt;coinmarketcap.com/new&lt;/a&gt; we are able to find even riskier, potential trendy coins. Reserach and invest on your own risk.&lt;/p&gt;
 &lt;h3 id="references"&gt;References&lt;/h3&gt;
 &lt;p&gt;&lt;em&gt;Not an investment advice. Opions are personal, don't represent my employer.&lt;/em&gt;&lt;/p&gt;
