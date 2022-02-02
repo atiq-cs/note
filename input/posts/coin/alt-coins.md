@@ -47,6 +47,7 @@ Similarly, we surf [binance.us/en/markets](https://www.binance.us/en/markets) an
 \* _I don't have access to international binance, hence, I mention US product_
 
 **coinmarketcap**
+Trending crypto: [coinmarketcap.com/trending-cryptocurrencies](https://coinmarketcap.com/trending-cryptocurrencies)
 Surfing [coinmarketcap.com/new](https://coinmarketcap.com/new) we are able to find even riskier, potential trendy coins. Reserach and invest on your own risk.
 
 ### References
