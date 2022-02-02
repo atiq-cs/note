@@ -205,7 +205,12 @@ Examples look like this,
 
 Finally,
 
-    git push --force origin master
+    git push --force origin dev
+
+To edit the root of the tip (the first commit),
+
+    git rebase --interactive --root
+
 
 Note: a force push destroys commits made by others (if they pushed in the mean time).
 
