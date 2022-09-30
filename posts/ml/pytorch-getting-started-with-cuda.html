@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Head&#x27;s in the cloud, a Qubit blog">
 
-  <title>Notes from Qubit Inc.</title>
+  <title>Notes from Qubit Inc. - Getting Started with PyTorch and NVidia CUDA</title>
 
-  <link rel="canonical" href="https://note.iqubit.xyz/page/12">
+  <link rel="canonical" href="https://note.iqubit.xyz/posts/ml/pytorch-getting-started-with-cuda">
 
       <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
       <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
@@ -18,9 +18,9 @@
   <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
   <meta name="msapplication-starturl" content="/" />
 
-  <meta property="og:title" content="Notes from Qubit Inc." />
+  <meta property="og:title" content="Notes from Qubit Inc. - Getting Started with PyTorch and NVidia CUDA" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://note.iqubit.xyz/page/12" />
+  <meta property="og:url" content="https://note.iqubit.xyz/posts/ml/pytorch-getting-started-with-cuda" />
   
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -87,11 +87,17 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <div class="site-heading">
+        <div class="post-heading">
           <h1>
-            Notes from Qubit Inc.
-              <small>(Page 12)</small>
+            Getting Started with PyTorch and NVidia CUDA
           </h1>
+            <h2 class="subheading">Installing PyTorch with NVidia CUDA support</h2>
+              <div class="meta">Published on Friday, 30 September 2022</div>
+                <div class="mt-3">
+                      <a href="/tags/machine-learning" class="badge badge-light"> Machine Learning</a>
+                      <a href="/tags/pytorch" class="badge badge-light"> pytorch</a>
+                      <a href="/tags/cuda" class="badge badge-light"> cuda</a>
+                </div>
         </div>
       </div>
     </div>
@@ -102,66 +108,46 @@
   <div class="container"> 
     <div class="row">
       <div id="content" class="col-md-12">  
-        <div class="container-sm-height">
-    <div class="row row-sm-height">
-        <div class="col-md-6 right-border col-sm-height">
-            
+        <h3 id="installing-pytorch">Installing PyTorch</h3>
+<p>Official <a href="https://pytorch.org/get-started/locally">pytorch.org install instructions</a> offers stable version version of pyTorch with slightly older version of CUDA which is 11.6 instead of latest (11.7)</p>
+<p>We wanna show here how to install it with CUDA 11.7 SDK Toolkit support.</p>
+<p>Start a shell (powershell/command prompt with python added to path),</p>
+<pre><code>pip3 install --pre torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/nightly/cu117 --upgrade
+</code></pre>
+<p><strong>refs</strong></p>
+<ul>
+<li><p>Official install instructions: <a href="https://pytorch.org/get-started/locally">https://pytorch.org/get-started/locally</a></p>
+</li>
+<li><p>CUDA 11.7 on pytroch official site doesn't exist yet, <a href="https://download.pytorch.org/whl/cu117">https://download.pytorch.org/whl/cu117</a></p>
+</li>
+<li><p>CloudCasts - Alan Smith - PyTorch &amp; CUDA Setup - Windows 10 <a href="https://www.youtube.com/watch?v=GMSjDTU8Zlc">https://www.youtube.com/watch?v=GMSjDTU8Zlc</a></p>
+</li>
+<li><p>Platform nvidia refs</p>
+</li>
+<li><p><a href="https://developer.nvidia.com/cuda-downloads?target_os=Linux&amp;target_arch=x86_64">Linux x64 build</a></p>
+</li>
+<li><p><a href="https://developer.nvidia.com/cuda-downloads?target_os=Windows&amp;target_arch=x86_64&amp;target_version=11">Windows x64 build</a></p>
+</li>
+<li><p><a href="https://developer.nvidia.com/cuda-toolkit">https://developer.nvidia.com/cuda-toolkit</a></p>
+</li>
+</ul>
 
 
-<div class="post-preview">
-    <h2 class="post-title"><a href="/posts/ds-fibo-heap">Fibonacci Heap</a></h2>
-    <p class="post-meta">Published on Wednesday, 14 February 2018</p>
-<p>In computer science, a Fibonacci heap is a heap data structure consisting of a collection of trees. It has a better amortized running time than a binomial heap. Fibonacci heaps were developed by Michael L. Fredman and Robert E. Tarjan in 1984 and first published in a scientific journal in 1987.</p>        <p class="small"><a href="/posts/ds-fibo-heap">Read more...</a></p>
-</div>
 
-<div class="post-preview">
-    <h2 class="post-title"><a href="/posts/blog-platform-online-tools">Markdown Editor and Related Tools</a></h2>
-    <p class="post-meta">Published on Sunday, 04 February 2018</p>
-<p>Example markdown doc from msdn <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/">async programming C#</a>,</p>        <p class="small"><a href="/posts/blog-platform-online-tools">Read more...</a></p>
-</div>
-
-<div class="post-preview">
-    <h2 class="post-title"><a href="/posts/python-online">Python Editors online</a></h2>
-    <p class="post-meta">Published on Sunday, 19 November 2017</p>
-<p>We list some Python Editors or compilers online</p>        <p class="small"><a href="/posts/python-online">Read more...</a></p>
-</div>
-    <div>
-        <div class="float-sm-left">
-                <a class="btn btn-primary" href="/page/11" role="button"><i class="fas fa-angle-double-left"></i> Newer</a>
-        </div>
-        <div class="float-sm-right">
-                <a class="btn btn-primary" href="/page/13" role="button">Older <i class="fas fa-angle-double-right"></i></a>
-        </div>
-        <div class="clearfix"></div>
-    </div>
-
-        </div>
-        <div class="col-md-4 mt-4 mt-md-0 col-sm-height">
-                    <div>
-                        <h5>Tags</h5>
-                            <a href="/tags/system-administration" class="badge badge-light"> system administration (6)</a>
-                            <a href="/tags/health-care" class="badge badge-light"> health care (5)</a>
-                            <a href="/tags/linux" class="badge badge-light"> linux (4)</a>
-                            <a href="/tags/powershell-core" class="badge badge-light"> powershell core (4)</a>
-                            <a href="/tags/programming" class="badge badge-light"> programming (4)</a>
-                            <a href="/tags/version-control" class="badge badge-light"> version control (4)</a>
-                            <a href="/tags/problem-solving" class="badge badge-light"> Problem Solving (4)</a>
-                            <a href="/tags/algorithms" class="badge badge-light"> Algorithms (4)</a>
-                            <a href="/tags/dotnet" class="badge badge-light"> dotnet (3)</a>
-                            <a href="/tags/pwsh" class="badge badge-light"> pwsh (3)</a>
-                        <div class="mt-3">
-                            <div class="float-sm-right">
-                                <a class="btn btn-sm btn-primary" href="/tags" role="button">All Tags <i class="fas fa-angle-double-right"></i></a>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-            
-            
-
-        </div>
-    </div>
-</div>
+<div id="giscus_thread"></div>
+<script src="https://giscus.app/client.js"
+        data-repo="atiq-cs/note"
+        data-repo-id="R_kgDOGMJt-w"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOGMJt-84B_XUr"
+        data-mapping="pathname"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-theme="dark"
+        crossorigin="anonymous"
+        async>
+</script>
+<noscript>Please enable JavaScript to view the comments powered by giscus.</noscript>
       </div>
     </div>
   </div>

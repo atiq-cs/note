@@ -4,8 +4,39 @@
 	<title />
 	<link rel="self" href="https://note.iqubit.xyz/" />
 	<rights>Copyright © 2022</rights>
-	<updated>2022-09-30T20:38:02Z</updated>
+	<updated>2022-09-30T20:59:33Z</updated>
 	<subtitle>Head's in the cloud, a Qubit blog</subtitle>
+	<entry>
+		<id>https://note.iqubit.xyz/posts/ml/pytorch-getting-started-with-cuda</id>
+		<title>Getting Started with PyTorch and NVidia CUDA</title>
+		<link href="https://note.iqubit.xyz/posts/ml/pytorch-getting-started-with-cuda" />
+		<updated>2022-09-30T00:00:00Z</updated>
+		<content>&lt;h3 id="installing-pytorch"&gt;Installing PyTorch&lt;/h3&gt;
+&lt;p&gt;Official &lt;a href="https://pytorch.org/get-started/locally"&gt;pytorch.org install instructions&lt;/a&gt; offers stable version version of pyTorch with slightly older version of CUDA which is 11.6 instead of latest (11.7)&lt;/p&gt;
+&lt;p&gt;We wanna show here how to install it with CUDA 11.7 SDK Toolkit support.&lt;/p&gt;
+&lt;p&gt;Start a shell (powershell/command prompt with python added to path),&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pip3 install --pre torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/nightly/cu117 --upgrade
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;refs&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Official install instructions: &lt;a href="https://pytorch.org/get-started/locally"&gt;https://pytorch.org/get-started/locally&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;CUDA 11.7 on pytroch official site doesn't exist yet, &lt;a href="https://download.pytorch.org/whl/cu117"&gt;https://download.pytorch.org/whl/cu117&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;CloudCasts - Alan Smith - PyTorch &amp;amp; CUDA Setup - Windows 10 &lt;a href="https://www.youtube.com/watch?v=GMSjDTU8Zlc"&gt;https://www.youtube.com/watch?v=GMSjDTU8Zlc&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Platform nvidia refs&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href="https://developer.nvidia.com/cuda-downloads?target_os=Linux&amp;amp;target_arch=x86_64"&gt;Linux x64 build&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href="https://developer.nvidia.com/cuda-downloads?target_os=Windows&amp;amp;target_arch=x86_64&amp;amp;target_version=11"&gt;Windows x64 build&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href="https://developer.nvidia.com/cuda-toolkit"&gt;https://developer.nvidia.com/cuda-toolkit&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+		<summary>Head's in the cloud, a Qubit blog</summary>
+	</entry>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/startup/typeahead-survey-2022-01</id>
 		<title>TypeAhead Product Survey</title>
@@ -16,7 +47,7 @@
 &lt;p&gt;A nice high level introduction and general guidelines of predictive search ca be found at
 &lt;a href="https://www.algolia.com/blog/ux/what-are-predictive-search-and-autocomplete"&gt;algolia blog - What is predictive search? What is autocomplete?&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id="system-design-examples"&gt;System Design Examples&lt;/h3&gt;
-&lt;p&gt;Here are some example of system Design,&lt;/p&gt;
+&lt;p&gt;Here are some examples of system Design,&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://medium.com/&amp;#64;iftimiealexandru/learning-to-build-an-autocomplete-system-2c2e9f423537"&gt;Pedro Lopes blog - Learning to build an Autocomplete System&lt;/a&gt; and &lt;a href="https://github.com/lopespm/autocomplete"&gt;his github repository&lt;/a&gt; demos an implemention&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://dingdingsherrywang.medium.com/system-design-autocomplete-62420021adb0"&gt;https://dingdingsherrywang.medium.com/system-design-autocomplete-62420021adb0&lt;/a&gt;&lt;/li&gt;
@@ -1125,108 +1156,6 @@ NPM(K)    PM(M)      WS(M)     CPU(s)      Id  SI ProcessName
 &lt;pre&gt;&lt;code&gt;Start-Service bthserv
 Stop-Service -Force bthserv
 &lt;/code&gt;&lt;/pre&gt;
-</content>
-		<summary>Head's in the cloud, a Qubit blog</summary>
-	</entry>
-	<entry>
-		<id>https://note.iqubit.xyz/posts/pwsh/git-config-switch-using-powershell-script</id>
-		<title>Switch among multiple Git Config/Profiles using Powershell</title>
-		<link href="https://note.iqubit.xyz/posts/pwsh/git-config-switch-using-powershell-script" />
-		<updated>2020-11-02T00:00:00Z</updated>
-		<content>&lt;h2 id="overview"&gt;Overview&lt;/h2&gt;
-&lt;p&gt;Overview of the script,&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;verify user name stuff, arguments&lt;/li&gt;
-&lt;li&gt;switch profile based on first command line argument&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="final-script"&gt;final script&lt;/h2&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;[CmdletBinding()]
-param(
-    [ValidateSet('USER_NAME_1', 'USER_NAME_2')]
-    [Parameter(Mandatory=$true)] [string] $ProfileName,
-    [Parameter(Mandatory=$true)] [string[]] $CredUserNames
-)
-
-
-&amp;lt;#
-.SYNOPSIS
-    Switch to given git config profile
-.DESCRIPTION
-    Sets for both git repo local and global,
-    - user name
-    - user email
-    - credential user name
-#&amp;gt;
-function Main() {
-    # Expecting switch between 2 users
-    if ($CredUserNames.Length -lt 2) {
-        throw [ArgumentException] ('Unexpected number of gUser Names!')
-    }
-
-    switch ($ProfileName) {
-        &amp;quot;USER_NAME_1&amp;quot; {
-            $gitUserName = git config --get user.name
-            $shellUserName = $($Home.SubString($Home.LastIndexOf('\')+1))
-
-            # Expecting git user name to start with Windows Login UserName
-            # For example,
-            #   windows username Mak will match with
-            #   git user full name 'Atiq Rahman'
-            if (-not ($gitUserName).StartsWith($shellUserName, [System.StringComparison]::`
-                InvariantCultureIgnoreCase)) {
-                throw [ArgumentException] ('Unexpected user name ' + $gitUserName + '!')
-            }
-
-            $gitUserEmail = git config --get user.email
-            # global
-            git config --global user.name &amp;quot;$gitUserName&amp;quot;
-            git config --global user.email $gitUserEmail
-
-            git config credential.username $CredUserNames[0]
-            $Env:GITHUB_TOKEN = 'gxp_clylM69Sjj0OZz5JOKX98TzcIE2xBo1MjNTO'
-            Break
-        }
-        &amp;quot;USER_NAME_2&amp;quot; {
-            $gitUserName = git config --get user.name
-            # last name of user 2, just for validation
-            $userNameSuffix = 'USER2_SUFFIX'
-
-            if (-not ($gitUserName).EndsWith($userNameSuffix)) {
-                throw [ArgumentException] ('Unexpected user name ' + $gitUserName + '!')
-            }
-
-            $gitUserEmail = git config --get user.email
-            # global
-            git config --global user.name &amp;quot;$gitUserName&amp;quot;
-            git config --global user.email $gitUserEmail
-
-            git config credential.username $CredUserNames[1]
-            $Env:GITHUB_TOKEN = 'gxp_84770a857cb1482de0e8af7c39a06de4ccf001eeb'
-            Break
-        }
-        Default { &amp;quot;Unexpected $ProfileName!&amp;quot; }
-    }
-
-    VerifyGitProfile
-
-    'Remember to set your GITHUB_TOKEN before invoking ''deploy'''
-}
-
-function VerifyGitProfile() {
-    'Final Git Configuration:'
-    git config --global --get user.name
-    git config --global --get user.email
-    git config --get user.name
-    git config --get user.email
-    git config --get credential.username
-}
-
-Main
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Copy of this script (including documentation) can be found at:
-&lt;a href="https://github.com/atiq-cs/old-scripts/blob/dev/pwsh/Switch-GitConfig.ps1"&gt;https://github.com/atiq-cs/old-scripts/blob/dev/pwsh/Switch-GitConfig.ps1&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;More scripts like this can be found at:
-&lt;a href="https://github.com/atiq-cs/old-scripts/blob/dev/pwsh"&gt;https://github.com/atiq-cs/old-scripts/blob/dev/pwsh&lt;/a&gt;&lt;/p&gt;
 </content>
 		<summary>Head's in the cloud, a Qubit blog</summary>
 	</entry>
