@@ -14,7 +14,7 @@ A nice high level introduction and general guidelines of predictive search ca be
 
 
 ### System Design Examples
-Here are some example of system Design,
+Here are some examples of system Design,
 
 - [Pedro Lopes blog - Learning to build an Autocomplete System](https://medium.com/@iftimiealexandru/learning-to-build-an-autocomplete-system-2c2e9f423537) and [his github repository](https://github.com/lopespm/autocomplete) demos an implemention
 - https://dingdingsherrywang.medium.com/system-design-autocomplete-62420021adb0
