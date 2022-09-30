@@ -12,8 +12,8 @@ jobs:
     - uses: actions/setup-dotnet@v1
       with:
         # SDK Version (requires full version)
-        # i.e, https://dotnet.microsoft.com/download/dotnet/6.0
-        dotnet-version: '6.0.100'
+        # i.e, https://dotnet.microsoft.com/download/dotnet/7.0
+        dotnet-version: '7.0.100-rc.1.22431.12'
     - run: dotnet run --configuration Release -- deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
