@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://note.iqubit.xyz/" />
 	<rights>Copyright © 2022</rights>
-	<updated>2022-02-02T02:15:51Z</updated>
+	<updated>2022-09-30T20:38:02Z</updated>
 	<subtitle>Head's in the cloud, a Qubit blog</subtitle>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/startup/typeahead-survey-2022-01</id>
@@ -113,6 +113,235 @@ Trending crypto: &lt;a href="https://coinmarketcap.com/trending-cryptocurrencies
 Surfing &lt;a href="https://coinmarketcap.com/new"&gt;coinmarketcap.com/new&lt;/a&gt; we are able to find even riskier, potential trendy coins. Reserach and invest on your own risk.&lt;/p&gt;
 &lt;h3 id="references"&gt;References&lt;/h3&gt;
 &lt;p&gt;&lt;em&gt;Not an investment advice. Opions are personal, don't represent my employer.&lt;/em&gt;&lt;/p&gt;
+</content>
+		<summary>Head's in the cloud, a Qubit blog</summary>
+	</entry>
+	<entry>
+		<id>https://note.iqubit.xyz/posts/linux/fedora</id>
+		<title>Fedora Linux Motley</title>
+		<link href="https://note.iqubit.xyz/posts/linux/fedora" />
+		<updated>2021-10-24T00:00:00Z</updated>
+		<content>&lt;p&gt;&lt;em&gt;this is still a draft, sections need to be organized, divided into separate posts for certain topics&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;First section is for Fedora 25.&lt;/p&gt;
+&lt;p&gt;New fedora uses in memory swap, swap partitions are no more required.&lt;/p&gt;
+&lt;p&gt;To find devices,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;lsblk
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;How to find unallocated disk partition with parted or another tool?&lt;/p&gt;
+&lt;p&gt;parted /dev/sdb free&lt;/p&gt;
+&lt;p&gt;Creating bootable USB fedora&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;clean
+conver gpt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Create .ssh dir to connect using ssh key,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo su - atiq
+mkdir .ssh
+chmod 700 .ssh
+touch .ssh/authorized_keys
+chmod 600 .ssh/authorized_keys
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Fedora Media Writer,&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;refs&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://docs.fedoraproject.org/en-US/quick-docs/installing-chromium-or-google-chrome-browsers"&gt;https://docs.fedoraproject.org/en-US/quick-docs/installing-chromium-or-google-chrome-browsers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://note.iqubit.xyz/posts/google-chrome-linux"&gt;https://note.iqubit.xyz/posts/google-chrome-linux&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;How to install manual pages for C/C++&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dnf install man-pages libstdc++-docs
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Install TP Link Wireless Driver packages in fedora&lt;/strong&gt;
+(probably from 10 years ago, however, principle still might apply)&lt;/p&gt;
+&lt;p&gt;Our WIFI adapter model is TL-WN722N
+info for linux driver at &lt;a href="https://help.ubuntu.com/community/HardwareSupportComponentsWirelessNetworkCardsTP-Link#USB"&gt;ubunut.com&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;lsusb&lt;/code&gt; command says it has ar9271 chip. Fedora supports it by following &lt;code&gt;ar9271.fw&lt;/code&gt;,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# rpm -q --whatprovides /usr/lib/firmware/ar9271.fw 
+linux-firmware-20120206-0.3.git06c8f81.fc17.noarch
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It has the AR9170 chipset as forum says.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;list loaded modules&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;less /proc/modules
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;see module info&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ath9k_htc
+ath9k_common
+ath9k_hw
+provides
+firmware:       htc_9271.fw
+firmware:       htc_7010.fw
+
+ath
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;current fedora driver &amp;amp; firmware: &lt;code&gt;ar9170-firmware-2009.05.28-4.fc17.noarch&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;When a problem occurs update following packages&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;wireless-tools&lt;/li&gt;
+&lt;li&gt;ar9170-firmware-2009.05.28-4.fc17.noarch (most probably it is working for tp link tl-wn722n)&lt;/li&gt;
+&lt;li&gt;ath_info (provides information)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;install cmd,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dnf -y update ar9170-firmware wireless-tools linux-firmware
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;listing firmware packages,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# rpm -qa | grep firmware
+ar9170-firmware-2009.05.28-4.fc17.noarch
+iwl6000g2b-firmware-17.168.5.2-2.fc17.noarch
+iwl5000-firmware-8.83.5.1_1-2.fc17.noarch
+atmel-firmware-1.3-9.fc17.noarch
+linux-firmware-20120206-0.3.git06c8f81.fc17.noarch
+alsa-firmware-1.0.25-1.fc17.noarch
+iwl1000-firmware-39.31.5.1-2.fc17.noarch
+iwl100-firmware-39.31.5.1-3.fc17.noarch
+ql2500-firmware-5.06.05-1.fc17.noarch
+iwl4965-firmware-228.61.2.24-4.fc17.noarch
+rt73usb-firmware-1.8-9.fc17.noarch
+netxen-firmware-4.0.534-5.fc17.noarch
+iwl6000-firmware-9.221.4.1-3.fc17.noarch
+iwl6050-firmware-41.28.5.1-4.fc17.noarch
+iwl6000g2a-firmware-17.168.5.3-2.fc17.noarch
+ivtv-firmware-20080701-22.noarch
+rt61pci-firmware-1.2-9.fc17.noarch
+iwl3945-firmware-15.32.2.9-6.fc17.noarch
+libertas-usb8388-firmware-5.110.22.p23-6.fc17.noarch
+aic94xx-firmware-30-3.fc17.noarch
+ipw2100-firmware-1.3-13.fc17.noarch
+ipw2200-firmware-3.1-6.fc17.noarch
+alsa-tools-firmware-1.0.25-2.fc17.x86_64
+iwl5150-firmware-8.24.2.2-3.fc17.noarch
+zd1211-firmware-1.4-6.fc17.noarch
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;How to install avro-keyboard in fedora&lt;/strong&gt;
+(from 2016 or earlier)&lt;/p&gt;
+&lt;p&gt;Install scim and development files. We need devel files for compiling scim-avro
+Run following commands as root
+yum -y install scim-devel scim&lt;/p&gt;
+&lt;p&gt;clone scim-avro latest version.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/mominul/scim-avro
+
+cd scim-avro/
+chmod a+x configure
+./configure
+make
+sudo make install
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;As a regular run following command &lt;code&gt;im-chooser&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;some cmds from online,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd 
+chmod a+x configure
+./configure
+cd po
+msginit --input=scim-avro.pot --output-file=ja.po --locale=ja
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In old times, we used to &lt;code&gt;groupinstall bengali-support&lt;/code&gt; for Bangla lang support. ref, &lt;a href="https://github.com/mominul/scim-avro"&gt;scim-avro&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;install video players in fedora core&lt;/strong&gt;
+adding codecs/ plugins for totemplayer,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; dnf -y install gstreamer-plugins-good gstreamer-plugins-good-extras gstreamer-plugins-ugly
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>Head's in the cloud, a Qubit blog</summary>
+	</entry>
+	<entry>
+		<id>https://note.iqubit.xyz/posts/google-chrome-linux</id>
+		<title>Google Chrome on Linux</title>
+		<link href="https://note.iqubit.xyz/posts/google-chrome-linux" />
+		<updated>2021-10-24T00:00:00Z</updated>
+		<content>&lt;p&gt;In new system, i.e, fedora 34/35 etc this is the way,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo dnf config-manager --set-enabled google-chrome
+sudo dnf install google-chrome-stable
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you want to install a beta release of google-chrome apply this command,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ sudo dnf install google-chrome-beta
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To install the latest development release apply following,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ sudo dnf install google-chrome
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you are using other operating systems continue reading.&lt;/p&gt;
+&lt;p&gt;Generally, there are 3 ways of installing Google Chrome:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Using dnf (&lt;code&gt;apt-get&lt;/code&gt; on Ubuntu), setting up with google's repository in dnf configuration file or ubuntu's aptitude source.lst&lt;/li&gt;
+&lt;li&gt;Locally download chrome rpm or debian package and apply dnf localinstall command&lt;/li&gt;
+&lt;li&gt;last option: Download all dependencies manually and install them one by one, then install google-chrome package.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="earlier-systems-fedora-core-rhel-cent-os-etc"&gt;Earlier Systems (Fedora Core, RHEL, Cent-OS etc)&lt;/h3&gt;
+&lt;p&gt;To enable google's dnf repository add a repo file inside directory &lt;code&gt;/etc/dnf.repos.d/&lt;/code&gt; named google-chrome.repo For 64 bit systems contents should look like this,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[google-chrome]
+name=google-chrome - \$basearch
+baseurl=http://dl.google.com/linux/chrome/rpm/stable/\$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Afterwards, if you want to install a stable release of google-chrome apply this command,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ sudo dnf install google-chrome-stable
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you have trouble accessing https URLs substitute https using http on the gpgkey field. This is useful when you hit errors like this,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Error: failure: No more mirrors to try.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Or error such as this,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GPG key retrieval failed: [Errno 14] problem making ssl connection
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Previously, we used to manually substitute the base url like this (not required anymore),&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[google-chrome]
+name=google-chrome - 64-bit
+baseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64
+enabled=1
+gpgcheck=1
+gpgkey=http://dl-ssl.google.com/linux/linux_signing_key.pub
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For 32 bit systems contents should be like this,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[google-chrome]
+name=google-chrome - 32-bit
+baseurl=http://dl.google.com/linux/chrome/rpm/stable/i386
+enabled=1
+gpgcheck=1
+gpgkey=http://dl-ssl.google.com/linux/linux_signing_key.pub
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Beaware that, google stopped updating 32 bit builds for Linux. If you install those versions you won't receive updates.&lt;/p&gt;
+&lt;h3 id="rhelcent-os-7"&gt;RHEL/Cent-OS 7&lt;/h3&gt;
+&lt;p&gt;RHEL/CentOS 7 have all required packages available for Google Chrome. Hence, a simple,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dnf install google-chrome-stable   
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;command dies the job. However, if you don't have redhat subscription you might get following error,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;libxss.so.1()(64bit) is needed by google-chrome-stable
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you enable local repository following instruction at &lt;a href="https://fftsys.azurewebsites.net/tech/how-to-setup-rhel-fedora-cent-os-dvd-or-iso-as-local-repository-to-install-packages"&gt;fftsys - Setup-RHEL-DVD-ISO-as-local-repository-to-install-packages&lt;/a&gt; the same previous dnf command completes without any error.&lt;/p&gt;
+&lt;h3 id="using-apt-get-on-debian-system-ubuntu-etc"&gt;Using apt-get on debian system (ubuntu etc)&lt;/h3&gt;
+&lt;p&gt;Add signing key&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Add google repository to the sources list,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo sh -c 'echo &amp;quot;deb http://dl.google.com/linux/chrome/deb/ stable main&amp;quot; &amp;gt;&amp;gt; /etc/apt/sources.list.d/google.list'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Update and install chrome,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo apt-get update
+sudo apt-get install google-chrome-stable
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For Ubuntu's new release 13.04 if you face following error &amp;quot;Error: Dependency is not satisfiable: libudev0(&amp;gt;=147)&amp;quot; use the beta version of chrome which has already resolved it.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo apt-get install google-chrome-beta
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Chromium project has details on the issue &lt;a href="https://code.google.com/p/chromium/issues/detail?id=226002"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id="chrome-on-rhel-6-or-earlier"&gt;Chrome on RHEL 6 or Earlier&lt;/h3&gt;
+&lt;p&gt;With RHEL 6 you will run into issues while installing google-chrome. Officially, Google Chrome is not supported on RHEL 6 or earlier since Google Chrome 28. If you are okay with experimental third party script to install google chrome you can follow &lt;a href="http://tecadmin.net/install-google-chrome-in-centos-rhel-and-fedora/#"&gt;tecadmin's article&lt;/a&gt;. You can install chromium as an alternative. &lt;a href="http://www.if-not-true-then-false.com/"&gt;If Not True Then False&lt;/a&gt; provides instructions &lt;a href="http://www.if-not-true-then-false.com/2013/install-chromium-on-centos-red-hat-rhel/"&gt;if-not-true-then-false's blog - how to install chromium on rhel&lt;/a&gt;. If an updated firefox does the job for you in RHEL old OSs in that case you can try &lt;a href="http://rpms.famillecollet.com/"&gt;remi repository&lt;/a&gt; to update firefox. Check &lt;a href="http://blog.famillecollet.com/pages/Config-en"&gt;remi famillecollet's site&lt;/a&gt; for info, tecmint also has an article &lt;a href="http://www.tecmint.com/install-firefox-in-rhelcentos-6-3-fedora-17-16/"&gt;Installing or Updating Firefox 30 using Remi&lt;/a&gt;. If you hate 3rd parties you can simply download the archive from firefox's site, extract it and run (possibly add few links such as in /usr/bin for convenience)&lt;/p&gt;
+&lt;h3 id="installing-using-direct-full-package"&gt;Installing using direct full package&lt;/h3&gt;
+&lt;p&gt;Download google chrome linux package first from &lt;a href="https://www.google.com/intl/en/chrome/browser/"&gt;Chrome's page&lt;/a&gt;. Apply this command in the directory where you downloaded &lt;a href="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"&gt;the file&lt;/a&gt;,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo dnf localinstall google-chrome-stable_current_x86_64.rpm    
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you want to install the package manually the command will be like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo dpkg -i google-chrome-stable_current_x86_64.deb
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="references"&gt;References&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="https://www.if-not-true-then-false.com/2010/install-google-chrome-with-dnf-on-fedora-red-hat-rhel/"&gt;Install Google Chrome on Fedora 17/16, CentOS/Red Hat (RHEL) 6.3&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Commit history&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;update fedora 34-35 - Oct 26, 2021&lt;/li&gt;
+&lt;li&gt;update fedora section - Dec 19, 2016&lt;/li&gt;
+&lt;li&gt;update - June 29, 2014&lt;/li&gt;
+&lt;/ol&gt;
 </content>
 		<summary>Head's in the cloud, a Qubit blog</summary>
 	</entry>
@@ -260,235 +489,6 @@ warning: be sure to add `/home/atiq/.cargo/bin` to your PATH to be able to run t
 		<summary>Head's in the cloud, a Qubit blog</summary>
 	</entry>
 	<entry>
-		<id>https://note.iqubit.xyz/posts/google-chrome-linux</id>
-		<title>Google Chrome on Linux</title>
-		<link href="https://note.iqubit.xyz/posts/google-chrome-linux" />
-		<updated>2021-10-24T00:00:00Z</updated>
-		<content>&lt;p&gt;In new system, i.e, fedora 34/35 etc this is the way,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo dnf config-manager --set-enabled google-chrome
-sudo dnf install google-chrome-stable
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;If you want to install a beta release of google-chrome apply this command,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ sudo dnf install google-chrome-beta
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To install the latest development release apply following,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ sudo dnf install google-chrome
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;If you are using other operating systems continue reading.&lt;/p&gt;
-&lt;p&gt;Generally, there are 3 ways of installing Google Chrome:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Using dnf (&lt;code&gt;apt-get&lt;/code&gt; on Ubuntu), setting up with google's repository in dnf configuration file or ubuntu's aptitude source.lst&lt;/li&gt;
-&lt;li&gt;Locally download chrome rpm or debian package and apply dnf localinstall command&lt;/li&gt;
-&lt;li&gt;last option: Download all dependencies manually and install them one by one, then install google-chrome package.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="earlier-systems-fedora-core-rhel-cent-os-etc"&gt;Earlier Systems (Fedora Core, RHEL, Cent-OS etc)&lt;/h3&gt;
-&lt;p&gt;To enable google's dnf repository add a repo file inside directory &lt;code&gt;/etc/dnf.repos.d/&lt;/code&gt; named google-chrome.repo For 64 bit systems contents should look like this,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;[google-chrome]
-name=google-chrome - \$basearch
-baseurl=http://dl.google.com/linux/chrome/rpm/stable/\$basearch
-enabled=1
-gpgcheck=1
-gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Afterwards, if you want to install a stable release of google-chrome apply this command,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ sudo dnf install google-chrome-stable
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;If you have trouble accessing https URLs substitute https using http on the gpgkey field. This is useful when you hit errors like this,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Error: failure: No more mirrors to try.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Or error such as this,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;GPG key retrieval failed: [Errno 14] problem making ssl connection
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Previously, we used to manually substitute the base url like this (not required anymore),&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;[google-chrome]
-name=google-chrome - 64-bit
-baseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64
-enabled=1
-gpgcheck=1
-gpgkey=http://dl-ssl.google.com/linux/linux_signing_key.pub
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;For 32 bit systems contents should be like this,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;[google-chrome]
-name=google-chrome - 32-bit
-baseurl=http://dl.google.com/linux/chrome/rpm/stable/i386
-enabled=1
-gpgcheck=1
-gpgkey=http://dl-ssl.google.com/linux/linux_signing_key.pub
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Beaware that, google stopped updating 32 bit builds for Linux. If you install those versions you won't receive updates.&lt;/p&gt;
-&lt;h3 id="rhelcent-os-7"&gt;RHEL/Cent-OS 7&lt;/h3&gt;
-&lt;p&gt;RHEL/CentOS 7 have all required packages available for Google Chrome. Hence, a simple,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;dnf install google-chrome-stable   
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;command dies the job. However, if you don't have redhat subscription you might get following error,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;libxss.so.1()(64bit) is needed by google-chrome-stable
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;If you enable local repository following instruction at &lt;a href="https://fftsys.azurewebsites.net/tech/how-to-setup-rhel-fedora-cent-os-dvd-or-iso-as-local-repository-to-install-packages"&gt;fftsys - Setup-RHEL-DVD-ISO-as-local-repository-to-install-packages&lt;/a&gt; the same previous dnf command completes without any error.&lt;/p&gt;
-&lt;h3 id="using-apt-get-on-debian-system-ubuntu-etc"&gt;Using apt-get on debian system (ubuntu etc)&lt;/h3&gt;
-&lt;p&gt;Add signing key&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Add google repository to the sources list,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo sh -c 'echo &amp;quot;deb http://dl.google.com/linux/chrome/deb/ stable main&amp;quot; &amp;gt;&amp;gt; /etc/apt/sources.list.d/google.list'
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Update and install chrome,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo apt-get update
-sudo apt-get install google-chrome-stable
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;For Ubuntu's new release 13.04 if you face following error &amp;quot;Error: Dependency is not satisfiable: libudev0(&amp;gt;=147)&amp;quot; use the beta version of chrome which has already resolved it.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo apt-get install google-chrome-beta
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Chromium project has details on the issue &lt;a href="https://code.google.com/p/chromium/issues/detail?id=226002"&gt;here&lt;/a&gt;.&lt;/p&gt;
-&lt;h3 id="chrome-on-rhel-6-or-earlier"&gt;Chrome on RHEL 6 or Earlier&lt;/h3&gt;
-&lt;p&gt;With RHEL 6 you will run into issues while installing google-chrome. Officially, Google Chrome is not supported on RHEL 6 or earlier since Google Chrome 28. If you are okay with experimental third party script to install google chrome you can follow &lt;a href="http://tecadmin.net/install-google-chrome-in-centos-rhel-and-fedora/#"&gt;tecadmin's article&lt;/a&gt;. You can install chromium as an alternative. &lt;a href="http://www.if-not-true-then-false.com/"&gt;If Not True Then False&lt;/a&gt; provides instructions &lt;a href="http://www.if-not-true-then-false.com/2013/install-chromium-on-centos-red-hat-rhel/"&gt;if-not-true-then-false's blog - how to install chromium on rhel&lt;/a&gt;. If an updated firefox does the job for you in RHEL old OSs in that case you can try &lt;a href="http://rpms.famillecollet.com/"&gt;remi repository&lt;/a&gt; to update firefox. Check &lt;a href="http://blog.famillecollet.com/pages/Config-en"&gt;remi famillecollet's site&lt;/a&gt; for info, tecmint also has an article &lt;a href="http://www.tecmint.com/install-firefox-in-rhelcentos-6-3-fedora-17-16/"&gt;Installing or Updating Firefox 30 using Remi&lt;/a&gt;. If you hate 3rd parties you can simply download the archive from firefox's site, extract it and run (possibly add few links such as in /usr/bin for convenience)&lt;/p&gt;
-&lt;h3 id="installing-using-direct-full-package"&gt;Installing using direct full package&lt;/h3&gt;
-&lt;p&gt;Download google chrome linux package first from &lt;a href="https://www.google.com/intl/en/chrome/browser/"&gt;Chrome's page&lt;/a&gt;. Apply this command in the directory where you downloaded &lt;a href="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"&gt;the file&lt;/a&gt;,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo dnf localinstall google-chrome-stable_current_x86_64.rpm    
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;If you want to install the package manually the command will be like this:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo dpkg -i google-chrome-stable_current_x86_64.deb
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id="references"&gt;References&lt;/h4&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;a href="https://www.if-not-true-then-false.com/2010/install-google-chrome-with-dnf-on-fedora-red-hat-rhel/"&gt;Install Google Chrome on Fedora 17/16, CentOS/Red Hat (RHEL) 6.3&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;strong&gt;Commit history&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;update fedora 34-35 - Oct 26, 2021&lt;/li&gt;
-&lt;li&gt;update fedora section - Dec 19, 2016&lt;/li&gt;
-&lt;li&gt;update - June 29, 2014&lt;/li&gt;
-&lt;/ol&gt;
-</content>
-		<summary>Head's in the cloud, a Qubit blog</summary>
-	</entry>
-	<entry>
-		<id>https://note.iqubit.xyz/posts/linux/fedora</id>
-		<title>Fedora Linux Motley</title>
-		<link href="https://note.iqubit.xyz/posts/linux/fedora" />
-		<updated>2021-10-24T00:00:00Z</updated>
-		<content>&lt;p&gt;&lt;em&gt;this is still a draft, sections need to be organized, divided into separate posts for certain topics&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;First section is for Fedora 25.&lt;/p&gt;
-&lt;p&gt;New fedora uses in memory swap, swap partitions are no more required.&lt;/p&gt;
-&lt;p&gt;To find devices,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;lsblk
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;How to find unallocated disk partition with parted or another tool?&lt;/p&gt;
-&lt;p&gt;parted /dev/sdb free&lt;/p&gt;
-&lt;p&gt;Creating bootable USB fedora&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;clean
-conver gpt
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Create .ssh dir to connect using ssh key,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo su - atiq
-mkdir .ssh
-chmod 700 .ssh
-touch .ssh/authorized_keys
-chmod 600 .ssh/authorized_keys
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Fedora Media Writer,&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;refs&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://docs.fedoraproject.org/en-US/quick-docs/installing-chromium-or-google-chrome-browsers"&gt;https://docs.fedoraproject.org/en-US/quick-docs/installing-chromium-or-google-chrome-browsers&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://note.iqubit.xyz/posts/google-chrome-linux"&gt;https://note.iqubit.xyz/posts/google-chrome-linux&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;How to install manual pages for C/C++&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;dnf install man-pages libstdc++-docs
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;Install TP Link Wireless Driver packages in fedora&lt;/strong&gt;
-(probably from 10 years ago, however, principle still might apply)&lt;/p&gt;
-&lt;p&gt;Our WIFI adapter model is TL-WN722N
-info for linux driver at &lt;a href="https://help.ubuntu.com/community/HardwareSupportComponentsWirelessNetworkCardsTP-Link#USB"&gt;ubunut.com&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;lsusb&lt;/code&gt; command says it has ar9271 chip. Fedora supports it by following &lt;code&gt;ar9271.fw&lt;/code&gt;,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# rpm -q --whatprovides /usr/lib/firmware/ar9271.fw 
-linux-firmware-20120206-0.3.git06c8f81.fc17.noarch
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;It has the AR9170 chipset as forum says.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;list loaded modules&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;less /proc/modules
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;see module info&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;ath9k_htc
-ath9k_common
-ath9k_hw
-provides
-firmware:       htc_9271.fw
-firmware:       htc_7010.fw
-
-ath
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;current fedora driver &amp;amp; firmware: &lt;code&gt;ar9170-firmware-2009.05.28-4.fc17.noarch&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;When a problem occurs update following packages&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;wireless-tools&lt;/li&gt;
-&lt;li&gt;ar9170-firmware-2009.05.28-4.fc17.noarch (most probably it is working for tp link tl-wn722n)&lt;/li&gt;
-&lt;li&gt;ath_info (provides information)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;install cmd,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;dnf -y update ar9170-firmware wireless-tools linux-firmware
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;listing firmware packages,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# rpm -qa | grep firmware
-ar9170-firmware-2009.05.28-4.fc17.noarch
-iwl6000g2b-firmware-17.168.5.2-2.fc17.noarch
-iwl5000-firmware-8.83.5.1_1-2.fc17.noarch
-atmel-firmware-1.3-9.fc17.noarch
-linux-firmware-20120206-0.3.git06c8f81.fc17.noarch
-alsa-firmware-1.0.25-1.fc17.noarch
-iwl1000-firmware-39.31.5.1-2.fc17.noarch
-iwl100-firmware-39.31.5.1-3.fc17.noarch
-ql2500-firmware-5.06.05-1.fc17.noarch
-iwl4965-firmware-228.61.2.24-4.fc17.noarch
-rt73usb-firmware-1.8-9.fc17.noarch
-netxen-firmware-4.0.534-5.fc17.noarch
-iwl6000-firmware-9.221.4.1-3.fc17.noarch
-iwl6050-firmware-41.28.5.1-4.fc17.noarch
-iwl6000g2a-firmware-17.168.5.3-2.fc17.noarch
-ivtv-firmware-20080701-22.noarch
-rt61pci-firmware-1.2-9.fc17.noarch
-iwl3945-firmware-15.32.2.9-6.fc17.noarch
-libertas-usb8388-firmware-5.110.22.p23-6.fc17.noarch
-aic94xx-firmware-30-3.fc17.noarch
-ipw2100-firmware-1.3-13.fc17.noarch
-ipw2200-firmware-3.1-6.fc17.noarch
-alsa-tools-firmware-1.0.25-2.fc17.x86_64
-iwl5150-firmware-8.24.2.2-3.fc17.noarch
-zd1211-firmware-1.4-6.fc17.noarch
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;How to install avro-keyboard in fedora&lt;/strong&gt;
-(from 2016 or earlier)&lt;/p&gt;
-&lt;p&gt;Install scim and development files. We need devel files for compiling scim-avro
-Run following commands as root
-yum -y install scim-devel scim&lt;/p&gt;
-&lt;p&gt;clone scim-avro latest version.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git clone https://github.com/mominul/scim-avro
-
-cd scim-avro/
-chmod a+x configure
-./configure
-make
-sudo make install
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;As a regular run following command &lt;code&gt;im-chooser&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;some cmds from online,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;cd 
-chmod a+x configure
-./configure
-cd po
-msginit --input=scim-avro.pot --output-file=ja.po --locale=ja
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;In old times, we used to &lt;code&gt;groupinstall bengali-support&lt;/code&gt; for Bangla lang support. ref, &lt;a href="https://github.com/mominul/scim-avro"&gt;scim-avro&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;install video players in fedora core&lt;/strong&gt;
-adding codecs/ plugins for totemplayer,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt; dnf -y install gstreamer-plugins-good gstreamer-plugins-good-extras gstreamer-plugins-ugly
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-		<summary>Head's in the cloud, a Qubit blog</summary>
-	</entry>
-	<entry>
 		<id>https://note.iqubit.xyz/posts/net-core-mvchello-entity-framework2021-08</id>
 		<title>dotnet core Hello World with Entity Framework and Database</title>
 		<link href="https://note.iqubit.xyz/posts/net-core-mvchello-entity-framework2021-08" />
@@ -595,214 +595,6 @@ error: Package 'Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore' is incompa
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Also, the old version (3.1.18 supports .net core) of &lt;code&gt;Diagnostics.EntityFrameworkCore&lt;/code&gt; doesn't have the definitions mentioned above.&lt;/p&gt;
 &lt;p&gt;Conclusion: since some of the packages i.e., &lt;code&gt;Diagnostics.EntityFrameworkCore&lt;/code&gt; don't target .net core and only targets newer versions of net framework, for example, .net 6. We cannot run the examples from official tutorial that uses EF Core or Diagnostics (may be Logging package as well).&lt;/p&gt;
-</content>
-		<summary>Head's in the cloud, a Qubit blog</summary>
-	</entry>
-	<entry>
-		<id>https://note.iqubit.xyz/posts/dennis-ritchie-c</id>
-		<title>Dennis Ritchie - The C Programming Language</title>
-		<link href="https://note.iqubit.xyz/posts/dennis-ritchie-c" />
-		<updated>2021-03-19T00:00:00Z</updated>
-		<content>&lt;h3 id="format-specifiers"&gt;Format Specifiers&lt;/h3&gt;
-&lt;p&gt;Right justification example,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;printf(&amp;quot;%3d %6d\n&amp;quot;, fahr, celsius);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="automatic-type-casting"&gt;Automatic Type Casting&lt;/h3&gt;
-&lt;p&gt;If an arithmetic operator has integer operands, an integer operation is performed. If an arithmetic operator has one floating-point operand and one integer operand, however, the integer will be converted to floating point before the operation is done. If we had written (fahr-32), the 32 would be automatically converted to floating point. Nevertheless, writing floating-point constants with explicit decimal points even when they have integral values emphasizes their floating-point nature for human readers.&lt;/p&gt;
-&lt;p&gt;Among others, &lt;code&gt;printf&lt;/code&gt; recognizes,&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;%o for octal&lt;/li&gt;
-&lt;li&gt;%x for hexadecimal&lt;/li&gt;
-&lt;li&gt;%c for character&lt;/li&gt;
-&lt;li&gt;%s for character string and,&lt;/li&gt;
-&lt;li&gt;%% for itself&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="getchar-and-putchar"&gt;getchar and putchar&lt;/h3&gt;
-&lt;p&gt;The problem is distinguishing the end of input from valid data. The solution is that getchar returns a distinctive value when there is no more input, a value that cannot be confused with any real character. This value is called EOF, for &amp;quot;end of file&amp;quot;. We must declare c to be a type big enough to hold any value that getchar returns. We can't use char since c must be big enough to hold EOF in addition to any possible char. Therefore we use int.&lt;/p&gt;
-&lt;p&gt;EOF is an integer defined in &lt;code&gt;&amp;lt;stdio.h&amp;gt;&lt;/code&gt;, but the specific numeric value doesn't matter as long as it is not the same as any char value. By using the symbolic constant, we are assured that nothing in the program depends on the specific numeric value.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;#include &amp;lt;stdio.h&amp;gt;  
-
-/* copy input to output; 2nd version */  
-main() {
-int c;
-
-while ((c = getchar()) != EOF)  
-    putchar(c);  
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="in-and-out-modifiers"&gt;IN and OUT Modifiers&lt;/h3&gt;
-&lt;p&gt;We prefer the symbolic constants &lt;code&gt;IN&lt;/code&gt; and &lt;code&gt;OUT&lt;/code&gt; to the literal values 1 and 0 because they make the program more readable.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;#include &amp;lt;stdio.h&amp;gt;
-
-#define IN 1 /* inside a word */
-#define OUT 0 /* outside a word */
-
-/* count lines, words, and characters in input */
-main() {
-    int c, nl, nw, nc, state;
-    state = OUT;
-    nl = nw = nc = 0;
-
-    while ((c = getchar()) != EOF) {
-        ++nc;
-
-        if (c == '\n')
-        ++nl;
-
-        if (c == ' ' || c == '\n' || c = '\t')
-        state = OUT;
-
-        else if (state == OUT) {
-        state = IN;
-        ++nw;
-        }
-    }
-
-    printf(&amp;quot;%d %d %d\n&amp;quot;, nl, nw, nc);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;In a program as tiny as this, it makes little difference, but in larger programs, the increase in clarity is well worth the modest extra effort to write it this way from the beginning. You'll also find that it's easier to make extensive changes in programs where magic numbers appear only as symbolic constants.&lt;/p&gt;
-&lt;h3 id="arguments-and-parameters"&gt;Arguments and parameters&lt;/h3&gt;
-&lt;p&gt;The function power is called twice by main, in the line&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;printf(&amp;quot;%d %d %d\n&amp;quot;, i, power(2,i), power(-3,i));
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Each call passes two arguments to power, which each time returns an integer to be formatted and printed. In an expression, power(2,i) is an integer just as 2 and i are. (Not all functions produce an integer value; we will take this up in Chapter 4.)&lt;/p&gt;
-&lt;p&gt;The first line of power itself,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;int power(int base, int n)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;declares the parameter types and names, and the type of the result that the function returns. The names used by power for its parameters are local to power, and are not visible to any other function: other routines can use the same names without conflict. This is also true of the variables i and p: the i in power is unrelated to the i in main.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;We will generally use &lt;code&gt;parameter&lt;/code&gt; for a variable named in the parenthesized list in a function.&lt;/em&gt;&lt;/p&gt;
-&lt;h3 id="argument-passing-call-by-value"&gt;Argument Passing: Call by Value&lt;/h3&gt;
-&lt;p&gt;In C, all function arguments are passed &amp;quot;by value&amp;quot;. This means that the called function is given the values of its arguments in temporary variables rather than the originals. This leads to some different properties than are seen with &amp;quot;call by reference&amp;quot; languages like Fortran or with var parameters in Pascal, in which the called routine has access to the original argument, not a local copy.&lt;/p&gt;
-&lt;h3 id="constant-expressions"&gt;Constant Expressions&lt;/h3&gt;
-&lt;p&gt;A &lt;em&gt;constant expression&lt;/em&gt; is an expression that involves only constants. Such expressions may be evaluated at during compilation rather than run-time, and accordingly may be used in any place that a constant can occur, as in&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;#define MAXLINE 1000
-char line[MAXLINE+1];
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Or,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;#define LEAP 1 /* in leap years */
-int days[31+28+LEAP+31+30+31+30+31+31+30+31+30+31];
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="string-constants"&gt;String Constants&lt;/h3&gt;
-&lt;p&gt;String constants can be concatenated at compile time:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;quot;hello, &amp;quot; &amp;quot;world&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;is equivalent to&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;quot;hello, world&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This is useful for splitting up long strings across several source lines.&lt;/p&gt;
-&lt;h3 id="enumeration"&gt;Enumeration&lt;/h3&gt;
-&lt;p&gt;An enumeration is a list of constant integer values, as in&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;enum boolean { NO, YES };
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The first name in an enum has value 0, the next 1, and so on, unless explicit values are specified. If not all values are specified, unspecified values continue the progression from the last specified value, as the second of these examples:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;enum escapes { BELL = '\a', BACKSPACE = '\b', TAB = '\t',
-    NEWLINE = '\n', VTAB = '\v', RETURN = '\r' };
-
-enum months { JAN = 1, FEB, MAR, APR, MAY, JUN,
-    JUL, AUG, SEP, OCT, NOV, DEC }; /* FEB = 2, MAR = 3, etc. */
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Names in different enumerations must be distinct.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Values need not be distinct in the same enumeration.&lt;/em&gt;&lt;/p&gt;
-&lt;h3 id="variable-initialization"&gt;Variable Initialization&lt;/h3&gt;
-&lt;p&gt;External and static variables are initialized to zero by default. Automatic variables for which is no explicit initializer have undefined (i.e., garbage) values.&lt;/p&gt;
-&lt;h3 id="precedence"&gt;Precedence&lt;/h3&gt;
-&lt;p&gt;The precedence of &lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt; is higher than that of ||, and both are lower than relational and equality operators, so expressions like&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;i &amp;lt; lim-1 &amp;amp;&amp;amp; (c=getchar()) != '\n' &amp;amp;&amp;amp; c != EOF
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;need no extra parentheses. But since the precedence of != is higher than assignment, parentheses are needed in&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;(c=getchar()) != '\n'
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;to achieve the desired result of assignment to c and then comparison with '\n'.&lt;/p&gt;
-&lt;p&gt;By definition, the numeric value of a relational or logical expression is 1 if the relation is true, and 0 if the relation is false.&lt;/p&gt;
-&lt;h3 id="type-conversions"&gt;Type Conversions&lt;/h3&gt;
-&lt;p&gt;Expressions that might lose information, like assigning a longer integer type to a shorter, or a floating-point type to an integer, may draw a warning, but they are not illegal.&lt;/p&gt;
-&lt;h3 id="bitwise-operators"&gt;Bitwise Operators&lt;/h3&gt;
-&lt;p&gt;The bitwise AND operator &amp;amp; is often used to mask off some set of bits, for example&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;n = n &amp;amp; 0177;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;sets to zero all but the low-order 7 bits of n.&lt;/p&gt;
-&lt;p&gt;The bitwise OR operator | is used to turn bits on:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;x = x | SET\_ON;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;sets to one in x the bits that are set to one in SET_ON.&lt;/p&gt;
-&lt;p&gt;The bitwise exclusive OR operator ^ sets a one in each bit position where its operands have different bits, and zero where they are the same.&lt;/p&gt;
-&lt;p&gt;The unary operator ~ yields the one's complement of an integer; that is, it converts each 1-bit into a 0-bit and vice versa. For example&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;x = x &amp;amp; ~077
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;sets the last six bits of x to zero. Note that &lt;code&gt;x &amp;amp; ~077&lt;/code&gt; is independent of word length, and is thus preferable to, for example, &lt;code&gt;x &amp;amp; 0177700&lt;/code&gt;, which assumes that x is a 16-bit quantity. The portable form involves no extra cost, since &lt;code&gt;~077&lt;/code&gt; is a constant expression that can be evaluated at compile time.&lt;/p&gt;
-&lt;h3 id="precedence-of-bitwise-operators"&gt;Precedence of bitwise operators&lt;/h3&gt;
-&lt;p&gt;Note that the precedence of the bitwise operators &amp;amp;, ^, and | falls below == and !=. This implies that bit-testing expressions like&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;if ((x &amp;amp; MASK) == 0) ...
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;must be fully parenthesized to give proper results.&lt;/p&gt;
-&lt;h3 id="switch-statement"&gt;Switch Statement&lt;/h3&gt;
-&lt;p&gt;&lt;em&gt;Each case is labeled by one or more integer-valued constants or constant expressions.&lt;/em&gt; If a case matches the expression value, execution starts at that case. All case expressions must be different. The case labeled default is executed if none of the other cases are satisfied. A default is optional; if it isn't there and if none of the cases match, no action at all takes place. Cases and the default clause can occur in any order.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;switch (expression) {
-    case const-expr: statements
-    case const-expr: statements
-    default: statements
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The break statement causes an immediate exit from the switch. Because cases serve just as labels, after the code for one case is done, execution falls through to the next unless you take explicit action to escape. break and return are the most common ways to leave a switch.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;The commas that separate function arguments, variables in declarations, etc., are not comma operators, and do not guarantee left to right evaluation.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Because the else part of an if-else is optional, there is an ambiguity when an else if omitted from a nested if sequence. This is resolved by associating the else with the closest previous else-less if. For example, in&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;if (n &amp;gt; 0)
-    if (a &amp;gt; b)
-        z = a;
-    else
-        z = b;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The else goes to the inner if, as we have shown by indentation. If that isn't what you want, braces must be used to force the proper association:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;if (n &amp;gt; 0) {
-    if (a &amp;gt; b)
-        z = a;
-}
-else
-    z = b;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="reverse-number-example"&gt;Reverse Number Example&lt;/h3&gt;
-&lt;p&gt;I tried a usual implementation of reverse number as I was learning,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;#include &amp;lt;stdio.h&amp;gt;
-
-main() {
-    int n;
-
-    printf(&amp;quot;Enter number to reverse: &amp;quot;);
-    scanf(&amp;quot;%d&amp;quot;, &amp;amp;n);
-
-    printf(&amp;quot;Reverse of that number is %d\n&amp;quot;, ReverseNum(n));
-}
-
-int ReverseNum(int a) {
-    int res = 0;
-    while (a) {
-        res = res * 10 + a % 10;
-        a /= 10;
-    }
-    return res;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;em&gt;Recursive version&lt;/em&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;#include &amp;lt;stdio.h&amp;gt;
-
-main() {
-    int n;
-
-    printf(&amp;quot;Enter number to reverse: &amp;quot;);
-    scanf(&amp;quot;%d&amp;quot;, &amp;amp;n);
-
-    printf(&amp;quot;Reverse of that number is %d\n&amp;quot;, ReverseNum(n, 0));
-}
-
-int ReverseNum(int a, int res) {
-    if (a == 0)
-        return res;
-
-    res = ReverseNum(a/10, res) * 10 + a % 10;
-    return res;
-}
-&lt;/code&gt;&lt;/pre&gt;
 </content>
 		<summary>Head's in the cloud, a Qubit blog</summary>
 	</entry>
@@ -1065,6 +857,214 @@ PSHOME
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="continue"&gt;continue&lt;/h2&gt;
 &lt;p&gt;rest of the contents yet to be appended..&lt;/p&gt;
+</content>
+		<summary>Head's in the cloud, a Qubit blog</summary>
+	</entry>
+	<entry>
+		<id>https://note.iqubit.xyz/posts/dennis-ritchie-c</id>
+		<title>Dennis Ritchie - The C Programming Language</title>
+		<link href="https://note.iqubit.xyz/posts/dennis-ritchie-c" />
+		<updated>2021-03-19T00:00:00Z</updated>
+		<content>&lt;h3 id="format-specifiers"&gt;Format Specifiers&lt;/h3&gt;
+&lt;p&gt;Right justification example,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;printf(&amp;quot;%3d %6d\n&amp;quot;, fahr, celsius);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="automatic-type-casting"&gt;Automatic Type Casting&lt;/h3&gt;
+&lt;p&gt;If an arithmetic operator has integer operands, an integer operation is performed. If an arithmetic operator has one floating-point operand and one integer operand, however, the integer will be converted to floating point before the operation is done. If we had written (fahr-32), the 32 would be automatically converted to floating point. Nevertheless, writing floating-point constants with explicit decimal points even when they have integral values emphasizes their floating-point nature for human readers.&lt;/p&gt;
+&lt;p&gt;Among others, &lt;code&gt;printf&lt;/code&gt; recognizes,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;%o for octal&lt;/li&gt;
+&lt;li&gt;%x for hexadecimal&lt;/li&gt;
+&lt;li&gt;%c for character&lt;/li&gt;
+&lt;li&gt;%s for character string and,&lt;/li&gt;
+&lt;li&gt;%% for itself&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="getchar-and-putchar"&gt;getchar and putchar&lt;/h3&gt;
+&lt;p&gt;The problem is distinguishing the end of input from valid data. The solution is that getchar returns a distinctive value when there is no more input, a value that cannot be confused with any real character. This value is called EOF, for &amp;quot;end of file&amp;quot;. We must declare c to be a type big enough to hold any value that getchar returns. We can't use char since c must be big enough to hold EOF in addition to any possible char. Therefore we use int.&lt;/p&gt;
+&lt;p&gt;EOF is an integer defined in &lt;code&gt;&amp;lt;stdio.h&amp;gt;&lt;/code&gt;, but the specific numeric value doesn't matter as long as it is not the same as any char value. By using the symbolic constant, we are assured that nothing in the program depends on the specific numeric value.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;stdio.h&amp;gt;  
+
+/* copy input to output; 2nd version */  
+main() {
+int c;
+
+while ((c = getchar()) != EOF)  
+    putchar(c);  
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="in-and-out-modifiers"&gt;IN and OUT Modifiers&lt;/h3&gt;
+&lt;p&gt;We prefer the symbolic constants &lt;code&gt;IN&lt;/code&gt; and &lt;code&gt;OUT&lt;/code&gt; to the literal values 1 and 0 because they make the program more readable.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;stdio.h&amp;gt;
+
+#define IN 1 /* inside a word */
+#define OUT 0 /* outside a word */
+
+/* count lines, words, and characters in input */
+main() {
+    int c, nl, nw, nc, state;
+    state = OUT;
+    nl = nw = nc = 0;
+
+    while ((c = getchar()) != EOF) {
+        ++nc;
+
+        if (c == '\n')
+        ++nl;
+
+        if (c == ' ' || c == '\n' || c = '\t')
+        state = OUT;
+
+        else if (state == OUT) {
+        state = IN;
+        ++nw;
+        }
+    }
+
+    printf(&amp;quot;%d %d %d\n&amp;quot;, nl, nw, nc);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In a program as tiny as this, it makes little difference, but in larger programs, the increase in clarity is well worth the modest extra effort to write it this way from the beginning. You'll also find that it's easier to make extensive changes in programs where magic numbers appear only as symbolic constants.&lt;/p&gt;
+&lt;h3 id="arguments-and-parameters"&gt;Arguments and parameters&lt;/h3&gt;
+&lt;p&gt;The function power is called twice by main, in the line&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;printf(&amp;quot;%d %d %d\n&amp;quot;, i, power(2,i), power(-3,i));
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Each call passes two arguments to power, which each time returns an integer to be formatted and printed. In an expression, power(2,i) is an integer just as 2 and i are. (Not all functions produce an integer value; we will take this up in Chapter 4.)&lt;/p&gt;
+&lt;p&gt;The first line of power itself,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;int power(int base, int n)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;declares the parameter types and names, and the type of the result that the function returns. The names used by power for its parameters are local to power, and are not visible to any other function: other routines can use the same names without conflict. This is also true of the variables i and p: the i in power is unrelated to the i in main.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;We will generally use &lt;code&gt;parameter&lt;/code&gt; for a variable named in the parenthesized list in a function.&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="argument-passing-call-by-value"&gt;Argument Passing: Call by Value&lt;/h3&gt;
+&lt;p&gt;In C, all function arguments are passed &amp;quot;by value&amp;quot;. This means that the called function is given the values of its arguments in temporary variables rather than the originals. This leads to some different properties than are seen with &amp;quot;call by reference&amp;quot; languages like Fortran or with var parameters in Pascal, in which the called routine has access to the original argument, not a local copy.&lt;/p&gt;
+&lt;h3 id="constant-expressions"&gt;Constant Expressions&lt;/h3&gt;
+&lt;p&gt;A &lt;em&gt;constant expression&lt;/em&gt; is an expression that involves only constants. Such expressions may be evaluated at during compilation rather than run-time, and accordingly may be used in any place that a constant can occur, as in&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#define MAXLINE 1000
+char line[MAXLINE+1];
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Or,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#define LEAP 1 /* in leap years */
+int days[31+28+LEAP+31+30+31+30+31+31+30+31+30+31];
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="string-constants"&gt;String Constants&lt;/h3&gt;
+&lt;p&gt;String constants can be concatenated at compile time:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;quot;hello, &amp;quot; &amp;quot;world&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;is equivalent to&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;quot;hello, world&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is useful for splitting up long strings across several source lines.&lt;/p&gt;
+&lt;h3 id="enumeration"&gt;Enumeration&lt;/h3&gt;
+&lt;p&gt;An enumeration is a list of constant integer values, as in&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;enum boolean { NO, YES };
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The first name in an enum has value 0, the next 1, and so on, unless explicit values are specified. If not all values are specified, unspecified values continue the progression from the last specified value, as the second of these examples:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;enum escapes { BELL = '\a', BACKSPACE = '\b', TAB = '\t',
+    NEWLINE = '\n', VTAB = '\v', RETURN = '\r' };
+
+enum months { JAN = 1, FEB, MAR, APR, MAY, JUN,
+    JUL, AUG, SEP, OCT, NOV, DEC }; /* FEB = 2, MAR = 3, etc. */
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Names in different enumerations must be distinct.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Values need not be distinct in the same enumeration.&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="variable-initialization"&gt;Variable Initialization&lt;/h3&gt;
+&lt;p&gt;External and static variables are initialized to zero by default. Automatic variables for which is no explicit initializer have undefined (i.e., garbage) values.&lt;/p&gt;
+&lt;h3 id="precedence"&gt;Precedence&lt;/h3&gt;
+&lt;p&gt;The precedence of &lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt; is higher than that of ||, and both are lower than relational and equality operators, so expressions like&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;i &amp;lt; lim-1 &amp;amp;&amp;amp; (c=getchar()) != '\n' &amp;amp;&amp;amp; c != EOF
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;need no extra parentheses. But since the precedence of != is higher than assignment, parentheses are needed in&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;(c=getchar()) != '\n'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;to achieve the desired result of assignment to c and then comparison with '\n'.&lt;/p&gt;
+&lt;p&gt;By definition, the numeric value of a relational or logical expression is 1 if the relation is true, and 0 if the relation is false.&lt;/p&gt;
+&lt;h3 id="type-conversions"&gt;Type Conversions&lt;/h3&gt;
+&lt;p&gt;Expressions that might lose information, like assigning a longer integer type to a shorter, or a floating-point type to an integer, may draw a warning, but they are not illegal.&lt;/p&gt;
+&lt;h3 id="bitwise-operators"&gt;Bitwise Operators&lt;/h3&gt;
+&lt;p&gt;The bitwise AND operator &amp;amp; is often used to mask off some set of bits, for example&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;n = n &amp;amp; 0177;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;sets to zero all but the low-order 7 bits of n.&lt;/p&gt;
+&lt;p&gt;The bitwise OR operator | is used to turn bits on:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;x = x | SET\_ON;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;sets to one in x the bits that are set to one in SET_ON.&lt;/p&gt;
+&lt;p&gt;The bitwise exclusive OR operator ^ sets a one in each bit position where its operands have different bits, and zero where they are the same.&lt;/p&gt;
+&lt;p&gt;The unary operator ~ yields the one's complement of an integer; that is, it converts each 1-bit into a 0-bit and vice versa. For example&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;x = x &amp;amp; ~077
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;sets the last six bits of x to zero. Note that &lt;code&gt;x &amp;amp; ~077&lt;/code&gt; is independent of word length, and is thus preferable to, for example, &lt;code&gt;x &amp;amp; 0177700&lt;/code&gt;, which assumes that x is a 16-bit quantity. The portable form involves no extra cost, since &lt;code&gt;~077&lt;/code&gt; is a constant expression that can be evaluated at compile time.&lt;/p&gt;
+&lt;h3 id="precedence-of-bitwise-operators"&gt;Precedence of bitwise operators&lt;/h3&gt;
+&lt;p&gt;Note that the precedence of the bitwise operators &amp;amp;, ^, and | falls below == and !=. This implies that bit-testing expressions like&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;if ((x &amp;amp; MASK) == 0) ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;must be fully parenthesized to give proper results.&lt;/p&gt;
+&lt;h3 id="switch-statement"&gt;Switch Statement&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;Each case is labeled by one or more integer-valued constants or constant expressions.&lt;/em&gt; If a case matches the expression value, execution starts at that case. All case expressions must be different. The case labeled default is executed if none of the other cases are satisfied. A default is optional; if it isn't there and if none of the cases match, no action at all takes place. Cases and the default clause can occur in any order.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;switch (expression) {
+    case const-expr: statements
+    case const-expr: statements
+    default: statements
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The break statement causes an immediate exit from the switch. Because cases serve just as labels, after the code for one case is done, execution falls through to the next unless you take explicit action to escape. break and return are the most common ways to leave a switch.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;The commas that separate function arguments, variables in declarations, etc., are not comma operators, and do not guarantee left to right evaluation.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Because the else part of an if-else is optional, there is an ambiguity when an else if omitted from a nested if sequence. This is resolved by associating the else with the closest previous else-less if. For example, in&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;if (n &amp;gt; 0)
+    if (a &amp;gt; b)
+        z = a;
+    else
+        z = b;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The else goes to the inner if, as we have shown by indentation. If that isn't what you want, braces must be used to force the proper association:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;if (n &amp;gt; 0) {
+    if (a &amp;gt; b)
+        z = a;
+}
+else
+    z = b;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="reverse-number-example"&gt;Reverse Number Example&lt;/h3&gt;
+&lt;p&gt;I tried a usual implementation of reverse number as I was learning,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;stdio.h&amp;gt;
+
+main() {
+    int n;
+
+    printf(&amp;quot;Enter number to reverse: &amp;quot;);
+    scanf(&amp;quot;%d&amp;quot;, &amp;amp;n);
+
+    printf(&amp;quot;Reverse of that number is %d\n&amp;quot;, ReverseNum(n));
+}
+
+int ReverseNum(int a) {
+    int res = 0;
+    while (a) {
+        res = res * 10 + a % 10;
+        a /= 10;
+    }
+    return res;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;Recursive version&lt;/em&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;stdio.h&amp;gt;
+
+main() {
+    int n;
+
+    printf(&amp;quot;Enter number to reverse: &amp;quot;);
+    scanf(&amp;quot;%d&amp;quot;, &amp;amp;n);
+
+    printf(&amp;quot;Reverse of that number is %d\n&amp;quot;, ReverseNum(n, 0));
+}
+
+int ReverseNum(int a, int res) {
+    if (a == 0)
+        return res;
+
+    res = ReverseNum(a/10, res) * 10 + a % 10;
+    return res;
+}
+&lt;/code&gt;&lt;/pre&gt;
 </content>
 		<summary>Head's in the cloud, a Qubit blog</summary>
 	</entry>
