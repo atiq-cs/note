@@ -31,7 +31,7 @@
   <!-- Custom fonts for this template -->
   <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="/vendor/fontawesome-free/css/brands.min.css" rel="stylesheet" type="text/css">
-  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css' data-no-mirror>
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,500,600,700,400italic,700italic' rel='stylesheet' type='text/css' data-no-mirror>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' data-no-mirror>
   
   <!-- Custom styles for this template -->
@@ -136,7 +136,7 @@
 <h3 id="conquer">Conquer</h3>
 <p>We start with partitioning the array. We sort 2 sub-arrays recursively by calling quick sort on partitions.</p>
 <h3 id="combine">Combine</h3>
-<p>Each recursive call to 'quick-sort' sorts the particular segment of the array. After recursive calls return the array is already sorted. Therefore, no action is required to be taken on combine step.</p>
+<p>Each recursive call to 'quick-sort' sorts the particular segment of the array. Once the last recursive call returns the array is already sorted. Therefore, no action is required to be taken on combine step.</p>
 <h2 id="how-it-works">How it works</h2>
 <p>The idea is that we choose a pivot element from the array. We put all elements less than the pivot to the left side and we put all elements greater than the pivot item to the right side. We consider the left side and the right side as 2 sub-arrays where we apply the same procedure. After recursively applying the mechanism in the end, the array is sorted.</p>
 <h3 id="worst-case-of-quick-sort">Worst Case of Quick Sort</h3>
