@@ -13,7 +13,7 @@ jobs:
       with:
         # SDK Version (requires full version)
         # i.e, https://dotnet.microsoft.com/download/dotnet/7.0
-        dotnet-version: '7.0.100-rc.1.22431.12'
+        dotnet-version: '7.0.100'
     - run: dotnet run --configuration Release -- deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
