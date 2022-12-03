@@ -5,8 +5,8 @@
 		<link>https://note.iqubit.xyz/</link>
 		<description>Head's in the cloud, a Qubit blog</description>
 		<copyright>Copyright © 2022</copyright>
-		<pubDate>Sat, 03 Dec 2022 18:54:06 GMT</pubDate>
-		<lastBuildDate>Sat, 03 Dec 2022 18:54:06 GMT</lastBuildDate>
+		<pubDate>Sat, 03 Dec 2022 21:11:58 GMT</pubDate>
+		<lastBuildDate>Sat, 03 Dec 2022 21:11:58 GMT</lastBuildDate>
 		<item>
 			<title>Getting Started with PyTorch and NVidia CUDA</title>
 			<link>https://note.iqubit.xyz/posts/ml/pytorch-getting-started-with-cuda</link>
@@ -639,9 +639,9 @@ error: Package 'Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore' is incompa
 		</item>
 		<item>
 			<title>Powershell Core Useful Commands</title>
-			<link>https://note.iqubit.xyz/posts/pwsh/powershell-core</link>
+			<link>https://note.iqubit.xyz/posts/pwsh/powershell</link>
 			<description>Head's in the cloud, a Qubit blog</description>
-			<guid>https://note.iqubit.xyz/posts/pwsh/powershell-core</guid>
+			<guid>https://note.iqubit.xyz/posts/pwsh/powershell</guid>
 			<pubDate>Fri, 19 Mar 2021 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;p&gt;&lt;em&gt;This article formerly titled as 'Powershell Frequently Used Commands. Even though the article is titled "core" it includes some Powershell contents as well.'&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Powershell Core refers to Powershell versions 6 or later.
@@ -1111,9 +1111,9 @@ int ReverseNum(int a, int res) {
 		</item>
 		<item>
 			<title>Powershell Core Cmdlets</title>
-			<link>https://note.iqubit.xyz/posts/pwsh/powershell-core-cmdlets</link>
+			<link>https://note.iqubit.xyz/posts/pwsh/powershell-cmdlets</link>
 			<description>Head's in the cloud, a Qubit blog</description>
-			<guid>https://note.iqubit.xyz/posts/pwsh/powershell-core-cmdlets</guid>
+			<guid>https://note.iqubit.xyz/posts/pwsh/powershell-cmdlets</guid>
 			<pubDate>Thu, 10 Dec 2020 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h3 id="start-process"&gt;Start-Process&lt;/h3&gt;
 &lt;p&gt;Here are some handy cmds (Application Run Examples),&lt;/p&gt;

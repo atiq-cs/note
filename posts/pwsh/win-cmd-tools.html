@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Head&#x27;s in the cloud, a Qubit blog">
 
-  <title>Notes from Qubit Inc. - Useful Windows Commands</title>
+  <title>Notes from Qubit Inc. - Command Line for Utilities and Tools</title>
 
-  <link rel="canonical" href="https://note.iqubit.xyz/posts/pwsh/windows-dos">
+  <link rel="canonical" href="https://note.iqubit.xyz/posts/pwsh/win-cmd-tools">
 
       <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
       <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
@@ -18,9 +18,9 @@
   <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
   <meta name="msapplication-starturl" content="/" />
 
-  <meta property="og:title" content="Notes from Qubit Inc. - Useful Windows Commands" />
+  <meta property="og:title" content="Notes from Qubit Inc. - Command Line for Utilities and Tools" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://note.iqubit.xyz/posts/pwsh/windows-dos" />
+  <meta property="og:url" content="https://note.iqubit.xyz/posts/pwsh/win-cmd-tools" />
   
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -89,9 +89,9 @@
       <div class="col-md-12">
         <div class="post-heading">
           <h1>
-            Useful Windows Commands
+            Command Line for Utilities and Tools
           </h1>
-              <div class="meta">Published on Tuesday, 19 November 2019</div>
+              <div class="meta">Published on Friday, 29 November 2019</div>
                 <div class="mt-3">
                       <a href="/tags/windows-command-prompt" class="badge badge-light"> windows command prompt</a>
                       <a href="/tags/system-administration" class="badge badge-light"> system administration</a>
@@ -107,82 +107,60 @@
     <div class="row">
       <div id="content" class="col-md-12">  
         <p>Please be aware of notation below in command outlines. <code>$</code> represents a command and rests of the lines following that line are output. Powershell is superset of traditional command prompt. Hence, all usual binaries still run on powershell for exxample, <code>takeown</code>.</p>
-<p><strong>Win Supported Run Cmds</strong></p>
-<p>[ToDo: move this to a separate one.]</p>
-<pre><code>desk.cpl
-services.msc
-sysdm.cpl
+<h2 id="windows-os-tools">Windows OS Tools</h2>
+<h3 id="balanced-power-options">Balanced Power options</h3>
+<p>Turn hibernation off (run from elevated PS),</p>
+<pre><code>powercfg.exe /h off
 </code></pre>
-<h2 id="misc">Misc</h2>
-<p>Customized ping command, waits 20 seconds for reply and keep pinging non-stop <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/ping">ping ref</a>,</p>
-<pre><code>ping -w 20000 -t myserver.company.com
+<p>List Power plans,</p>
+<pre><code>$ powercfg list
+Existing Power Schemes (* Active)
+-----------------------------------
+Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced) *
+Power Scheme GUID: 433299bd-efc0-474e-a61e-4a940c85e632  (Timers off (Presentation))
+Power Scheme GUID: 496d75e1-8cba-4d72-b778-535d67c976ea  (Airplane)
 </code></pre>
-<p>Enable or disable Linux Subsystem feature,</p>
-<pre><code>Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
-Disable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+<p>How to export Balanced plan (we copy paste id from output of above command),</p>
+<pre><code>powercfg -Export D:\Efficient_BP.pow 381b4222-f694-41f0-9685-ff5bb260df2e
 </code></pre>
-<p>Get host name,</p>
-<pre><code>HOSTNAME
+<p>automate importing registry (requires privilege) ref,</p>
+<pre><code>reg import 'D:\Soft\reg files soft settings\app_paths\KeePass.reg'
 </code></pre>
-<p>associating file type for extension <code>.fob</code>,</p>
-<pre><code>cmd /c assoc .fob=foobarfile
-cmd /c ftype foobarfile=powershell.exe -File `&quot;C:\path\to\your.ps1`&quot; `&quot;%1`&quot;
+<h3 id="winrar">WinRar</h3>
+<p>An example use of rar (in my system referring to <code>D:\ProgData\WinRAR\rar.exe</code>),</p>
+<pre><code>rar a -m5 -psa1 -ep1 I:\Doc\docs.rar I:\Doc\Office_Docs\
 </code></pre>
-<p>Find files with hidden attributes,</p>
-<pre><code>dir /A:H general-solving\lintcode
+<p><em>without <code>-ep1</code> it makes a big directory tree</em></p>
+<h2 id="gnuwin32-tools">gnuwin32 tools</h2>
+<p>similar to Unix,</p>
+<pre><code>&quot;D:\ProgramFiles_x86\GnuWin32\bin\gzip.exe&quot; -d .\bitarray-ex-0.8.1.tar.gz
+&quot;D:\ProgramFiles_x86\GnuWin32\bin\tar.exe&quot; -xvf .\bitarray-ex-0.8.1.tar
+&quot;D:\ProgramFiles_x86\GnuWin32\bin\tar.exe&quot; --version
 </code></pre>
-<p>Modify files to remove hidden attributes using attrib</p>
-<pre><code>attrib -h my-hidden-file.txt
+<h2 id="external-applications">External Applications</h2>
+<p>Here are some command line examples for External Applications.</p>
+<p>using <code>tftp</code> to uplod a file into ftp server,</p>
+<pre><code> tftp -i 192.168.1.10 PUT 'E:\LinkSys E2000\images\FW_E2000_1.0.04.007_US_20101201_code.bin' FW_E2000_1.0.04.007_US_20101201_code.bin
 </code></pre>
-<p><strong>Robust copy</strong>
-<code>robocopy</code> is good for copying large numbeer of files (to handle so many different cases: large files, network interruptions, file names). An example cmd,</p>
-<pre><code>robocopy /s /z /v /fp /eta 'D:\Movies' 'H:\' Office.*
-robocopy /s /z /v /fp /eta 'D:\TV Series' 'H:\' Fringe*
+<p>I used to use this one for 'ATA Automation'.</p>
+<p>Identify image format info using image magick's <code>identiy</code> (referring to <code>C:\Program Files\ImageMagick-6.8.8-Q16\identify.exe</code> in my system as an example),</p>
+<pre><code>identify &quot;F:\Documents\Images\From Previous Cell-Phone\2011-09\01092011.jpg&quot;
+identify -verbose &quot;F:\Sourcecodes\Web\ASP .Net\Icons\saos_favicon.ico&quot;
 </code></pre>
-<p>Above cmds copy all files from first one (source dir) matching the pattern.</p>
-<p>Exmple of copy over network,</p>
-<pre><code>robocopy /s /z /v /fp /eta '\\ENLIGHTENSOUL\Bangla\3RD Person Singular Number' 'i:\'
+<p>Identify image format info using image magick's <code>convert</code> tool (referring to <code>C:\Program Files\ImageMagick-6.8.8-Q16\convert.exe</code> in my system as an example),</p>
+<pre><code>convert -background transparent
 </code></pre>
-<p><strong>xcopy examples</strong>
-(prefer <code>robocopy</code> over this one), some variations below,</p>
-<pre><code>xcopy /C /F /H e:\c O:
-xcopy /s /C /F /H e:\C++ O:\C++
-xcopy /s /C /F /H &quot;e:\FC back up&quot; &quot;o:\FC back up&quot;
-xcopy /s /C /F /H &quot;e:\Net Workspace&quot; &quot;o:\Net Workspace&quot;
-xcopy /s /C /F /H f:\* Q:\*
+<p><code>ps2pdf</code> tool (location in my system <code>C:\Program Files\MiKTex\miktex\bin\x64\ps2pdf.exe</code>) from Miktex from example,</p>
+<pre><code>ps2pdf D:\Source\ml-95-ripper.ps
 </code></pre>
-<p>Retrieving all cmd history,</p>
-<pre><code>doskey /history &gt; copy_command.txt
+<h2 id="video-applications">Video Applications</h2>
+<p><strong>mkvextract</strong>
+Extract subtitle using <code>mkvextract</code> (referring to <code>C:\Program Files (x86)\MKVToolNix\mkvextract.exe</code> in my system),</p>
+<pre><code>mkvextract tracks D:\Movies\Fences.mkv &quot;2:D:\Movies\Fences.srt&quot;
 </code></pre>
-<p>delete everything inside a directory,</p>
-<pre><code>rd /s /q JobDetails_data
+<p><code>mkvmerge</code> (in my system <code>C:\Program Files (x86)\MKVToolNix\mkvmerge.exe</code>) show info on mkv file,</p>
+<pre><code>mkvmerge -i D:\Movies\Fences.mkv
 </code></pre>
-<p><strong>mklink</strong>
-To create a symbolic link named MyDocs from the root directory to the \Users\User1\Documents directory,</p>
-<pre><code>mklink /d \MyDocs \Users\User1\Documents
-</code></pre>
-<p>Creates a Directory Junction instead using mklink,</p>
-<pre><code>$ mklink /j C:\Users\Atique\AppData\Local\Microsoft\Office\15.0\OfficeFileCache H:\OfficeFileCache
-Junction created for C:\Users\Atique\AppData\Local\Microsoft\Office\15.0\OfficeFileCache &lt;&lt;===&gt;&gt; H:\OfficeFileCache
-</code></pre>
-<p><strong>Network share commands</strong>
-view curently shared directories,</p>
-<pre><code>net share
-</code></pre>
-<p>to delete share (requires admin privilege),</p>
-<pre><code>$ net share NewDrama /delete
-Movies      D:\Cool Movies
-Softs       D:\Sourcecodes\Web\Softs
-</code></pre>
-<p>To share a directory,</p>
-<pre><code>net share listshare=&quot;D:\Docs&quot;
-</code></pre>
-<p><strong>registry</strong>
-For example usage <code>regsvr32</code> of check <a href="https://www.codeproject.com/Articles/766246/Windows-Media-Player-Native-Subtitle-Plugin-Cplusp">codeproject - Windows Media Player Native Subtitle Plugin</a></p>
-<h2 id="references">References</h2>
-<ul>
-<li><a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/commands-by-server-role">MS Docs - Windows Commands</a></li>
-</ul>
 
 
 

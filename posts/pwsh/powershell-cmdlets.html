@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Head&#x27;s in the cloud, a Qubit blog">
 
-  <title>Notes from Qubit Inc. - Command Line for Utilities and Tools</title>
+  <title>Notes from Qubit Inc. - Powershell Core Cmdlets</title>
 
-  <link rel="canonical" href="https://note.iqubit.xyz/posts/pwsh/windows-tools-cmd">
+  <link rel="canonical" href="https://note.iqubit.xyz/posts/pwsh/powershell-cmdlets">
 
       <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
       <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
@@ -18,9 +18,9 @@
   <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
   <meta name="msapplication-starturl" content="/" />
 
-  <meta property="og:title" content="Notes from Qubit Inc. - Command Line for Utilities and Tools" />
+  <meta property="og:title" content="Notes from Qubit Inc. - Powershell Core Cmdlets" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://note.iqubit.xyz/posts/pwsh/windows-tools-cmd" />
+  <meta property="og:url" content="https://note.iqubit.xyz/posts/pwsh/powershell-cmdlets" />
   
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -89,11 +89,12 @@
       <div class="col-md-12">
         <div class="post-heading">
           <h1>
-            Command Line for Utilities and Tools
+            Powershell Core Cmdlets
           </h1>
-              <div class="meta">Published on Friday, 29 November 2019</div>
+              <div class="meta">Published on Thursday, 10 December 2020</div>
                 <div class="mt-3">
-                      <a href="/tags/windows-command-prompt" class="badge badge-light"> windows command prompt</a>
+                      <a href="/tags/powershell-core" class="badge badge-light"> powershell core</a>
+                      <a href="/tags/pwsh" class="badge badge-light"> pwsh</a>
                       <a href="/tags/system-administration" class="badge badge-light"> system administration</a>
                 </div>
         </div>
@@ -106,60 +107,57 @@
   <div class="container"> 
     <div class="row">
       <div id="content" class="col-md-12">  
-        <p>Please be aware of notation below in command outlines. <code>$</code> represents a command and rests of the lines following that line are output. Powershell is superset of traditional command prompt. Hence, all usual binaries still run on powershell for exxample, <code>takeown</code>.</p>
-<h2 id="windows-os-tools">Windows OS Tools</h2>
-<h3 id="balanced-power-options">Balanced Power options</h3>
-<p>Turn hibernation off (run from elevated PS),</p>
-<pre><code>powercfg.exe /h off
+        <h3 id="start-process">Start-Process</h3>
+<p>Here are some handy cmds (Application Run Examples),</p>
+<p><code>Start</code> is an alias of <code>Start-Process</code></p>
+<pre><code>Start DevEnv /Edit, Stream-Converter.ps1
+Start TeamViewer
+Start CVpn-Client
+
+Start Atom
 </code></pre>
-<p>List Power plans,</p>
-<pre><code>$ powercfg list
-Existing Power Schemes (* Active)
------------------------------------
-Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced) *
-Power Scheme GUID: 433299bd-efc0-474e-a61e-4a940c85e632  (Timers off (Presentation))
-Power Scheme GUID: 496d75e1-8cba-4d72-b778-535d67c976ea  (Airplane)
+<p>where I link <code>CVpn-Client</code> to <code>C:\Program Files (x86)\Cisco\Cisco AnyConnect Secure Mobility Client\vpnui.exe</code>,</p>
+<p>and, atom is usually linked to <code>C:\Users\atiq\AppData\Local\atom\atom.exe</code></p>
+<p>Syntax for microsoft store apps,</p>
+<pre><code>Start Microsoft-Edge:https://google.com
+Start Skype:
 </code></pre>
-<p>How to export Balanced plan (we copy paste id from output of above command),</p>
-<pre><code>powercfg -Export D:\Efficient_BP.pow 381b4222-f694-41f0-9685-ff5bb260df2e
+<p>For passing arguments to an application we can either add it right after the app name with a seperating space,</p>
+<pre><code>Start Notepad++ file_path
 </code></pre>
-<p>automate importing registry (requires privilege) ref,</p>
-<pre><code>reg import 'D:\Soft\reg files soft settings\app_paths\KeePass.reg'
+<p>Or, specify it in <code>ArgumentList</code>,</p>
+<pre><code>Start Notepad++ -ArgumentList file_path
 </code></pre>
-<h3 id="winrar">WinRar</h3>
-<p>An example use of rar (in my system referring to <code>D:\ProgData\WinRAR\rar.exe</code>),</p>
-<pre><code>rar a -m5 -psa1 -ep1 I:\Doc\docs.rar I:\Doc\Office_Docs\
+<p>However, it's tricky if passed argument for example, <code>file_path</code> above contains a space character.</p>
+<p>To make it work, we need to double quote them <a href="https://stackoverflow.com/questions/22840882/powershell-opening-file-path-with-spaces">ref</a>,</p>
+<pre><code>Start Notepad++ -ArgumentList &quot;`&quot;D:\Cool Soft\my awesome file.txt`&quot;&quot;
 </code></pre>
-<p><em>without <code>-ep1</code> it makes a big directory tree</em></p>
-<h2 id="gnuwin32-tools">gnuwin32 tools</h2>
-<p>similar to Unix,</p>
-<pre><code>&quot;D:\ProgramFiles_x86\GnuWin32\bin\gzip.exe&quot; -d .\bitarray-ex-0.8.1.tar.gz
-&quot;D:\ProgramFiles_x86\GnuWin32\bin\tar.exe&quot; -xvf .\bitarray-ex-0.8.1.tar
-&quot;D:\ProgramFiles_x86\GnuWin32\bin\tar.exe&quot; --version
+<h3 id="get-process">Get-Process</h3>
+<p>A simple run gives a technical summary of the process</p>
+<pre><code>$ Get-Process pwsh
+
+NPM(K)    PM(M)      WS(M)     CPU(s)      Id  SI ProcessName
+------    -----      -----     ------      --  -- -----------
+    80   117.16     170.47      25.61   21628   1 pwsh
 </code></pre>
-<h2 id="external-applications">External Applications</h2>
-<p>Here are some command line examples for External Applications.</p>
-<p>using <code>tftp</code> to uplod a file into ftp server,</p>
-<pre><code> tftp -i 192.168.1.10 PUT 'E:\LinkSys E2000\images\FW_E2000_1.0.04.007_US_20101201_code.bin' FW_E2000_1.0.04.007_US_20101201_code.bin
+<p>To get number of instances of a process</p>
+<pre><code>function GetProcessInstanceNumber([string] $process) {
+    &#64;(Get-Process $process -ErrorAction 0).Count
+}
 </code></pre>
-<p>I used to use this one for 'ATA Automation'.</p>
-<p>Identify image format info using image magick's <code>identiy</code> (referring to <code>C:\Program Files\ImageMagick-6.8.8-Q16\identify.exe</code> in my system as an example),</p>
-<pre><code>identify &quot;F:\Documents\Images\From Previous Cell-Phone\2011-09\01092011.jpg&quot;
-identify -verbose &quot;F:\Sourcecodes\Web\ASP .Net\Icons\saos_favicon.ico&quot;
+<h2 id="service-management">Service Management</h2>
+<p>Get list of services currently running,</p>
+<pre><code>Get-Service | Where-Object {$_.Status -eq &quot;Running&quot;}
 </code></pre>
-<p>Identify image format info using image magick's <code>convert</code> tool (referring to <code>C:\Program Files\ImageMagick-6.8.8-Q16\convert.exe</code> in my system as an example),</p>
-<pre><code>convert -background transparent
+<p>Start a service,</p>
+<pre><code>Start-Service -Name VPNAgent
 </code></pre>
-<p><code>ps2pdf</code> tool (location in my system <code>C:\Program Files\MiKTex\miktex\bin\x64\ps2pdf.exe</code>) from Miktex from example,</p>
-<pre><code>ps2pdf D:\Source\ml-95-ripper.ps
+<p>Stop one,</p>
+<pre><code>Stop-Service -Name VPNAgent
 </code></pre>
-<h2 id="video-applications">Video Applications</h2>
-<p><strong>mkvextract</strong>
-Extract subtitle using <code>mkvextract</code> (referring to <code>C:\Program Files (x86)\MKVToolNix\mkvextract.exe</code> in my system),</p>
-<pre><code>mkvextract tracks D:\Movies\Fences.mkv &quot;2:D:\Movies\Fences.srt&quot;
-</code></pre>
-<p><code>mkvmerge</code> (in my system <code>C:\Program Files (x86)\MKVToolNix\mkvmerge.exe</code>) show info on mkv file,</p>
-<pre><code>mkvmerge -i D:\Movies\Fences.mkv
+<p>Useful for bluetooth service,</p>
+<pre><code>Start-Service bthserv
+Stop-Service -Force bthserv
 </code></pre>
 
 

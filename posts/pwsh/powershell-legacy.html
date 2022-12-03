@@ -106,12 +106,28 @@
   <div class="container"> 
     <div class="row">
       <div id="content" class="col-md-12">  
-        <p>Please be aware of notation below in command outlines. <code>$</code> represents a command; following rest of the lines represent output. Powershell is superset of traditional command prompt. Hence, all usual binaries still run on powershell for example, <code>takeown</code>.</p>
-<p><strong>Power Options</strong>
-Open Power Options Window,</p>
-<pre><code>Show-ControlPanelItem -Name &quot;Power Options&quot;
+        <p><strong>This article applies to legacy powershell (powershell 5.0 or earlier)</strong></p>
+<p><em>Please be aware of notation below in command outlines. <code>$</code> represents a command and rests of the lines following that line are output. The tradition is to utilize the &quot;&gt; &quot; prompt for Windows Command Shell, however, I come from a Unix background and I defy that.</em></p>
+<h3 id="control-panel-cmdlet">Control Panel Cmdlet</h3>
+<p>Handy cmds follow, <a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/show-controlpanelitem">ref</a> to access sys properties,</p>
+<pre><code>Show-ControlPanelItem -Name System
 </code></pre>
-<h2 id="service-management">Service Management</h2>
+<p>For example, open Power Options Window,</p>
+<pre><code>Show-ControlPanelItem -Name 'Power Options'
+</code></pre>
+<p>Useful names list supported by <code>Show-ControlPanelItem</code>,</p>
+<ul>
+<li>Device Manager</li>
+<li>Programs and Features</li>
+<li>Network and Sharing Center</li>
+<li>Default Programs</li>
+</ul>
+<p>For, Sound mouse etc we do,</p>
+<ul>
+<li>Sound</li>
+<li>Mouse</li>
+</ul>
+<h3 id="service-management">Service Management</h3>
 <p>Get list of services currently running,</p>
 <pre><code>Get-Service | Where-Object {$_.Status -eq &quot;Running&quot;}
 </code></pre>
@@ -121,15 +137,15 @@ Open Power Options Window,</p>
 <p>Stop one,</p>
 <pre><code>Stop-Service -Name VPNAgent
 </code></pre>
-<h2 id="scripting-using-pwsh">Scripting using pwsh</h2>
+<h3 id="scripting-using-pwsh">Scripting using pwsh</h3>
 <p>These basic stuffs might come handy,</p>
 <p>Passing all arguments, untouched to another script,</p>
-<pre><code>$saArgs = $args[0 .. ($args.Count)]
+<pre><code class="language-powershell">$saArgs = $args[0 .. ($args.Count)]
 &amp; &quot;$Env:HOME\ss.ps1&quot; $saArgs
 </code></pre>
 <h3 id="changing-window-size">Changing Window Size</h3>
 <p>To change Window ize we change buffer size first, because Window Size depends on it.</p>
-<pre><code>$cUI = (Get-Host).UI.RawUI
+<pre><code class="language-powershell">$cUI = (Get-Host).UI.RawUI
 $b = $cUI.BufferSize
 $b.Width = $width
 $b.Height = $history_size
@@ -148,8 +164,8 @@ $cUI.WindowSize = $b
 <p>To change the title of the console we do,</p>
 <pre><code>$cUI.WindowTitle = $title
 </code></pre>
-<p><a href="https://docs.microsoft.com/en-us/dotnet/api/system.management.automation.host.pshostuserinterface.rawui">ms docs ref</a></p>
-<h2 id="continue">continue</h2>
+<p>ref, <a href="https://docs.microsoft.com/en-us/dotnet/api/system.management.automation.host.pshostuserinterface.rawui">MSFT Docs Automation</a> provides more details on the UI properties for automation on powershell.</p>
+<h3 id="continue">continue</h3>
 <p>rest of the contents yet to be appended..</p>
 
 
