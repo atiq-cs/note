@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://note.iqubit.xyz/" />
 	<rights>Copyright © 2022</rights>
-	<updated>2022-12-03T22:13:03Z</updated>
+	<updated>2022-12-03T22:25:11Z</updated>
 	<subtitle>Head's in the cloud, a Qubit blog</subtitle>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/ml/pytorch-getting-started-with-cuda</id>
@@ -877,8 +877,6 @@ PSEdition
 PSHOME
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;em&gt;TODO: check pwsh 7&lt;/em&gt;&lt;/p&gt;
-&lt;h3 id="continue"&gt;continue&lt;/h3&gt;
-&lt;p&gt;rest of the contents yet to be appended..&lt;/p&gt;
 </content>
 		<summary>Head's in the cloud, a Qubit blog</summary>
 	</entry>
@@ -1099,17 +1097,12 @@ int ReverseNum(int a, int res) {
 &lt;h3 id="start-process"&gt;Start-Process&lt;/h3&gt;
 &lt;p&gt;Here are some handy cmds (Application Run Examples),&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Start&lt;/code&gt; is an alias of &lt;code&gt;Start-Process&lt;/code&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Start DevEnv /Edit, Stream-Converter.ps1
-Start TeamViewer
-Start CVpn-Client
-
-Start Atom
+&lt;pre&gt;&lt;code&gt;Start Code --diff, a.md, b.md
+Start Signal
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;where I link &lt;code&gt;CVpn-Client&lt;/code&gt; to &lt;code&gt;C:\Program Files (x86)\Cisco\Cisco AnyConnect Secure Mobility Client\vpnui.exe&lt;/code&gt;,&lt;/p&gt;
-&lt;p&gt;and, atom is usually linked to &lt;code&gt;C:\Users\atiq\AppData\Local\atom\atom.exe&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Syntax for microsoft store apps,&lt;/p&gt;
+&lt;p&gt;Syntax for AppEx/ MS Store Apps,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Start Microsoft-Edge:https://google.com
-Start Skype:
+Start MS-Paint:
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;For passing arguments to an application we can either add it right after the app name with a seperating space,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Start Notepad++ file_path
@@ -1121,7 +1114,7 @@ Start Skype:
 &lt;p&gt;To make it work, we need to double quote them &lt;a href="https://stackoverflow.com/questions/22840882/powershell-opening-file-path-with-spaces"&gt;ref, SO - pwsh opening file path with spaces&lt;/a&gt;,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Start Notepad++ -ArgumentList &amp;quot;`&amp;quot;D:\Cool Soft\my awesome file.txt`&amp;quot;&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="get-process"&gt;Get-Process&lt;/h3&gt;
+&lt;h3 id="process-management"&gt;Process Management&lt;/h3&gt;
 &lt;p&gt;A simple run gives a technical summary of the process&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ Get-Process pwsh
 
@@ -1129,10 +1122,19 @@ NPM(K)    PM(M)      WS(M)     CPU(s)      Id  SI ProcessName
 ------    -----      -----     ------      --  -- -----------
     80   117.16     170.47      25.61   21628   1 pwsh
 &lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;annoying what the powershell team chose by default on the implementation&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;To get number of instances of a process&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;function GetProcessInstanceNumber([string] $process) {
     &amp;#64;(Get-Process $process -ErrorAction 0).Count
 }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Get top 30 processes sorted by CPU usage,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Get-Process | Sort-Object CPU -Descending | Select -First 30 -Property ID,ProcessName,CPU,WorkingSet64 | Format-table -autosize
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Same thing with default columns,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Get-Process | Sort-Object -Property cpu -Descending | Select -First 30
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id="service-management"&gt;Service Management&lt;/h3&gt;
 &lt;p&gt;Get list of services currently running,&lt;/p&gt;

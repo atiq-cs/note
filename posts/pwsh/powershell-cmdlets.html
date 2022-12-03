@@ -110,17 +110,12 @@
 <h3 id="start-process">Start-Process</h3>
 <p>Here are some handy cmds (Application Run Examples),</p>
 <p><code>Start</code> is an alias of <code>Start-Process</code></p>
-<pre><code>Start DevEnv /Edit, Stream-Converter.ps1
-Start TeamViewer
-Start CVpn-Client
-
-Start Atom
+<pre><code>Start Code --diff, a.md, b.md
+Start Signal
 </code></pre>
-<p>where I link <code>CVpn-Client</code> to <code>C:\Program Files (x86)\Cisco\Cisco AnyConnect Secure Mobility Client\vpnui.exe</code>,</p>
-<p>and, atom is usually linked to <code>C:\Users\atiq\AppData\Local\atom\atom.exe</code></p>
-<p>Syntax for microsoft store apps,</p>
+<p>Syntax for AppEx/ MS Store Apps,</p>
 <pre><code>Start Microsoft-Edge:https://google.com
-Start Skype:
+Start MS-Paint:
 </code></pre>
 <p>For passing arguments to an application we can either add it right after the app name with a seperating space,</p>
 <pre><code>Start Notepad++ file_path
@@ -132,7 +127,7 @@ Start Skype:
 <p>To make it work, we need to double quote them <a href="https://stackoverflow.com/questions/22840882/powershell-opening-file-path-with-spaces">ref, SO - pwsh opening file path with spaces</a>,</p>
 <pre><code>Start Notepad++ -ArgumentList &quot;`&quot;D:\Cool Soft\my awesome file.txt`&quot;&quot;
 </code></pre>
-<h3 id="get-process">Get-Process</h3>
+<h3 id="process-management">Process Management</h3>
 <p>A simple run gives a technical summary of the process</p>
 <pre><code>$ Get-Process pwsh
 
@@ -140,10 +135,19 @@ NPM(K)    PM(M)      WS(M)     CPU(s)      Id  SI ProcessName
 ------    -----      -----     ------      --  -- -----------
     80   117.16     170.47      25.61   21628   1 pwsh
 </code></pre>
+<ul>
+<li>annoying what the powershell team chose by default on the implementation</li>
+</ul>
 <p>To get number of instances of a process</p>
 <pre><code>function GetProcessInstanceNumber([string] $process) {
     &#64;(Get-Process $process -ErrorAction 0).Count
 }
+</code></pre>
+<p>Get top 30 processes sorted by CPU usage,</p>
+<pre><code>Get-Process | Sort-Object CPU -Descending | Select -First 30 -Property ID,ProcessName,CPU,WorkingSet64 | Format-table -autosize
+</code></pre>
+<p>Same thing with default columns,</p>
+<pre><code>Get-Process | Sort-Object -Property cpu -Descending | Select -First 30
 </code></pre>
 <h3 id="service-management">Service Management</h3>
 <p>Get list of services currently running,</p>

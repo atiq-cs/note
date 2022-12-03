@@ -134,7 +134,7 @@
 <p>To access advanced system properties (old: <code>sysdm.cpl</code>), use,</p>
 <pre><code>$ SystemPropertiesAdvanced
 </code></pre>
-<p><strong>Ref</strong></p>
+<p><strong>Refs</strong></p>
 <ul>
 <li><a href="https://social.technet.microsoft.com/wiki/contents/articles/4486.accessing-the-control-panel-via-the-commandline.aspx">MSFT TechNet - Accessing the Control Panel via the Commandline</a></li>
 <li><a href="https://learn.microsoft.com/en-us/windows/win32/shell/controlpanel-canonical-names">MSFT Win32 Shell - Canonical Names of Control Panel Items</a></li>
@@ -152,12 +152,6 @@
 </code></pre>
 <p>Get Software List,</p>
 <pre><code>Get-WmiObject -Class Win32_Product -Filter &quot;Name = 'Java 8 (64 bit)'&quot;
-</code></pre>
-<h3 id="scripting-using-pwsh">Scripting using pwsh</h3>
-<p>These basic stuffs might come handy,</p>
-<p>Passing all arguments, untouched to another script,</p>
-<pre><code class="language-powershell">$saArgs = $args[0 .. ($args.Count)]
-&amp; &quot;$Env:HOME\ss.ps1&quot; $saArgs
 </code></pre>
 <h3 id="changing-window-size">Changing Window Size</h3>
 <p>To change Window ize we change buffer size first, because Window Size depends on it.</p>
@@ -190,9 +184,12 @@ $cUI.WindowSize = $b
 $app.Uninstall()
 </code></pre>
 <h3 id="miscellaneous">Miscellaneous</h3>
-<p>to fill in</p>
-<h3 id="continue">continue</h3>
-<p>rest of the contents yet to be appended..</p>
+<p><strong>Arguments to the Shell</strong></p>
+<p>These basic stuffs might come handy,</p>
+<p>Passing all arguments, untouched to another script,</p>
+<pre><code class="language-powershell">$saArgs = $args[0 .. ($args.Count)]
+&amp; &quot;$Env:HOME\ss.ps1&quot; $saArgs
+</code></pre>
 
 
 
