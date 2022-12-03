@@ -40,7 +40,7 @@ Pivot can be chosen in a number of ways,
 We start with partitioning the array. We sort 2 sub-arrays recursively by calling quick sort on partitions.
 
 ### Combine
-Each recursive call to 'quick-sort' sorts the particular segment of the array. After recursive calls return the array is already sorted. Therefore, no action is required to be taken on combine step.
+Each recursive call to 'quick-sort' sorts the particular segment of the array. Once the last recursive call returns, the array is sorted. Due to that, no action is required to be taken on combine step.
 
 ## How it works
 The idea is that we choose a pivot element from the array. We put all elements less than the pivot to the left side and we put all elements greater than the pivot item to the right side. We consider the left side and the right side as 2 sub-arrays where we apply the same procedure. After recursively applying the mechanism in the end, the array is sorted.
