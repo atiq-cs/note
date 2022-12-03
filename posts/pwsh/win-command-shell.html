@@ -93,7 +93,7 @@
           </h1>
               <div class="meta">Published on Tuesday, 19 November 2019</div>
                 <div class="mt-3">
-                      <a href="/tags/windows-command-prompt" class="badge badge-light"> windows command prompt</a>
+                      <a href="/tags/windows-command-shell" class="badge badge-light"> windows command shell</a>
                       <a href="/tags/system-administration" class="badge badge-light"> system administration</a>
                 </div>
         </div>
@@ -106,12 +106,36 @@
   <div class="container"> 
     <div class="row">
       <div id="content" class="col-md-12">  
-        <p>Please be aware of notation below in command outlines. <code>$</code> represents a command and rests of the lines following that line are output. Powershell is superset of traditional command prompt. Hence, all usual binaries still run on powershell for exxample, <code>takeown</code>.</p>
-<p><strong>Win Supported Run Cmds</strong></p>
-<p>[ToDo: move this to a separate one.]</p>
+        <p><em>Please be aware of notation below in command outlines. <code>$</code> represents a command and rests of the lines following that line are output. The tradition is to utilize the &quot;&gt; &quot; prompt for Windows Command Shell, however, I come from a Unix background and I defy that.</em></p>
+<p>Primary ref, <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands#command-line-shells">MSFT Win Server - Intro to Windows Command Line Shell</a></p>
+<h4 id="control-panel-commands">Control Panel Commands</h4>
+<p>These can be run from Run Command Dialog Box as well,</p>
 <pre><code>desk.cpl
 services.msc
 sysdm.cpl
+</code></pre>
+<p>Few more,</p>
+<pre><code>Name         Description
+----         -----------
+appwiz.cpl   Shell Application Manager
+bthprops.cpl Bluetooth Control Panel Applet
+desk.cpl     Desktop Settings Control Panel
+Firewall.cpl Windows Defender Firewall Control Panel DLL Launching Stub
+hdwwiz.cpl   Add Hardware Control Panel Applet
+inetcpl.cpl  Internet Control Panel
+intl.cpl     Control Panel DLL
+irprops.cpl  Infrared Control Panel Applet
+joy.cpl      Game Controllers Control Panel Applet
+main.cpl     Mouse and Keyboard Control Panel Applets
+mmsys.cpl    Audio Control Panel
+ncpa.cpl     Network Connections Control-Panel Stub
+powercfg.cpl Power Management Configuration Control Panel Applet
+sapi.cpl     Speech UX Control Panel
+sysdm.cpl    System Applet for the Control Panel
+TabletPC.cpl Tablet PC Control Panel
+telephon.cpl Telephony Control Panel
+timedate.cpl Time Date Control Panel Applet
+wscui.cpl    Security and Maintenance
 </code></pre>
 <h2 id="misc">Misc</h2>
 <p>Customized ping command, waits 20 seconds for reply and keep pinging non-stop <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/ping">ping ref</a>,</p>
@@ -134,8 +158,12 @@ cmd /c ftype foobarfile=powershell.exe -File `&quot;C:\path\to\your.ps1`&quot; `
 <p>Modify files to remove hidden attributes using attrib</p>
 <pre><code>attrib -h my-hidden-file.txt
 </code></pre>
-<p><strong>Robust copy</strong>
-<code>robocopy</code> is good for copying large numbeer of files (to handle so many different cases: large files, network interruptions, file names). An example cmd,</p>
+<p><strong>Robust copy</strong></p>
+<p>robocopy is quite useful on recovery mode / troubleshooting on UEFI recovery image,</p>
+<pre><code>robocopy /zb /s SOURCE DEST
+</code></pre>
+<p>ref, <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/robocopy">MSFT Learn - Windows Server Commands</a></p>
+<p><code>robocopy</code> is good for copying large numbeer of files (to handle so many different cases: large files, network interruptions, file names). An example cmd,</p>
 <pre><code>robocopy /s /z /v /fp /eta 'D:\Movies' 'H:\' Office.*
 robocopy /s /z /v /fp /eta 'D:\TV Series' 'H:\' Fringe*
 </code></pre>
@@ -143,30 +171,29 @@ robocopy /s /z /v /fp /eta 'D:\TV Series' 'H:\' Fringe*
 <p>Exmple of copy over network,</p>
 <pre><code>robocopy /s /z /v /fp /eta '\\ENLIGHTENSOUL\Bangla\3RD Person Singular Number' 'i:\'
 </code></pre>
-<p><strong>xcopy examples</strong>
-(prefer <code>robocopy</code> over this one), some variations below,</p>
+<p><strong>xcopy examples</strong></p>
+<p><code>xcopy</code> cmd examples,</p>
 <pre><code>xcopy /C /F /H e:\c O:
 xcopy /s /C /F /H e:\C++ O:\C++
 xcopy /s /C /F /H &quot;e:\FC back up&quot; &quot;o:\FC back up&quot;
 xcopy /s /C /F /H &quot;e:\Net Workspace&quot; &quot;o:\Net Workspace&quot;
 xcopy /s /C /F /H f:\* Q:\*
 </code></pre>
-<p>Retrieving all cmd history,</p>
-<pre><code>doskey /history &gt; copy_command.txt
-</code></pre>
-<p>delete everything inside a directory,</p>
+<p>I prefer <code>robocopy</code> over <code>xcopy</code>.</p>
+<h3 id="file-system-management">File System Management</h3>
+<p>Removing directory: delete everything inside a directory,</p>
 <pre><code>rd /s /q JobDetails_data
 </code></pre>
-<p><strong>mklink</strong>
-To create a symbolic link named MyDocs from the root directory to the \Users\User1\Documents directory,</p>
+<p><strong>mklink</strong></p>
+<p>To create a symbolic link named MyDocs from the root directory to the \Users\User1\Documents directory,</p>
 <pre><code>mklink /d \MyDocs \Users\User1\Documents
 </code></pre>
 <p>Creates a Directory Junction instead using mklink,</p>
 <pre><code>$ mklink /j C:\Users\Atique\AppData\Local\Microsoft\Office\15.0\OfficeFileCache H:\OfficeFileCache
 Junction created for C:\Users\Atique\AppData\Local\Microsoft\Office\15.0\OfficeFileCache &lt;&lt;===&gt;&gt; H:\OfficeFileCache
 </code></pre>
-<p><strong>Network share commands</strong>
-view curently shared directories,</p>
+<p><strong>Network share commands</strong></p>
+<p>view curently shared directories,</p>
 <pre><code>net share
 </code></pre>
 <p>to delete share (requires admin privilege),</p>
@@ -177,12 +204,17 @@ Softs       D:\Sourcecodes\Web\Softs
 <p>To share a directory,</p>
 <pre><code>net share listshare=&quot;D:\Docs&quot;
 </code></pre>
-<p><strong>registry</strong>
-For example usage <code>regsvr32</code> of check <a href="https://www.codeproject.com/Articles/766246/Windows-Media-Player-Native-Subtitle-Plugin-Cplusp">codeproject - Windows Media Player Native Subtitle Plugin</a></p>
+<p><strong>registry</strong></p>
+<p>For example usage <code>regsvr32</code> of check <a href="https://www.codeproject.com/Articles/766246/Windows-Media-Player-Native-Subtitle-Plugin-Cplusp">codeproject - Windows Media Player Native Subtitle Plugin</a></p>
+<p><strong>dos features</strong></p>
+<p>Retrieving all cmd history,</p>
+<pre><code>doskey /history &gt; copy_command.txt
+</code></pre>
 <h2 id="references">References</h2>
 <ul>
 <li><a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/commands-by-server-role">MS Docs - Windows Commands</a></li>
 </ul>
+<p><em>Powershell is supersedes of command shell. Hence, all commands for this also run on powershell with some minor variations.</em></p>
 
 
 

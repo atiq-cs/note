@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Head&#x27;s in the cloud, a Qubit blog">
 
-  <title>Notes from Qubit Inc. - Powershell Core Cmdlets</title>
+  <title>Notes from Qubit Inc. - Powershell Cmdlets</title>
 
   <link rel="canonical" href="https://note.iqubit.xyz/posts/pwsh/powershell-cmdlets">
 
@@ -18,7 +18,7 @@
   <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
   <meta name="msapplication-starturl" content="/" />
 
-  <meta property="og:title" content="Notes from Qubit Inc. - Powershell Core Cmdlets" />
+  <meta property="og:title" content="Notes from Qubit Inc. - Powershell Cmdlets" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://note.iqubit.xyz/posts/pwsh/powershell-cmdlets" />
   
@@ -89,12 +89,11 @@
       <div class="col-md-12">
         <div class="post-heading">
           <h1>
-            Powershell Core Cmdlets
+            Powershell Cmdlets
           </h1>
               <div class="meta">Published on Thursday, 10 December 2020</div>
                 <div class="mt-3">
-                      <a href="/tags/powershell-core" class="badge badge-light"> powershell core</a>
-                      <a href="/tags/pwsh" class="badge badge-light"> pwsh</a>
+                      <a href="/tags/powershell" class="badge badge-light"> powershell</a>
                       <a href="/tags/system-administration" class="badge badge-light"> system administration</a>
                 </div>
         </div>
@@ -107,7 +106,8 @@
   <div class="container"> 
     <div class="row">
       <div id="content" class="col-md-12">  
-        <h3 id="start-process">Start-Process</h3>
+        <p><em>This article applies to Powershell version 6 or later (formerly also known as Powershell Core).</em></p>
+<h3 id="start-process">Start-Process</h3>
 <p>Here are some handy cmds (Application Run Examples),</p>
 <p><code>Start</code> is an alias of <code>Start-Process</code></p>
 <pre><code>Start DevEnv /Edit, Stream-Converter.ps1
@@ -129,7 +129,7 @@ Start Skype:
 <pre><code>Start Notepad++ -ArgumentList file_path
 </code></pre>
 <p>However, it's tricky if passed argument for example, <code>file_path</code> above contains a space character.</p>
-<p>To make it work, we need to double quote them <a href="https://stackoverflow.com/questions/22840882/powershell-opening-file-path-with-spaces">ref</a>,</p>
+<p>To make it work, we need to double quote them <a href="https://stackoverflow.com/questions/22840882/powershell-opening-file-path-with-spaces">ref, SO - pwsh opening file path with spaces</a>,</p>
 <pre><code>Start Notepad++ -ArgumentList &quot;`&quot;D:\Cool Soft\my awesome file.txt`&quot;&quot;
 </code></pre>
 <h3 id="get-process">Get-Process</h3>
@@ -145,7 +145,7 @@ NPM(K)    PM(M)      WS(M)     CPU(s)      Id  SI ProcessName
     &#64;(Get-Process $process -ErrorAction 0).Count
 }
 </code></pre>
-<h2 id="service-management">Service Management</h2>
+<h3 id="service-management">Service Management</h3>
 <p>Get list of services currently running,</p>
 <pre><code>Get-Service | Where-Object {$_.Status -eq &quot;Running&quot;}
 </code></pre>
@@ -158,6 +158,121 @@ NPM(K)    PM(M)      WS(M)     CPU(s)      Id  SI ProcessName
 <p>Useful for bluetooth service,</p>
 <pre><code>Start-Service bthserv
 Stop-Service -Force bthserv
+</code></pre>
+<h3 id="network-administration">Network Administration</h3>
+<p><em>To view information on the currently connect WiFi network</em></p>
+<pre><code>$ Get-NetConnectionProfile
+Name                     : &#64;Coffeebar Guest WiFi
+InterfaceAlias           : Wi-Fi
+InterfaceIndex           : 16
+NetworkCategory          : Public
+DomainAuthenticationKind : None
+IPv4Connectivity         : Internet
+IPv6Connectivity         : NoTraffic
+</code></pre>
+<p><strong>Show Network Interfaces Information</strong>
+Using powershell cmdlet, we can view information on all network interfaces in the system,</p>
+<pre><code>$ Get-NetAdapter
+Name                      InterfaceDescription                    ifIndex Status       MacAddress             LinkSpeed
+----                      --------------------                    ------- ------       ----------             ---------
+Ethernet 2                Cisco AnyConnect Secure Mobility Clien…      14 Not Present  00-05-9A-3C-7A-00          0 bps
+Wi-Fi                     Intel(R) Wi-Fi 6 AX200 160MHz                10 Up           04-ED-33-4C-9E-1F       400 Mbps
+vEthernet (Default Switc… Hyper-V Virtual Ethernet Adapter             23 Up           00-15-5D-5F-1A-CB        10 Gbps
+</code></pre>
+<p>To view information on the WiFi network interface,</p>
+<pre><code>$ Get-NetAdapter -Name Wi-Fi
+Name                      InterfaceDescription                    ifIndex Status       MacAddress             LinkSpeed
+----                      --------------------                    ------- ------       ----------             ---------
+Wi-Fi                     Intel(R) Wi-Fi 6 AX200 160MHz                10 Up           04-ED-33-4C-9E-1F       400 Mbps
+</code></pre>
+<p>Show cmdlets related to net adapter,</p>
+<pre><code>$ gcm -Noun netadapter | select name, modulename
+
+Name               ModuleName
+----               ----------
+Disable-NetAdapter NetAdapter
+Enable-NetAdapter  NetAdapter
+Get-NetAdapter     NetAdapter
+Rename-NetAdapter  NetAdapter
+Restart-NetAdapter NetAdapter
+Set-NetAdapter     NetAdapter
+</code></pre>
+<p>Additionally, now, we have cmdlet to show IP Address info without sing <code>netsh</code>,</p>
+<pre><code>$ Get-NetIPAddress
+IPAddress         : fe80::f384:25fc:f7ba:30b%7
+InterfaceIndex    : 7
+InterfaceAlias    : Bluetooth Network Connection
+AddressFamily     : IPv6
+Type              : Unicast
+PrefixLength      : 64
+PrefixOrigin      : WellKnown
+SuffixOrigin      : Link
+AddressState      : Deprecated
+ValidLifetime     : Infinite ([TimeSpan]::MaxValue)
+PreferredLifetime : Infinite ([TimeSpan]::MaxValue)
+SkipAsSource      : False
+PolicyStore       : ActiveStore
+
+IPAddress         : fe80::99c3:e3a9:7b86:99fe%11
+InterfaceIndex    : 11
+InterfaceAlias    : Local Area Connection* 10
+AddressFamily     : IPv6
+Type              : Unicast
+PrefixLength      : 64
+PrefixOrigin      : WellKnown
+SuffixOrigin      : Link
+AddressState      : Deprecated
+ValidLifetime     : Infinite ([TimeSpan]::MaxValue)
+PreferredLifetime : Infinite ([TimeSpan]::MaxValue)
+SkipAsSource      : False
+PolicyStore       : ActiveStore
+
+IPAddress         : fe80::604:e257:2351:2768%17
+InterfaceIndex    : 17
+InterfaceAlias    : Local Area Connection* 9
+AddressFamily     : IPv6
+Type              : Unicast
+PrefixLength      : 64
+PrefixOrigin      : WellKnown
+SuffixOrigin      : Link
+AddressState      : Deprecated
+ValidLifetime     : Infinite ([TimeSpan]::MaxValue)
+PreferredLifetime : Infinite ([TimeSpan]::MaxValue)
+SkipAsSource      : False
+PolicyStore       : ActiveStore
+
+
+
+... ...
+
+... ...
+IPAddress         : 10.55.200.98
+InterfaceIndex    : 16
+InterfaceAlias    : Wi-Fi
+AddressFamily     : IPv4
+Type              : Unicast
+PrefixLength      : 8
+PrefixOrigin      : Dhcp
+SuffixOrigin      : Dhcp
+AddressState      : Preferred
+ValidLifetime     : 20:23:37
+PreferredLifetime : 20:23:37
+SkipAsSource      : False
+PolicyStore       : ActiveStore
+
+IPAddress         : 127.0.0.1
+InterfaceIndex    : 1
+InterfaceAlias    : Loopback Pseudo-Interface 1
+AddressFamily     : IPv4
+Type              : Unicast
+PrefixLength      : 8
+PrefixOrigin      : WellKnown
+SuffixOrigin      : WellKnown
+AddressState      : Preferred
+ValidLifetime     : Infinite ([TimeSpan]::MaxValue)
+PreferredLifetime : Infinite ([TimeSpan]::MaxValue)
+SkipAsSource      : False
+PolicyStore       : ActiveStore
 </code></pre>
 
 

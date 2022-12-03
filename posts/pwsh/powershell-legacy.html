@@ -106,7 +106,7 @@
   <div class="container"> 
     <div class="row">
       <div id="content" class="col-md-12">  
-        <p><strong>This article applies to legacy powershell (powershell 5.0 or earlier)</strong></p>
+        <p><em>This article applies to legacy powershell (powershell 5.0 or earlier) Check edition via Powershell variable: <code>$PSEdition</code> (should show &quot;Desktop for legacy/classic powershell), classic powershell is also bundled into the Windows OS.</em></p>
 <p><em>Please be aware of notation below in command outlines. <code>$</code> represents a command and rests of the lines following that line are output. The tradition is to utilize the &quot;&gt; &quot; prompt for Windows Command Shell, however, I come from a Unix background and I defy that.</em></p>
 <h3 id="control-panel-cmdlet">Control Panel Cmdlet</h3>
 <p>Handy cmds follow, <a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/show-controlpanelitem">ref</a> to access sys properties,</p>
@@ -115,17 +115,30 @@
 <p>For example, open Power Options Window,</p>
 <pre><code>Show-ControlPanelItem -Name 'Power Options'
 </code></pre>
-<p>Useful names list supported by <code>Show-ControlPanelItem</code>,</p>
+<p>Following can be invoked using <code>Show-ControlPanelItem</code> specifying name argument,</p>
 <ul>
+<li>System</li>
+<li>Programs and Features, old: <code>appwiz.cpl</code></li>
+<li>Network and Sharing Center (previous: <code>control ncpa.cpl</code>)</li>
 <li>Device Manager</li>
-<li>Programs and Features</li>
-<li>Network and Sharing Center</li>
 <li>Default Programs</li>
+<li>Power Options, old: <code>powercfg.cpl</code></li>
+<li>User Accounts</li>
+<li>Taskbar and Navigation</li>
 </ul>
 <p>For, Sound mouse etc we do,</p>
 <ul>
 <li>Sound</li>
 <li>Mouse</li>
+</ul>
+<p>To access advanced system properties (old: <code>sysdm.cpl</code>), use,</p>
+<pre><code>$ SystemPropertiesAdvanced
+</code></pre>
+<p><strong>Ref</strong></p>
+<ul>
+<li><a href="https://social.technet.microsoft.com/wiki/contents/articles/4486.accessing-the-control-panel-via-the-commandline.aspx">MSFT TechNet - Accessing the Control Panel via the Commandline</a></li>
+<li><a href="https://learn.microsoft.com/en-us/windows/win32/shell/controlpanel-canonical-names">MSFT Win32 Shell - Canonical Names of Control Panel Items</a></li>
+<li><a href="https://www.tenforums.com/tutorials/86339-list-commands-open-control-panel-items-windows-10-a.html">tenforums - Control Panel Item Cmds</a></li>
 </ul>
 <h3 id="service-management">Service Management</h3>
 <p>Get list of services currently running,</p>
@@ -136,6 +149,9 @@
 </code></pre>
 <p>Stop one,</p>
 <pre><code>Stop-Service -Name VPNAgent
+</code></pre>
+<p>Get Software List,</p>
+<pre><code>Get-WmiObject -Class Win32_Product -Filter &quot;Name = 'Java 8 (64 bit)'&quot;
 </code></pre>
 <h3 id="scripting-using-pwsh">Scripting using pwsh</h3>
 <p>These basic stuffs might come handy,</p>
@@ -165,6 +181,16 @@ $cUI.WindowSize = $b
 <pre><code>$cUI.WindowTitle = $title
 </code></pre>
 <p>ref, <a href="https://docs.microsoft.com/en-us/dotnet/api/system.management.automation.host.pshostuserinterface.rawui">MSFT Docs Automation</a> provides more details on the UI properties for automation on powershell.</p>
+<h4 id="programs-and-feature-management">Programs and Feature Management</h4>
+<p>Software Management: <strong>Get Software List</strong></p>
+<pre><code>Get-WmiObject -Class Win32_Product -Filter &quot;Name = 'Java 8 (64 bit)'&quot;
+</code></pre>
+<p>How to uninstall application,</p>
+<pre><code>$app = Get-WmiObject -Class Win32_Product -Filter &quot;Name = 'Java 8 (64-bit)'&quot;
+$app.Uninstall()
+</code></pre>
+<h3 id="miscellaneous">Miscellaneous</h3>
+<p>to fill in</p>
 <h3 id="continue">continue</h3>
 <p>rest of the contents yet to be appended..</p>
 

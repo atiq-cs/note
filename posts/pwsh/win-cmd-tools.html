@@ -93,7 +93,7 @@
           </h1>
               <div class="meta">Published on Friday, 29 November 2019</div>
                 <div class="mt-3">
-                      <a href="/tags/windows-command-prompt" class="badge badge-light"> windows command prompt</a>
+                      <a href="/tags/windows-command-shell" class="badge badge-light"> windows command shell</a>
                       <a href="/tags/system-administration" class="badge badge-light"> system administration</a>
                 </div>
         </div>
@@ -106,11 +106,11 @@
   <div class="container"> 
     <div class="row">
       <div id="content" class="col-md-12">  
-        <p>Please be aware of notation below in command outlines. <code>$</code> represents a command and rests of the lines following that line are output. Powershell is superset of traditional command prompt. Hence, all usual binaries still run on powershell for exxample, <code>takeown</code>.</p>
-<h2 id="windows-os-tools">Windows OS Tools</h2>
+        <p><em>Please be aware of notation below in command outlines. <code>$</code> represents a command and rests of the lines following that line are output. The tradition is to utilize the &quot;&gt; &quot; prompt for Windows Command Shell, however, I come from a Unix background and I defy that.</em></p>
+<p>* Netsh tool examples are bit long, hence it is moved at the bottom.</p>
 <h3 id="balanced-power-options">Balanced Power options</h3>
 <p>Turn hibernation off (run from elevated PS),</p>
-<pre><code>powercfg.exe /h off
+<pre><code>powercfg /h off
 </code></pre>
 <p>List Power plans,</p>
 <pre><code>$ powercfg list
@@ -127,7 +127,7 @@ Power Scheme GUID: 496d75e1-8cba-4d72-b778-535d67c976ea  (Airplane)
 <pre><code>reg import 'D:\Soft\reg files soft settings\app_paths\KeePass.reg'
 </code></pre>
 <h3 id="winrar">WinRar</h3>
-<p>An example use of rar (in my system referring to <code>D:\ProgData\WinRAR\rar.exe</code>),</p>
+<p>An example use of rar,</p>
 <pre><code>rar a -m5 -psa1 -ep1 I:\Doc\docs.rar I:\Doc\Office_Docs\
 </code></pre>
 <p><em>without <code>-ep1</code> it makes a big directory tree</em></p>
@@ -160,6 +160,154 @@ Extract subtitle using <code>mkvextract</code> (referring to <code>C:\Program Fi
 </code></pre>
 <p><code>mkvmerge</code> (in my system <code>C:\Program Files (x86)\MKVToolNix\mkvmerge.exe</code>) show info on mkv file,</p>
 <pre><code>mkvmerge -i D:\Movies\Fences.mkv
+</code></pre>
+<h3 id="network-shell-netsh">Network Shell (Netsh)</h3>
+<p>Network shell (netsh) is a command-line utility that allows you to configure and display the status of various network communications server roles and components after they are installed on computers running Windows Server. ref, <a href="https://learn.microsoft.com/en-us/windows-server/networking/technologies/netsh/netsh">MSFT Windows Server - Network Shell</a></p>
+<p>We still need to use <code>netsh</code> till we have cmdlets support</p>
+<p><em>To connect to a specific network or SSID</em></p>
+<pre><code>netsh wlan connect name='Starbucks WiFi'
+</code></pre>
+<p><em>To disconnect from WiFi</em></p>
+<pre><code>$ netsh wlan disconnect interface=Wi-Fi
+Disconnection request was completed successfully for interface &quot;Wi-Fi&quot;.
+</code></pre>
+<p><em>To disable Net WiFi Adapter (requires admin privilege),</em></p>
+<pre><code>Disable-NetAdapter -Name Wi-Fi -Confirm:$false
+</code></pre>
+<p><em>To disable Net WiFi Adapter (requires admin privilege),</em></p>
+<pre><code>Enable-NetAdapter -Name Wi-Fi
+</code></pre>
+<p>To provide more context, new cmdlets and netsh features enable us to control network interfaces of the PC. Here's a netsh example to list WiFi SSIDs,</p>
+<pre><code>$ netsh wlan show profiles
+
+Profiles on interface Wi-Fi:
+
+Group policy profiles (read only)
+---------------------------------
+
+User profiles
+-------------
+    All User Profile     : CSC-Public
+    All User Profile     : Starbucks WiFi
+    All User Profile     : PEETS
+.......
+</code></pre>
+<p>This command does not show currently available WiFi Networks. It only shows the networks that are saved in the System because it connected to those in past.</p>
+<p>Following shows pretty much the same list probably because most WiFi have clear type Key,</p>
+<pre><code>$ netsh wlan show profiles key=clear
+</code></pre>
+<p>Applying above command on a specific SSID provides us more info,</p>
+<pre><code>$ netsh wlan show profiles name='Starbucks WiFi'
+
+Profile Starbucks WiFi on interface Wi-Fi:
+=======================================================================
+
+Applied: All User Profile
+
+Profile information
+-------------------
+    Version                : 1
+    Type                   : Wireless LAN
+    Name                   : Starbucks WiFi
+    Control options        :
+        Connection mode    : Connect automatically
+        Network broadcast  : Connect only if this network is broadcasting
+        AutoSwitch         : Do not switch to other networks
+        MAC Randomization  : Disabled
+
+Connectivity settings
+---------------------
+    Number of SSIDs        : 1
+    SSID name              : &quot;Starbucks WiFi&quot;
+    Network type           : Infrastructure
+    Radio type             : [ Any Radio Type ]
+    Vendor extension          : Not present
+
+Security settings
+-----------------
+    Authentication         : Open
+    Cipher                 : None
+    Security key           : Absent
+    Key Index              : 1
+
+Cost settings
+-------------
+    Cost                   : Unrestricted
+    Congested              : No
+    Approaching Data Limit : No
+    Over Data Limit        : No
+    Roaming                : No
+    Cost Source            : Default
+</code></pre>
+<p>Following is equivalent,</p>
+<pre><code>$ netsh wlan show profiles name='Starbucks WiFi' key=clear
+</code></pre>
+<p><strong>Show Network Interfaces Information</strong></p>
+<p>To view currently connected SSID etc,</p>
+<pre><code>$ netsh wlan show interfaces
+There is 1 interface on the system:
+
+Name                   : Wi-Fi
+Description            : Intel(R) Wi-Fi 6 AX200 160MHz
+GUID                   : 605a0ad1-b96b-4f4e-b5a9-782623d6d797
+Physical address       : 04:ed:33:4c:9e:1f
+State                  : connected
+SSID                   : Nimbus3000
+BSSID                  : 84:bb:69:fa:93:10
+Network type           : Infrastructure
+Radio type             : 802.11ac
+Authentication         : WPA2-Personal
+Cipher                 : CCMP
+Connection mode        : Auto Connect
+Channel                : 40
+Receive rate (Mbps)    : 585
+Transmit rate (Mbps)   : 866.7
+Signal                 : 94%
+Profile                : Qubit
+
+Hosted network status  : Not available
+</code></pre>
+<p>Show available WiFi Networks using <code>netsh</code>,</p>
+<pre><code>$ netsh wlan show networks mode=bssid
+
+Interface name : Wi-Fi
+There are 3 networks currently visible.
+
+SSID 1 : Qubit_Guest
+    Network type            : Infrastructure
+    Authentication          : WPA2-Personal
+    Encryption              : CCMP
+    BSSID 1                 : 20:a6:cd:32:fe:e1
+        Signal             : 50%
+        Radio type         : 802.11n
+        Channel            : 6
+        Basic rates (Mbps) : 24
+        Other rates (Mbps) : 36 48 54
+    BSSID 2                 : 44:48:c1:a5:08:81
+        Signal             : 81%
+        Radio type         : 802.11n
+        Channel            : 6
+        Basic rates (Mbps) : 24
+        Other rates (Mbps) : 36 48 54
+    BSSID 3                ... ...
+
+SSID 2 : Qubit
+    Network type            : Infrastructure
+    Authentication          : WPA2-Enterprise
+    Encryption              : CCMP
+    BSSID 1                 : 44:48:c1:a4:f0:b1
+        Signal             : 62%
+        Radio type         : 802.11ac
+        Channel            : 157
+        Basic rates (Mbps) : 24
+        Other rates (Mbps) : 36 48 54
+    BSSID 2                ... ...
+
+SSID 3 : hello_kitty
+    Network type            : Infrastructure
+    Authentication          : WPA2-Personal
+    Encryption              : CCMP
+    BSSID 1                ... ...
 </code></pre>
 
 

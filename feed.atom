@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="https://note.iqubit.xyz/" />
 	<rights>Copyright © 2022</rights>
-	<updated>2022-12-03T21:11:58Z</updated>
+	<updated>2022-12-03T22:13:03Z</updated>
 	<subtitle>Head's in the cloud, a Qubit blog</subtitle>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/ml/pytorch-getting-started-with-cuda</id>
@@ -631,21 +631,24 @@ error: Package 'Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore' is incompa
 	</entry>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/pwsh/powershell</id>
-		<title>Powershell Core Useful Commands</title>
+		<title>Powershell Useful Commands</title>
 		<link href="https://note.iqubit.xyz/posts/pwsh/powershell" />
 		<updated>2021-03-19T00:00:00Z</updated>
-		<content>&lt;p&gt;&lt;em&gt;This article formerly titled as 'Powershell Frequently Used Commands. Even though the article is titled "core" it includes some Powershell contents as well.'&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Powershell Core refers to Powershell versions 6 or later.
-More cmdlets are on the other article: &lt;code&gt;powershell-core-cmdlets&lt;/code&gt;&lt;/p&gt;
-&lt;h2 id="initialization-of-shell"&gt;Initialization of Shell&lt;/h2&gt;
+		<content>&lt;p&gt;&lt;em&gt;This article mostly applies to Powershell version 6 or later (formerly known as Powershell Core). Check edition via Powershell variable: &lt;code&gt;$PSEdition&lt;/code&gt; (should show core for modern powershell)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;More cmdlets are on the other article: &lt;code&gt;powershell-cmdlets&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="initialization-of-shell"&gt;Initialization of Shell&lt;/h3&gt;
 &lt;p&gt;&lt;em&gt;This section is for my personalized shell; please feel free to skip it.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Initiate a shell using a specified init script (replaced &lt;code&gt;Env:WinDir/*&lt;/code&gt; symbolic link),&lt;/p&gt;
+&lt;p&gt;Initiate a shell using a specified init script,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;pwsh -NoExit D:\pwsh\Init.ps1
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;For Machine Learning customized shell, I try adding an arg,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;pwsh -NoExit D:\pwsh\Init.ps1 ML
+&lt;p&gt;For shells with specialized purposes, we have,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;New-Shell.ps1 -Type Python
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="new-to-pwsh"&gt;New to pwsh?&lt;/h2&gt;
+&lt;p&gt;to support Machine Learning and Data Science stack.&lt;/p&gt;
+&lt;p&gt;Or, for frontend stack,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;New-Shell.ps1 -Type Node
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="new-to-powershell"&gt;New to Powershell?&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;Clear-Host&lt;/code&gt; is equivalent to cls&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;Get-Location&lt;/code&gt; is alias to &lt;code&gt;pwd&lt;/code&gt;&lt;/li&gt;
@@ -656,45 +659,37 @@ More cmdlets are on the other article: &lt;code&gt;powershell-core-cmdlets&lt;/c
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;code&gt;ps&lt;/code&gt; is equivalent to Get-Process or to List processes or doing &lt;code&gt;tasklist&lt;/code&gt;.
 Stop-Proccess instead of taskkill&lt;/p&gt;
-&lt;p&gt;Example of starting pwsh with an initiazation script or calling a script with an arg,&lt;/p&gt;
+&lt;p&gt;Example of starting Powershell with an initiazation script or calling a script with an arg,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Start-Process pwsh -ArgumentList '-NoExit', 'Init-App.ps1 foo' -ErrorAction 'stop'
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;above, &lt;code&gt;foo&lt;/code&gt; is argument.&lt;/p&gt;
 &lt;p&gt;Split string based on delimeter,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$Env:Path –split ';'
+&lt;pre&gt;&lt;code&gt;$Env:Path –Split ';'
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="cmdlets"&gt;Cmdlets&lt;/h3&gt;
-&lt;h2 id="file-management"&gt;File Management&lt;/h2&gt;
+&lt;p&gt;Access current user's Path variable on the system,&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;(Get-ItemPropertyValue -Path HKCU:\Environment -Name Path) -Split(';')
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="file-system-management"&gt;File System Management&lt;/h3&gt;
 &lt;p&gt;Filter files containing name pattern,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;gci -filter '*word*'
+&lt;pre&gt;&lt;code&gt;Get-ChildItem -Filter '*word*'
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Create directory,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;New-Item D:\work\git -Type Directory
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Create file (alternative of Unix &lt;code&gt;touch&lt;/code&gt;),&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;New-Item C:\scripts\new_file.txt -type file
+&lt;p&gt;Create file (alternative of Unix cmd, &lt;code&gt;touch&lt;/code&gt;),&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;New-Item C:\scripts\new_file.txt -Type File
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Show files in order of modified time,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ Get-ChildItem -Path C:\windows\CPE\Chef\outputs | Where-Object { -not $_.PsIsContainer } |
-    Sort-Object LastWriteTime -Descending | Select-Object -first 10 
+    Sort-Object LastWriteTime -Descending | Select-Object -first 10
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="control-panel-cmdlet"&gt;Control Panel Cmdlet&lt;/h2&gt;
-&lt;p&gt;Handy cmds follow, &lt;a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/show-controlpanelitem"&gt;ref&lt;/a&gt; to access sys properties,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Show-ControlPanelItem -Name System
+&lt;p&gt;List files in order of size,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ gci 'D:\Movies\pq\movies' | Sort-Object Length -Descending
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Names supported by &lt;code&gt;Show-ControlPanelItem&lt;/code&gt;,&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Network and Sharing Center&lt;/li&gt;
-&lt;li&gt;Device Manager&lt;/li&gt;
-&lt;li&gt;Programs and Features&lt;/li&gt;
-&lt;li&gt;Default Programs&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;For, Sound mouse etc we do,&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Sound&lt;/li&gt;
-&lt;li&gt;Mouse&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="network-cmdlets"&gt;Network Cmdlets&lt;/h2&gt;
+&lt;p&gt;List items in order of last modified time&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ gci E:\Media\upload | Sort-Object LastWriteTime -Descending
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="network-connections"&gt;Network Connections&lt;/h3&gt;
 &lt;p&gt;Ping hosts,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Test-Connection -Count 64 google.com
 Test-Connection -Count 1024 google.com
@@ -704,17 +699,18 @@ Test-Connection -Count 1024 google.com
 &lt;pre&gt;&lt;code&gt;Update-Help
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;More network related cmdlets or commands are at &lt;a href="https://note.iqubit.xyz/network-wifi-cmd"&gt;wifi cmd article&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id="other-cmdlets"&gt;Other Cmdlets&lt;/h2&gt;
+&lt;h3 id="miscellaneous"&gt;Miscellaneous&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Processes&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Get list of running processes (unique), show full path,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Get-Process | Select-Object -Unique Path
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;When Windows Explorer or taskbar has trouble,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Stop-Process -Name explorer
+&lt;pre&gt;&lt;code&gt;Stop-Process -Name Explorer
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Find difference between 2 text files,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Compare-Object (get-content one.txt) (get-content two.txt)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Scheduled Tasks,&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Scheduled Tasks&lt;/strong&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Get-ScheduledTask -TaskName *chef*
 Get-ScheduledTask -TaskPath \
 Get-ScheduledTask -TaskPath \MSIT\
@@ -741,13 +737,7 @@ Runspace         : System.Management.Automation.Runspaces.LocalRunspace
 &lt;p&gt;How to uninstall store application i.e., skype&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Get-AppxPackage Microsoft.SkypeApp | Remove-AppxPackage
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Get Software List,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Get-WmiObject -Class Win32_Product -Filter "Name = 'Java 8 (64 bit)'"
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;How to uninstall application,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$app = Get-WmiObject -Class Win32_Product -Filter "Name = 'Java 8 (64-bit)'"
-$app.Uninstall()
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;WmiObject&lt;/code&gt; example can be found on post: &lt;a href="https://note.iqubit.xyz/powershell-legacy"&gt;powershell-legacy&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id="type-conversion"&gt;Type Conversion&lt;/h3&gt;
 &lt;p&gt;This part also demonstrates how to use some datatype libraries in commands.&lt;/p&gt;
 &lt;p&gt;Example 1, how do we find ascii number of a bunch of characters?&lt;/p&gt;
@@ -758,11 +748,11 @@ $app.Uninstall()
 100
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Additionally, to find ascii number of single char,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ [int][char] 'z'
+&lt;pre&gt;&lt;code class="language-powershell"&gt;$ [int][char] 'z'
 122
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Moroever we can call &lt;code&gt;Array.Sort&lt;/code&gt; in following way,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$a = [int[]] @(9,5)
+&lt;pre&gt;&lt;code class="language-powershell"&gt;$a = [int[]] @(9,5)
 [Array]::Sort($a)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Because these literatls i.e., 'xxx' in powershell is considered as string literal like python.&lt;/p&gt;
@@ -773,75 +763,75 @@ True     True     String                                   System.Object
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4 id="mathematics-library"&gt;Mathematics Library&lt;/h4&gt;
 &lt;p&gt;Example usage of .net math library, using old friend the &lt;code&gt;power&lt;/code&gt; method,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;[Math]::Pow(2,13)
+&lt;pre&gt;&lt;code class="language-powershell"&gt;[Math]::Pow(2,13)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Or finding a square root,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;[Math]::Sqrt(9)
+&lt;pre&gt;&lt;code class="language-powershell"&gt;[Math]::Sqrt(9)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4 id="string-helpers"&gt;String Helpers&lt;/h4&gt;
-&lt;p&gt;nll or empty related where &lt;code&gt;$ConfigName&lt;/code&gt; is an example variable,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;[string]::IsNullOrEmpty($ConfigName)
+&lt;p&gt;String Split,&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;$Env:Path –split ';'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;Null&lt;/code&gt; or empty string related examples, where &lt;code&gt;$ConfigName&lt;/code&gt; is an example variable,&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;[string]::IsNullOrEmpty($ConfigName)
 [string]::IsEmpty($ConfigName)
 [string]::Empty($ConfigName)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;substring example,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;if ($loc.EndsWith("\")) {
+&lt;p&gt;Substring example,&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;if ($loc.EndsWith("\")) {
     return $loc.Substring(0, $loc.Length-1)
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;which is fine to be replaced with,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;if (($lastindex = [int] $loc.lastindexof('\')) -ne -1) {
+&lt;pre&gt;&lt;code class="language-powershell"&gt;if (($lastindex = [int] $loc.lastindexof('\')) -ne -1) {
     return $loc.Substring(0, $lastindex)
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="show-os-version"&gt;Show OS Version&lt;/h2&gt;
+&lt;h3 id="show-os-version"&gt;Show OS Version&lt;/h3&gt;
 &lt;p&gt;Using Net Framework Library,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ [Environment]::OSVersion
 Platform ServicePack Version      VersionString
 -------- ----------- -------      -------------
-Win32NT             10.0.18362.0 Microsoft Windows NT 10.0.18362.0
+Win32NT             10.0.22621.0 Microsoft Windows NT 10.0.22621.0
 
 $ [Environment]::OSVersion.Version
 Major  Minor  Build  Revision
 -----  -----  -----  --------
-10     0      18362  0
+10     0      22621  0
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Additionally, we can do this inspecting &lt;code&gt;hal.dll&lt;/code&gt;,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ [Version](Get-ItemProperty -Path "$($Env:Windir)\System32\hal.dll" -ErrorAction SilentlyContinue).VersionInfo.FileVersion.Split()[0]
+&lt;pre&gt;&lt;code&gt;$ [Version](Get-ItemProperty -Path "$($Env:Windir)\System32\hal.dll" -ErrorAction SilentlyContinue).`
+    VersionInfo.FileVersion.Split()[0]
 Major  Minor  Build  Revision
 -----  -----  -----  --------
-10     0      18362  356
+10     0      22621  819
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="shell-variables"&gt;Shell Variables&lt;/h2&gt;
+&lt;h3 id="shell-variables"&gt;Shell Variables&lt;/h3&gt;
 &lt;p&gt;To delete all contents of USB drive (this is dangerous as it deletea all contents and files/dirs from a drive),&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Remove-Item -force l:\*
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;On pwsh,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ $profile
+&lt;p&gt;On Powershell,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ $Profile
 DocumentsDir\PowerShell\Microsoft.PowerShell_profile.ps1
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;On Powershell (Windows),&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ $profile
+&lt;p&gt;On Legacy Powershell (the classic one that comes with Windows),&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ $Profile
 DocumentsDir\\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Access history file,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ (Get-PSReadlineOption).HistorySavePath
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="invoking-legacy-powershell-features-from-pwsh"&gt;Invoking Legacy Powershell Features from pwsh&lt;/h2&gt;
+&lt;h3 id="invoking-legacy-powershell-features-from-powershell"&gt;Invoking Legacy Powershell Features from Powershell&lt;/h3&gt;
 &lt;p&gt;Say you have a script named &lt;code&gt;Bluetooth.ps1&lt;/code&gt; that uses Windows features i.e., COM. We invoke old Powershell to execute those.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Powershell -NoProfile -File Bluetooth.ps1 On
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="setting-permission-for-running-pwsh-on-a-new-machine"&gt;Setting permission for running pwsh on a new machine&lt;/h2&gt;
+&lt;h3 id="setting-permission-for-running-powershell-on-a-new-machine"&gt;Setting permission for running Powershell on a new machine&lt;/h3&gt;
 &lt;p&gt;By default, there are lot of warnings and requests for permission. To make things easier, we relax the permission by setting execution policy.
-Set execution policy for current user &lt;a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy"&gt;ref&lt;/a&gt;,&lt;/p&gt;
+Set execution policy for current user. &lt;a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy"&gt;ref, MSFT - Security Set Execution Policy&lt;/a&gt;,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Set-Executionpolicy Unrestricted -scope CurrentUser
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;In old days, that used to be enough. If you get following,&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;PowerShell 6.2.3
-Copyright (c) Microsoft Corporation. All rights reserved.
-
-https://aka.ms/pscore6-docs
-Type 'help' to get help.
+&lt;pre&gt;&lt;code&gt;PowerShell 7.3.0   https://aka.ms/pscore6-docs
 
 Security warning
 Run only scripts that you trust. While scripts from the internet can be useful, this script can potentially harm your computer. If you trust this script, use the Unblock-File cmdlet to allow the script to run without this warning
@@ -866,8 +856,8 @@ At line:1 char:3
 &lt;p&gt;In environments like school computers that are running SINC Site, bypassing in Process scope can be useful,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Set-ExecutionPolicy Bypass -Scope Process
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="variables-pwsh-vs-powershell"&gt;Variables pwsh vs Powershell&lt;/h2&gt;
-&lt;p&gt;Following are new pwsh variables,&lt;/p&gt;
+&lt;h3 id="variables-powershell-vs-legacy-powershell"&gt;Variables Powershell vs Legacy Powershell&lt;/h3&gt;
+&lt;p&gt;Following are new Powershell variables,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;EnabledExperimentalFeatures    {}
 
 IsCoreCLR                      True
@@ -886,7 +876,8 @@ PSCommandPath
 PSEdition
 PSHOME
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="continue"&gt;continue&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;TODO: check pwsh 7&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="continue"&gt;continue&lt;/h3&gt;
 &lt;p&gt;rest of the contents yet to be appended..&lt;/p&gt;
 </content>
 		<summary>Head's in the cloud, a Qubit blog</summary>
@@ -1101,10 +1092,11 @@ int ReverseNum(int a, int res) {
 	</entry>
 	<entry>
 		<id>https://note.iqubit.xyz/posts/pwsh/powershell-cmdlets</id>
-		<title>Powershell Core Cmdlets</title>
+		<title>Powershell Cmdlets</title>
 		<link href="https://note.iqubit.xyz/posts/pwsh/powershell-cmdlets" />
 		<updated>2020-12-10T00:00:00Z</updated>
-		<content>&lt;h3 id="start-process"&gt;Start-Process&lt;/h3&gt;
+		<content>&lt;p&gt;&lt;em&gt;This article applies to Powershell version 6 or later (formerly also known as Powershell Core).&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="start-process"&gt;Start-Process&lt;/h3&gt;
 &lt;p&gt;Here are some handy cmds (Application Run Examples),&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Start&lt;/code&gt; is an alias of &lt;code&gt;Start-Process&lt;/code&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Start DevEnv /Edit, Stream-Converter.ps1
@@ -1126,7 +1118,7 @@ Start Skype:
 &lt;pre&gt;&lt;code&gt;Start Notepad++ -ArgumentList file_path
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;However, it's tricky if passed argument for example, &lt;code&gt;file_path&lt;/code&gt; above contains a space character.&lt;/p&gt;
-&lt;p&gt;To make it work, we need to double quote them &lt;a href="https://stackoverflow.com/questions/22840882/powershell-opening-file-path-with-spaces"&gt;ref&lt;/a&gt;,&lt;/p&gt;
+&lt;p&gt;To make it work, we need to double quote them &lt;a href="https://stackoverflow.com/questions/22840882/powershell-opening-file-path-with-spaces"&gt;ref, SO - pwsh opening file path with spaces&lt;/a&gt;,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Start Notepad++ -ArgumentList &amp;quot;`&amp;quot;D:\Cool Soft\my awesome file.txt`&amp;quot;&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id="get-process"&gt;Get-Process&lt;/h3&gt;
@@ -1142,7 +1134,7 @@ NPM(K)    PM(M)      WS(M)     CPU(s)      Id  SI ProcessName
     &amp;#64;(Get-Process $process -ErrorAction 0).Count
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="service-management"&gt;Service Management&lt;/h2&gt;
+&lt;h3 id="service-management"&gt;Service Management&lt;/h3&gt;
 &lt;p&gt;Get list of services currently running,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Get-Service | Where-Object {$_.Status -eq &amp;quot;Running&amp;quot;}
 &lt;/code&gt;&lt;/pre&gt;
@@ -1155,6 +1147,121 @@ NPM(K)    PM(M)      WS(M)     CPU(s)      Id  SI ProcessName
 &lt;p&gt;Useful for bluetooth service,&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Start-Service bthserv
 Stop-Service -Force bthserv
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="network-administration"&gt;Network Administration&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;To view information on the currently connect WiFi network&lt;/em&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ Get-NetConnectionProfile
+Name                     : &amp;#64;Coffeebar Guest WiFi
+InterfaceAlias           : Wi-Fi
+InterfaceIndex           : 16
+NetworkCategory          : Public
+DomainAuthenticationKind : None
+IPv4Connectivity         : Internet
+IPv6Connectivity         : NoTraffic
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Show Network Interfaces Information&lt;/strong&gt;
+Using powershell cmdlet, we can view information on all network interfaces in the system,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ Get-NetAdapter
+Name                      InterfaceDescription                    ifIndex Status       MacAddress             LinkSpeed
+----                      --------------------                    ------- ------       ----------             ---------
+Ethernet 2                Cisco AnyConnect Secure Mobility Clien…      14 Not Present  00-05-9A-3C-7A-00          0 bps
+Wi-Fi                     Intel(R) Wi-Fi 6 AX200 160MHz                10 Up           04-ED-33-4C-9E-1F       400 Mbps
+vEthernet (Default Switc… Hyper-V Virtual Ethernet Adapter             23 Up           00-15-5D-5F-1A-CB        10 Gbps
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To view information on the WiFi network interface,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ Get-NetAdapter -Name Wi-Fi
+Name                      InterfaceDescription                    ifIndex Status       MacAddress             LinkSpeed
+----                      --------------------                    ------- ------       ----------             ---------
+Wi-Fi                     Intel(R) Wi-Fi 6 AX200 160MHz                10 Up           04-ED-33-4C-9E-1F       400 Mbps
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Show cmdlets related to net adapter,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ gcm -Noun netadapter | select name, modulename
+
+Name               ModuleName
+----               ----------
+Disable-NetAdapter NetAdapter
+Enable-NetAdapter  NetAdapter
+Get-NetAdapter     NetAdapter
+Rename-NetAdapter  NetAdapter
+Restart-NetAdapter NetAdapter
+Set-NetAdapter     NetAdapter
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Additionally, now, we have cmdlet to show IP Address info without sing &lt;code&gt;netsh&lt;/code&gt;,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ Get-NetIPAddress
+IPAddress         : fe80::f384:25fc:f7ba:30b%7
+InterfaceIndex    : 7
+InterfaceAlias    : Bluetooth Network Connection
+AddressFamily     : IPv6
+Type              : Unicast
+PrefixLength      : 64
+PrefixOrigin      : WellKnown
+SuffixOrigin      : Link
+AddressState      : Deprecated
+ValidLifetime     : Infinite ([TimeSpan]::MaxValue)
+PreferredLifetime : Infinite ([TimeSpan]::MaxValue)
+SkipAsSource      : False
+PolicyStore       : ActiveStore
+
+IPAddress         : fe80::99c3:e3a9:7b86:99fe%11
+InterfaceIndex    : 11
+InterfaceAlias    : Local Area Connection* 10
+AddressFamily     : IPv6
+Type              : Unicast
+PrefixLength      : 64
+PrefixOrigin      : WellKnown
+SuffixOrigin      : Link
+AddressState      : Deprecated
+ValidLifetime     : Infinite ([TimeSpan]::MaxValue)
+PreferredLifetime : Infinite ([TimeSpan]::MaxValue)
+SkipAsSource      : False
+PolicyStore       : ActiveStore
+
+IPAddress         : fe80::604:e257:2351:2768%17
+InterfaceIndex    : 17
+InterfaceAlias    : Local Area Connection* 9
+AddressFamily     : IPv6
+Type              : Unicast
+PrefixLength      : 64
+PrefixOrigin      : WellKnown
+SuffixOrigin      : Link
+AddressState      : Deprecated
+ValidLifetime     : Infinite ([TimeSpan]::MaxValue)
+PreferredLifetime : Infinite ([TimeSpan]::MaxValue)
+SkipAsSource      : False
+PolicyStore       : ActiveStore
+
+
+
+... ...
+
+... ...
+IPAddress         : 10.55.200.98
+InterfaceIndex    : 16
+InterfaceAlias    : Wi-Fi
+AddressFamily     : IPv4
+Type              : Unicast
+PrefixLength      : 8
+PrefixOrigin      : Dhcp
+SuffixOrigin      : Dhcp
+AddressState      : Preferred
+ValidLifetime     : 20:23:37
+PreferredLifetime : 20:23:37
+SkipAsSource      : False
+PolicyStore       : ActiveStore
+
+IPAddress         : 127.0.0.1
+InterfaceIndex    : 1
+InterfaceAlias    : Loopback Pseudo-Interface 1
+AddressFamily     : IPv4
+Type              : Unicast
+PrefixLength      : 8
+PrefixOrigin      : WellKnown
+SuffixOrigin      : WellKnown
+AddressState      : Preferred
+ValidLifetime     : Infinite ([TimeSpan]::MaxValue)
+PreferredLifetime : Infinite ([TimeSpan]::MaxValue)
+SkipAsSource      : False
+PolicyStore       : ActiveStore
 &lt;/code&gt;&lt;/pre&gt;
 </content>
 		<summary>Head's in the cloud, a Qubit blog</summary>
