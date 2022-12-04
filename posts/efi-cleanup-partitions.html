@@ -110,10 +110,10 @@
   <div class="container"> 
     <div class="row">
       <div id="content" class="col-md-12">  
-        <h2 id="recognizing-a-damaged-partition-table">Recognizing a damaged partition table</h2>
+        <h3 id="recognizing-a-damaged-partition-table">Recognizing a damaged partition table</h3>
 <p>There are several reasons why a partition table is damaged. One reason can be experimenting with disks, for example, applying a slightly modified (may be mistakenly) command to make a USB flash drive bootable (for a live OS). It can also be possible by some faulty usb creator software. Additionally, directly writing an ISO using 'dd' command can result a corrupted partition table. The partition can also be damaged or engineered by a virus to meet certain goals. As these operations are mostly run on USB drives or USB keys this post provides instructions to fix such partition tables. Generally these commands are applicable to any kind of hard-disk/usb drive.</p>
 <p><img src="http://3.bp.blogspot.com/-CeoFlB0Q0zU/UacmGoF1YeI/AAAAAAAAAeA/CIXxvWWxGzw/s320/5707_Partitions.gif" alt="enter image description here" /></p>
-<p><a href="http://averma82.blogspot.com/2013/05/types-of-hard-drive-partitions-and.html">image acknowledgement</a></p>
+<p>[<a href="http://averma82.blogspot.com/2013/05/types-of-hard-drive-partitions-and.html">image acknowledgement</a>]</p>
 <p>You can have a look at the partition table using <code>parted</code> command or <code>fdisk</code> command on Linux. On Windows, you can view your partition table using 'Disk Management Console' or using diskpart command (requires admin privilege). For a damaged partition table, if you look at the partition table you will see unexpected partition entries, garbage characters and symbols or combination of both of them. You might even see partition entries that you didn't know existed before in your device. To view list of partitions you can run fdisk command in Linux. An example to use this command on drive sdX is below. You should replace sdX by appropriate drive id i.e., sdc, sdb etc.</p>
 <pre><code># fdisk -l /dev/sdX
 </code></pre>
@@ -122,9 +122,9 @@
 <pre><code># parted /dev/sdX p
 </code></pre>
 <p>If your partition table is EFI you must use parted tool as fdisk does not yet support EFI partition table yet.</p>
-<h2 id="cleaning-up-or-resetting-the-partition-table">Cleaning up or resetting the partition table</h2>
+<h3 id="cleaning-up-or-resetting-the-partition-table">Cleaning up or resetting the partition table</h3>
 <p>Before proceeding further, be sure to backup data. Partitions will be lost after resetting partition table. Procedures for both Windows and Linux platform are presented below. If you are using Linux please skip to next Linux section.</p>
-<h3 id="windows-way">Windows Way</h3>
+<h4 id="windows-pc">Windows / PC</h4>
 <p>Run command prompt as administrator then run diskpart,</p>
 <pre><code>C:\Windows\system32&gt; diskpart
 Microsoft DiskPart version 10.0.10586
@@ -154,13 +154,14 @@ DISKPART&gt; convert mbr
 DISKPART&gt; format fs=ntfs label=&quot;your label&quot; quick
 DISKPART&gt; clean
 </code></pre>
-<h3 id="linux-way">Linux Way</h3>
-<p>Please open a terminal and login as root,</p>
+<h4 id="linux">Linux</h4>
+<p>We will Unix tools: <code>dd</code> and <code>parted</code> to accomplish this on Linux. This requires root privilege.</p>
+<p>Let's open a terminal and login as root as prerequisite,</p>
 <pre><code>$ su - root
 Enter root password:
 </code></pre>
-<h3 id="using-dd-to-reset-partition-table-on-a-disk-legacy-partition-table">Using dd to reset partition table on a disk legacy partition table</h3>
-<p>The dd command is applicable only if the disk contains BIOS(legacy) partition table instead of GPT. Be aware most new systems are rolling out with GPT partition table and EFI firmware. If your system contains a GPT partition table please skip to the next section. Please apply following (caution: data will be lost!) command. Replace sdX with appropriate device id. You can list all devices by running <code>fdisk -l</code>. For example, if your flash drive is sdc you have to replace sdX with sdc,</p>
+<h4 id="using-dd-to-reset-partition-table-on-a-disk-legacy-partition-table">Using dd to reset partition table on a disk legacy partition table</h4>
+<p>The dd command is applicable only if the disk contains BIOS(legacy) partition table instead of GPT. Be aware most new systems are rolling out with GPT partition table and EFI firmware. If your system contains a GPT partition table please skip to the next section. Please apply following (caution: data will be lost!) command. Replace sdX with appropriate device id. You can list all devices by running <code>fdisk -l</code>. For example, if your flash drive is assigned as <code>sdc</code> you have to replace <code>sdX</code> with <code>sdc</code>,</p>
 <pre><code># dd if=/dev/zero of=/dev/sdX bs=1 seek=446 count=64
 </code></pre>
 <p>This command wipes out the partition table but preserves the MBR. If you want to wipe out your MBR as well you would like to apply following command (first line is the command ran on with root access),</p>
@@ -169,7 +170,7 @@ Enter root password:
 512+0 records out
 512 bytes (512 B) copied, 1.25339 s, 0.4 kB/s
 </code></pre>
-<p>At this point, the device does not have a partition table. So, we create one. Please keep in mind that our next commands require root access as well. As we are using sdc as our example device id of the USB drive it is the third storage device connected to our system. First two hard disks connected to the system are sda and sdb. You should use proper device id in the command according to your device id,</p>
+<p>At this point, the device does not have a partition table. So, we create one. Please keep in mind that our next commands require root access as well. As we are using <code>sdc</code> as our example device id of the USB drive it is the third storage device connected to our system. First two hard disks connected to the system are <code>sda</code> and <code>sdb</code>. You should use proper device id in the command according to your device id,</p>
 <h4 id="for-all-partition-tables-including-gpt">For all partition tables (including GPT)</h4>
 <p>If your disk contains GPT partition table please use parted rm commands to delete the partitions one by one. Afterwards, proceed with next steps mentioned below.</p>
 <p>Let's see information on current partition table,</p>
@@ -214,9 +215,9 @@ Warning: label too long, truncating.
 When label is too long it truncates.
 </code></pre>
 <p>Please provide your feedback regarding the article. Previous comments are removed which were mostly appreciating remarks (<em>Thanks to Bill Biffle, Robert Liimatainen, bemma, gusbus, roj, dvt, ponmudi, Leon, cory pollard, RezaKnot, Steve, vtwire and many people around the world</em>). We are more interested in critical cases where instructions do not work as said.</p>
-<h3 id="faq">FAQ</h3>
-<h4 id="q1-roj-my-fdisk-output-is-saying-my-disk-is-gpt.why-is-my-dd-command-failing">Q1: Roj: my fdisk output is saying my disk is gpt. Why is my dd command failing?</h4>
-<p>&#64;roj, you are applying dd command on a disk with GPT partition. That is wrong. Follow other ways mentioned in the article for example using <code>diskpart</code> or <code>parted</code> to remove partitions. <code>fdisk</code> is being deprecated and is not well supported on GPT disk.</p>
+<h4 id="faq">FAQ</h4>
+<p><strong>Q1: Roj: my fdisk output is saying my disk is gpt. Why is my dd command failing?</strong></p>
+<p>Answer: &#64;Roj, you should not apply dd command on a disk with GPT partition. Please follow other ways mentioned in the article for example using <code>diskpart</code> or <code>parted</code> to remove partitions. <code>fdisk</code> is being deprecated and is not well supported on GPT disks.</p>
 
 
 

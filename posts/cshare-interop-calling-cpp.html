@@ -113,18 +113,18 @@
 <li>Other project contain C# driving code doing the demonstrating interop</li>
 </ul>
 <p>C++ code looks like,</p>
-<pre><code>extern &quot;C&quot;             //No name mangling
+<pre><code class="language-csharp">extern &quot;C&quot;             //No name mangling
 __declspec(dllexport)  //Tells the compiler to export the function
 int                    //Function return type     
 __cdecl                //Specifies calling convention, cdelc is default, 
-                       //so this can be omitted 
+                        //so this can be omitted 
   test(int number) {
   return number + 1;
 }
 </code></pre>
 <p>Please note the way return type specified compare to traditional function declaration.</p>
 <p>C# driver code looks like following,</p>
-<pre><code>using System;
+<pre><code class="language-csharp">using System;
 using System.Runtime.InteropServices;
 
 namespace p1
@@ -185,7 +185,7 @@ namespace p1
             AssemblyInfo.cs
 </code></pre>
 <p>For the project structure above, I can use a relative location of the file,</p>
-<pre><code>private const string DllFilePath = &#64;&quot;..\..\..\Cpp\Debug\Cpp.dll&quot;;
+<pre><code class="language-csharp">private const string DllFilePath = &#64;&quot;..\..\..\Cpp\Debug\Cpp.dll&quot;;
 </code></pre>
 <p>Additionally, I have changed following for C++ project,</p>
 <p><em>Output Directory:</em> <span class="math">\((SolutionDir)\)</span>(ProjectName)$(Configuration)<br />
