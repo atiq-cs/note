@@ -3,10 +3,8 @@ Published: 11/27/2019
 Tags:
   - markdown
   - statiq
-  - Cloud
-  - Pipelines
 ---
-Wyam is deprecated. Replacement is [statiq](https://github.com/statiqdev).
+*Wyam is deprecated by [statiq](https://github.com/statiqdev).*
 
 ## Wyam
 First, we install wyam install locally using pwsh admin,
@@ -390,11 +388,6 @@ To edit pipeline variables on azure cloud.
 2. Click Edit and noow you can access variables
 
 #### Conclusion
-So, far, this is pretty good experience.
-
-Finally, my blog URL:
-[fftsysX blog](https://blog.fftsysx.com)
-
 wyam uses markdig flavor of Markdown of by default: [markdig math](https://github.com/lunet-io/markdig/blob/master/src/Markdig.Tests/Specs/MathSpecs.md)
 
 Readily, I can think of following cons,

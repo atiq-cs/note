@@ -1,7 +1,6 @@
 Title: Subversion Basics
 Published: 11/14/2014
 Tags:
-  - source Control
   - version Control
 ---
 ## SVN - Version Control

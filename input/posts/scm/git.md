@@ -2,7 +2,6 @@ Title: Useful Git Commands
 Published: 07/25/2020
 Tags:
   - git
-  - source control
   - version control
 ---
 

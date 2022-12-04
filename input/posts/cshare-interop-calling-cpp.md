@@ -11,42 +11,44 @@ For this demonstration, let's consider a Visual Studio 2017 Solution containing 
  - Other project contain C# driving code doing the demonstrating interop
 
 C++ code looks like,
-
-    extern "C"             //No name mangling
-    __declspec(dllexport)  //Tells the compiler to export the function
-    int                    //Function return type     
-    __cdecl                //Specifies calling convention, cdelc is default, 
-                           //so this can be omitted 
-      test(int number) {
-      return number + 1;
-    }
+```csharp
+extern "C"             //No name mangling
+__declspec(dllexport)  //Tells the compiler to export the function
+int                    //Function return type     
+__cdecl                //Specifies calling convention, cdelc is default, 
+                        //so this can be omitted 
+  test(int number) {
+  return number + 1;
+}
+```
 
 Please note the way return type specified compare to traditional function declaration.
 
 C# driver code looks like following,
+```csharp
+using System;
+using System.Runtime.InteropServices;
 
-    using System;
-    using System.Runtime.InteropServices;
-
-    namespace p1
+namespace p1
+{
+  public static class NativeTest
+  {
+    static void Main(string[] args)
     {
-      public static class NativeTest
-      {
-        static void Main(string[] args)
-        {
-          Console.WriteLine("Interop test: " + test(100));
-        }
-
-        private const string DllFilePath = @"D:\Code\CSharp\InterOp\Debug\Cpp.dll";
-
-        [DllImport(DllFilePath , CallingConvention = CallingConvention.Cdecl)]
-        private extern static int test(int number);
-
-        public static int Test(int number) {
-            return test(number);
-        }
-      }
+      Console.WriteLine("Interop test: " + test(100));
     }
+
+    private const string DllFilePath = @"D:\Code\CSharp\InterOp\Debug\Cpp.dll";
+
+    [DllImport(DllFilePath , CallingConvention = CallingConvention.Cdecl)]
+    private extern static int test(int number);
+
+    public static int Test(int number) {
+        return test(number);
+    }
+  }
+}
+```
 
 
 My projects dir structure looks like,
@@ -87,9 +89,11 @@ My projects dir structure looks like,
         └───Properties
                 AssemblyInfo.cs
 
-For the project structure above, I can use a relative location of the file,
 
-    private const string DllFilePath = @"..\..\..\Cpp\Debug\Cpp.dll";
+For the project structure above, I can use a relative location of the file,
+```csharp
+private const string DllFilePath = @"..\..\..\Cpp\Debug\Cpp.dll";
+```
 
 Additionally, I have changed following for C++ project,
 

@@ -1,7 +1,7 @@
 Title: Legacy Powershell Useful Commands
 Published: 07/18/2020
 Tags:
-  - powershell
+  - legacy powershell
   - system administration
 ---
 *This article applies to legacy powershell (powershell 5.0 or earlier) Check edition via Powershell variable: `$PSEdition` (should show "Desktop for legacy/classic powershell), classic powershell is also bundled into the Windows OS.*
