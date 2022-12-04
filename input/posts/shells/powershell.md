@@ -1,30 +1,35 @@
-Title: Powershell Core Useful Commands
-Lead: Powershell Core Cheat Sheet and Intro
+Title: Powershell Useful Commands
+Lead: Powershell Cheat Sheet and Useful Commands/Cmdlets
 Published: 03/19/2021
 Tags:
-  - powershell core
-  - pwsh
+  - powershell
+  - legacy powershell
   - system administration
 ---
 
-_This article formerly titled as 'Powershell Frequently Used Commands. Even though the article is titled "core" it includes some Powershell contents as well.'_
+*This article mostly applies to Powershell version 6 or later (formerly known as Powershell Core). Check edition via Powershell variable: `$PSEdition` (should show core for modern powershell)*
 
+More cmdlets are on the other article: `powershell-cmdlets`
 
-Powershell Core refers to Powershell versions 6 or later.
-More cmdlets are on the other article: `powershell-core-cmdlets`
-
-## Initialization of Shell
+### Initialization of Shell
 _This section is for my personalized shell; please feel free to skip it._
 
-Initiate a shell using a specified init script (replaced `Env:WinDir/*` symbolic link),
+Initiate a shell using a specified init script,
 
     pwsh -NoExit D:\pwsh\Init.ps1
 
-For Machine Learning customized shell, I try adding an arg,
+For shells with specialized purposes, we have,
 
-    pwsh -NoExit D:\pwsh\Init.ps1 ML
+    New-Shell.ps1 -Type Python
 
-## New to pwsh?
+to support Machine Learning and Data Science stack.
+
+Or, for frontend stack,
+
+    New-Shell.ps1 -Type Node
+
+
+### New to Powershell?
 - `Clear-Host` is equivalent to cls
 - `Get-Location` is alias to `pwd`
 
@@ -37,7 +42,7 @@ Write-Host is equivalent to echo. For example,
 `ps` is equivalent to Get-Process or to List processes or doing `tasklist`.
 Stop-Proccess instead of taskkill
 
-Example of starting pwsh with an initiazation script or calling a script with an arg,
+Example of starting Powershell with an initiazation script or calling a script with an arg,
 
     Start-Process pwsh -ArgumentList '-NoExit', 'Init-App.ps1 foo' -ErrorAction 'stop'
 
@@ -45,44 +50,45 @@ above, `foo` is argument.
 
 Split string based on delimeter,
 
-    $Env:Path –split ';'
+    $Env:Path –Split ';'
+
+Access current user's Path variable on the system,
+
+```powershell
+(Get-ItemPropertyValue -Path HKCU:\Environment -Name Path) -Split(';')
+```
 
 
-### Cmdlets
-## File Management
+### File System Management
 Filter files containing name pattern,
 
-    gci -filter '*word*'
+    Get-ChildItem -Filter '*word*'
 
 Create directory,
 
     New-Item D:\work\git -Type Directory
 
-Create file (alternative of Unix `touch`),
+Create file (alternative of Unix cmd, `touch`),
 
-    New-Item C:\scripts\new_file.txt -type file
+    New-Item C:\scripts\new_file.txt -Type File
 
 Show files in order of modified time,
 
     $ Get-ChildItem -Path C:\windows\CPE\Chef\outputs | Where-Object { -not $_.PsIsContainer } |
-        Sort-Object LastWriteTime -Descending | Select-Object -first 10 
+        Sort-Object LastWriteTime -Descending | Select-Object -first 10
 
-## Control Panel Cmdlet
-Handy cmds follow, [ref](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/show-controlpanelitem) to access sys properties,
+List files in order of size,
 
-    Show-ControlPanelItem -Name System
 
-Names supported by `Show-ControlPanelItem`,
-- Network and Sharing Center
-- Device Manager
-- Programs and Features
-- Default Programs
+    $ gci 'D:\Movies\pq\movies' | Sort-Object Length -Descending
 
-For, Sound mouse etc we do,
-- Sound
-- Mouse
+List items in order of last modified time
 
-## Network Cmdlets
+
+    $ gci E:\Media\upload | Sort-Object LastWriteTime -Descending
+
+
+### Network Connections
 Ping hosts,
 
     Test-Connection -Count 64 google.com
@@ -94,22 +100,25 @@ if help modules are outdated this updates it,
 
     Update-Help
 
-More network related cmdlets or commands are at [wifi cmd article](network-wifi-cmd)
+More network related cmdlets or commands are at [wifi cmd article](../network-wifi-cmd)
 
-## Other Cmdlets
+### Miscellaneous
+**Processes**
+
 Get list of running processes (unique), show full path,
 
     Get-Process | Select-Object -Unique Path
 
 When Windows Explorer or taskbar has trouble,
 
-    Stop-Process -Name explorer
+    Stop-Process -Name Explorer
 
 Find difference between 2 text files,
 
     Compare-Object (get-content one.txt) (get-content two.txt)
 
-Scheduled Tasks,
+**Scheduled Tasks**
+
 
     Get-ScheduledTask -TaskName *chef*
     Get-ScheduledTask -TaskPath \
@@ -139,18 +148,12 @@ Show console host info,
     IsRunspacePushed : False
     Runspace         : System.Management.Automation.Runspaces.LocalRunspace
 
+
 How to uninstall store application i.e., skype
 
     Get-AppxPackage Microsoft.SkypeApp | Remove-AppxPackage
 
-Get Software List,
-
-    Get-WmiObject -Class Win32_Product -Filter "Name = 'Java 8 (64 bit)'"
-
-How to uninstall application,
-
-    $app = Get-WmiObject -Class Win32_Product -Filter "Name = 'Java 8 (64-bit)'"
-    $app.Uninstall()
+`WmiObject` example can be found on post: [powershell-legacy](powershell-legacy)
 
 ### Type Conversion
 This part also demonstrates how to use some datatype libraries in commands.
@@ -164,15 +167,17 @@ Example 1, how do we find ascii number of a bunch of characters?
     100
 
 Additionally, to find ascii number of single char,
-```
+```powershell
 $ [int][char] 'z'
 122
 ```
 
 Moroever we can call `Array.Sort` in following way,
 
-    $a = [int[]] @(9,5)
-    [Array]::Sort($a)
+```powershell
+$a = [int[]] @(9,5)
+[Array]::Sort($a)
+```
 
 Because these literatls i.e., 'xxx' in powershell is considered as string literal like python.
 
@@ -184,65 +189,78 @@ Because these literatls i.e., 'xxx' in powershell is considered as string litera
 
 #### Mathematics Library
 Example usage of .net math library, using old friend the `power` method,
-
-    [Math]::Pow(2,13)
+```powershell
+[Math]::Pow(2,13)
+```
 
 Or finding a square root,
-
-    [Math]::Sqrt(9)
+```powershell
+[Math]::Sqrt(9)
+```
 
 #### String Helpers
-nll or empty related where `$ConfigName` is an example variable,
+String Split,
 
-    [string]::IsNullOrEmpty($ConfigName)
-    [string]::IsEmpty($ConfigName)
-    [string]::Empty($ConfigName)
+```powershell
+$Env:Path –split ';'
+```
 
-substring example,
+`Null` or empty string related examples, where `$ConfigName` is an example variable,
 
-    if ($loc.EndsWith("\")) {
-        return $loc.Substring(0, $loc.Length-1)
-    }
+```powershell
+[string]::IsNullOrEmpty($ConfigName)
+[string]::IsEmpty($ConfigName)
+[string]::Empty($ConfigName)
+```
+
+Substring example,
+```powershell
+if ($loc.EndsWith("\")) {
+    return $loc.Substring(0, $loc.Length-1)
+}
+```
 
 which is fine to be replaced with,
+```powershell
+if (($lastindex = [int] $loc.lastindexof('\')) -ne -1) {
+    return $loc.Substring(0, $lastindex)
+}
+```
 
-    if (($lastindex = [int] $loc.lastindexof('\')) -ne -1) {
-        return $loc.Substring(0, $lastindex)
-    }
-
-## Show OS Version
+### Show OS Version
 Using Net Framework Library,
 
     $ [Environment]::OSVersion
     Platform ServicePack Version      VersionString
     -------- ----------- -------      -------------
-    Win32NT             10.0.18362.0 Microsoft Windows NT 10.0.18362.0
+    Win32NT             10.0.22621.0 Microsoft Windows NT 10.0.22621.0
 
     $ [Environment]::OSVersion.Version
     Major  Minor  Build  Revision
     -----  -----  -----  --------
-    10     0      18362  0
+    10     0      22621  0
 
 Additionally, we can do this inspecting `hal.dll`,
 
-    $ [Version](Get-ItemProperty -Path "$($Env:Windir)\System32\hal.dll" -ErrorAction SilentlyContinue).VersionInfo.FileVersion.Split()[0]
+    $ [Version](Get-ItemProperty -Path "$($Env:Windir)\System32\hal.dll" -ErrorAction SilentlyContinue).`
+        VersionInfo.FileVersion.Split()[0]
     Major  Minor  Build  Revision
     -----  -----  -----  --------
-    10     0      18362  356
+    10     0      22621  819
 
-## Shell Variables
+### Shell Variables
 To delete all contents of USB drive (this is dangerous as it deletea all contents and files/dirs from a drive),
 
     Remove-Item -force l:\*
 
-On pwsh,
+On Powershell,
 
-    $ $profile
+    $ $Profile
     DocumentsDir\PowerShell\Microsoft.PowerShell_profile.ps1
 
-On Powershell (Windows),
+On Legacy Powershell (the classic one that comes with Windows),
 
-    $ $profile
+    $ $Profile
     DocumentsDir\\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
 
 Access history file,
@@ -250,24 +268,20 @@ Access history file,
     $ (Get-PSReadlineOption).HistorySavePath
 
 
-## Invoking Legacy Powershell Features from pwsh
+### Invoking Legacy Powershell Features from Powershell
 Say you have a script named `Bluetooth.ps1` that uses Windows features i.e., COM. We invoke old Powershell to execute those.
 
     Powershell -NoProfile -File Bluetooth.ps1 On
 
-## Setting permission for running pwsh on a new machine
+### Setting permission for running Powershell on a new machine
 By default, there are lot of warnings and requests for permission. To make things easier, we relax the permission by setting execution policy.
-Set execution policy for current user [ref](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy),
+Set execution policy for current user. [ref, MSFT - Security Set Execution Policy](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy),
 
     Set-Executionpolicy Unrestricted -scope CurrentUser
 
 In old days, that used to be enough. If you get following,
 
-    PowerShell 6.2.3
-    Copyright (c) Microsoft Corporation. All rights reserved.
-
-    https://aka.ms/pscore6-docs
-    Type 'help' to get help.
+    PowerShell 7.3.0   https://aka.ms/pscore6-docs
 
     Security warning
     Run only scripts that you trust. While scripts from the internet can be useful, this script can potentially harm your computer. If you trust this script, use the Unblock-File cmdlet to allow the script to run without this warning
@@ -296,9 +310,9 @@ In environments like school computers that are running SINC Site, bypassing in P
 
     Set-ExecutionPolicy Bypass -Scope Process
 
-## Variables pwsh vs Powershell
+### Variables Powershell vs Legacy Powershell
 
-Following are new pwsh variables,
+Following are new Powershell variables,
 
     EnabledExperimentalFeatures    {}
 
@@ -319,5 +333,4 @@ The shell modified following previously known Powershell variables,
     PSEdition
     PSHOME
 
-## continue
-rest of the contents yet to be appended..
+*TODO: check pwsh 7*

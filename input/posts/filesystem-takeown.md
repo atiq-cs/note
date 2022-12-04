@@ -1,7 +1,7 @@
 Title: Fix File Ownership / Readonly Attribute
 Published: 07/25/2019
 Tags:
-  - windows command prompt
+  - windows command shell
 ---
 
 [to do: import [from wordpress](https://atiqcs.wordpress.com/2014/03/17/take-ownership-remove-read-only-attributes-of-directory-or-file), requires linking 7 images]

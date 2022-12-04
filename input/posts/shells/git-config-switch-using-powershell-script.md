@@ -2,8 +2,7 @@ Title: Switch among multiple Git Config/Profiles using Powershell
 Lead: use git cli to switch among multiple Git Config/Profiles
 Published: 11/02/2020
 Tags:
-  - powershell core
-  - pwsh
+  - powershell
   - version control
   - git
 ---
