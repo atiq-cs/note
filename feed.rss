@@ -5,8 +5,8 @@
 		<link>https://note.iqubit.xyz/</link>
 		<description>Head's in the cloud, a Qubit blog</description>
 		<copyright>Copyright © 2022</copyright>
-		<pubDate>Sat, 03 Dec 2022 22:25:11 GMT</pubDate>
-		<lastBuildDate>Sat, 03 Dec 2022 22:25:11 GMT</lastBuildDate>
+		<pubDate>Sun, 04 Dec 2022 01:02:44 GMT</pubDate>
+		<lastBuildDate>Sun, 04 Dec 2022 01:02:44 GMT</lastBuildDate>
 		<item>
 			<title>Getting Started with PyTorch and NVidia CUDA</title>
 			<link>https://note.iqubit.xyz/posts/ml/pytorch-getting-started-with-cuda</link>
@@ -639,9 +639,9 @@ error: Package 'Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore' is incompa
 		</item>
 		<item>
 			<title>Powershell Useful Commands</title>
-			<link>https://note.iqubit.xyz/posts/pwsh/powershell</link>
+			<link>https://note.iqubit.xyz/posts/shells/powershell</link>
 			<description>Head's in the cloud, a Qubit blog</description>
-			<guid>https://note.iqubit.xyz/posts/pwsh/powershell</guid>
+			<guid>https://note.iqubit.xyz/posts/shells/powershell</guid>
 			<pubDate>Fri, 19 Mar 2021 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;p&gt;&lt;em&gt;This article mostly applies to Powershell version 6 or later (formerly known as Powershell Core). Check edition via Powershell variable: &lt;code&gt;$PSEdition&lt;/code&gt; (should show core for modern powershell)&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;More cmdlets are on the other article: &lt;code&gt;powershell-cmdlets&lt;/code&gt;&lt;/p&gt;
@@ -1100,9 +1100,9 @@ int ReverseNum(int a, int res) {
 		</item>
 		<item>
 			<title>Powershell Cmdlets</title>
-			<link>https://note.iqubit.xyz/posts/pwsh/powershell-cmdlets</link>
+			<link>https://note.iqubit.xyz/posts/shells/powershell-cmdlets</link>
 			<description>Head's in the cloud, a Qubit blog</description>
-			<guid>https://note.iqubit.xyz/posts/pwsh/powershell-cmdlets</guid>
+			<guid>https://note.iqubit.xyz/posts/shells/powershell-cmdlets</guid>
 			<pubDate>Thu, 10 Dec 2020 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;p&gt;&lt;em&gt;This article applies to Powershell version 6 or later (formerly also known as Powershell Core).&lt;/em&gt;&lt;/p&gt;
 &lt;h3 id="start-process"&gt;Start-Process&lt;/h3&gt;

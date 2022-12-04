@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Head&#x27;s in the cloud, a Qubit blog">
 
-  <title>Notes from Qubit Inc. - Switch among multiple Git Config/Profiles using Powershell</title>
+  <title>Notes from Qubit Inc. - Legacy Powershell Useful Commands</title>
 
-  <link rel="canonical" href="https://note.iqubit.xyz/posts/pwsh/git-config-switch-using-powershell-script">
+  <link rel="canonical" href="https://note.iqubit.xyz/posts/shells/powershell-legacy">
 
       <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
       <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
@@ -18,9 +18,9 @@
   <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
   <meta name="msapplication-starturl" content="/" />
 
-  <meta property="og:title" content="Notes from Qubit Inc. - Switch among multiple Git Config/Profiles using Powershell" />
+  <meta property="og:title" content="Notes from Qubit Inc. - Legacy Powershell Useful Commands" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://note.iqubit.xyz/posts/pwsh/git-config-switch-using-powershell-script" />
+  <meta property="og:url" content="https://note.iqubit.xyz/posts/shells/powershell-legacy" />
   
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -89,14 +89,12 @@
       <div class="col-md-12">
         <div class="post-heading">
           <h1>
-            Switch among multiple Git Config/Profiles using Powershell
+            Legacy Powershell Useful Commands
           </h1>
-            <h2 class="subheading">use git cli to switch among multiple Git Config/Profiles</h2>
-              <div class="meta">Published on Monday, 02 November 2020</div>
+              <div class="meta">Published on Saturday, 18 July 2020</div>
                 <div class="mt-3">
                       <a href="/tags/powershell" class="badge badge-light"> powershell</a>
-                      <a href="/tags/version-control" class="badge badge-light"> version control</a>
-                      <a href="/tags/git" class="badge badge-light"> git</a>
+                      <a href="/tags/system-administration" class="badge badge-light"> system administration</a>
                 </div>
         </div>
       </div>
@@ -108,100 +106,90 @@
   <div class="container"> 
     <div class="row">
       <div id="content" class="col-md-12">  
-        <h2 id="overview">Overview</h2>
-<p>Overview of the script,</p>
-<ul>
-<li>verify user name stuff, arguments</li>
-<li>switch profile based on first command line argument</li>
-</ul>
-<h2 id="final-script">final script</h2>
-<pre><code class="language-powershell">[CmdletBinding()]
-param(
-    [ValidateSet('USER_NAME_1', 'USER_NAME_2')]
-    [Parameter(Mandatory=$true)] [string] $ProfileName,
-    [Parameter(Mandatory=$true)] [string[]] $CredUserNames
-)
-
-
-&lt;#
-.SYNOPSIS
-    Switch to given git config profile
-.DESCRIPTION
-    Sets for both git repo local and global,
-    - user name
-    - user email
-    - credential user name
-#&gt;
-function Main() {
-    # Expecting switch between 2 users
-    if ($CredUserNames.Length -lt 2) {
-        throw [ArgumentException] ('Unexpected number of gUser Names!')
-    }
-
-    switch ($ProfileName) {
-        &quot;USER_NAME_1&quot; {
-            $gitUserName = git config --get user.name
-            $shellUserName = $($Home.SubString($Home.LastIndexOf('\')+1))
-
-            # Expecting git user name to start with Windows Login UserName
-            # For example,
-            #   windows username Mak will match with
-            #   git user full name 'Atiq Rahman'
-            if (-not ($gitUserName).StartsWith($shellUserName, [System.StringComparison]::`
-                InvariantCultureIgnoreCase)) {
-                throw [ArgumentException] ('Unexpected user name ' + $gitUserName + '!')
-            }
-
-            $gitUserEmail = git config --get user.email
-            # global
-            git config --global user.name &quot;$gitUserName&quot;
-            git config --global user.email $gitUserEmail
-
-            git config credential.username $CredUserNames[0]
-            $Env:GITHUB_TOKEN = 'gxp_clylM69Sjj0OZz5JOKX98TzcIE2xBo1MjNTO'
-            Break
-        }
-        &quot;USER_NAME_2&quot; {
-            $gitUserName = git config --get user.name
-            # last name of user 2, just for validation
-            $userNameSuffix = 'USER2_SUFFIX'
-
-            if (-not ($gitUserName).EndsWith($userNameSuffix)) {
-                throw [ArgumentException] ('Unexpected user name ' + $gitUserName + '!')
-            }
-
-            $gitUserEmail = git config --get user.email
-            # global
-            git config --global user.name &quot;$gitUserName&quot;
-            git config --global user.email $gitUserEmail
-
-            git config credential.username $CredUserNames[1]
-            $Env:GITHUB_TOKEN = 'gxp_84770a857cb1482de0e8af7c39a06de4ccf001eeb'
-            Break
-        }
-        Default { &quot;Unexpected $ProfileName!&quot; }
-    }
-
-    VerifyGitProfile
-
-    'Remember to set your GITHUB_TOKEN before invoking ''deploy'''
-}
-
-function VerifyGitProfile() {
-    'Final Git Configuration:'
-    git config --global --get user.name
-    git config --global --get user.email
-    git config --get user.name
-    git config --get user.email
-    git config --get credential.username
-}
-
-Main
+        <p><em>This article applies to legacy powershell (powershell 5.0 or earlier) Check edition via Powershell variable: <code>$PSEdition</code> (should show &quot;Desktop for legacy/classic powershell), classic powershell is also bundled into the Windows OS.</em></p>
+<p><em>Please be aware of notation below in command outlines. <code>$</code> represents a command and rests of the lines following that line are output. The tradition is to utilize the &quot;&gt; &quot; prompt for Windows Command Shell, however, I come from a Unix background and I defy that.</em></p>
+<h3 id="control-panel-cmdlet">Control Panel Cmdlet</h3>
+<p>Handy cmds follow, <a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/show-controlpanelitem">ref</a> to access sys properties,</p>
+<pre><code>Show-ControlPanelItem -Name System
 </code></pre>
-<p>Copy of this script (including documentation) can be found at:
-<a href="https://github.com/atiq-cs/old-scripts/blob/dev/pwsh/Switch-GitConfig.ps1">https://github.com/atiq-cs/old-scripts/blob/dev/pwsh/Switch-GitConfig.ps1</a></p>
-<p>More scripts like this can be found at:
-<a href="https://github.com/atiq-cs/old-scripts/blob/dev/pwsh">https://github.com/atiq-cs/old-scripts/blob/dev/pwsh</a></p>
+<p>For example, open Power Options Window,</p>
+<pre><code>Show-ControlPanelItem -Name 'Power Options'
+</code></pre>
+<p>Following can be invoked using <code>Show-ControlPanelItem</code> specifying name argument,</p>
+<ul>
+<li>System</li>
+<li>Programs and Features, old: <code>appwiz.cpl</code></li>
+<li>Network and Sharing Center (previous: <code>control ncpa.cpl</code>)</li>
+<li>Device Manager</li>
+<li>Default Programs</li>
+<li>Power Options, old: <code>powercfg.cpl</code></li>
+<li>User Accounts</li>
+<li>Taskbar and Navigation</li>
+</ul>
+<p>For, Sound mouse etc we do,</p>
+<ul>
+<li>Sound</li>
+<li>Mouse</li>
+</ul>
+<p>To access advanced system properties (old: <code>sysdm.cpl</code>), use,</p>
+<pre><code>$ SystemPropertiesAdvanced
+</code></pre>
+<p><strong>Refs</strong></p>
+<ul>
+<li><a href="https://social.technet.microsoft.com/wiki/contents/articles/4486.accessing-the-control-panel-via-the-commandline.aspx">MSFT TechNet - Accessing the Control Panel via the Commandline</a></li>
+<li><a href="https://learn.microsoft.com/en-us/windows/win32/shell/controlpanel-canonical-names">MSFT Win32 Shell - Canonical Names of Control Panel Items</a></li>
+<li><a href="https://www.tenforums.com/tutorials/86339-list-commands-open-control-panel-items-windows-10-a.html">tenforums - Control Panel Item Cmds</a></li>
+</ul>
+<h3 id="service-management">Service Management</h3>
+<p>Get list of services currently running,</p>
+<pre><code>Get-Service | Where-Object {$_.Status -eq &quot;Running&quot;}
+</code></pre>
+<p>Start a service,</p>
+<pre><code>Start-Service -Name VPNAgent
+</code></pre>
+<p>Stop one,</p>
+<pre><code>Stop-Service -Name VPNAgent
+</code></pre>
+<p>Get Software List,</p>
+<pre><code>Get-WmiObject -Class Win32_Product -Filter &quot;Name = 'Java 8 (64 bit)'&quot;
+</code></pre>
+<h3 id="changing-window-size">Changing Window Size</h3>
+<p>To change Window ize we change buffer size first, because Window Size depends on it.</p>
+<pre><code class="language-powershell">$cUI = (Get-Host).UI.RawUI
+$b = $cUI.BufferSize
+$b.Width = $width
+$b.Height = $history_size
+$cUI.BufferSize = $b
+
+# change window height and width
+$b = $cUI.WindowSize
+$b.Width = $width
+$b.Height = $height
+$cUI.WindowSize = $b
+</code></pre>
+<p>There's oneliner to do it as well,</p>
+<pre><code>(Get-Host).UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size -Property &#64;{Width=$width; Height=$history_size}
+(Get-Host).UI.RawUI.WindowSize = New-Object System.Management.Automation.Host.Size -Property &#64;{Width=$width; Height=$height}
+</code></pre>
+<p>To change the title of the console we do,</p>
+<pre><code>$cUI.WindowTitle = $title
+</code></pre>
+<p>ref, <a href="https://docs.microsoft.com/en-us/dotnet/api/system.management.automation.host.pshostuserinterface.rawui">MSFT Docs Automation</a> provides more details on the UI properties for automation on powershell.</p>
+<h4 id="programs-and-feature-management">Programs and Feature Management</h4>
+<p>Software Management: <strong>Get Software List</strong></p>
+<pre><code>Get-WmiObject -Class Win32_Product -Filter &quot;Name = 'Java 8 (64 bit)'&quot;
+</code></pre>
+<p>How to uninstall application,</p>
+<pre><code>$app = Get-WmiObject -Class Win32_Product -Filter &quot;Name = 'Java 8 (64-bit)'&quot;
+$app.Uninstall()
+</code></pre>
+<h3 id="miscellaneous">Miscellaneous</h3>
+<p><strong>Arguments to the Shell</strong></p>
+<p>These basic stuffs might come handy,</p>
+<p>Passing all arguments, untouched to another script,</p>
+<pre><code class="language-powershell">$saArgs = $args[0 .. ($args.Count)]
+&amp; &quot;$Env:HOME\ss.ps1&quot; $saArgs
+</code></pre>
 
 
 
