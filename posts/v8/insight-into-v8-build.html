@@ -305,12 +305,12 @@ $(if $(findstring NEW_OS, $(TARGET_ARCH_DESC)), /usr/custom/bin/find, find) $(OU
   }],
 </code></pre>
 <h5 id="how-to-specify-clang-dir-during-compile">How to specify clang dir during compile?</h5>
-<p>Default location of clangdir is <code>&lt;(base_dir)/third_party/llvm-build/Release+Asserts</code> which uses clang compiler binaries downloaded from google storage. For platforms, windows, linux, mac they have separate binaries. For a new platform if clang installed in the system (/usr/bin/clang).</p>
+<p>Default location of clangdir is <code>&lt;(base_dir)/third_party/llvm-build/Release+Asserts</code> which uses clang compiler binaries downloaded from google storage. For platforms, windows, linux, mac they have separate binaries. For a new platform if clang installed in the system, <code>/usr/bin/clang</code>.</p>
 <pre><code>$ diff standalone.gypi standalone.gypi.modified
 94c94
 &lt;       'clang_dir%': '       'clang_dir%': '/usr',
 </code></pre>
-<p>Change on line 94 specifies the new clang location (which contains /bin/clang).</p>
+<p>Change on line 94 specifies the new clang location (which contains <code>/bin/clang</code>).</p>
 <h3 id="buildtoolchain.gypi">build/toolchain.gypi</h3>
 <p><em>ref, this source file on <a href="https://github.com/v8/v8/blob/8ffa1f10cb9c670fd6416bc214e2c22ebec8af12/gypfiles/toolchain.gypi">upstream v8/v8</a></em></p>
 <p>Changes in this file for a new platform helps us to build properly for different architectures i.e., 32 bit and 64 bit. This is why we enable host and target biarch variables for a new platform (I can be wrong) so that we can do 32 bit build on 64 bit if supported by CXX. Use only if CXX in your platform supports this, First, we set <em>biarch</em> variables: this is for <code>host_cxx_is_biarch</code>,</p>
@@ -345,12 +345,12 @@ $(if $(findstring NEW_OS, $(TARGET_ARCH_DESC)), /usr/custom/bin/find, find) $(OU
    }],
 </code></pre>
 <p>The next code block is the one to look into to set compile flags for 32 bit builds,</p>
-<pre><code>['(OS==&quot;linux&quot; or OS==&quot;freebsd&quot; or OS==&quot;openbsd&quot; or OS==&quot;NEW_OS&quot; \
- or OS==&quot;netbsd&quot; or OS==&quot;mac&quot; or OS==&quot;android&quot; or OS==&quot;qnx&quot;) and \
+<pre><code class="language-python">['(OS==&quot;linux&quot; or OS==&quot;freebsd&quot; or OS==&quot;openbsd&quot; or OS==&quot;NEW_OS&quot; \
+  or OS==&quot;netbsd&quot; or OS==&quot;mac&quot; or OS==&quot;android&quot; or OS==&quot;qnx&quot;) and \
 (v8_target_arch==&quot;arm&quot; or v8_target_arch==&quot;ia32&quot; or \
- v8_target_arch==&quot;x87&quot; or v8_target_arch==&quot;mips&quot; or \
- v8_target_arch==&quot;mipsel&quot; or v8_target_arch==&quot;ppc&quot; or \
- v8_target_arch==&quot;s390&quot; or v8_target_arch==&quot;NEW_PLATFORM&quot;)', {
+  v8_target_arch==&quot;x87&quot; or v8_target_arch==&quot;mips&quot; or \
+  v8_target_arch==&quot;mipsel&quot; or v8_target_arch==&quot;ppc&quot; or \
+  v8_target_arch==&quot;s390&quot; or v8_target_arch==&quot;NEW_PLATFORM&quot;)', {
 'target_conditions': [
   ['_toolset==&quot;host&quot;', {
     'conditions': [
@@ -360,8 +360,8 @@ $(if $(findstring NEW_OS, $(TARGET_ARCH_DESC)), /usr/custom/bin/find, find) $(OU
             'cflags': [ '-m31' ],
             'ldflags': [ '-m31' ]
           },{
-           'cflags': [ '-m32' ],
-           'ldflags': [ '-m32' ]
+            'cflags': [ '-m32' ],
+            'ldflags': [ '-m32' ]
           }],
         ],
       }],
@@ -378,7 +378,8 @@ $(if $(findstring NEW_OS, $(TARGET_ARCH_DESC)), /usr/custom/bin/find, find) $(OU
 ],
 </code></pre>
 <h3 id="faq">FAQ</h3>
-<p>Q1. How to override compiler, assembler and linker for the build? You can always override those like this,</p>
+<p>Q1. How to override compiler, assembler and linker for the build?</p>
+<p>You can always override those like this,</p>
 <pre><code>export CC=/usr/custom/gcc
 export AR=/usr/custom/ar
 export LD=/usr/custom/ld
@@ -387,7 +388,12 @@ export LD=/usr/custom/ld
 <pre><code>$ export CC=/usr/bin/clang
 $ export CXX=/usr/bin/clang++
 </code></pre>
-<p>Q2. Why -m64 flag is duplicate? Probably, biarch conditionals are hitting match multiple times. Since, the behavior is identical on other platforms I will check this later. Q3. How to disable use of clang during build? There can be more than one ways to do this. Pass a GYP flag with <code>gmake</code> command like this, <code>GYPFLAGS=&quot;-Dclang=0&quot;</code> Q4. Why GYPFlags are messed up when I mix -DVAR and a shortcut? It will mess up if you mix something like <code>snapshot=on</code> and <code>GYPFLAGS=&quot;-Dclang=0&quot;</code> on the command line. <code>GYPFLAGS=&quot;-Dclang=0&quot;</code> will probably override the previous flag added by <code>snapshot=on</code>. So be careful on mixing those arguments together. #References</p>
+<p>Q2. Why is <code>-m64</code> flag duplicate?</p>
+<p>Probably, biarch conditionals are hitting match multiple times. Since, the behavior is identical on other platforms I will check this later.</p>
+<p>Q3. How to disable use of clang during build?</p>
+<p>There can be more than one ways to do this. Pass a GYP flag with <code>gmake</code> command like this, <code>GYPFLAGS=&quot;-Dclang=0&quot;</code></p>
+<p>Q4. Why GYPFlags are messed up when I mix -DVAR and a shortcut?</p>
+<p>GYPFlags get messed up if you mix something like <code>snapshot=on</code> and <code>GYPFLAGS=&quot;-Dclang=0&quot;</code> on the command line. <code>GYPFLAGS=&quot;-Dclang=0&quot;</code> will probably override the previous flag added by <code>snapshot=on</code>. So, be careful on mixing those arguments together.</p>
 <p><strong>Acknowledgement</strong><br />
 V8 Team,</p>
 <ul>
