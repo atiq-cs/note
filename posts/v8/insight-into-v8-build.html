@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Head&#x27;s in the cloud, a Qubit blog">
+
+  <title>Notes from Qubit Inc. - Insight into V8 Build System</title>
+
+  <link rel="canonical" href="https://note.iqubit.xyz/posts/v8/insight-into-v8-build">
+
+      <link type="application/rss+xml" rel="alternate" href="/feed.rss" />
+      <link type="application/atom+xml" rel="alternate" href="/feed.atom" />
+  
+  <meta name="application-name" content="Notes from Qubit Inc." />
+  <meta name="msapplication-tooltip" content="Notes from Qubit Inc." />
+  <meta name="msapplication-starturl" content="/" />
+
+  <meta property="og:title" content="Notes from Qubit Inc. - Insight into V8 Build System" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://note.iqubit.xyz/posts/v8/insight-into-v8-build" />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="/vendor/bootstrap/scss/bootstrap.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/fontawesome-free/css/brands.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,500,600,700,400italic,700italic' rel='stylesheet' type='text/css' data-no-mirror>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' data-no-mirror>
+  
+  <!-- Custom styles for this template -->
+  <link href="/scss/clean-blog.css" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/plugins/autoloader/prism-autoloader.min.js" data-no-mirror></script>
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/themes/prism.css">
+
+  <!-- Lunr search -->
+    <script src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pako@2.0.3/dist/pako_inflate.min.js"></script>
+    <script src="/search.js"></script>
+  
+  
+
+
+  
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Notes from Qubit Inc.</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/posts">Posts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/tags">Tags</a>
+            </li>
+</ul>
+        <form class="form-inline my-2 my-lg-0" action="/search" method="GET">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query">
+          <input type="submit" hidden />
+        </form>
+    </div>
+  </div>
+</nav>
+
+  <!-- Page Header -->
+  <header class="masthead">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="post-heading">
+          <h1>
+            Insight into V8 Build System
+          </h1>
+              <div class="meta">Published on Tuesday, 17 May 2016</div>
+                <div class="mt-3">
+                      <a href="/tags/javascript-engine" class="badge badge-light"> javascript-engine</a>
+                      <a href="/tags/v8" class="badge badge-light"> v8</a>
+                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- Main Content -->
+  <div class="container"> 
+    <div class="row">
+      <div id="content" class="col-md-12">  
+        <p><em>Please be aware of notation below in command outlines. <code>$</code> represents a command and rests of the lines following that line are output.</em></p>
+<p>Just like <a href="https://www.chromium.org/">Chromium</a> v8 is cross platform. Its build system works on Windows, Linux, MAC and Unix. It is possible to bring a new OS or hardware platform by looking at examples provided by the source code. However, when you start working you feel the lack of documentation about how things get done. So I decided to document what I learnt.</p>
+<h3 id="what-is-in-buildgyp">What is in build/gyp ?</h3>
+<p>V8 build uses <a href="https://chromium.googlesource.com/external/gyp.git/+/master">build/gyp</a> project to generate build configuration files. <code>make</code> reads those configuration files (includes .mk etc) during the build. gyp retains provided command line gyp flags, sets appropriate compiler flags (takes care of reading from environment variables as well). Some of the make arguments are mapped properly by the <a href="https://github.com/v8/v8/blob/master/Makefile">Makefile</a>.</p>
+<pre><code># disassembler=on
+ifeq ($(disassembler), on)
+  GYPFLAGS += -Dv8_enable_disassembler=1
+endif
+# objectprint=on
+ifeq ($(objectprint), on)
+  GYPFLAGS += -Dv8_object_print=1
+endif
+</code></pre>
+<p>Code snippet above in the <code>Makefile</code> ensures that make argument <code>disassembler=on</code> would work as well as <code>objectprint=on</code>. It sets the appropriate GYP Flags for those options.</p>
+<h3 id="an-example-of-build">An example of build</h3>
+<p>To be acquainted with the v8 build system it is handy to do a build yourself. The build is pretty simple on Linux and is worth trying. I have compiled an <a href="https://fftsys.azurewebsites.net/atiq/tech/v8-build-fedora-23">example of Linux build</a> as reference. If you are a beginner you should have a look at that before proceeding to next part of the article.</p>
+<h3 id="the-fetch-script">The Fetch Script</h3>
+<p>We talked little bit about <code>fetch</code> on the <a href="http://fft-blog.azurewebsites.net/tech/v8-build-fedora-23">v8 build on Linux</a> article. As long as fetch can determine the target platform it's all good. It works fine on Linux, FreeBSD, Windows and MACOSX. Based on target platform it determines what build-tools to download. <code>fetch</code> throws an exception on a new platform that it does not know. It throws an exception when it cannot determine target platform. To explain this better we need to look at next two sub-sections.</p>
+<h3 id="buildlandmine_utils.py">build/landmine_utils.py</h3>
+<p><code>fetch</code> uses <code>build/landmines.py</code> script to detect builder setting and gyp environment setting. The script, <code>build/landmine_utils.py</code> is used by <code>build/landmines.py</code>. I do not know if any other file uses this script. There are a number of <code>&#64;memoize()</code> blocks in this file that determines the target platform,</p>
+<pre><code>&#64;memoize()
+def IsWindows():
+  return sys.platform in ['win32', 'cygwin']
+
+&#64;memoize()
+def IsLinux():
+  return sys.platform.startswith(('linux', 'freebsd'))
+
+&#64;memoize()
+def IsMac():
+  return sys.platform == 'darwin'
+</code></pre>
+<p>It is easier to understand looking at the <code>builder()</code> function used by landmines.py,</p>
+<pre><code>if platform() == 'android':
+  # Good enough for now? Do any android bots use make?
+  return 'make'
+elif platform() == 'ios':
+  return 'xcode'
+elif IsWindows():
+  return 'msvs'
+elif IsLinux():
+  return 'make'
+elif IsMac():
+  return 'xcode'
+else:
+  assert False, 'Don\'t know what builder we\'re using!'
+</code></pre>
+<p>It tries to get what builder the target platform uses. When platform does not match with either one from the conditional statements it does an <code>assert</code>. This is where you need to look at if fetch is not working on your new platform. If your build should use <code>gmake</code> like Linux you can return <code>IsLinux()</code> true,</p>
+<pre><code>def IsLinux():
+    return sys.platform.startswith(('linux', 'freebsd', 'new_os'))
+</code></pre>
+<h3 id="buildlandmines.py">build/landmines.py</h3>
+<p>If your platform uses an unconventional builder instead of <code>make</code> you need to add that to the <code>get_build_dir</code> function. Looking at following code block in the file you will get the idea,</p>
+<pre><code>ret = None
+if build_tool == 'xcode':
+    ret = os.path.join(SRC_DIR, 'xcodebuild')
+elif build_tool in ['make', 'ninja', 'ninja-ios']:  # TODO: Remove ninja-ios.
+    if 'CHROMIUM_OUT_DIR' in os.environ:
+      output_dir = os.environ.get('CHROMIUM_OUT_DIR').strip()
+      if not output_dir:
+        raise Error('CHROMIUM_OUT_DIR environment variable is set but blank!')
+    else:
+      output_dir = landmine_utils.gyp_generator_flags().get('output_dir', 'out')
+    ret = os.path.join(SRC_DIR, output_dir)
+elif build_tool in ['msvs', 'vs', 'ib']:
+    ret = os.path.join(SRC_DIR, 'build')
+else:
+    raise NotImplementedError('Unexpected GYP_GENERATORS (%s)' % build_tool)
+return os.path.abspath(ret)
+</code></pre>
+<p>In this file, there are two other code blocks where functions from landmine_util.py are called. In conclusion, build system maps detected platform to a builder like gmake, msvs, xcode etc. When it cannot map it throws an exception.</p>
+<h3 id="v8-project-makefile">v8 Project Makefile</h3>
+<p><a href="https://github.com/v8/v8/blob/master/Makefile">Current Makefile</a> in the v8 repository is first class one. It defines build modes and build targets for a number of platforms and build modes. It works with gmake for sure. Other Make tools might give error except for Windows where Visual Studio/Windows SDK stuffs are used to build. There are plenty of things that can be discussed. I would like to start with following command,</p>
+<pre><code>make native
+</code></pre>
+<p>If you have done a build on Linux you probably already have an idea what it does. 'native' does a native release build for target platform: x64 on 64 bit architecture and ia32 on 32 bit architecture. We can do specific builds,</p>
+<pre><code>make x64.release
+</code></pre>
+<p>Besides, it supports other architecture/hardware platforms. However, be mindful that those commands will default to output of the following cmmand,</p>
+<pre><code>g++ -v
+Target: x86_64-pc-solaris2.11
+</code></pre>
+<p>Detailed output of the command is <a href="http://collabedit.com/sk78q">here</a>. and takes out the target string to determine the architecture. To say specifically <code>g++</code> is wrong! It uses whatever <code>CXX</code> is set for the platform. CXX can be clang++, g++ etc. Here is the code block in the Makefile that shows of use of <code>CXX</code> to get target architecture string, [code lang=bash] <span class="math">\((eval CXX\_TARGET\_ARCH:=\)</span>(shell $(CXX) -v 2&gt;&amp;1 | grep ^Target: | \ cut -f 2 -d &quot; &quot; | cut -f 1 -d &quot;-&quot; )) <span class="math">\((eval CXX\_TARGET\_ARCH:=\)</span>(subst aarch64,arm64,$(CXX_TARGET_ARCH))) <span class="math">\((eval CXX\_TARGET\_ARCH:=\)</span>(subst x86_64,x64,<span class="math">\((CXX\_TARGET\_ARCH))) \[/code\] Similar code block can be found under Makefile target of `\)</span>(ENVFILE).new<code>. In some systems, </code>g++ -v` does not give actual target information. For example, gcc-4.9 or older on Solaris. In x86 (64 bit system) those gcc give,</p>
+<pre><code>gcc -v
+Target: i386-solaris2.11
+</code></pre>
+<p>As a result, with those gcc build target becomes ia32 on 64 bit system. Funny? It is possible to do multiple target builds on biarch systems. By that I mean you can do 32 bit build on some 64 bit systems for some platforms. More on this on toolchain.gypi section. For a new platform, if the hardware is not listed in ARCHES in Makefile it should be added. Following lines show what target platforms are supported for build,</p>
+<pre><code>ARCHES = ia32 x64 x32 arm arm64 mips mipsel mips64 mips64el x87 ppc ppc64 \
+    s390 s390x
+</code></pre>
+<p>A NEW_PLATFORM can be added to the list,</p>
+<pre><code>ARCHES = ia32 x64 x32 arm arm64 mips mipsel mips64 mips64el x87 ppc ppc64 \
+    s390 s390x NEW_PLATFORM
+</code></pre>
+<p>Makefile has target definitions for following type of build commands,</p>
+<pre><code>gmake native
+gmake platform.release
+gmake platform.debug
+gmake platform.optdebug
+</code></pre>
+<p>Here, platform can be anything that is defined in ARCHES (discussed in previous paragraph). How do I know the modes? It's here,</p>
+<pre><code>MODES = release debug optdebug
+</code></pre>
+<p>A bare <code>gmake</code> command without any arguments means building all combination of default modes and default arches. Total 2*3=6 of following combinations are attempted to be built when the command is applied,</p>
+<pre><code>DEFAULT_ARCHES = ia32 x64 arm
+DEFAULT_MODES = release debug
+</code></pre>
+<h4 id="supported-clean-commands">Supported clean commands</h4>
+<p>The Makefile has target definitions for following type of clean commands,</p>
+<pre><code>gmake clean
+gmake native.clean
+gmake platform.clean
+</code></pre>
+<p><code>gmake clean</code> attempts clean for all combination of Modes and Arch. Therefore, it can be slow. On the contrary, following are examples of faster clean commands,</p>
+<pre><code>gmake native.clean
+gmake ia32.clean
+gmake x64.clean
+gmake sparc64.clean
+</code></pre>
+<h4 id="modifying-clean-target">Modifying clean target</h4>
+<p>Why do we need to do that? You will need that if you want to apply a different command then find or you want to apply additional commands that only applies to your new platform. For example, instead of,</p>
+<pre><code>find $(OUTDIR) -regex '.*\(host\|target\)\.$(basename $&#64;).*\.mk' -delete
+</code></pre>
+<p>you can use a custom find command on your new OS, [code lang=bash] <span class="math">\((eval TARGET\_ARCH\_DESC:=\)</span>(shell $(CXX) -v 2&gt;&amp;1 | grep ^Target: | cut -f 2 -d &quot; &quot; )) $(if $(findstring NEW_OS, $(TARGET_ARCH_DESC)), /usr/custom/bin/find, find) <span class="math">\((OUTDIR) -regex \\ '.\*\\(host\\|target\\)\\.\)</span>(basename $&#64;).*\.mk' -delete [/code]</p>
+<h3 id="builddetect_v8_host_arch.py">build/detect_v8_host_arch.py</h3>
+<p>As part of the fixing the build system for a new platform this file should be taken care of as well,</p>
+<pre><code>def DoMain(_):
+  host_arch = platform.machine()
+  host_system = platform.system();
+
+  # Convert machine type to format recognized by gyp.
+  if re.match(r'i.86', host_arch) or host_arch == 'i86pc':
+    host_arch = 'ia32'
+  elif host_arch in ['x86_64', 'amd64']:
+    host_arch = 'x64'
+  elif host_arch.startswith('arm'):
+    host_arch = 'arm'
+  # code trimmed    
+
+  if host_arch == 'x64' and platform.architecture()[0] == '32bit':
+    host_arch = 'ia32'
+
+  return host_arch
+</code></pre>
+<p>If <code>gcc -v</code> is giving you &quot;i386&quot; then when you apply following command,</p>
+<pre><code>$ python build/detect_v8_host_arch.py
+</code></pre>
+<p>you get ia32. Even though your platform is 64 bit even <code>platform.architecture()[0]</code> gives 32 bit tragically. To fix this problem following modification on the first conditional can be considered,</p>
+<pre><code>if re.match(r'i.86', host_arch) or host_arch == 'i86pc':
+    if host_system == 'NEW_OS':
+        host_arch = 'x64'
+    return host_arch
+</code></pre>
+<h3 id="buildstandalone.gypi">build/standalone.gypi</h3>
+<p>We have talked about <code>detect_v8_host_arch</code> function on section <code>build/detect_v8_host_arch.py</code>. If you want your new OS to support this it can be added as showed in following block,</p>
+<pre><code>['OS==&quot;linux&quot; or OS==&quot;freebsd&quot; or OS==&quot;openbsd&quot; or \
+    OS==&quot;netbsd&quot; or OS==&quot;mac&quot; or OS==&quot;qnx&quot; or OS==&quot;aix&quot; or \
+    OS==&quot;new_OS&quot;', {
+        'host_arch%': '&amp;lt;!pymod_do_main(detect_v8_host_arch)',
+    }, {
+</code></pre>
+<p>If the new OS does not have clang yet it can choose to disable use of clang/clang++ during build,</p>
+<pre><code>['host_arch!=&amp;quot;ppc&amp;quot; and host_arch!=&amp;quot;ppc64&amp;quot; and host_arch!=&amp;quot;ppc64le&amp;quot; and \
+  host_arch!=&amp;quot;s390&amp;quot; and host_arch!=&amp;quot;s390x&amp;quot; and OS!=&amp;quot;NEW_OS&amp;quot;', {
+    'host_clang%': 1,
+}, {
+    'host_clang%': 0,
+}],
+</code></pre>
+<p>This is way to disable <code>Werror</code> when you want it temporarily,</p>
+<pre><code>['OS==&amp;quot;NEW_OS&amp;quot;', {
+  'target_defaults': {
+    'conditions': [
+      ['target_arch==&amp;quot;NEW_PLATFORM&amp;quot;', {
+        'cflags!': [ '&amp;lt;(werror)', ],
+      }],
+    ],
+  },
+}],  # OS==&amp;quot;NEW_OS&amp;quot;
+</code></pre>
+<p>If you want to do shared build instead of static it is a good idea to put the condition right after <code>conditions</code> statement,</p>
+<pre><code>'conditions': [
+  ['OS==&amp;quot;NEW_OS&amp;quot;', {
+    'component%': 'shared_library',
+  }],
+</code></pre>
+<h5 id="how-to-specify-clang-dir-during-compile">How to specify clang dir during compile?</h5>
+<p>Default location of clangdir is <code>&amp;lt;(base_dir)/third_party/llvm-build/Release+Asserts</code> which uses clang compiler binaries downloaded from google storage. For platforms, windows, linux, mac they have separate binaries. For a new platform if clang installed in the system (/usr/bin/clang).</p>
+<pre><code>$ diff standalone.gypi standalone.gypi.modified
+94c94
+&amp;lt;       'clang_dir%': '       'clang_dir%': '/usr',
+</code></pre>
+<p>Change on line 94 specifies the new clang location (which contains /bin/clang).</p>
+<h3 id="buildtoolchain.gypi">build/toolchain.gypi</h3>
+<p>Changes in this file for a new platform helps us to build properly for different architectures i.e., 32 bit and 64 bit. This is why we enable host and target biarch variables for a new platform (I can be wrong) so that we can do 32 bit build on 64 bit if supported by CXX. Use only if CXX in your platform supports this, First, we set <em>biarch</em> variables: this is for <code>host_cxx_is_biarch</code>,</p>
+<pre><code>['host_arch==&quot;ia32&quot; or host_arch==&quot;x64&quot; or \
+  host_arch==&quot;ppc&quot; or host_arch==&quot;ppc64&quot; or \
+  host_arch==&quot;s390&quot; or host_arch==&quot;s390x&quot; or \
+  host_arch==&quot;NEW_PLATFORM&quot; or clang==1', {
+  'variables': {
+    'host_cxx_is_biarch%': 1,
+  },
+</code></pre>
+<p>And, this is for target_cxx_is_biarch,</p>
+<pre><code>['target_arch==&quot;ia32&quot; or target_arch==&quot;x64&quot; or target_arch==&quot;x87&quot; or \
+  target_arch==&quot;ppc&quot; or target_arch==&quot;ppc64&quot; or target_arch==&quot;s390&quot; or \
+  target_arch==&quot;s390x&quot; or host_arch==&quot;NEW_PLATFORM&quot; or clang==1', {
+  'variables': {
+    'target_cxx_is_biarch%': 1,
+  },
+</code></pre>
+<p>This is the code block to look into to set compile flags for 64 bit builds,</p>
+<pre><code>['(OS==&quot;linux&quot; or OS==&quot;android&quot; or OS==&quot;NEW_OS&quot;) and \
+(v8_target_arch==&quot;x64&quot; or v8_target_arch==&quot;arm64&quot; or \
+ v8_target_arch==&quot;ppc64&quot; or v8_target_arch==&quot;s390x&quot; or v8_target_arch==&quot;NEW_PLATFORM&quot;)', {
+'target_conditions': [
+  ['_toolset==&quot;host&quot;', {
+    'conditions': [
+      ['host_cxx_is_biarch==1', {
+        'cflags': [ '-m64' ],
+        'ldflags': [ '-m64' ]
+      }],
+     ],
+   }],
+</code></pre>
+<p>The next code block is the one to look into to set compile flags for 32 bit builds,</p>
+<pre><code>['(OS==&quot;linux&quot; or OS==&quot;freebsd&quot; or OS==&quot;openbsd&quot; or OS==&quot;NEW_OS&quot; \
+ or OS==&quot;netbsd&quot; or OS==&quot;mac&quot; or OS==&quot;android&quot; or OS==&quot;qnx&quot;) and \
+(v8_target_arch==&quot;arm&quot; or v8_target_arch==&quot;ia32&quot; or \
+ v8_target_arch==&quot;x87&quot; or v8_target_arch==&quot;mips&quot; or \
+ v8_target_arch==&quot;mipsel&quot; or v8_target_arch==&quot;ppc&quot; or \
+ v8_target_arch==&quot;s390&quot; or v8_target_arch==&quot;NEW_PLATFORM&quot;)', {
+'target_conditions': [
+  ['_toolset==&quot;host&quot;', {
+    'conditions': [
+      ['host_cxx_is_biarch==1', {
+        'conditions': [
+          ['host_arch==&quot;s390&quot; or host_arch==&quot;s390x&quot;', {
+            'cflags': [ '-m31' ],
+            'ldflags': [ '-m31' ]
+          },{
+           'cflags': [ '-m32' ],
+           'ldflags': [ '-m32' ]
+          }],
+        ],
+      }],
+    ],
+</code></pre>
+<h3 id="buildfeatures.gypi">build/features.gypi</h3>
+<p>On a new platform we can disable use of snapshot adding a condition block,</p>
+<pre><code>'v8_use_snapshot%': 'true',
+'conditions': [
+  ['target_arch == &quot;NEW_PLATFORM&quot;', {
+    'v8_use_snapshot%': 'false',
+  }],
+],
+</code></pre>
+<h3 id="faq">FAQ</h3>
+<p>Q1. How to override compiler, assembler and linker for the build? You can always override those like this,</p>
+<pre><code>export CC=/usr/custom/gcc
+export AR=/usr/custom/ar
+export LD=/usr/custom/ld
+</code></pre>
+<p>By default, CC is set to cc instead of gcc in some platforms. If there is no cc found in current path it will give an error saying &quot;cc: command not found&quot;. This is when mentioned export statements are very useful. An example to override this use clang would be [<a href="http://stackoverflow.com/questions/7031126/switching-between-gcc-and-clang-llvm-using-cmake">ref</a>],</p>
+<pre><code>$ export CC=/usr/bin/clang
+$ export CXX=/usr/bin/clang++
+</code></pre>
+<p>Q2. Why -m64 flag is duplicate? Probably, biarch conditionals are hitting match multiple times. Since, the behavior is identical on other platforms I will check this later. Q3. How to disable use of clang during build? There can be more than one ways to do this. Pass a GYP flag with <code>gmake</code> command like this, <code>GYPFLAGS=&quot;-Dclang=0&quot;</code> Q4. Why GYPFlags are messed up when I mix -DVAR and a shortcut? It will mess up if you mix something like <code>snapshot=on</code> and <code>GYPFLAGS=&quot;-Dclang=0&quot;</code> on the command line. <code>GYPFLAGS=&quot;-Dclang=0&quot;</code> will probably override the previous flag added by <code>snapshot=on</code>. So be careful on mixing those arguments together. #References</p>
+<p><strong>Acknowledgement</strong><br />
+V8 Team,</p>
+<ul>
+<li><a href="https://www.linkedin.com/in/peterschow">Peter Schow</a></li>
+<li>Miguel Ulloa</li>
+</ul>
+<p><em>Disclaimer: I am a novice working on v8, not expert advise. My employer is not resonsible for opinions in this article.</em></p>
+<p><strong>References</strong></p>
+<ol>
+<li><a href="https://chromium.googlesource.com/chromium/buildtools/+/master">chromium - buildtools</a></li>
+</ol>
+
+
+
+<div id="giscus_thread">
+        <script src="https://giscus.app/client.js"
+                data-repo="atiq-cs/note"
+                data-repo-id="R_kgDOGMJt-w"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOGMJt-84B_XUr"
+                data-mapping="pathname"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-theme="dark"
+                crossorigin="anonymous"
+                async>
+        </script>
+</div>
+
+<!-- Google Analytics tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-S42PTR68ME"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-S42PTR68ME');
+</script>
+
+<noscript>Please enable JavaScript to view the comments powered by giscus, to enable google anlaytics.</noscript>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Footer -->  
+  <footer>
+    <div class="container">
+        <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright text-muted m-0">Copyright &#xA9; 2022</p>
+                    <br />
+                    <ul class="list-inline text-center small">
+                            <li class="list-inline-item">
+                                <a href="/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                            </li>
+                    </ul>
+                    <br />
+                    <div class="font-weight-bold small"><a href="https://statiq.dev">Generated by Statiq</a></div>
+                </div>
+        </div>
+    </div>
+</footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  
+
+
+  
+
+  <!-- Custom scripts for this template -->
+  <script src="/js/clean-blog.js"></script>
+
+</body>
+
+</html>
