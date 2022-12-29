@@ -7,7 +7,7 @@ Tags:
 ---
 *Please be aware of notation below in command outlines. `$` represents a command and rests of the lines following that line are output. The tradition is to utilize the "> " prompt for Windows Command Shell, however, I come from a Unix background and I defy that.*
 
-Network related cmdlets are in post: [powershell-cmdlets](pwsh/powershell-cmdlets). Network shell related commands moved to [win-cmd-tools](pwsh/win-cmd-tools).
+Network related cmdlets are in post: [powershell-cmdlets](shells/powershell-cmdlets). Network shell related commands moved to [win-cmd-tools](shells/win-cmd-tools).
 
 
 ### Modem + WiFI Router Best Practices
